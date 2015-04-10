@@ -5,10 +5,17 @@
  */
 package br.com.financemate.ManageBean;
 
+import br.com.financemate.Controller.BancoController;
 import br.com.financemate.Controller.ContasPagarController;
+import br.com.financemate.Controller.PlanoContasController;
+import br.com.financemate.Controller.UsuarioController;
 import br.com.financemate.Util.Formatacao;
+import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contaspagar;
+import br.com.financemate.model.Planocontas;
+import br.com.financemate.model.Usuario;
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,6 +49,15 @@ public class ContasPagarMB implements Serializable {
     private boolean liberadas;
     private String sql;
     private String imagemAutorizado = " ";
+    private String usuarioAgendou;
+    private String usuarioBaixou;
+    private String usuarioAutorizou;
+    private String usuarioCadastrou;
+    private File arquivo01;
+    private File arquivo02;
+    private List<Planocontas> listaPlanoContas;
+    private List<Banco> listaBanco;
+    private String valorConta;
     
     public ContasPagarMB() {
         gerarDataInicia();
@@ -64,6 +80,62 @@ public class ContasPagarMB implements Serializable {
         return liberadas;
     }
 
+    public String getUsuarioAgendou() {
+        return usuarioAgendou;
+    }
+
+    public String getValorConta() {
+        return valorConta;
+    }
+
+    public void setValorConta(String valorConta) {
+        this.valorConta = valorConta;
+    }
+
+    public String getUsuarioCadastrou() {
+        return usuarioCadastrou;
+    }
+
+    public List<Planocontas> getListaPlanoContas() {
+        return listaPlanoContas;
+    }
+
+    public void setListaPlanoContas(List<Planocontas> listaPlanoContas) {
+        this.listaPlanoContas = listaPlanoContas;
+    }
+
+    public List<Banco> getListaBanco() {
+        return listaBanco;
+    }
+
+    public void setListaBanco(List<Banco> listaBanco) {
+        this.listaBanco = listaBanco;
+    }
+
+    public void setUsuarioCadastrou(String usuarioCadastrou) {
+        this.usuarioCadastrou = usuarioCadastrou;
+    }
+
+    public void setUsuarioAgendou(String usuarioAgendou) {
+        this.usuarioAgendou = usuarioAgendou;
+    }
+
+    public String getUsuarioBaixou() {
+        return usuarioBaixou;
+    }
+
+    public void setUsuarioBaixou(String usuarioBaixou) {
+        this.usuarioBaixou = usuarioBaixou;
+    }
+
+    public String getUsuarioAutorizou() {
+        return usuarioAutorizou;
+    }
+
+    public void setUsuarioAutorizou(String usuarioAutorizou) {
+        this.usuarioAutorizou = usuarioAutorizou;
+    }
+
     public Contaspagar getContasPagar() {
         return contasPagar;
     }
@@ -82,6 +154,22 @@ public class ContasPagarMB implements Serializable {
 
     public void setLiberadas(boolean liberadas) {
         this.liberadas = liberadas;
+    }
+
+    public File getArquivo01() {
+        return arquivo01;
+    }
+
+    public void setArquivo01(File arquivo01) {
+        this.arquivo01 = arquivo01;
+    }
+
+    public File getArquivo02() {
+        return arquivo02;
+    }
+
+    public void setArquivo02(File arquivo02) {
+        this.arquivo02 = arquivo02;
     }
 
     public void setClienteMB(ClienteMB clienteMB) {
@@ -195,6 +283,11 @@ public class ContasPagarMB implements Serializable {
         clienteMB.setPagina("consConPagar");
         return "selecionarUnidade";
     }
+    
+    public String selecionarUnidadeCadastro(){
+        clienteMB.setPagina("cadConPagar");
+        return "selecionarUnidade";
+    }
 
     public void gerarListaContasPagar() {
         ContasPagarController contasPagarController = new ContasPagarController();
@@ -305,10 +398,44 @@ public class ContasPagarMB implements Serializable {
     }
     
     public String operacaoUsuario(){
+        UsuarioController usuarioController = new UsuarioController();
+        Usuario usuario;
+        boolean achouUser = false;
         for(int i=0;i<listaContaPagar.size();i++){
             if (listaContaPagar.get(i).getSelecionado()){
+                listaContaPagar.get(i).setSelecionado(false);
                 contasPagar = listaContaPagar.get(i);
-                return "operacoesUsuario";
+                if ((listaContaPagar.get(i).getUsuarioAgendou()>0) && (listaContaPagar.get(i).getUsuarioAgendou()!=null)){
+                    usuario = usuarioController.consultar(listaContaPagar.get(i).getUsuarioAgendou());
+                    if (usuario!=null){
+                        usuarioAgendou = usuario.getNome();
+                        achouUser=true;
+                    }
+                }
+                if ((listaContaPagar.get(i).getUsuarioAutorizou()>0) && (listaContaPagar.get(i).getUsuarioAutorizou()!=null)){
+                    usuario = usuarioController.consultar(listaContaPagar.get(i).getUsuarioAutorizou());
+                    if (usuario!=null){
+                        usuarioAutorizou = usuario.getNome();
+                        achouUser=true;
+                    }
+                }
+                if ((listaContaPagar.get(i).getUsuarioBaixou()>0) && (listaContaPagar.get(i).getUsuarioBaixou()!=null)){
+                    usuario = usuarioController.consultar(listaContaPagar.get(i).getUsuarioBaixou());
+                    if (usuario!=null){
+                        usuarioBaixou = usuario.getNome();
+                        achouUser=true;
+                    }
+                }
+                if ((listaContaPagar.get(i).getUsuarioCadastrou()>0) && (listaContaPagar.get(i).getUsuarioCadastrou()!=null)){
+                    usuario = usuarioController.consultar(listaContaPagar.get(i).getUsuarioCadastrou());
+                    if (usuario!=null){
+                        usuarioCadastrou = usuario.getNome();
+                        achouUser=true;
+                    }
+                }
+                if (achouUser){
+                    return "operacoesUsuario";
+                }else return "consConPagar";
             }
         }
         return null;
@@ -322,5 +449,41 @@ public class ContasPagarMB implements Serializable {
         } else {
             return  "resources/img/cancel.png";
         }
+    }
+    
+    public void carregarListaBanco(){
+        BancoController bancoController = new BancoController();
+        listaBanco = bancoController.listar(clienteMB.getCliente().getIdcliente());
+        if (listaBanco==null){
+            listaBanco = new ArrayList<Banco>();
+        }
+    }
+    
+    public void carregarListaPlanoContas(){
+        PlanoContasController planoContasController = new PlanoContasController();
+        listaPlanoContas = planoContasController.listar();
+        if (listaPlanoContas==null){
+            listaPlanoContas = new ArrayList<Planocontas>();
+        }
+    }
+    
+    public String salvar(){
+        contasPagar.setCliente(clienteMB.getCliente());
+        contasPagar.setContaPaga("N");
+        contasPagar.setMarcar("N");
+        contasPagar.setMovimentoBanco(0);
+        contasPagar.setUsuarioAgendou(0);
+        contasPagar.setUsuarioAutorizou(0);
+        contasPagar.setUsuarioBaixou(0);
+        contasPagar.setUsuarioCadastrou(usuarioLogadoBean.getUsuario().getIdusuario());
+        if (valorConta.length()>0){
+            contasPagar.setValor(Formatacao.ConvercaoMonetariaFloat(valorConta));
+        }else contasPagar.setValor(0.0f);
+        contasPagar.setVendaComissao(0);
+        ContasPagarController contasPagarController = new ContasPagarController();
+        contasPagarController.salvar(contasPagar);
+        contasPagar = new Contaspagar();
+        gerarListaContasPagar();
+        return "consConPagar";
     }
 }

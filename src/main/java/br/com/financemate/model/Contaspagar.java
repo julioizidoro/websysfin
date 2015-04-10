@@ -124,7 +124,7 @@ public class Contaspagar implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "contaspagar")
     private List<Arquivocontaspagar> arquivocontaspagarList;
     @Transient
-    private Boolean selecionado;
+    private boolean selecionado=false;
    
     public Contaspagar() {
     }
