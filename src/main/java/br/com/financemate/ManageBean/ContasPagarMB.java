@@ -5,7 +5,6 @@
  */
 package br.com.financemate.ManageBean;
 
-import br.com.financemate.Bean.ContasPagarBean;
 import br.com.financemate.Controller.ContasPagarController;
 import br.com.financemate.Util.Formatacao;
 import br.com.financemate.model.Cliente;
@@ -42,6 +41,7 @@ public class ContasPagarMB implements Serializable {
     private boolean autorizadas;
     private boolean liberadas;
     private String sql;
+    private String imagemAutorizado = " ";
     
     public ContasPagarMB() {
         gerarDataInicia();
@@ -66,6 +66,14 @@ public class ContasPagarMB implements Serializable {
 
     public Contaspagar getContasPagar() {
         return contasPagar;
+    }
+
+    public String getImagemAutorizado() {
+        return imagemAutorizado;
+    }
+
+    public void setImagemAutorizado(String imagemAutorizado) {
+        this.imagemAutorizado = imagemAutorizado;
     }
 
     public void setContasPagar(Contaspagar contasPagar) {
@@ -304,5 +312,15 @@ public class ContasPagarMB implements Serializable {
             }
         }
         return null;
+    }
+    
+    public String imagem(Contaspagar conta) {
+        if (conta.getAutorizarPagamento()==null){
+            return  "resources/img/cancel.png";
+        }else if (conta.getAutorizarPagamento().equalsIgnoreCase("s")) {
+            return "resources/img/confirmar.png";
+        } else {
+            return  "resources/img/cancel.png";
+        }
     }
 }
