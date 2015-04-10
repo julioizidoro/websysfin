@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/WEB-INF/templates/default.xhtml">
+        <ui:define name="corpo">
+            <h:form>
+                <div id="centro">
+                    <p:growl id="growl" showDetail="true" sticky="true" />
+                    <br></br>
+                  <br></br>
+                    <p:tabView class="cadastroContasPagar">
+                        <p:tab title="Recebimento de contas" >
+                         <h:panelGrid columns="2" cellpadding="5" >
+                            <p:outputLabel value="Unidade" for="unidade"  class="left3"/>
+                        </h:panelGrid>
+                         <h:panelGrid columns="2">
+                            <p:inputText id="unidade" size="81"  class="left3" />
+                          
+                         </h:panelGrid>
+                         <h:panelGrid columns="2" cellpadding="5" >
+                            <p:outputLabel value="Nome do cliente" for="nomeCliente"  class="left3"/>
+                        </h:panelGrid>
+                         <h:panelGrid columns="2">
+                            <p:inputText id="nomeCliente" size="81"  class="left3"/>
+                          
+                         </h:panelGrid>
+                <h:panelGrid columns="7" cellpadding="3">
+                    <p:outputLabel value="Data Vencimento" for="dataVenc" class="left3"/>
+                    <p:outputLabel value="Nº Documento" for="nDocumento" class="left1"/>
+                    <p:outputLabel value="Numero Parcela" for="nParcela" class="left"/>
+                    <p:outputLabel value="Valor R$" for="valor" class="left4"/>
+                </h:panelGrid>
+                <h:panelGrid columns="5" cellpadding="1">
+                    <p:calendar id="dataVenc"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="left3"/>
+                    <p:inputText id="nDocumento" size="8"  class="left"/>
+                     <p:inputText id="nParcela" size="5"  class="left"/>
+                     <p:inputText id="valor" size="13"  class="left"/>
+                </h:panelGrid> 
+              <h:panelGrid columns="7" cellpadding="3">
+                    <p:outputLabel value="Data Recebimento" for="dataRece" class="left3"/>
+                    <p:outputLabel value="Desagio" for="desagio" class="left"/>
+                    <p:outputLabel value="Juros" for="juros" class="left13"/>
+                    <p:outputLabel value="Valor Recebido" for="valorRece" class="left9"/>
+                </h:panelGrid>
+                <h:panelGrid columns="5" cellpadding="1">
+                    <p:calendar id="dataRece"  pattern="dd/MM/yyyy" mask="true" size="12" maxlength="15" class="left3"/>
+                    <p:inputText id="desagio" size="10"  class="left"/>
+                     <p:inputText id="juros" size="4"  class="left"/>
+                     <p:inputText id="valorRece" size="8"  class="left"/>
+                </h:panelGrid> 
+              <h:panelGrid columns="5" cellpadding="1">        
+                 <p:outputLabel value="Conta" for="conta" class="left3"/> 
+              </h:panelGrid>   
+                <h:panelGrid columns="5" cellpadding="1">    
+                  <p:selectOneMenu id="conta" class="left3" style="width:615px" required="true" requiredMessage="Campo conta preenchimento Obrigatório">
+                        <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
+                  </p:selectOneMenu>
+                   </h:panelGrid>            
+                        </p:tab>
+                    </p:tabView>  
+                    <p:commandButton value="Cadastrar" icon=" ui-icon-plusthick" class="cadastrar"  actionListener="#{mensagem.saveMessagem}" update="growl"/>
+                    <p:commandButton value="Cancelar" icon=" ui-icon-cancel " class="pesquisar2"  action="#{contasPagarMB.cancelar()}"/>
+                    <br></br>
+                    <br></br>
+
+                </div>
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+</html>
+
+

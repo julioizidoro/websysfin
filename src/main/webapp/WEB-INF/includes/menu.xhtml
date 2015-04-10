@@ -1,0 +1,29 @@
+<h:form xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:h="http://java.sun.com/jsf/html">
+        
+    <div id="tudo">
+      <tr>
+        <td><table aling="center" width="00" border="0" cellpadding="0" cellspacing="0"> 
+        <tr>
+            <td><img src="resources/img/logo.png" width="400" height="140" class="logo"/></td>
+        </tr>
+       </table></td></tr>
+    <p:menubar class="menu">
+         <p:menuitem value="Movimento"  />
+         <p:menuitem value="Cadastro" />
+           <p:menuitem value="Relatórios" />
+    </p:menubar>
+        <p:stack  expanded="false" icon="resources/img/stack.png">
+            <p:menuitem value="Contas a Pagar" icon="/resources/img/finpagar.png" action="#{menuMB.contasPagar()}"  />
+            <p:menuitem value="Contas a Receber" icon="/resources/img/finreceber.png" action="#{menuMB.contasReceber}"/>
+            <p:menuitem value="Outros Lançamentos" icon="/resources/img/finbanco.png" action="#{menuMB.OutrosLancamento}"/>
+            <p:menuitem value="Vendas" icon="/resources/img/cashier.png" action="#{menuMB.Vendas}" />
+            <p:menuitem value="Inicio" icon="/resources/img/inicio_1.jpg" action="#{menuMB.home}" />
+          </p:stack>
+    <br>  </br>
+    <br>  </br>
+    
+</div>
+    
+</h:form>
