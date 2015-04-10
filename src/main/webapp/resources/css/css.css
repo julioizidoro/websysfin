@@ -113,7 +113,7 @@
 		0px 1px 0px rgba(255,255,255,1);
 }
     button.pesquisar {
-        margin-left:50px;
+        margin-left:115px;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	color: #3E7D62;
@@ -215,6 +215,10 @@
     margin-left:60px;
      font-size:15px;
     }
+    .unidade{
+    margin-left:32px;
+     font-size:15px;
+    }
     .total{
         margin-left:60px;
         font-size:15px;
@@ -233,7 +237,10 @@
      background: #FFFF00;
      text-align: right;
     }
-    
+    .imagens{
+    margin-left:410px;
+     font-size:15px;
+    }
      .left0{
     margin-left:480px;
      font-size:15px;
@@ -252,6 +259,10 @@
     }
     .usuario{
         margin-left:220px;
+         font-size:15px;
+    }
+    .pesqcon{
+         margin-left:243px;
          font-size:15px;
     }
     .usuario2{

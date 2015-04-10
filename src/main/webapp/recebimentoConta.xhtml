@@ -35,28 +35,28 @@
                     <p:outputLabel value="Valor R$" for="valor" class="left4"/>
                 </h:panelGrid>
                 <h:panelGrid columns="5" cellpadding="1">
-                    <p:calendar id="dataVenc"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="left3"/>
-                    <p:inputText id="nDocumento" size="8"  class="left"/>
-                     <p:inputText id="nParcela" size="5"  class="left"/>
+                    <p:calendar id="dataVenc"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left3"/>
+                    <p:inputText id="nDocumento" size="11"  class="left"/>
+                     <p:inputText id="nParcela" size="8"  class="left"/>
                      <p:inputText id="valor" size="13"  class="left"/>
                 </h:panelGrid> 
               <h:panelGrid columns="7" cellpadding="3">
                     <p:outputLabel value="Data Recebimento" for="dataRece" class="left3"/>
                     <p:outputLabel value="Desagio" for="desagio" class="left"/>
-                    <p:outputLabel value="Juros" for="juros" class="left13"/>
+                    <p:outputLabel value="Juros" for="juros" class="left9"/>
                     <p:outputLabel value="Valor Recebido" for="valorRece" class="left9"/>
                 </h:panelGrid>
                 <h:panelGrid columns="5" cellpadding="1">
-                    <p:calendar id="dataRece"  pattern="dd/MM/yyyy" mask="true" size="12" maxlength="15" class="left3"/>
+                    <p:calendar id="dataRece"  pattern="dd/MM/yyyy" mask="true" size="11" maxlength="15" class="left3"/>
                     <p:inputText id="desagio" size="10"  class="left"/>
-                     <p:inputText id="juros" size="4"  class="left"/>
-                     <p:inputText id="valorRece" size="8"  class="left"/>
+                     <p:inputText id="juros" size="7"  class="left"/>
+                     <p:inputText id="valorRece" size="10"  class="left"/>
                 </h:panelGrid> 
               <h:panelGrid columns="5" cellpadding="1">        
                  <p:outputLabel value="Conta" for="conta" class="left3"/> 
               </h:panelGrid>   
                 <h:panelGrid columns="5" cellpadding="1">    
-                  <p:selectOneMenu id="conta" class="left3" style="width:615px" required="true" requiredMessage="Campo conta preenchimento Obrigatório">
+                  <p:selectOneMenu id="conta" class="left3" style="width:530px" required="true" requiredMessage="Campo conta preenchimento Obrigatório">
                         <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
                   </p:selectOneMenu>
                    </h:panelGrid>            

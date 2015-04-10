@@ -25,10 +25,10 @@
                        
                 <h:panelGrid columns="2" cellpadding="3">
                     <p:outputLabel value="Nome do Cliente" for="nomeCliente" class="left3"/> 
-                    <p:outputLabel value="Nº Venda" for="nVenda" class="left7"/>
+                    <p:outputLabel value="Nº Venda" for="nVenda" class="pesqcon"/>
                 </h:panelGrid>  
                <h:panelGrid columns="2" cellpadding="3">
-                      <p:inputText id="nomeCliente" size="53"  class="left3" required="true" requiredMessage="Campo nº do documento preenchimento Obrigatório"/>
+                      <p:inputText id="nomeCliente" size="51"  class="left3" required="true" requiredMessage="Campo nº do documento preenchimento Obrigatório"/>
                       <p:inputText id="nVenda" size="12"  class="left"  requiredMessage="Campo nº do documento preenchimento Obrigatório"/>
                 </h:panelGrid>
                 <h:panelGrid columns="7" cellpadding="3">
@@ -37,7 +37,7 @@
                 </h:panelGrid>
                 <h:panelGrid columns="5" cellpadding="1">
                     <p:calendar id="datainicial"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="left3" required="true" requiredMessage="Campo data de vencimento de conta preenchimento Obrigatório" />
-                    <p:inputText id="dataFinal" size="16"  class="left" required="true" requiredMessage="Campo nº do documento preenchimento Obrigatório"/>
+                    <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="left" required="true" requiredMessage="Campo data de vencimento de conta preenchimento Obrigatório" />
                    <p:selectOneMenu  class="left9" style="width:200px" required="true" requiredMessage="Campo tipo de documento preenchimento Obrigatório">
                                 <f:selectItem itemLabel="Todas" itemValue="" noSelectionOption="true"/> 
                           </p:selectOneMenu>

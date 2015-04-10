@@ -43,7 +43,7 @@
                     <p:outputLabel value="Valor R$" for="valor" class="left1"/>
                 </h:panelGrid>
                 <h:panelGrid columns="5" cellpadding="1">
-                    <p:calendar id="dataVenc"  pattern="dd/MM/yyyy" mask="true" size="6" maxlength="15" class="left3" required="true" requiredMessage="Campo data de vencimento de conta preenchimento Obrigatório" >
+                    <p:calendar id="dataVenc" value="#{ContasReceberMB.contasReceber.dataVencimento}" pattern="dd/MM/yyyy" mask="true" size="6" maxlength="15" class="left3" required="true" requiredMessage="Campo data de vencimento de conta preenchimento Obrigatório" >
                         <f:convertDateTime parent="dd/MM/yyyy"/>
                     </p:calendar>
                     <p:inputText id="nDocumento" size="15"  class="left" required="true" requiredMessage="Campo nº do documento preenchimento Obrigatório" value="#{ContasReceberMB.contasReceber.numeroDocumento}"/>

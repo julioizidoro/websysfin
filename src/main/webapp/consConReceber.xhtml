@@ -19,7 +19,7 @@
                         <h:outputText value="Recebidas"/>
                     </h:panelGrid>
                     <h:panelGrid columns="5" cellpadding="1">
-                        <p:inputText id="unidade" size="36" maxlength="100" class="left"/>
+                        <p:inputText id="unidade" size="36" maxlength="100" class="left"  readonly="true"/>
                         <p:commandButton value="Selecionar" class="css3button" icon=" ui-icon-arrowthickstop-1-s" />
                         <p:calendar id="dataIni" value="#{ContasReceberMB.dataInicial}"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="" >
                             <f:convertDateTime parent="dd/MM/yyyy"/>
@@ -100,11 +100,11 @@
                     </h:panelGrid>
                     <h:panelGrid columns="5" cellpadding="1">
 
-                        <p:inputText id="quantidade" size="16" maxlength="100" class="total3" value="#{ContasReceberMB.quantidade}"/>
-                        <p:inputText id="totalconta" size="13" maxlength="100" class="total" value="#{ContasReceberMB.totalconta}"/>
-                        <p:inputText id="totaljuros" size="8" maxlength="100" class="total" value="#{ContasReceberMB.totaljuros}"/>
-                        <p:inputText id="totaldesconto" size="12" maxlength="100" class="total" value="#{ContasReceberMB.totaldesconto}"/>
-                        <p:inputText id="totalrecebido" size="15" maxlength="100" class="total" value="#{ContasReceberMB.totalrecebido}"/>
+                        <p:inputText id="quantidade" size="16" maxlength="100" class="total3" value="#{ContasReceberMB.quantidade}"  readonly="true"/>
+                        <p:inputText id="totalconta" size="13" maxlength="100" class="total" value="#{ContasReceberMB.totalconta}"  readonly="true"/>
+                        <p:inputText id="totaljuros" size="8" maxlength="100" class="total" value="#{ContasReceberMB.totaljuros}"  readonly="true"/>
+                        <p:inputText id="totaldesconto" size="12" maxlength="100" class="total" value="#{ContasReceberMB.totaldesconto}"  readonly="true"/>
+                        <p:inputText id="totalrecebido" size="15" maxlength="100" class="total" value="#{ContasReceberMB.totalrecebido}"  readonly="true"/>
                     </h:panelGrid>       
                     <br></br>
                     <h:panelGrid columns="10" cellpadding="1" class="cadPagar">

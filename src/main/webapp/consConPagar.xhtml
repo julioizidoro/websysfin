@@ -4,8 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/WEB-INF/templates/default.xhtml">
         <ui:define name="corpo">
             <h:form>
@@ -13,10 +12,10 @@
                     <p:growl id="growl" showDetail="true" sticky="true" />
                     <br></br>
                     <h:panelGrid columns="7" cellpadding="3">
-                        <p:outputLabel value="Unidade" for="unidade" class="left"/> 
-                        <p:outputLabel value="Data Inicia:" for="dataIni" class="data"/> 
-                        <p:outputLabel value="Data Final" for="dataFinal" class="left8"/>
-                        <p:selectBooleanCheckbox  class="left5"/>
+                        <p:outputLabel value="Unidade" for="unidade" class="unidade"/> 
+                        <p:outputLabel value="Data Inicia:" for="dataIni" class="left7"/> 
+                        <p:outputLabel value="Data Final" for="dataFinal" class="left"/>
+                        <p:selectBooleanCheckbox  class="left"/>
                         <h:outputText value="Liberadas"/>
                         <p:selectBooleanCheckbox  class="" />
                         <h:outputText value="Autorizadas"/>    
@@ -24,12 +23,12 @@
                     </h:panelGrid>
                     <h:panelGrid columns="5" cellpadding="1">
 
-                        <p:inputText id="unidade" size="26" maxlength="100" class="left" value="#{ClienteMB.cliente.nomeFantasia}"/>
+                        <p:inputText id="unidade" size="31" maxlength="100" class="unidade" value="#{ClienteMB.cliente.nomeFantasia}"  readonly="true"/>
                         <p:commandButton value="Selecionar" class="css3button" icon=" ui-icon-arrowthickstop-1-s" action="#{ContasPagarMB.selecionarUnidade}"/>
-                        <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="" value="#{ContasPagarMB.dataInicial}" >
+                        <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="9" maxlength="15" class="left4" value="#{ContasPagarMB.dataInicial}" >
                             <f:convertDateTime pattern="dd/MM/yyyy" />  
                         </p:calendar>
-                        <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="left" value="#{ContasPagarMB.dataFinal}">
+                        <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="left4" value="#{ContasPagarMB.dataFinal}">
                             <f:convertDateTime pattern="dd/MM/yyyy" />  
                         </p:calendar>
                         <p:commandButton value="Pesquisar" class="pesquisar" icon=" ui-icon-search " update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{ContasPagarMB.pesquisar()}"/>
@@ -47,13 +46,13 @@
 
                         <f:facet name="{Exporters}">
                             <h:commandLink>
-                                <img src="resources/img/excel.png" width="20" class="left0"/>
-                                <p:dataExporter type="xls" target="tbl" fileName="cars" />
+                                <img src="resources/img/excel.png" width="20" class="imagens"/>
+                                <p:dataExporter type="xls" target="contasPagar" fileName="contas" />
                             </h:commandLink>
 
                             <h:commandLink>
                                 <img src="resources/img/pdf.png" width="20"/>
-                                <p:dataExporter type="pdf" target="tbl" fileName="cars"/>
+                                <p:dataExporter type="pdf" target="contasPagar" fileName="contas"/>
                             </h:commandLink>
                         </f:facet>
 
@@ -92,10 +91,10 @@
                     </h:panelGrid>
                     <h:panelGrid columns="5" cellpadding="1">
 
-                        <p:inputText id="contasVenc" size="16" maxlength="100" class="vermelho" value="#{ContasPagarMB.stotalvencida}"/>
-                        <p:inputText id="contasVencendo" size="18" maxlength="100" class="amarelo" value="#{ContasPagarMB.stotalvencendo}"/>
-                        <p:inputText id="contasVencer" size="16" maxlength="100" class="total" value="#{ContasPagarMB.stotalvencer}"/>
-                        <p:inputText id="contasPagar" size="15" maxlength="100" class="total" value="#{ContasPagarMB.stotal}"/>
+                        <p:inputText id="contasVenc" size="16" maxlength="100" class="vermelho" value="#{ContasPagarMB.stotalvencida}"  readonly="true"/>
+                        <p:inputText id="contasVencendo" size="18" maxlength="100" class="amarelo" value="#{ContasPagarMB.stotalvencendo}"  readonly="true"/>
+                        <p:inputText id="contasVencer" size="16" maxlength="100" class="total" value="#{ContasPagarMB.stotalvencer}"  readonly="true"/>
+                        <p:inputText id="contasPagar" size="15" maxlength="100" class="total" value="#{ContasPagarMB.stotal}"  readonly="true"/>
                     </h:panelGrid>  
                     <br></br>
                     <br></br>

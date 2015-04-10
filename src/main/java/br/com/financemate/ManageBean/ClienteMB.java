@@ -37,10 +37,6 @@ public class ClienteMB implements Serializable{
     public ClienteMB() {
         cliente = new Cliente();
     }
-    
-    
-    
-
     public String getNomeCliente() {
         return nomeCliente;
     }
@@ -94,6 +90,13 @@ public class ClienteMB implements Serializable{
             listaClientes = new ArrayList<Cliente>();
         }
     }
+    
+    public String pesquisarNome(){
+        
+        gerarListaClientes();
+        return "selecionarUnidade";
+    
+    }  
     
     public String selecionarCliente(){
         FacesContext fc = FacesContext.getCurrentInstance();
