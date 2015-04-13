@@ -7,9 +7,7 @@ package br.com.financemate.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,9 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,8 +27,6 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "contaspagar")
-@NamedQueries({
-    @NamedQuery(name = "Contaspagar.findAll", query = "SELECT c FROM Contaspagar c")})
 public class Contaspagar implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -89,9 +82,6 @@ public class Contaspagar implements Serializable {
     @Size(max = 30)
     @Column(name = "numeroDocumento")
     private String numeroDocumento;
-    @Size(max = 1)
-    @Column(name = "marcar")
-    private String marcar;
     @Size(max = 50)
     @Column(name = "tipoDocumento")
     private String tipoDocumento;
@@ -110,8 +100,6 @@ public class Contaspagar implements Serializable {
     @Size(max = 30)
     @Column(name = "dataHoraAutorizou")
     private String dataHoraAutorizou;
-    @Column(name = "status")
-    private String status;
     @JoinColumn(name = "banco_idbanco", referencedColumnName = "idbanco")
     @ManyToOne(optional = false)
     private Banco banco;
@@ -121,10 +109,10 @@ public class Contaspagar implements Serializable {
     @JoinColumn(name = "planoContas_idplanoContas", referencedColumnName = "idplanoContas")
     @ManyToOne(optional = false)
     private Planocontas planocontas;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contaspagar")
-    private List<Arquivocontaspagar> arquivocontaspagarList;
     @Transient
     private boolean selecionado=false;
+    @Transient
+    private String status="";
    
     public Contaspagar() {
     }
@@ -145,13 +133,15 @@ public class Contaspagar implements Serializable {
         return dataLiberacao;
     }
 
-    public String getStatus() {
-        return status;
+    public boolean isSelecionado() {
+        return selecionado;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setSelecionado(boolean selecionado) {
+        this.selecionado = selecionado;
     }
+
+   
 
     public void setDataLiberacao(Date dataLiberacao) {
         this.dataLiberacao = dataLiberacao;
@@ -179,6 +169,15 @@ public class Contaspagar implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+   
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Date getDataAgendamento() {
@@ -293,14 +292,6 @@ public class Contaspagar implements Serializable {
         this.numeroDocumento = numeroDocumento;
     }
 
-    public String getMarcar() {
-        return marcar;
-    }
-
-    public void setMarcar(String marcar) {
-        this.marcar = marcar;
-    }
-
     public String getTipoDocumento() {
         return tipoDocumento;
     }
@@ -349,14 +340,6 @@ public class Contaspagar implements Serializable {
         this.dataHoraAutorizou = dataHoraAutorizou;
     }
 
-    public Boolean getSelecionado() {
-        return selecionado;
-    }
-
-    public void setSelecionado(Boolean selecionado) {
-        this.selecionado = selecionado;
-    }
-
     public Banco getBanco() {
         return banco;
     }
@@ -379,14 +362,6 @@ public class Contaspagar implements Serializable {
 
     public void setPlanocontas(Planocontas planocontas) {
         this.planocontas = planocontas;
-    }
-
-    public List<Arquivocontaspagar> getArquivocontaspagarList() {
-        return arquivocontaspagarList;
-    }
-
-    public void setArquivocontaspagarList(List<Arquivocontaspagar> arquivocontaspagarList) {
-        this.arquivocontaspagarList = arquivocontaspagarList;
     }
 
     @Override

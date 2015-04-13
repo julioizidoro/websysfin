@@ -32,7 +32,7 @@ public class BancoDao {
     public List<Banco> listar(int idCliente) throws SQLException{
         EntityManager manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
-        Query q = manager.createQuery("Select b from Banco b where b.cliente=" + idCliente);
+        Query q = manager.createQuery("Select b from Banco b where b.cliente.idcliente=" + idCliente);
         List<Banco> lista = q.getResultList();
         manager.getTransaction().commit();
         return lista;

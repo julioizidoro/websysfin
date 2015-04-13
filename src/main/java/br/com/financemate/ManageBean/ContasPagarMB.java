@@ -57,7 +57,9 @@ public class ContasPagarMB implements Serializable {
     private File arquivo02;
     private List<Planocontas> listaPlanoContas;
     private List<Banco> listaBanco;
-    private String valorConta;
+    private String valorConta="";
+    private String idPlanoConta;
+    private String idBanco;
     
     public ContasPagarMB() {
         gerarDataInicia();
@@ -84,6 +86,22 @@ public class ContasPagarMB implements Serializable {
         return usuarioAgendou;
     }
 
+    public String getIdPlanoConta() {
+        return idPlanoConta;
+    }
+
+    public void setIdPlanoConta(String idPlanoConta) {
+        this.idPlanoConta = idPlanoConta;
+    }
+
+    public String getIdBanco() {
+        return idBanco;
+    }
+
+    public void setIdBanco(String idBanco) {
+        this.idBanco = idBanco;
+    }
+
     public String getValorConta() {
         return valorConta;
     }
@@ -105,9 +123,15 @@ public class ContasPagarMB implements Serializable {
     }
 
     public List<Banco> getListaBanco() {
+        if ((clienteMB.getCliente() != null) && (clienteMB.getCliente().getIdcliente() != null)) {
+            if ((listaBanco == null) || (listaBanco.isEmpty())) {
+                carregarListaBanco();
+            }
+        }
         return listaBanco;
     }
 
+    
     public void setListaBanco(List<Banco> listaBanco) {
         this.listaBanco = listaBanco;
     }
@@ -272,10 +296,44 @@ public class ContasPagarMB implements Serializable {
     }
 
     public String novo() {
+        clienteMB.setCliente(new Cliente());
+        listaBanco = new ArrayList<Banco>();
+        contasPagar = new Contaspagar();
+            carregarListaPlanoContas();
         return "cadConPagar";
     }
+    
+    public String editar(){
+        for(int i=0;i<listaContaPagar.size();i++){
+            if (listaContaPagar.get(i).isSelecionado()){
+                contasPagar = listaContaPagar.get(i);
+                clienteMB.setCliente(contasPagar.getCliente());
+                carregarListaPlanoContas();
+                listaBanco = new ArrayList<Banco>();
+                listaContaPagar.get(i).setSelecionado(false);
+                valorConta = Formatacao.foramtarFloatString(contasPagar.getValor());
+                idBanco = String.valueOf(contasPagar.getBanco().getIdbanco());
+                idPlanoConta = String.valueOf(contasPagar.getPlanocontas().getIdplanoContas());
+                return "cadConPagar";
+            }
+        }
+        return null;
+    }
+    
+    public String excluir(){
+       ContasPagarController contasPagarController = new ContasPagarController();
+       for (int i=0;i<listaContaPagar.size();i++){
+           if (listaContaPagar.get(i).isSelecionado()){
+               contasPagarController.excluir(listaContaPagar.get(i).getIdcontasPagar());
+           }
+       }
+       carregarListaPlanoContas();
+       return "consConPagar";
+    }
+    
 
     public String cancelar() {
+        clienteMB.setCliente(new Cliente());
         return "consConPagar";
     }
 
@@ -402,7 +460,7 @@ public class ContasPagarMB implements Serializable {
         Usuario usuario;
         boolean achouUser = false;
         for(int i=0;i<listaContaPagar.size();i++){
-            if (listaContaPagar.get(i).getSelecionado()){
+            if (listaContaPagar.get(i).isSelecionado()){
                 listaContaPagar.get(i).setSelecionado(false);
                 contasPagar = listaContaPagar.get(i);
                 if ((listaContaPagar.get(i).getUsuarioAgendou()>0) && (listaContaPagar.get(i).getUsuarioAgendou()!=null)){
@@ -452,10 +510,12 @@ public class ContasPagarMB implements Serializable {
     }
     
     public void carregarListaBanco(){
-        BancoController bancoController = new BancoController();
-        listaBanco = bancoController.listar(clienteMB.getCliente().getIdcliente());
-        if (listaBanco==null){
-            listaBanco = new ArrayList<Banco>();
+        if ((clienteMB.getCliente() != null) && (clienteMB.getCliente().getIdcliente() != null)) {
+            BancoController bancoController = new BancoController();
+            listaBanco = bancoController.listar(clienteMB.getCliente().getIdcliente());
+            if (listaBanco == null) {
+                listaBanco = new ArrayList<Banco>();
+            }
         }
     }
     
@@ -468,9 +528,21 @@ public class ContasPagarMB implements Serializable {
     }
     
     public String salvar(){
+        if (contasPagar==null){
+            contasPagar=new Contaspagar();
+        }
+        if (!idPlanoConta.equalsIgnoreCase("0")){
+            PlanoContasController planoContasController = new PlanoContasController();
+            Planocontas plano = planoContasController.consultar(Integer.parseInt(idPlanoConta));
+            contasPagar.setPlanocontas(plano);
+        }
+        if (!idBanco.equalsIgnoreCase("0")){
+            BancoController bancoController = new BancoController();
+            Banco banco = bancoController.consultar(Integer.parseInt(idBanco));
+            contasPagar.setBanco(banco);
+        }
         contasPagar.setCliente(clienteMB.getCliente());
         contasPagar.setContaPaga("N");
-        contasPagar.setMarcar("N");
         contasPagar.setMovimentoBanco(0);
         contasPagar.setUsuarioAgendou(0);
         contasPagar.setUsuarioAutorizou(0);
@@ -483,6 +555,7 @@ public class ContasPagarMB implements Serializable {
         ContasPagarController contasPagarController = new ContasPagarController();
         contasPagarController.salvar(contasPagar);
         contasPagar = new Contaspagar();
+        clienteMB.setCliente(new Cliente());
         gerarListaContasPagar();
         return "consConPagar";
     }
