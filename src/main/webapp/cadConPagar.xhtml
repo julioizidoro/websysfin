@@ -52,8 +52,8 @@
                             </h:panelGrid>
                             <h:panelGrid columns="7" cellpadding="3">
                                 <p:outputLabel value="Data Envio" for="dataEnv" class="left3"/> 
-                                <p:outputLabel value="Data Vencimento" for="dataVenc" class="left5"/>
-                                <p:outputLabel value="Data Agendamento" for="dataAgen" class="left4"/>
+                                <p:outputLabel value="Data Vencimento" for="dataVenc" class="left8"/>
+                                <p:outputLabel value="Data Agendamento" for="dataAgen" class="left18"/>
                                 <p:outputLabel value="Data Compensação" for="dataComp" class="espaco"/>
                             </h:panelGrid>
                             <h:panelGrid columns="5" cellpadding="1">
@@ -75,11 +75,11 @@
                                 <p:outputLabel value="Valor R$" for="valor" class="left7"/>
                             </h:panelGrid>  
                             <h:panelGrid columns="2" cellpadding="3">
-                                <p:selectOneMenu id="planoConta" class="left3" style="width:437px"  value="#{ContasPagarMB.idPlanoConta}">
+                                <p:selectOneMenu id="planoConta" class="left3" style="width:417px"  value="#{ContasPagarMB.idPlanoConta}">
                                     <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
                                     <f:selectItems value="#{ContasPagarMB.listaPlanoContas}" var="planoConta" itemLabel="#{planoConta.descricao}" itemValue="#{planoConta.idplanoContas}"/>
                                 </p:selectOneMenu>                   
-                                <p:inputText id="valor" size="14"  class="left4"  value="#{ContasPagarMB.valorConta}"/>
+                                <p:inputText id="valor" size="16"  class="left4"  value="#{ContasPagarMB.valorConta}"/>
                             </h:panelGrid>
                             <h:panelGrid columns="2" cellpadding="3">
                                 <p:outputLabel value="Descrição" for="descricao" class="left3" /> 
@@ -93,11 +93,11 @@
                                 <p:outputLabel value="Competência" for="competencia" class="left5"/> 
                             </h:panelGrid> 
                             <h:panelGrid columns="3">
-                                <p:selectOneMenu id="banco" class="left4" style="width:130px"  value="#{ContasPagarMB.idBanco}">
+                                <p:selectOneMenu id="banco" class="left3" style="width:162px"  value="#{ContasPagarMB.idBanco}">
                                     <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
                                     <f:selectItems value="#{ContasPagarMB.listaBanco}" var="banco" itemLabel="#{banco.nome}" itemValue="#{banco.idbanco}"/>
                                 </p:selectOneMenu>
-                                <p:selectOneMenu id="formaPaga" class="left5" style="width:160px"  value="#{ContasPagarMB.contasPagar.formaPagamento}">
+                                <p:selectOneMenu id="formaPaga" class="left5" style="width:152px"  value="#{ContasPagarMB.contasPagar.formaPagamento}">
                                     <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
                                     <f:selectItem itemLabel="Cartão" itemValue="Cartão" />  
                                     <f:selectItem itemLabel="Débito em Conta" itemValue="debito em conta" /> 
@@ -106,7 +106,7 @@
                                     <f:selectItem itemLabel="Cheque" itemValue="Cheque" />  
                                     <f:selectItem itemLabel="Depósito" itemValue="Depósito" /> 
                                 </p:selectOneMenu>
-                                <p:inputText id="competencia" size="15"  class="left1" value="#{ContasPagarMB.contasPagar.competencia}"/>
+                                <p:inputText id="competencia" size="18"  class="left1" value="#{ContasPagarMB.contasPagar.competencia}"/>
                             </h:panelGrid>            
                         </p:tab>
                     </p:tabView>  

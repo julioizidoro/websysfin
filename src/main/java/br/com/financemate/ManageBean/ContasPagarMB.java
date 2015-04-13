@@ -57,14 +57,13 @@ public class ContasPagarMB implements Serializable {
     private File arquivo02;
     private List<Planocontas> listaPlanoContas;
     private List<Banco> listaBanco;
-    private String valorConta="";
+    private String valorConta = "";
     private String idPlanoConta;
     private String idBanco;
-    
+
     public ContasPagarMB() {
         gerarDataInicia();
     }
-
 
     public ClienteMB getClienteMB() {
         return clienteMB;
@@ -131,7 +130,6 @@ public class ContasPagarMB implements Serializable {
         return listaBanco;
     }
 
-    
     public void setListaBanco(List<Banco> listaBanco) {
         this.listaBanco = listaBanco;
     }
@@ -240,23 +238,24 @@ public class ContasPagarMB implements Serializable {
         this.stotalvencer = stotalvencer;
     }
 
-  
     public String verStatus(Contaspagar conta) {
         Date data = new Date();
-        if (conta.getDataLiberacao() != null) {
-            return "verde";
-        } else {
-            if (!conta.getDataVencimento().after(data)) {
-                return "vermelho";
+        String diaData = Formatacao.ConvercaoDataPadrao(data);
+        for (int i = 0; i < listaContaPagar.size(); i++) {
+            String vencData = Formatacao.ConvercaoDataPadrao(listaContaPagar.get(i).getDataVencimento());
+            if (listaContaPagar.get(i).getDataVencimento().after(data)) {
+                return "resources/img/bolaVerde.png";
             } else {
-                if (conta.getDataAgendamento() == null) {
-                    return "amarelo";
+                if (!conta.getDataVencimento().after(data)) {
+                    return "resources/img/bolaVermelha.png";
                 } else {
-                    return null;
+                    if (diaData.equalsIgnoreCase(vencData)) {
+                        return "resources/img/bolaAmarela.png";
+                    }
                 }
             }
         }
-
+        return "resources/img/bolaVerde.png";
     }
 
     public UsuarioLogadoBean getUsuarioLogadoBean() {
@@ -267,7 +266,6 @@ public class ContasPagarMB implements Serializable {
         this.usuarioLogadoBean = usuarioLogadoBean;
     }
 
-    
     public List<Contaspagar> getListaContaPagar() {
         if (listaContaPagar == null) {
             gerarSqlInicial();
@@ -299,13 +297,13 @@ public class ContasPagarMB implements Serializable {
         clienteMB.setCliente(new Cliente());
         listaBanco = new ArrayList<Banco>();
         contasPagar = new Contaspagar();
-            carregarListaPlanoContas();
+        carregarListaPlanoContas();
         return "cadConPagar";
     }
-    
-    public String editar(){
-        for(int i=0;i<listaContaPagar.size();i++){
-            if (listaContaPagar.get(i).isSelecionado()){
+
+    public String editar() {
+        for (int i = 0; i < listaContaPagar.size(); i++) {
+            if (listaContaPagar.get(i).isSelecionado()) {
                 contasPagar = listaContaPagar.get(i);
                 clienteMB.setCliente(contasPagar.getCliente());
                 carregarListaPlanoContas();
@@ -319,18 +317,17 @@ public class ContasPagarMB implements Serializable {
         }
         return null;
     }
-    
-    public String excluir(){
-       ContasPagarController contasPagarController = new ContasPagarController();
-       for (int i=0;i<listaContaPagar.size();i++){
-           if (listaContaPagar.get(i).isSelecionado()){
-               contasPagarController.excluir(listaContaPagar.get(i).getIdcontasPagar());
-           }
-       }
-       carregarListaPlanoContas();
-       return "consConPagar";
+
+    public String excluir() {
+        ContasPagarController contasPagarController = new ContasPagarController();
+        for (int i = 0; i < listaContaPagar.size(); i++) {
+            if (listaContaPagar.get(i).isSelecionado()) {
+                contasPagarController.excluir(listaContaPagar.get(i).getIdcontasPagar());
+            }
+        }
+        carregarListaPlanoContas();
+        return "consConPagar";
     }
-    
 
     public String cancelar() {
         clienteMB.setCliente(new Cliente());
@@ -341,8 +338,8 @@ public class ContasPagarMB implements Serializable {
         clienteMB.setPagina("consConPagar");
         return "selecionarUnidade";
     }
-    
-    public String selecionarUnidadeCadastro(){
+
+    public String selecionarUnidadeCadastro() {
         clienteMB.setPagina("cadConPagar");
         return "selecionarUnidade";
     }
@@ -358,8 +355,8 @@ public class ContasPagarMB implements Serializable {
         }
         calcularTotal();
     }
-    
-    public void gerarDataInicia(){
+
+    public void gerarDataInicia() {
         String data = Formatacao.ConvercaoDataPadrao(new Date());
         String mesString = data.substring(3, 5);
         String anoString = data.substring(6, 10);
@@ -393,49 +390,55 @@ public class ContasPagarMB implements Serializable {
         sql = " Select v from Contaspagar v where v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial)
                 + "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' and v.contaPaga='N' ";
         if (clienteMB.getCliente() != null) {
-            if (clienteMB.getCliente().getIdcliente()!=null){
+            if (clienteMB.getCliente().getIdcliente() != null) {
                 sql = sql + " and v.cliente.idcliente=" + clienteMB.getCliente().getIdcliente();
-            }else sql = sql + "  and v.cliente.visualizacao='Operacional' ";
+            } else {
+                sql = sql + "  and v.cliente.visualizacao='Operacional' ";
+            }
         } else {
             sql = sql + "  and v.cliente.visualizacao='Operacional' ";
         }
         sql = sql + " order by v.dataVencimento";
         gerarListaContasPagar();
     }
-    
-    public String pesquisar(){
+
+    public String pesquisar() {
         sql = "Select v from Contaspagar v where ";
-        if (liberadas){
+        if (liberadas) {
             sql = sql + " v.contaPaga='S' and ";
-        }else sql = sql + " v.contaPaga='N' and ";
-        if (autorizadas){
+        } else {
+            sql = sql + " v.contaPaga='N' and ";
+        }
+        if (autorizadas) {
             sql = sql + " v.autorizarPagamento='S' and ";
         }
-        if (clienteMB.getCliente()!=null){
-            if (clienteMB.getCliente().getIdcliente()!=null){
+        if (clienteMB.getCliente() != null) {
+            if (clienteMB.getCliente().getIdcliente() != null) {
                 sql = sql + " v.cliente.idcliente=" + clienteMB.getCliente().getIdcliente() + " and ";
-            }else sql = sql + " v.cliente.visualizacao='Operacional' and ";    
-        }else {
+            } else {
+                sql = sql + " v.cliente.visualizacao='Operacional' and ";
+            }
+        } else {
             sql = sql + " v.cliente.visualizacao='Operacional' and ";
         }
-        if (liberadas){
-            sql = sql + "v.dataLiberacao>='" + Formatacao.ConvercaoDataSql(dataInicial) + 
-                "' and v.dataLiberacao<='" + Formatacao.ConvercaoDataSql(dataFinal) + 
-                "' order by v.dataLiberacao";
-        }else {
-            sql = sql + "v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial) + 
-                "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + 
-                "' order by v.dataVencimento";
+        if (liberadas) {
+            sql = sql + "v.dataLiberacao>='" + Formatacao.ConvercaoDataSql(dataInicial)
+                    + "' and v.dataLiberacao<='" + Formatacao.ConvercaoDataSql(dataFinal)
+                    + "' order by v.dataLiberacao";
+        } else {
+            sql = sql + "v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial)
+                    + "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal)
+                    + "' order by v.dataVencimento";
         }
         gerarListaContasPagar();
         return "consConPagar";
     }
-    
+
     public void calcularTotal() {
         float totalvencida = 0.0f;
         float totalvencendo = 0.0f;
         float totalvencer = 0.0f;
-        float total =0.0f;
+        float total = 0.0f;
         Date data = new Date();
         String diaData = Formatacao.ConvercaoDataPadrao(data);
         for (int i = 0; i < listaContaPagar.size(); i++) {
@@ -454,62 +457,64 @@ public class ContasPagarMB implements Serializable {
         stotalvencer = Formatacao.foramtarFloatString(totalvencer);
         stotalvencida = Formatacao.foramtarFloatString(totalvencida);
     }
-    
-    public String operacaoUsuario(){
+
+    public String operacaoUsuario() {
         UsuarioController usuarioController = new UsuarioController();
         Usuario usuario;
         boolean achouUser = false;
-        for(int i=0;i<listaContaPagar.size();i++){
-            if (listaContaPagar.get(i).isSelecionado()){
+        for (int i = 0; i < listaContaPagar.size(); i++) {
+            if (listaContaPagar.get(i).isSelecionado()) {
                 listaContaPagar.get(i).setSelecionado(false);
                 contasPagar = listaContaPagar.get(i);
-                if ((listaContaPagar.get(i).getUsuarioAgendou()>0) && (listaContaPagar.get(i).getUsuarioAgendou()!=null)){
+                if ((listaContaPagar.get(i).getUsuarioAgendou() > 0) && (listaContaPagar.get(i).getUsuarioAgendou() != null)) {
                     usuario = usuarioController.consultar(listaContaPagar.get(i).getUsuarioAgendou());
-                    if (usuario!=null){
+                    if (usuario != null) {
                         usuarioAgendou = usuario.getNome();
-                        achouUser=true;
+                        achouUser = true;
                     }
                 }
-                if ((listaContaPagar.get(i).getUsuarioAutorizou()>0) && (listaContaPagar.get(i).getUsuarioAutorizou()!=null)){
+                if ((listaContaPagar.get(i).getUsuarioAutorizou() > 0) && (listaContaPagar.get(i).getUsuarioAutorizou() != null)) {
                     usuario = usuarioController.consultar(listaContaPagar.get(i).getUsuarioAutorizou());
-                    if (usuario!=null){
+                    if (usuario != null) {
                         usuarioAutorizou = usuario.getNome();
-                        achouUser=true;
+                        achouUser = true;
                     }
                 }
-                if ((listaContaPagar.get(i).getUsuarioBaixou()>0) && (listaContaPagar.get(i).getUsuarioBaixou()!=null)){
+                if ((listaContaPagar.get(i).getUsuarioBaixou() > 0) && (listaContaPagar.get(i).getUsuarioBaixou() != null)) {
                     usuario = usuarioController.consultar(listaContaPagar.get(i).getUsuarioBaixou());
-                    if (usuario!=null){
+                    if (usuario != null) {
                         usuarioBaixou = usuario.getNome();
-                        achouUser=true;
+                        achouUser = true;
                     }
                 }
-                if ((listaContaPagar.get(i).getUsuarioCadastrou()>0) && (listaContaPagar.get(i).getUsuarioCadastrou()!=null)){
+                if ((listaContaPagar.get(i).getUsuarioCadastrou() > 0) && (listaContaPagar.get(i).getUsuarioCadastrou() != null)) {
                     usuario = usuarioController.consultar(listaContaPagar.get(i).getUsuarioCadastrou());
-                    if (usuario!=null){
+                    if (usuario != null) {
                         usuarioCadastrou = usuario.getNome();
-                        achouUser=true;
+                        achouUser = true;
                     }
                 }
-                if (achouUser){
+                if (achouUser) {
                     return "operacoesUsuario";
-                }else return "consConPagar";
+                } else {
+                    return "consConPagar";
+                }
             }
         }
         return null;
     }
-    
+
     public String imagem(Contaspagar conta) {
-        if (conta.getAutorizarPagamento()==null){
-            return  "resources/img/cancel.png";
-        }else if (conta.getAutorizarPagamento().equalsIgnoreCase("s")) {
+        if (conta.getAutorizarPagamento() == null) {
+            return "resources/img/cancel.png";
+        } else if (conta.getAutorizarPagamento().equalsIgnoreCase("s")) {
             return "resources/img/confirmar.png";
         } else {
-            return  "resources/img/cancel.png";
+            return "resources/img/cancel.png";
         }
     }
-    
-    public void carregarListaBanco(){
+
+    public void carregarListaBanco() {
         if ((clienteMB.getCliente() != null) && (clienteMB.getCliente().getIdcliente() != null)) {
             BancoController bancoController = new BancoController();
             listaBanco = bancoController.listar(clienteMB.getCliente().getIdcliente());
@@ -518,25 +523,25 @@ public class ContasPagarMB implements Serializable {
             }
         }
     }
-    
-    public void carregarListaPlanoContas(){
+
+    public void carregarListaPlanoContas() {
         PlanoContasController planoContasController = new PlanoContasController();
         listaPlanoContas = planoContasController.listar();
-        if (listaPlanoContas==null){
+        if (listaPlanoContas == null) {
             listaPlanoContas = new ArrayList<Planocontas>();
         }
     }
-    
-    public String salvar(){
-        if (contasPagar==null){
-            contasPagar=new Contaspagar();
+
+    public String salvar() {
+        if (contasPagar == null) {
+            contasPagar = new Contaspagar();
         }
-        if (!idPlanoConta.equalsIgnoreCase("0")){
+        if (!idPlanoConta.equalsIgnoreCase("0")) {
             PlanoContasController planoContasController = new PlanoContasController();
             Planocontas plano = planoContasController.consultar(Integer.parseInt(idPlanoConta));
             contasPagar.setPlanocontas(plano);
         }
-        if (!idBanco.equalsIgnoreCase("0")){
+        if (!idBanco.equalsIgnoreCase("0")) {
             BancoController bancoController = new BancoController();
             Banco banco = bancoController.consultar(Integer.parseInt(idBanco));
             contasPagar.setBanco(banco);
@@ -548,9 +553,11 @@ public class ContasPagarMB implements Serializable {
         contasPagar.setUsuarioAutorizou(0);
         contasPagar.setUsuarioBaixou(0);
         contasPagar.setUsuarioCadastrou(usuarioLogadoBean.getUsuario().getIdusuario());
-        if (valorConta.length()>0){
+        if (valorConta.length() > 0) {
             contasPagar.setValor(Formatacao.ConvercaoMonetariaFloat(valorConta));
-        }else contasPagar.setValor(0.0f);
+        } else {
+            contasPagar.setValor(0.0f);
+        }
         contasPagar.setVendaComissao(0);
         ContasPagarController contasPagarController = new ContasPagarController();
         contasPagarController.salvar(contasPagar);

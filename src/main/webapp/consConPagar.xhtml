@@ -38,11 +38,7 @@
 
                     <p:dataTable id="contarPagar" var="contasPagar"  value="#{ContasPagarMB.listaContaPagar}" class="tabelacontas" 
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-                                 paginator="true" rows="10" style="margin-bottom:20px" 
-                                 rowStyleClass="#{contasPagar.status eq 'verde' ? 'green' : 
-                                                  contasPagar.status eq 'amarelo' ? 'yellow' :
-                                                  contasPagar.status eq 'vermelho' ? 'red'   : 
-                                                  null}">
+                                 paginator="true" rows="10" style="margin-bottom:20px" >
 
                         <f:facet name="{Exporters}">
                             <h:commandLink>
@@ -55,7 +51,9 @@
                                 <p:dataExporter type="pdf" target="contasPagar" fileName="contas"/>
                             </h:commandLink>
                         </f:facet>
-
+                        <p:column headerText="Status"  style="width:35px">
+                            <p:graphicImage  value="#{ContasPagarMB.verStatus(contasPagar)}"/>
+                        </p:column>
                         <p:column headerText="Data Vencimento" style="width:78px">
                             <h:outputText  value="#{contasPagar.dataVencimento}" >
                                 <f:convertDateTime pattern="dd/MM/yyyy" />  
