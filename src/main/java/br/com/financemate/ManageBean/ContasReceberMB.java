@@ -5,9 +5,10 @@
  */
 package br.com.financemate.ManageBean;
 
-import br.com.financemate.Bean.ContasReceberBean;
 import br.com.financemate.Controller.BancoController;
+import br.com.financemate.Controller.ContasReceberController;
 import br.com.financemate.Controller.PlanoContasController;
+import br.com.financemate.Util.Formatacao;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contasreceber;
@@ -30,7 +31,7 @@ public class ContasReceberMB implements Serializable{
     
     
     @Inject private UsuarioLogadoBean usuarioLogadoBean;
-    private ContasReceberBean contasReceberBean;
+    @Inject private ClienteMB clienteMB;
     private List<Contasreceber> listaContasReceber;
     private Contasreceber contasReceber;
     private Date dataInicial;
@@ -38,17 +39,25 @@ public class ContasReceberMB implements Serializable{
     private boolean recebida;
     private List<Planocontas> listaPlanoContas;
     private List<Banco> listaBanco;
-    private Cliente cliente;
-    private float quantidade;
-    private float totalconta;
-    private float totaljuros;
-    private float totaldesconto;
-    private float totalrecebido;
+    private String quantidade;
+    private String totalconta;
+    private String totaljuros;
+    private String totaldesconto;
+    private String totalrecebido;
+    String sql;
 
    
 
     public ContasReceberMB() {
-        contasReceberBean = new ContasReceberBean();
+        gerarDataInicial();
+    }
+
+    public ClienteMB getClienteMB() {
+        return clienteMB;
+    }
+
+    public void setClienteMB(ClienteMB clienteMB) {
+        this.clienteMB = clienteMB;
     }
     
     
@@ -77,54 +86,46 @@ public class ContasReceberMB implements Serializable{
         this.listaPlanoContas = listaPlanoContas;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public float getQuantidade() {
+    public String getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(float quantidade) {
+    public void setQuantidade(String quantidade) {
         this.quantidade = quantidade;
     }
 
-    public float getTotalconta() {
+    public String getTotalconta() {
         return totalconta;
     }
 
-    public void setTotalconta(float totalconta) {
+    public void setTotalconta(String totalconta) {
         this.totalconta = totalconta;
     }
 
-    public float getTotaljuros() {
+    public String getTotaljuros() {
         return totaljuros;
     }
 
-    public void setTotaljuros(float totaljuros) {
+    public void setTotaljuros(String totaljuros) {
         this.totaljuros = totaljuros;
     }
 
-    public float getTotaldesconto() {
+    public String getTotaldesconto() {
         return totaldesconto;
     }
 
-    public void setTotaldesconto(float totaldesconto) {
+    public void setTotaldesconto(String totaldesconto) {
         this.totaldesconto = totaldesconto;
     }
 
-    public float getTotalrecebido() {
+    public String getTotalrecebido() {
         return totalrecebido;
     }
 
-    public void setTotalrecebido(float totalrecebido) {
+    public void setTotalrecebido(String totalrecebido) {
         this.totalrecebido = totalrecebido;
     }
-
+    
     public List<Banco> getListaBanco() {
         return listaBanco;
     }
@@ -135,7 +136,7 @@ public class ContasReceberMB implements Serializable{
 
     public List<Contasreceber> getListaContasReceber() {
          if (listaContasReceber==null){
-            iniciarContasReceber();
+             criarConsultaContasReceberInicial();
         }
         return listaContasReceber;
     }
@@ -168,14 +169,7 @@ public class ContasReceberMB implements Serializable{
         this.dataInicial = dataInicial;
     }
 
-    public ContasReceberBean getContasReceberBean() {
-        return contasReceberBean;
-    }
-
-    public void setContasReceberBean(ContasReceberBean contasReceberBean) {
-        this.contasReceberBean = contasReceberBean;
-    }
-
+    
     public Date getDataFinal() {
         return dataFinal;
     }
@@ -183,23 +177,10 @@ public class ContasReceberMB implements Serializable{
     public void setDataFinal(Date dataFinal) {
         this.dataFinal = dataFinal;
     }
-
-    
-    
-    public void iniciarContasReceber(){
-        this.listaContasReceber = contasReceberBean.getListaContasReceber(usuarioLogadoBean.getCliente());
-        dataInicial = contasReceberBean.getDataInicial();
-        dataFinal = contasReceberBean.getDataFinal();
-    }
-    
-    public void pesquisar(){
-        contasReceberBean.pesquisarContasReceber(dataInicial, dataFinal, recebida, null);
-        listaContasReceber = contasReceberBean.getListaContasReceber(null);
-    }
     
     public void carregarListaBanco(){
         BancoController bancoController = new BancoController();
-        listaBanco = bancoController.listar(cliente.getIdcliente());
+        listaBanco = bancoController.listar(clienteMB.getCliente().getIdcliente());
         if (listaBanco==null){
             listaBanco = new ArrayList<Banco>();
         }
@@ -213,17 +194,80 @@ public class ContasReceberMB implements Serializable{
         }
     }
     
+    public void criarConsultaContasReceberInicial(){
+        if ((clienteMB.getCliente()!=null) && (clienteMB.getCliente().getIdcliente()!=null)){
+            sql = " Select c from Contasreceber c where c.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + 
+                "' and c.valorPago=0 and c.cliente.idcliente=" + clienteMB.getCliente().getIdcliente() + 
+                    " order by c.dataVencimento";
+        }else {
+            sql = " Select c from Contasreceber c where c.cliente.visualizacao='Operacional' and "
+                    + "c.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + 
+                "' and c.valorPago=0 order by c.dataVencimento";
+        }
+        carregarLista();
+    }
+    
+    public void carregarLista() {
+        if (listaContasReceber == null) {
+            ContasReceberController contasReceberController = new ContasReceberController();
+            listaContasReceber = contasReceberController.listar(sql);
+            if (listaContasReceber == null) {
+                listaContasReceber = new ArrayList<Contasreceber>();
+            }
+        }
+    }
+    
+    public void pesquisarContasReceber(Date dataInicial, Date dataFinal, boolean recebida, Cliente cliente ){
+        this.listaContasReceber=null;
+        sql = "Select c from Contasreceber c where ";
+        if (recebida) {
+            if (cliente != null) {
+                sql = sql + " c.cliente.idcliente=" + cliente.getIdcliente() + " and ";
+            }
+            sql = sql + "c.dataPagamento>='" + Formatacao.ConvercaoDataSql(dataInicial)
+                    + "' and c.dataPagamento<='" + Formatacao.ConvercaoDataSql(dataFinal)
+                    + "' and c.valorPago>0 order by c.dataVencimento";
+        } else {
+            if (cliente != null) {
+                sql = sql + " c.cliente,idcliente=" + cliente.getIdcliente() + " and ";
+            }else {
+                sql = sql + " c.cliente.visualizacao='Operacional' and ";
+            }
+            sql = sql + "c.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial)
+                    + "' and c.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal)
+                    + "' and c.valorPago=0 order by c.dataVencimento";
+        }
+        carregarLista();
+    }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    public void gerarDataInicial(){
+        String data = Formatacao.ConvercaoDataPadrao(new Date());
+        String mesString = data.substring(3, 5);
+        String anoString = data.substring(6, 10);
+        int mesInicio = Integer.parseInt(mesString);
+        int anoInicio = Integer.parseInt(anoString);
+        int mescInicio;
+        int mescFinal;
+        int anocInicio = 0;
+        int anocFinal = 0;
+        if (mesInicio==1){
+            mescInicio=12;
+            anocInicio=anoInicio - 1;
+        }else {
+            mescInicio = mesInicio - 1;
+            anocInicio = anoInicio;
+        }
+        if (mesInicio==12){
+            mescFinal=1;
+            anocFinal=anoInicio+1;
+        }else {
+            mescFinal = mesInicio  + 1;
+            anocFinal = anoInicio;
+        }
+        String sdataInicial = anocInicio + "-" + Formatacao.retornaDataInicia(mescInicio);
+        String sdataFinal = anocFinal + "-" + Formatacao.retornaDataFinal(mescFinal);
+        dataInicial =(Formatacao.ConvercaoStringData(sdataInicial));
+        dataFinal = (Formatacao.ConvercaoStringData(sdataFinal));
+    }
 }
