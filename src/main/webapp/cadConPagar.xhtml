@@ -18,7 +18,7 @@
                                 <p:outputLabel value="Upload de Arquivo" for="upload"  class="left3"/>
                             </h:panelGrid>
                             <h:panelGrid columns="2">
-                                <p:fileUpload id="upload"  mode="simple" class="left3" value="#{ContasPagarMB.arquivo01}"/>
+                                <p:fileUpload id="upload"  mode="simple" class="left3" fileUploadListener="#{ContasPagarMB.upload(event)}"/>
                                 <p:growl id="messages" showDetail="true" />
                             </h:panelGrid>
                             <h:panelGrid columns="2">
@@ -29,7 +29,7 @@
                                 <p:outputLabel value="Unidade" for="unidade"  class="left3"/>
                             </h:panelGrid>
                             <h:panelGrid columns="2">
-                                <p:inputText id="unidade" size="75"  class="left3"  value="#{ClienteMB.cliente.nomeFantasia}"/>
+                                <p:inputText id="unidade" size="90"  class="left3"  value="#{ClienteMB.cliente.nomeFantasia}"/>
                                 <p:commandButton value="Selecionar" class="selecionar" action="#{ContasPagarMB.selecionarUnidadeCadastro()}"/>
                             </h:panelGrid>
                             <h:panelGrid columns="3" cellpadding="5" >
@@ -85,7 +85,7 @@
                                 <p:outputLabel value="Descrição" for="descricao" class="left3" /> 
                             </h:panelGrid>  
                             <h:panelGrid columns="2" cellpadding="3">
-                                <p:inputTextarea rows="1" cols="81" id="descricao"  class="left3"  value="#{ContasPagarMB.contasPagar.descricao}"/>
+                                <p:inputTextarea rows="1" cols="108" id="descricao"  class="left3"  value="#{ContasPagarMB.contasPagar.descricao}"/>
                             </h:panelGrid>
                             <h:panelGrid columns="3" cellpadding="3">
                                 <p:outputLabel value="Conta" for="banco" class="left3"/> 
@@ -106,7 +106,8 @@
                                     <f:selectItem itemLabel="Cheque" itemValue="Cheque" />  
                                     <f:selectItem itemLabel="Depósito" itemValue="Depósito" /> 
                                 </p:selectOneMenu>
-                                <p:inputText id="competencia" size="18"  class="left1" value="#{ContasPagarMB.contasPagar.competencia}"/>
+                                <p:inputMask id="competencia" label="competencia" value="#{ContasPagarMB.contasPagar.competencia}" size="19" mask="99/9999"  class="left1">
+                                </p:inputMask>
                             </h:panelGrid>            
                         </p:tab>
                     </p:tabView>  

@@ -16,13 +16,29 @@ import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Planocontas;
 import br.com.financemate.model.Usuario;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.imageio.stream.FileImageOutputStream;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 /**
  *
@@ -60,6 +76,7 @@ public class ContasPagarMB implements Serializable {
     private String valorConta = "";
     private String idPlanoConta;
     private String idBanco;
+    private Object event;
 
     public ContasPagarMB() {
         gerarDataInicia();
@@ -67,6 +84,14 @@ public class ContasPagarMB implements Serializable {
 
     public ClienteMB getClienteMB() {
         return clienteMB;
+    }
+
+    public Object getEvent() {
+        return event;
+    }
+
+    public void setEvent(Object event) {
+        this.event = event;
     }
 
     public boolean isAutorizadas() {
@@ -564,6 +589,43 @@ public class ContasPagarMB implements Serializable {
         contasPagar = new Contaspagar();
         clienteMB.setCliente(new Cliente());
         gerarListaContasPagar();
+
         return "consConPagar";
+    }
+    private String destination = "resources/img/";
+
+    public void upload(FileUploadEvent event) {
+        FacesMessage msg = new FacesMessage("Sucesso! ", event.getFile().getFileName() + " upload.");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        // Do what you want with the file        
+        try {
+            copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void copyFile(String fileName, InputStream in) {
+        try {
+
+            // write the inputStream to a FileOutputStream
+            OutputStream out = new FileOutputStream(new File("resources/img/"+ fileName));
+
+            int read = 0;
+            byte[] bytes = new byte[1024];
+
+            while ((read = in.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+
+            in.close();
+            out.flush();
+            out.close();
+
+            System.out.println("Novo Arquivo!");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

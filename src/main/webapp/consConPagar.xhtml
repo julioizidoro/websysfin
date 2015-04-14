@@ -51,7 +51,7 @@
                                 <p:dataExporter type="pdf" target="contasPagar" fileName="contas"/>
                             </h:commandLink>
                         </f:facet>
-                        <p:column headerText="Status"  style="width:35px">
+                        <p:column headerText="Status"  style="width:35px" styleClass="Center">
                             <p:graphicImage  value="#{ContasPagarMB.verStatus(contasPagar)}"/>
                         </p:column>
                         <p:column headerText="Data Vencimento" style="width:78px">
@@ -65,13 +65,13 @@
                         <p:column headerText="Descrição"  >
                             <h:outputText value="#{contasPagar.descricao}"/>
                         </p:column>
-                        <p:column headerText="Autorizadas"  style="width:63px" >
+                        <p:column headerText="Autorizadas"  style="width:63px" styleClass="Center" >
                             <p:graphicImage value="#{ContasPagarMB.imagem(contasPagar)}"/>
                         </p:column>
                         <p:column headerText="Fornecedor" style="width:140px" >
                             <h:outputText value="#{contasPagar.fornecedor}"/>
                         </p:column>
-                        <p:column headerText="Valor Conta" style="width:60px" styleClass="alinharCenter">
+                        <p:column headerText="Valor Conta" style="width:60px" styleClass="Center">
                             <h:outputText value="#{contasPagar.valor}">
                                 <f:convertNumber currencySymbol="" type="currency"/>
                              </h:outputText>
@@ -94,8 +94,6 @@
                         <p:inputText id="contasVencer" size="16" maxlength="100" class="total" value="#{ContasPagarMB.stotalvencer}"  readonly="true"/>
                         <p:inputText id="contasPagar" size="15" maxlength="100" class="total" value="#{ContasPagarMB.stotal}"  readonly="true"/>
                     </h:panelGrid>  
-                    <br></br>
-                    <br></br>
                     <br></br>
                     <h:panelGrid columns="10" cellpadding="1" class="cadPagar">
                         <p:commandButton value="Adicionar" icon=" ui-icon-plus " class="pesquisar2" action="#{ContasPagarMB.novo()}"/>

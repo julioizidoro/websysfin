@@ -12,14 +12,14 @@
                     <p:growl id="growl" showDetail="true" sticky="true" />
                     <br></br>
                     <h:panelGrid columns="7" cellpadding="3">
-                        <p:outputLabel value="Unidade" for="unidade" class="left"/> 
+                        <p:outputLabel value="Unidade" for="unidade" class="unidade"/> 
                         <p:outputLabel value="Data Inicial" for="dataIni" class="left7"/> 
                         <p:outputLabel value="Data Final" for="dataFinal" class="left8"/>
                         <p:selectBooleanCheckbox  class="left5" value="#{ContasReceberMB.recebida}"/>
                         <h:outputText value="Recebidas"/>
                     </h:panelGrid>
                     <h:panelGrid columns="5" cellpadding="1">
-                        <p:inputText id="unidade" size="36" maxlength="100" class="left"  readonly="true"/>
+                        <p:inputText id="unidade" size="36" maxlength="100" class="unidade"  readonly="true"/>
                         <p:commandButton value="Selecionar" class="css3button" icon=" ui-icon-arrowthickstop-1-s" />
                         <p:calendar id="dataIni" value="#{ContasReceberMB.dataInicial}"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="" >
                             <f:convertDateTime parent="dd/MM/yyyy"/>
@@ -30,7 +30,6 @@
                         <p:commandButton value="Pesquisar" class="pesquisarreceber"  icon=" ui-icon-search" update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}"  action="#{ContasReceberMB.pesquisar()}"/>
                     </h:panelGrid>  
                     <br></br>
-                    <br></br>
                     <legend id="iUsu2" ><b>Consulta de Contas a Receber </b></legend>
 
                     <p:dataTable id="contarReceber" var="contasReceber" value="#{ContasReceberMB.listaContasReceber}" rowStyleClass="tabela" class="tabelacontas" 
@@ -39,7 +38,7 @@
 
                         <f:facet name="{Exporters}">
                             <h:commandLink>
-                                <img src="resources/img/excel.png" width="24" class="left0"/>
+                                <img src="resources/img/excel.png" width="24" class="imagem"/>
                                 <p:dataExporter type="xls" target="tbl" fileName="cars" />
                             </h:commandLink>
 

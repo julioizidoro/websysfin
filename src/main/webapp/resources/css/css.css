@@ -248,7 +248,7 @@ button.pesquisarreceber {
      font-size:15px;
     }
     .unidade{
-    margin-left:32px;
+    margin-left:20px;
      font-size:15px;
     }
     .total{
@@ -271,6 +271,10 @@ button.pesquisarreceber {
     }
     .imagens{
     margin-left:410px;
+     font-size:15px;
+    }
+    .imagem{
+    margin-left:200px;
      font-size:15px;
     }
      .left0{
@@ -349,7 +353,7 @@ button.pesquisarreceber {
         text-align:right;
     }   
     .cadastroContasPagar{
-        width: 700px;
+        width: 650px;
         margin-left:130px;
         font-size: 12px;
     }
@@ -685,4 +689,7 @@ button.editar {
 .left18{
     margin-left: 55px;
     font-size: 15px;
+}
+.Center{
+    margin-left:20px;
 }
