@@ -99,7 +99,8 @@
                         <p:commandButton value="Adicionar" icon=" ui-icon-plus " class="pesquisar2" action="#{ContasPagarMB.novo()}"/>
                         <p:commandButton value="Editar" class="pesquisar2" icon=" ui-icon-pencil" action="#{ContasPagarMB.editar()}"/>
                         <p:commandButton value="Excluir" class="pesquisar2" icon=" ui-icon-trash " actionListener="#{mensagem.excluiMessagem()}" update="growl"/>
-                        <p:commandButton value="Finalizar" class="pesquisar2" icon=" ui-icon-check "/>
+                        <p:commandButton value="Liberar" class="pesquisar2" icon=" ui-icon-check " action="#{ContasPagarMB.liberarContasPagar()}"/>
+                        <p:commandButton value="Autorizar" class="pesquisar2" icon=" ui-icon-check " action="#{ContasPagarMB.autorizarPagamentoContasPagar()}" />
                         <p:commandButton value="Arquivo" class="pesquisar2" icon="ui-icon-folder-open " oncomplete="PF('dlg').show()"/>
                         <p:commandButton value="Usuários" class="pesquisar2" action="#{ContasPagarMB.operacaoUsuario}"/>
                     </h:panelGrid>

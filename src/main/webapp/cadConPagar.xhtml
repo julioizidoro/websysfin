@@ -7,7 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/WEB-INF/templates/default.xhtml">
         <ui:define name="corpo">
-            <h:form>
+            <h:form enctype = "multipart / form-data" >>
                 <div id="centro">
                     <p:growl id="growl" showDetail="true" sticky="true" />
                     <br></br>
@@ -18,12 +18,14 @@
                                 <p:outputLabel value="Upload de Arquivo" for="upload"  class="left3"/>
                             </h:panelGrid>
                             <h:panelGrid columns="2">
-                                <p:fileUpload id="upload"  mode="simple" class="left3" fileUploadListener="#{ContasPagarMB.upload(event)}"/>
+                                <p:fileUpload id="upload" fileUploadListener="#{ContasPagarMB.upload01}" mode="advanced"
+                                              update="messages" auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+
                                 <p:growl id="messages" showDetail="true" />
                             </h:panelGrid>
                             <h:panelGrid columns="2">
                                 <p:fileUpload id="upload2"  mode="simple" class="left3" value="#{ContasPagarMB.arquivo02}"/>
-                                <p:growl id="message" showDetail="true" />
+                                <p:growl id="message2" showDetail="true" />
                             </h:panelGrid>
                             <h:panelGrid columns="2" cellpadding="5" >
                                 <p:outputLabel value="Unidade" for="unidade"  class="left3"/>
