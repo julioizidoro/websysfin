@@ -1,25 +1,25 @@
-    body {
-        font-size:15px;
-      font-family: tahoma;
-      background-color: #F0FFFF;
-      color: #333;
-    }
+body {
+    font-size:15px;
+    font-family: tahoma;
+    background-color: #F0FFFF;
+    color: #333;
+}
 
-    h1 {
-      margin: 10px 20px 10px 20px;
-    }
-    #tudo {
-      top:0px;
-      position: relative;
-      background: #3E7D62;
-      margin: 0px 0 20px -390px;
-      width: 950px;
-      left:18%;
-      margin-top:-15px;
-      border: 0px solid #aaa;
-      margin-left:-10px;
-     }
-     .menu{
+h1 {
+    margin: 10px 20px 10px 20px;
+}
+#tudo {
+    top:0px;
+    position: relative;
+    background: #3E7D62;
+    margin: 0px 0 20px -390px;
+    width: 950px;
+    left:18%;
+    margin-top:-15px;
+    border: 0px solid #aaa;
+    margin-left:-10px;
+}
+.menu{
     font-family: tahoma;
     list-style:none; 
     border:1px solid aliceblue; 
@@ -29,301 +29,316 @@
     background: #EEE5DE;
     font-size: 15px;
     color:#30b344;
-    }
-      #centro {
-           font-size:15px;
-      top:-68px;
-      position: relative;
-      background:#99CC33;
-      margin: 0px 0 20px -390px;
-      width: 950px;
-      left:18%;
-      
-      border: 0px solid #aaa;
-      margin-left:-10px;
-      //borda arredondada
-       -webkit-border-bottom-right-radius: 10px;
-        -webkit-border-bottom-left-radius: 10px;
-        -moz-border-radius-bottomright: 10px;
-        -moz-border-radius-bottomleft: 10px;
-        border-bottom-right-radius: 10px;
-        border-bottom-left-radius: 10px;
-     //////////
-     //borda sombreada
-        box-shadow: 5px 4px 10px #828282;
-       -moz-box-shadow: 5px 4px 10px #828282;
-       -webkit-box-shadow: 5px 4px 10px #828282;
-       -khtml-box-shadow: 5px 4px 10px #828282;
-       -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(color=#ccc,direction=120,strength=4)"; /* IE8+ */
-       filter:progid:DXImageTransform.Microsoft.Shadow(color=#ccc,direction=120,strength=4); /* IE7 and lower */
-       ///////
-    }
-    .tabelacontas{
-     font-size:12px;
-     
-       position:relative;
-       margin-left:19%;
-       right:18%;
-       top:-1px;
-       width:920px;
-    }
-    .tabelaselecionar{
-     font-size:12px;
-     
-       position:relative;
-       margin-left:19%;
-       right:15%;
-       top:-1px;
-       width:868px;
-    }
-    .tabela{
-        color: #4F4F4F;
-        background:#F0FFFF;
-    }
-    button.css3button {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	color: #3E7D62;
-	padding: 1px 1px;
-	background: -moz-linear-gradient(
-		top,
-		#ffffff 0%,
-		#ffffff 50%,
-		#ffffff);
-	background: -webkit-gradient(
-		linear, left top, left bottom,
-		from(#ffffff),
-		color-stop(0.50, #ffffff),
-		to(#ffffff));
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
-	border: 1px solid #7fdb15;
-	-moz-box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	-webkit-box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	text-shadow:
-		0px -1px 0px rgba(39,242,8,0.2),
-		0px 1px 0px rgba(255,255,255,1);
 }
-    button.pesquisar {
-        margin-left:115px;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	color: #3E7D62;
-	background: -moz-linear-gradient(
-		top,
-		#ffffff 0%,
-		#ffffff 50%,
-		#ffffff);
-	background: -webkit-gradient(
-		linear, left top, left bottom,
-		from(#ffffff),
-		color-stop(0.50, #ffffff),
-		to(#ffffff));
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
-	border: 1px solid #7fdb15;
-	-moz-box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	-webkit-box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	text-shadow:
-		0px -1px 0px rgba(39,242,8,0.2),
-		0px 1px 0px rgba(255,255,255,1);
+#centro {
+    font-size:15px;
+    top:-68px;
+    position: relative;
+    background:#99CC33;
+    margin: 0px 0 20px -390px;
+    width: 950px;
+    left:18%;
+
+    border: 0px solid #aaa;
+    margin-left:-10px;
+    //borda arredondada
+    -webkit-border-bottom-right-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -moz-border-radius-bottomright: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    //////////
+    //borda sombreada
+    box-shadow: 5px 4px 10px #828282;
+    -moz-box-shadow: 5px 4px 10px #828282;
+    -webkit-box-shadow: 5px 4px 10px #828282;
+    -khtml-box-shadow: 5px 4px 10px #828282;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(color=#ccc,direction=120,strength=4)"; /* IE8+ */
+    filter:progid:DXImageTransform.Microsoft.Shadow(color=#ccc,direction=120,strength=4); /* IE7 and lower */
+    ///////
+}
+.tabelacontas{
+    font-size:12px;
+
+    position:relative;
+    margin-left:19%;
+    right:18%;
+    top:-1px;
+    width:920px;
+}
+.tabelaselecionar{
+    font-size:12px;
+
+    position:relative;
+    margin-left:19%;
+    right:15%;
+    top:-1px;
+    width:868px;
+}
+.tabela{
+    color: #4F4F4F;
+    background:#F0FFFF;
+}
+button.css3button {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #3E7D62;
+    padding: 1px 1px;
+    background: -moz-linear-gradient(
+        top,
+        #ffffff 0%,
+        #ffffff 50%,
+        #ffffff);
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#ffffff),
+        color-stop(0.50, #ffffff),
+        to(#ffffff));
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #7fdb15;
+    -moz-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    -webkit-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    text-shadow:
+        0px -1px 0px rgba(39,242,8,0.2),
+        0px 1px 0px rgba(255,255,255,1);
+}
+button.pesquisar {
+    margin-left:115px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #3E7D62;
+    background: -moz-linear-gradient(
+        top,
+        #ffffff 0%,
+        #ffffff 50%,
+        #ffffff);
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#ffffff),
+        color-stop(0.50, #ffffff),
+        to(#ffffff));
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #7fdb15;
+    -moz-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    -webkit-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    text-shadow:
+        0px -1px 0px rgba(39,242,8,0.2),
+        0px 1px 0px rgba(255,255,255,1);
 }
 button.pesquisarreceber {
-        margin-left:50px;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	color: #3E7D62;
-	background: -moz-linear-gradient(
-		top,
-		#ffffff 0%,
-		#ffffff 50%,
-		#ffffff);
-	background: -webkit-gradient(
-		linear, left top, left bottom,
-		from(#ffffff),
-		color-stop(0.50, #ffffff),
-		to(#ffffff));
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
-	border: 1px solid #7fdb15;
-	-moz-box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	-webkit-box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	text-shadow:
-		0px -1px 0px rgba(39,242,8,0.2),
-		0px 1px 0px rgba(255,255,255,1);
+    margin-left:50px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #3E7D62;
+    background: -moz-linear-gradient(
+        top,
+        #ffffff 0%,
+        #ffffff 50%,
+        #ffffff);
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#ffffff),
+        color-stop(0.50, #ffffff),
+        to(#ffffff));
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #7fdb15;
+    -moz-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    -webkit-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    text-shadow:
+        0px -1px 0px rgba(39,242,8,0.2),
+        0px 1px 0px rgba(255,255,255,1);
 }
-    button.pesquisar2 {
-        margin-left:30px;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	color: #3E7D62;
-	padding: 1px 1px;
-	background: -moz-linear-gradient(
-		top,
-		#ffffff 0%,
-		#ffffff 50%,
-		#ffffff);
-	background: -webkit-gradient(
-		linear, left top, left bottom,
-		from(#ffffff),
-		color-stop(0.50, #ffffff),
-		to(#ffffff));
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
-	border: 1px solid #7fdb15;
-	-moz-box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	-webkit-box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	text-shadow:
-		0px -1px 0px rgba(39,242,8,0.2),
-		0px 1px 0px rgba(255,255,255,1);
+button.pesquisar2 {
+    margin-left:30px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #3E7D62;
+    padding: 1px 1px;
+    background: -moz-linear-gradient(
+        top,
+        #ffffff 0%,
+        #ffffff 50%,
+        #ffffff);
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#ffffff),
+        color-stop(0.50, #ffffff),
+        to(#ffffff));
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #7fdb15;
+    -moz-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    -webkit-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    text-shadow:
+        0px -1px 0px rgba(39,242,8,0.2),
+        0px 1px 0px rgba(255,255,255,1);
 }
-    button.cadastrar {
-        margin-left: 330px;
-        margin-top:30px;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	color: #3E7D62;
-	padding: 1px 15px;
-	background: -moz-linear-gradient(
-		top,
-		#ffffff 0%,
-		#ffffff 50%,
-		#ffffff);
-	background: -webkit-gradient(
-		linear, left top, left bottom,
-		from(#ffffff),
-		color-stop(0.50, #ffffff),
-		to(#ffffff));
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
-	border: 1px solid #7fdb15;
-	-moz-box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	-webkit-box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	text-shadow:
-		0px -1px 0px rgba(39,242,8,0.2),
-		0px 1px 0px rgba(255,255,255,1);
+button.cadastrar {
+    margin-left: 330px;
+    margin-top:30px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #3E7D62;
+    padding: 1px 15px;
+    background: -moz-linear-gradient(
+        top,
+        #ffffff 0%,
+        #ffffff 50%,
+        #ffffff);
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#ffffff),
+        color-stop(0.50, #ffffff),
+        to(#ffffff));
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #7fdb15;
+    -moz-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    -webkit-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    text-shadow:
+        0px -1px 0px rgba(39,242,8,0.2),
+        0px 1px 0px rgba(255,255,255,1);
 }
-    .left{
+.left{
     margin-left:60px;
-     font-size:15px;
-    }
-    .unidade{
+    font-size:15px;
+}
+.valorreceber{
+    margin-left:60px;
+    font-size:15px;
+    text-align: right;
+}
+.unidade{
     margin-left:20px;
-     font-size:15px;
-    }
-    .total{
-        margin-left:60px;
-        font-size:15px;
-        text-align:right;
-    }
-    .vermelho{
+    font-size:15px;
+}
+.total{
     margin-left:60px;
-     font-size:15px;
-     background: #EE3B3B;
-     color: #F0FFFF;
-     text-align:right;
-    }
-    .amarelo{
+    font-size:15px;
+    text-align:right;
+}
+.vermelho{
     margin-left:60px;
-     font-size:15px;
-     background: #FFFF00;
-     text-align: right;
-    }
-    .imagens{
+    font-size:15px;
+    background: #EE3B3B;
+    color: #F0FFFF;
+    text-align:right;
+}
+.amarelo{
+    margin-left:60px;
+    font-size:15px;
+    background: #FFFF00;
+    text-align: right;
+}
+.imagens{
     margin-left:410px;
-     font-size:15px;
-    }
-    .imagem{
+    font-size:15px;
+}
+.imagem{
     margin-left:200px;
-     font-size:15px;
-    }
-     .left0{
+    font-size:15px;
+}
+.left0{
     margin-left:480px;
-     font-size:15px;
-    }
-     .left1{
+    font-size:15px;
+}
+.left1{
     margin-left:47px;
-     font-size:15px;
-    }
-    .data{
+    font-size:15px;
+}
+.valorvenda{
+    margin-left:47px;
+    font-size:15px;
+    text-align: right;
+}
+.data{
     margin-left:290px;
-     font-size:15px;
-    }
-    .left2{
-        margin-left:200px;
-         font-size:15px;
-    }
-    .usuario{
-        margin-left:220px;
-         font-size:15px;
-    }
-    .pesqcon{
-         margin-left:243px;
-         font-size:15px;
-    }
-    .usuario2{
-        margin-left:210px;
-         font-size:15px;
-    }
-    .usuario3{
-        margin-left:150px;
-         font-size:15px;
-    }
-    .numeroconta{
-        margin-left:135px;
-         font-size:15px;
-    }
-    .logo{
-        margin-top:-9px;
-    }
-    #centro legend#iUsu b{
+    font-size:15px;
+}
+.left2{
+    margin-left:200px;
+    font-size:15px;
+}
+.valorliberar{
+    margin-left:200px;
+    font-size:15px;
+    text-align: right;
+}
+.usuario{
+    margin-left:220px;
+    font-size:15px;
+}
+.pesqcon{
+    margin-left:243px;
+    font-size:15px;
+}
+.usuario2{
+    margin-left:210px;
+    font-size:15px;
+}
+.usuario3{
+    margin-left:150px;
+    font-size:15px;
+}
+.numeroconta{
+    margin-left:135px;
+    font-size:15px;
+}
+.logo{
+    margin-top:-9px;
+}
+#centro legend#iUsu b{
     margin-top:28px;
     font-size: 15px;
     font-family: tahoma;
     margin-left:310px;
     color:aliceblue;
 }
-     #centro legend#iUsu {
+#centro legend#iUsu {
     background: #3E7D62;
     width: 868px;
     margin-left:39px;
@@ -335,333 +350,362 @@ button.pesquisarreceber {
     margin-left:310px;
     color:aliceblue;
 }
-     #centro legend#iUsu2 {
+#centro legend#iUsu2 {
     background: #3E7D62;
     width: 920px;
     margin-left:11px;
 }
-    .left3{
-        margin-left:11px;
-          font-size:15px;
-    }
-    .total3{
-        margin-left:11px;
-          font-size:15px;
-          text-align: right;
-    }
-    .alinharCenter{
-        text-align:right;
-    }   
-    .cadastroContasPagar{
-        width: 650px;
-        margin-left:130px;
-        font-size: 12px;
-    }
-    .tabUsuario{
-        width: 530px;
-        margin-left:180px;
-        font-size: 12px;
-    }
-    .selecionar{
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 14px;
-            color: #30b344;
-            padding: -4px 15px;
-    }
-    .left4{
-        margin-left: 33px;
-         font-size:15px;
-    }
-    .left5{
-       margin-left: 73px;
-     font-size:15px;
-    }
-    .left6{
-        margin-left:18px;
-      font-size:15px;
-    }
-    .left7{
-        margin-left:360px;
-        
-         font-size:15px;
-    }
-    .left8{
-       margin-left:76px;
-    
-      font-size:15px;
-    }
-    .left9{
-       margin-left: 90px;
-        
-      font-size:15px;
-    }
-    .dialog{
-        font-size:15px;
-        margin-left:18%;
-    }
-    .lado{
-        margin-left:325px;
-        font-size: 14px;
-    }
-    .left10{
-        margin-left:450px;
-     font-size:15px;
-    }
-        button.pesquisar3 {
-        margin-left:200px;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	color: #3E7D62;
-	background: -moz-linear-gradient(
-		top,
-		#ffffff 0%,
-		#ffffff 50%,
-		#ffffff);
-	background: -webkit-gradient(
-		linear, left top, left bottom,
-		from(#ffffff),
-		color-stop(0.50, #ffffff),
-		to(#ffffff));
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
-	border: 1px solid #7fdb15;
-	-moz-box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	-webkit-box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	text-shadow:
-		0px -1px 0px rgba(39,242,8,0.2),
-		0px 1px 0px rgba(255,255,255,1);
-}   
-     button.pesquisar4 {
-        margin-left:6px;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	color: #3E7D62;
-	padding: 1px 1px;
-	background: -moz-linear-gradient(
-		top,
-		#ffffff 0%,
-		#ffffff 50%,
-		#ffffff);
-	background: -webkit-gradient(
-		linear, left top, left bottom,
-		from(#ffffff),
-		color-stop(0.50, #ffffff),
-		to(#ffffff));
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
-	border: 1px solid #7fdb15;
-	-moz-box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	-webkit-box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	text-shadow:
-		0px -1px 0px rgba(39,242,8,0.2),
-		0px 1px 0px rgba(255,255,255,1);
+.left3{
+    margin-left:11px;
+    font-size:15px;
 }
-    .left11{
-        margin-left:430px;
-        font-size:15px;
-    }
-     .left12{
-        margin-left:130px;
-        font-size:15px;
-    }
-    .left13{
-        margin-left:120px;
-        font-size:15px;
-    }
-    .espaco{
-        margin-left:40px;
-         font-size:15px;
-    }
-    .leftt{
-        margin-left:260px;
-         font-size:15px;
-    }
-    .tabelaRecebimento{
-        font-size:14px;
-    }
-    .left14{
-        margin-left:276px;
-         font-size:15px;
-    }
-    .left15{
-        margin-left:160px;
-        font-size:15px;
-    }
-    button.principal{
-        margin-top:30px;
-        margin-left:230px;
-        width: 450px;
-        height: 80px;
-    }
+.valoentrada{
+    margin-left:11px;
+    font-size:15px;
+    text-align: right;
+}
+.total3{
+    margin-left:11px;
+    font-size:15px;
+    text-align: right;
+}
+.alinharCenter{
+    text-align:right;
+}   
+.cadastroContasPagar{
+    width: 650px;
+    margin-left:130px;
+    font-size: 12px;
+}
+.relContasPagar{
+    width: 500px;
+    margin-left:210px;
+    font-size: 12px;
+}
+.tabUsuario{
+    width: 530px;
+    margin-left:180px;
+    font-size: 12px;
+}
+.selecionar{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #30b344;
+    padding: -4px 15px;
+}
+.left4{
+    margin-left: 33px;
+    font-size:15px;
+}
+.valorr{
+    margin-left: 33px;
+    font-size:15px;
+    text-align: right;
+}
+.left5{
+    margin-left: 73px;
+    font-size:15px;
+}
+.left6{
+    margin-left:18px;
+    font-size:15px;
+}
+.left7{
+    margin-left:360px;
+
+    font-size:15px;
+}
+.left8{
+    margin-left:76px;
+
+    font-size:15px;
+}
+.valorsaida{
+    margin-left:76px;
+    text-align: right;
+    font-size:15px;
+}
+.left9{
+    margin-left: 90px;
+
+    font-size:15px;
+}
+.dialog{
+    font-size:15px;
+    margin-left:18%;
+}
+.lado{
+    margin-left:325px;
+    font-size: 14px;
+}
+.left10{
+    margin-left:450px;
+    font-size:15px;
+}
+    .valorliq{
+    margin-left:450px;
+    font-size:15px;
+    text-align: right;
+}
+button.pesquisar3 {
+    margin-left:200px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #3E7D62;
+    background: -moz-linear-gradient(
+        top,
+        #ffffff 0%,
+        #ffffff 50%,
+        #ffffff);
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#ffffff),
+        color-stop(0.50, #ffffff),
+        to(#ffffff));
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #7fdb15;
+    -moz-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    -webkit-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    text-shadow:
+        0px -1px 0px rgba(39,242,8,0.2),
+        0px 1px 0px rgba(255,255,255,1);
+}   
+button.pesquisar4 {
+    margin-left:6px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #3E7D62;
+    padding: 1px 1px;
+    background: -moz-linear-gradient(
+        top,
+        #ffffff 0%,
+        #ffffff 50%,
+        #ffffff);
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#ffffff),
+        color-stop(0.50, #ffffff),
+        to(#ffffff));
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #7fdb15;
+    -moz-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    -webkit-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    text-shadow:
+        0px -1px 0px rgba(39,242,8,0.2),
+        0px 1px 0px rgba(255,255,255,1);
+}
+.left11{
+    margin-left:430px;
+    font-size:15px;
+}
+.left12{
+    margin-left:130px;
+    font-size:15px;
+}
+.leefft{
+    margin-left:138px;
+    font-size:15px;
+}
+.left13{
+    margin-left:120px;
+    font-size:15px;
+}
+.espaco{
+    margin-left:40px;
+    font-size:15px;
+}
+.leftt{
+    margin-left:260px;
+    font-size:15px;
+}
+.tabelaRecebimento{
+    font-size:14px;
+}
+.left14{
+    margin-left:276px;
+    font-size:15px;
+}
+.left15{
+    margin-left:160px;
+    font-size:15px;
+}
+button.principal{
+    margin-top:30px;
+    margin-left:230px;
+    width: 450px;
+    height: 80px;
+}
 .ui-stack ul li{
-     font-size:13px;
-     width: 60px;
-     height: 50px;
+    font-size:13px;
+    width: 60px;
+    height: 50px;
 }
 .ui-stack ul li span{
     width: 140px;
 }
-    .ui-stack {
-        bottom: 28px;
-        right: 40px;
-    } 
-    .ui-stack ul li img{
-        width: 80px;
-    }
+.ui-stack {
+    bottom: 28px;
+    right: 40px;
+} 
+.ui-stack ul li img{
+    width: 80px;
+}
 .cadPagar{
     margin-left:1px;
     height: 85px;
     width: 950px;
     background: -moz-linear-gradient(
-		top,
-		#ffffff 0%,
-		#c7d95f 50%,
-		#add136 40%,
-		#3E7D62);
-	background: -webkit-gradient(
-		linear, left top, left bottom,
-		from(#3E7D62),
-		color-stop(0.50, #3E7D62),
-		color-stop(0.50, #3E7D62),
-		to(#3E7D62));
-        //borda arredondada
-       -webkit-border-bottom-right-radius: 10px;
-        -webkit-border-bottom-left-radius: 10px;
-        -moz-border-radius-bottomright: 10px;
-        -moz-border-radius-bottomleft: 10px;
-        border-bottom-right-radius: 10px;
-        border-bottom-left-radius: 10px;
-     //////////
-     //borda sombreada
-        box-shadow: 5px 4px 10px #828282;
-       -moz-box-shadow: 5px 4px 10px #828282;
-       -webkit-box-shadow: 5px 4px 10px #828282;
-       -khtml-box-shadow: 5px 4px 10px #828282;
-       -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(color=#ccc,direction=120,strength=4)"; /* IE8+ */
-       filter:progid:DXImageTransform.Microsoft.Shadow(color=#ccc,direction=120,strength=4); /* IE7 and lower */
-       ///////
+        top,
+        #ffffff 0%,
+        #c7d95f 50%,
+        #add136 40%,
+        #3E7D62);
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#3E7D62),
+        color-stop(0.50, #3E7D62),
+        color-stop(0.50, #3E7D62),
+        to(#3E7D62));
+    //borda arredondada
+    -webkit-border-bottom-right-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -moz-border-radius-bottomright: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    //////////
+    //borda sombreada
+    box-shadow: 5px 4px 10px #828282;
+    -moz-box-shadow: 5px 4px 10px #828282;
+    -webkit-box-shadow: 5px 4px 10px #828282;
+    -khtml-box-shadow: 5px 4px 10px #828282;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(color=#ccc,direction=120,strength=4)"; /* IE8+ */
+    filter:progid:DXImageTransform.Microsoft.Shadow(color=#ccc,direction=120,strength=4); /* IE7 and lower */
+    ///////
 }
 button.editar {
-        margin-left:-200px;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	color: #3E7D62;
-	background: -moz-linear-gradient(
-		top,
-		#ffffff 0%,
-		#ffffff 50%,
-		#ffffff);
-	background: -webkit-gradient(
-		linear, left top, left bottom,
-		from(#ffffff),
-		color-stop(0.50, #ffffff),
-		to(#ffffff));
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
-	border: 1px solid #7fdb15;
-	-moz-box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	-webkit-box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	text-shadow:
-		0px -1px 0px rgba(39,242,8,0.2),
-		0px 1px 0px rgba(255,255,255,1);
+    margin-left:-200px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #3E7D62;
+    background: -moz-linear-gradient(
+        top,
+        #ffffff 0%,
+        #ffffff 50%,
+        #ffffff);
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#ffffff),
+        color-stop(0.50, #ffffff),
+        to(#ffffff));
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #7fdb15;
+    -moz-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    -webkit-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    text-shadow:
+        0px -1px 0px rgba(39,242,8,0.2),
+        0px 1px 0px rgba(255,255,255,1);
 }   
-    .meio{
-       margin-left:35px;
-       font-size: 15px;
-       color:#F0FFFF;
-    }
-    fieldset button.botaologin{
-         margin-left:227px;
-         margin-top:7px;
-         font-size: 15px;
-         color:  #3E7D62;
-       background: -moz-linear-gradient(
-		top,
-		#97dba5 0%,
-		#f7faf7);
-	background: -webkit-gradient(
-		linear, left top, left bottom,
-		from(#97dba5),
-		to(#f7faf7));
-    }
-    .telalogin{
-        width: 346px;
-        margin-top:50px;
-       background: -moz-linear-gradient(
-		top,
-		#3E7D62 0%,
-		#f7faf7);
-	background: -webkit-gradient(
-		linear, left top, left bottom,
-		from(#268a3a),
-		to(#f7faf7));
-        margin-left:270px;
-        -webkit-border-top-left-radius: 20px;
-        -webkit-border-bottom-right-radius: 20px;
-        -moz-border-radius-topleft: 20px;
-        -moz-border-radius-bottomright: 20px;
-        border-top-left-radius: 20px;
-        border-bottom-right-radius: 20px;
-    }
-    .left17{
-        margin-left:335px;
-    }
-     button.pesquisar5 {
-        margin-left:30px;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	color: #3E7D62;
-	padding: 1px 1px;
-	background: -moz-linear-gradient(
-		top,
-		#ffffff 0%,
-		#ffffff 50%,
-		#ffffff);
-	background: -webkit-gradient(
-		linear, left top, left bottom,
-		from(#ffffff),
-		color-stop(0.50, #ffffff),
-		to(#ffffff));
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
-	border: 1px solid #7fdb15;
-	-moz-box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	-webkit-box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	box-shadow:
-		0px 1px 3px rgba(000,000,000,0.5),
-		inset 0px 0px 3px rgba(255,255,255,1);
-	text-shadow:
-		0px -1px 0px rgba(39,242,8,0.2),
-		0px 1px 0px rgba(255,255,255,1);
+.meio{
+    margin-left:35px;
+    font-size: 15px;
+    color:#F0FFFF;
+}
+fieldset button.botaologin{
+    margin-left:227px;
+    margin-top:7px;
+    font-size: 15px;
+    color:  #3E7D62;
+    background: -moz-linear-gradient(
+        top,
+        #97dba5 0%,
+        #f7faf7);
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#97dba5),
+        to(#f7faf7));
+}
+.telalogin{
+    width: 346px;
+    margin-top:50px;
+    background: -moz-linear-gradient(
+        top,
+        #3E7D62 0%,
+        #f7faf7);
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#268a3a),
+        to(#f7faf7));
+    margin-left:270px;
+    -webkit-border-top-left-radius: 20px;
+    -webkit-border-bottom-right-radius: 20px;
+    -moz-border-radius-topleft: 20px;
+    -moz-border-radius-bottomright: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.left17{
+    margin-left:335px;
+}
+button.pesquisar5 {
+    margin-left:30px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #3E7D62;
+    padding: 1px 1px;
+    background: -moz-linear-gradient(
+        top,
+        #ffffff 0%,
+        #ffffff 50%,
+        #ffffff);
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#ffffff),
+        color-stop(0.50, #ffffff),
+        to(#ffffff));
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #7fdb15;
+    -moz-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    -webkit-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    text-shadow:
+        0px -1px 0px rgba(39,242,8,0.2),
+        0px 1px 0px rgba(255,255,255,1);
 }
 .green { 
     background:#F0FFFF;
@@ -673,7 +717,7 @@ button.editar {
 }
 
 .yellow{
-   background: #FFFF00;
+    background: #FFFF00;
 }
 .white .ui-datatable {
     background-color: white;

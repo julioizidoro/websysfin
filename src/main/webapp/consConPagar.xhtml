@@ -9,116 +9,116 @@
         <ui:define name="corpo">
             <h:form>
                 <div id="centro">
-                    <p:growl id="growl" showDetail="true" sticky="true" />
-                    <br></br>
-                    <h:panelGrid columns="7" cellpadding="3">
-                        <p:outputLabel value="Unidade" for="unidade" class="unidade"/> 
-                        <p:outputLabel value="Data Inicia:" for="dataIni" class="left7"/> 
-                        <p:outputLabel value="Data Final" for="dataFinal" class="left"/>
-                        <p:selectBooleanCheckbox  class="left"/>
-                        <h:outputText value="Liberadas"/>
-                        <p:selectBooleanCheckbox  class="" />
-                        <h:outputText value="Autorizadas"/>    
-                        
-                    </h:panelGrid>
-                    <h:panelGrid columns="5" cellpadding="1">
+                    <p:growl id="growl" showDetail="true" sticky="true"/>
+                        <br></br>
+                        <h:panelGrid columns="7" cellpadding="3">
+                            <p:outputLabel value="Unidade" for="unidade" class="unidade"/> 
+                            <p:outputLabel value="Data Inicia:" for="dataIni" class="left7"/> 
+                            <p:outputLabel value="Data Final" for="dataFinal" class="left"/>
+                            <p:selectBooleanCheckbox  class="left"/>
+                            <h:outputText value="Liberadas"/>
+                            <p:selectBooleanCheckbox  class="" />
+                            <h:outputText value="Autorizadas"/>    
 
-                        <p:inputText id="unidade" size="31" maxlength="100" class="unidade" value="#{ClienteMB.cliente.nomeFantasia}"  readonly="true"/>
-                        <p:commandButton value="Selecionar" class="css3button" icon=" ui-icon-arrowthickstop-1-s" action="#{ContasPagarMB.selecionarUnidade}"/>
-                        <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="9" maxlength="15" class="left4" value="#{ContasPagarMB.dataInicial}" >
-                            <f:convertDateTime pattern="dd/MM/yyyy" />  
-                        </p:calendar>
-                        <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="left4" value="#{ContasPagarMB.dataFinal}">
-                            <f:convertDateTime pattern="dd/MM/yyyy" />  
-                        </p:calendar>
-                        <p:commandButton value="Pesquisar" class="pesquisar" icon=" ui-icon-search " update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{ContasPagarMB.pesquisar()}"/>
-                    </h:panelGrid>  
-                    <br></br>
-                    <legend id="iUsu2" ><b>Consulta de Contas a Pagar </b></legend>
+                        </h:panelGrid>
+                        <h:panelGrid columns="5" cellpadding="1">
 
-                    <p:dataTable id="contaPagar" var="contasPagar"  value="#{ContasPagarMB.listaContaPagar}" class="tabelacontas" 
-                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-                                 paginator="true" rows="10" style="margin-bottom:20px" >
-
-                        <f:facet name="{Exporters}">
-                            <h:commandLink>
-                                <img src="resources/img/excel.png" width="20" class="imagens"/>
-                                <p:dataExporter type="xls" target="contaPagar" fileName="contas" />
-                            </h:commandLink>
-
-                            <h:commandLink>
-                                <img src="resources/img/pdf.png" width="20"/>
-                                <p:dataExporter type="pdf" target="contaPagar" fileName="conta"/>
-                            </h:commandLink>
-                        </f:facet>
-                        <p:column headerText="Status"  style="width:35px" styleClass="Center">
-                            <p:graphicImage  value="#{ContasPagarMB.verStatus(contasPagar)}"/>
-                        </p:column>
-                        <p:column headerText="Data Vencimento" style="width:78px">
-                            <h:outputText  value="#{contasPagar.dataVencimento}" >
+                            <p:inputText id="unidade" size="31" maxlength="100" class="unidade" value="#{ClienteMB.cliente.nomeFantasia}"  readonly="true"/>
+                            <p:commandButton value="Selecionar" class="css3button" icon=" ui-icon-arrowthickstop-1-s" action="#{ContasPagarMB.selecionarUnidade}"/>
+                            <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="9" maxlength="15" class="left4" value="#{ContasPagarMB.dataInicial}" >
                                 <f:convertDateTime pattern="dd/MM/yyyy" />  
-                            </h:outputText>
-                        </p:column>
-                        <p:column headerText="Cliente"  style="width:130px">
-                            <h:outputText value="#{contasPagar.cliente.nomeFantasia}"/>
-                        </p:column>
-                        <p:column headerText="Descrição"  >
-                            <h:outputText value="#{contasPagar.descricao}"/>
-                        </p:column>
-                        <p:column headerText="Autorizadas"  style="width:63px" styleClass="Center" >
-                            <p:graphicImage value="#{ContasPagarMB.imagem(contasPagar)}"/>
-                        </p:column>
-                        <p:column headerText="Fornecedor" style="width:140px" >
-                            <h:outputText value="#{contasPagar.fornecedor}"/>
-                        </p:column>
-                        <p:column headerText="Valor Conta" style="width:60px" styleClass="Center">
-                            <h:outputText value="#{contasPagar.valor}">
-                                <f:convertNumber currencySymbol="" type="currency"/>
-                             </h:outputText>
-                        </p:column>
+                            </p:calendar>
+                            <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="left4" value="#{ContasPagarMB.dataFinal}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />  
+                            </p:calendar>
+                            <p:commandButton value="Pesquisar" class="pesquisar" icon=" ui-icon-search " update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{ContasPagarMB.pesquisar()}"/>
+                        </h:panelGrid>  
+                        <br></br>
+                        <legend id="iUsu2" ><b>Consulta de Contas a Pagar </b></legend>
 
-                        <p:column style="width:28px">
-                            <p:selectBooleanCheckbox value="#{contasPagar.selecionado}"/>
-                        </p:column>
-                    </p:dataTable>
-               <h:panelGrid columns="4" cellpadding="3">
-                        <p:outputLabel value="Total Contas Vencidas" for="contasVenc" class="left" /> 
-                        <p:outputLabel value="Total Contas Vencendo" for="contasVencendo" class="left"/> 
-                        <p:outputLabel value="Total Contas a Vencer" for="contasVencer" class="left5"/>
-                        <p:outputLabel value="Total Contas a Pagar" for="contasPagar" class="left"/>
-                    </h:panelGrid>
-                    <h:panelGrid columns="5" cellpadding="1">
+                        <p:dataTable id="contaPagar" var="contasPagar"  value="#{ContasPagarMB.listaContaPagar}" class="tabelacontas" 
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                     paginator="true" rows="10" style="margin-bottom:20px" >
 
-                        <p:inputText id="contasVenc" size="16" maxlength="100" class="vermelho" value="#{ContasPagarMB.stotalvencida}"  readonly="true"/>
-                        <p:inputText id="contasVencendo" size="18" maxlength="100" class="amarelo" value="#{ContasPagarMB.stotalvencendo}"  readonly="true"/>
-                        <p:inputText id="contasVencer" size="16" maxlength="100" class="total" value="#{ContasPagarMB.stotalvencer}"  readonly="true"/>
-                        <p:inputText id="contasPagar" size="15" maxlength="100" class="total" value="#{ContasPagarMB.stotal}"  readonly="true"/>
-                    </h:panelGrid>  
-                    <br></br>
-                    <h:panelGrid columns="10" cellpadding="1" class="cadPagar">
-                        <p:commandButton value="Adicionar" icon=" ui-icon-plus " class="pesquisar2" action="#{ContasPagarMB.novo()}"/>
-                        <p:commandButton value="Editar" class="pesquisar2" icon=" ui-icon-pencil" action="#{ContasPagarMB.editar()}"/>
-                        <p:commandButton value="Excluir" class="pesquisar2" icon=" ui-icon-trash " actionListener="#{mensagem.excluiMessagem()}" update="growl"/>
-                        <p:commandButton value="Liberar" class="pesquisar2" icon=" ui-icon-check " action="#{ContasPagarMB.liberarContasPagar()}"/>
-                        <p:commandButton value="Autorizar" class="pesquisar2" icon=" ui-icon-check " action="#{ContasPagarMB.autorizarPagamentoContasPagar()}" />
-                        <p:commandButton value="Arquivo" class="pesquisar2" icon="ui-icon-folder-open " oncomplete="PF('dlg').show()"/>
-                        <p:commandButton value="Usuários" class="pesquisar2" action="#{ContasPagarMB.operacaoUsuario}"/>
-                    </h:panelGrid>
-                    <p:dialog header="Adicionar arquivo" modal="true" showEffect="bounce" widgetVar="dlg" resizable="false"  class="dialog" width="55%">
-                        <h:panelGrid columns="2" cellpadding="5" >
-                            <p:outputLabel value="Arquivos:" for="arquivo"  class="left"/>
-                        </h:panelGrid>
-                        <h:panelGrid columns="2" cellpadding="5" >
-                            <p:inputText id="arquivo"   size="70" maxlength="100"  class="left"/>
-                            <p:commandButton value="Salvar" icon=" ui-icon-plusthick" />
-                        </h:panelGrid>
-                        <h:panelGrid columns="2" cellpadding="5" >
-                            <p:inputText id="arquivo2"   size="70" maxlength="100"  class="left"/>
-                            <p:commandButton value="Salvar" icon=" ui-icon-plusthick" />
-                        </h:panelGrid>
-                        <p:commandButton value="Fechar" onclick="dlg.hide();" icon=" ui-icon-carat-1-s"  class="lado"/>
+                            <f:facet name="{Exporters}">
+                                <h:commandLink>
+                                    <img src="resources/img/excel.png" width="20" class="imagens"/>
+                                    <p:dataExporter type="xls" target="contaPagar" fileName="contas" />
+                                </h:commandLink>
 
-                    </p:dialog> 
+                                <h:commandLink>
+                                    <img src="resources/img/pdf.png" width="20"/>
+                                    <p:dataExporter type="pdf" target="contaPagar" fileName="conta"/>
+                                </h:commandLink>
+                            </f:facet>
+                            <p:column headerText="Status"  style="width:35px" styleClass="Center">
+                                <p:graphicImage  value="#{ContasPagarMB.verStatus(contasPagar)}"/>
+                            </p:column>
+                            <p:column headerText="Data Vencimento" style="width:78px">
+                                <h:outputText  value="#{contasPagar.dataVencimento}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />  
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Cliente"  style="width:130px">
+                                <h:outputText value="#{contasPagar.cliente.nomeFantasia}"/>
+                            </p:column>
+                            <p:column headerText="Descrição"  >
+                                <h:outputText value="#{contasPagar.descricao}"/>
+                            </p:column>
+                            <p:column headerText="Autorizadas"  style="width:63px" styleClass="Center" >
+                                <p:graphicImage value="#{ContasPagarMB.imagem(contasPagar)}"/>
+                            </p:column>
+                            <p:column headerText="Fornecedor" style="width:140px" >
+                                <h:outputText value="#{contasPagar.fornecedor}"/>
+                            </p:column>
+                            <p:column headerText="Valor Conta" style="width:60px" styleClass="Center">
+                                <h:outputText value="#{contasPagar.valor}">
+                                    <f:convertNumber currencySymbol="" type="currency"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column style="width:28px">
+                                <p:selectBooleanCheckbox value="#{contasPagar.selecionado}"/>
+                            </p:column>
+                        </p:dataTable>
+                        <h:panelGrid columns="4" cellpadding="3">
+                            <p:outputLabel value="Total Contas Vencidas" for="contasVenc" class="left" /> 
+                            <p:outputLabel value="Total Contas Vencendo" for="contasVencendo" class="left"/> 
+                            <p:outputLabel value="Total Contas a Vencer" for="contasVencer" class="left5"/>
+                            <p:outputLabel value="Total Contas a Pagar" for="contasPagar" class="left"/>
+                        </h:panelGrid>
+                        <h:panelGrid columns="5" cellpadding="1">
+
+                            <p:inputText id="contasVenc" size="16" maxlength="100" class="vermelho" value="#{ContasPagarMB.stotalvencida}"  readonly="true"/>
+                            <p:inputText id="contasVencendo" size="18" maxlength="100" class="amarelo" value="#{ContasPagarMB.stotalvencendo}"  readonly="true"/>
+                            <p:inputText id="contasVencer" size="16" maxlength="100" class="total" value="#{ContasPagarMB.stotalvencer}"  readonly="true"/>
+                            <p:inputText id="contasPagar" size="15" maxlength="100" class="total" value="#{ContasPagarMB.stotal}"  readonly="true"/>
+                        </h:panelGrid>  
+                        <br></br>
+                        <h:panelGrid columns="10" cellpadding="1" class="cadPagar">
+                            <p:commandButton value="Adicionar" icon=" ui-icon-plus " class="pesquisar2" action="#{ContasPagarMB.novo()}"/>
+                            <p:commandButton value="Editar" class="pesquisar2" icon=" ui-icon-pencil" action="#{ContasPagarMB.editar()}"/>
+                            <p:commandButton value="Excluir" class="pesquisar2" icon=" ui-icon-trash " actionListener="#{mensagem.excluiMessagem()}" update="growl"/>
+                            <p:commandButton value="Liberar" class="pesquisar2" icon=" ui-icon-check " action="#{ContasPagarMB.liberarContasPagar()}"  />
+                            <p:commandButton value="Autorizar" class="pesquisar2" icon=" ui-icon-check " action="#{ContasPagarMB.autorizarPagamentoContasPagar()}" actionListener="#{mensagem.autorizar()}" update="growl" />
+                            <p:commandButton value="Arquivo" class="pesquisar2" icon="ui-icon-folder-open " oncomplete="PF('dlg').show()"/>
+                            <p:commandButton value="Usuários" class="pesquisar2" action="#{ContasPagarMB.operacaoUsuario}"/>
+                        </h:panelGrid>
+                        <p:dialog header="Adicionar arquivo" modal="true" showEffect="bounce" widgetVar="dlg" resizable="false"  class="dialog" width="55%">
+                            <h:panelGrid columns="2" cellpadding="5" >
+                                <p:outputLabel value="Arquivos:" for="arquivo"  class="left"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2" cellpadding="5" >
+                                <p:inputText id="arquivo"   size="70" maxlength="100"  class="left"/>
+                                <p:commandButton value="Salvar" icon=" ui-icon-plusthick" />
+                            </h:panelGrid>
+                            <h:panelGrid columns="2" cellpadding="5" >
+                                <p:inputText id="arquivo2"   size="70" maxlength="100"  class="left"/>
+                                <p:commandButton value="Salvar" icon=" ui-icon-plusthick" />
+                            </h:panelGrid>
+                            <p:commandButton value="Fechar" onclick="dlg.hide();" icon=" ui-icon-carat-1-s"  class="lado"/>
+
+                        </p:dialog> 
                 </div>
             </h:form>     
 

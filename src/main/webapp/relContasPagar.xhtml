@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/WEB-INF/templates/default.xhtml">
+        <ui:define name="corpo">
+            <h:form enctype = "multipart / form-data" >
+                <div id="centro">
+                    <p:growl id="growl" showDetail="true" sticky="true" />
+                    <br></br>
+                    <br></br>
+                    <p:tabView class="relContasPagar">
+                        <p:tab title="Relatório de Pagamentos" >
+                            <h:panelGrid columns="2" cellpadding="5" >
+                                <p:outputLabel value="Unidade" for="unidade"  class="left3"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2">
+                                <p:inputText id="unidade" size="59"  class="left3"  value="#{ClienteMB.cliente.nomeFantasia}"/>
+                                <p:commandButton value="Selecionar" class="selecionar" action="#{ContasPagarMB.selecionarUnidadeCadastro()}"/>
+                            </h:panelGrid>
+                            
+                            <h:panelGrid columns="7" cellpadding="3">
+                                <p:outputLabel value="Data Inicio" for="dataIni" class="left3"/> 
+                                <p:outputLabel value="Data Fínal" for="dataFim" class="left9"/>
+                                <p:outputLabel value="Competência" for="competencia" class="left5"/>
+                                
+                            </h:panelGrid>
+                            <h:panelGrid columns="5" cellpadding="1">
+                                <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="left3" >
+                                    <f:convertDateTime parent="dd/MM/yyy"/>
+                                </p:calendar>
+                                <p:calendar id="dataFim"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left"  >
+                                    <f:convertDateTime parent="dd/MM/yyy"/>
+                                </p:calendar>
+                                <p:inputMask id="competencia" label="competencia" value="" size="19" mask="99/9999"  class="left1">
+                                </p:inputMask>
+                            </h:panelGrid> 
+                                 
+                        </p:tab>
+                    </p:tabView>  
+                    <p:commandButton value="Confirmar" icon=" ui-icon-plusthick" class="cadastrar"  actionListener="#{mensagem.saveMessagem}" update="growl" />
+                    <p:commandButton value="Excel" class="pesquisar2"/>
+                    <p:commandButton value="Cancelar" icon=" ui-icon-cancel " class="pesquisar2"  />
+                    <br></br>
+                    <br></br>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+
+

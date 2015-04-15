@@ -9,42 +9,42 @@
         <ui:define name="corpo">
             <h:form>
                 <div id="centro">
+                    <p:growl id="growl" showDetail="true" sticky="true"  />
+                        <br></br>
+                        <legend id="iUsu" ><b>Liberação contas a pagar</b></legend>
 
-                    <br></br>
-                    <legend id="iUsu" ><b>Liberação contas a pagar</b></legend>
-
-                    <p:dataTable id="contarPagar" var="contasPagar"  rowStyleClass="tabela" class="tabelaselecionar" value="#{ContasPagarMB.listaLiberadas}" 
-                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                 paginator="true" rows="10" style="margin-bottom:20px"> 
-                        <p:column headerText="Data Vencimento" >
-                            <h:outputText  value="#{contasPagar.dataVencimento}">
-                                <f:convertDateTime pattern="dd/MM/yyyy" />  
-                            </h:outputText>
-                        </p:column>
-                        <p:column headerText="Descrição" style="width: 400px;">
-                            <h:outputText value="#{contasPagar.descricao}"/>
-                        </p:column>
-                        <p:column headerText="Valor da Conta" >
-                            <h:outputText value="#{contasPagar.valor}">
-                                <f:convertNumber currencySymbol="" type="currency"/>
-                            </h:outputText>
-                        </p:column>
-                    </p:dataTable>    
-                    <h:panelGrid columns="4" cellpadding="3">
-                        <p:outputLabel value="Valor total a liberar" for="valorTotal" class="left2"/> 
-                        <p:outputLabel value="Data da liberação" for="dataLiberação" class="left8"/> 
-                    </h:panelGrid>
-                    <h:panelGrid columns="5" cellpadding="1">
-                        <p:inputText id="valorTotal" size="15" maxlength="100" class="left2" value="#{ContasPagarMB.totalLiberadas}" />
-                        <p:calendar id="dataLiberação"  pattern="dd/MM/yyyy" mask="true" size="6" maxlength="15" class="left" value="#{ContasPagarMB.dataLiberacao}">
-                            <f:convertDateTime parent="dd/MM/yyyy"/>
-                        </p:calendar>
-                        <p:commandButton value="Confirmar" icon=" ui-icon-plus " class="pesquisar" action="#{ContasPagarMB.salvarContasLiberadas()}"/>
-                        <p:commandButton value="Cancelar" class="pesquisar5" action="#{ContasPagarMB.cancelar()}"/>
-                    </h:panelGrid>  
-                    <br></br>
-                    <h:panelGrid columns="2" cellpadding="1" class="cadPagar">
-                    </h:panelGrid>
+                        <p:dataTable id="contarPagar" var="contasPagar"  rowStyleClass="tabela" class="tabelaselecionar" value="#{ContasPagarMB.listaLiberadas}" 
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                     paginator="true" rows="10" style="margin-bottom:20px"> 
+                            <p:column headerText="Data Vencimento" >
+                                <h:outputText  value="#{contasPagar.dataVencimento}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />  
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Descrição" style="width: 400px;">
+                                <h:outputText value="#{contasPagar.descricao}"/>
+                            </p:column>
+                            <p:column headerText="Valor da Conta"  styleClass="Center">
+                                <h:outputText value="#{contasPagar.valor}">
+                                    <f:convertNumber currencySymbol="" type="currency"/>
+                                </h:outputText>
+                            </p:column>
+                        </p:dataTable>    
+                        <h:panelGrid columns="4" cellpadding="3">
+                            <p:outputLabel value="Valor total a liberar" for="valorTotal" class="left2"/> 
+                            <p:outputLabel value="Data da liberação" for="dataLiberação" class="left8"/> 
+                        </h:panelGrid>
+                        <h:panelGrid columns="5" cellpadding="1">
+                            <p:inputText id="valorTotal" size="15" maxlength="100" class="valorliberar" value="#{ContasPagarMB.totalLiberadas}" />
+                            <p:calendar id="dataLiberação"  pattern="dd/MM/yyyy" mask="true" size="6" maxlength="15" class="left" value="#{ContasPagarMB.dataLiberacao}">
+                                <f:convertDateTime parent="dd/MM/yyyy"/>
+                            </p:calendar>
+                            <p:commandButton value="Confirmar" icon=" ui-icon-plus " class="pesquisar" action="#{ContasPagarMB.salvarContasLiberadas()}" actionListener="#{mensagem.liberar()}" update="growl"/>
+                            <p:commandButton value="Cancelar" class="pesquisar5" action="#{ContasPagarMB.cancelar()}"/>
+                        </h:panelGrid>  
+                        <br></br>
+                        <h:panelGrid columns="2" cellpadding="1" class="cadPagar">
+                        </h:panelGrid>
                 </div>
             </h:form>     
 

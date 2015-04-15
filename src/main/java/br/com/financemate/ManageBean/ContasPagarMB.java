@@ -75,6 +75,8 @@ public class ContasPagarMB implements Serializable {
     private List<Contaspagar> listaLiberadas;
     private String totalLiberadas;
     private Date dataLiberacao;
+    private String nomeArquivo01;
+    private String nomeArquivo02;
 
     public ContasPagarMB() {
         gerarDataInicia();
@@ -82,6 +84,22 @@ public class ContasPagarMB implements Serializable {
 
     public ClienteMB getClienteMB() {
         return clienteMB;
+    }
+
+    public String getNomeArquivo01() {
+        return nomeArquivo01;
+    }
+
+    public void setNomeArquivo01(String nomeArquivo01) {
+        this.nomeArquivo01 = nomeArquivo01;
+    }
+
+    public String getNomeArquivo02() {
+        return nomeArquivo02;
+    }
+
+    public void setNomeArquivo02(String nomeArquivo02) {
+        this.nomeArquivo02 = nomeArquivo02;
     }
 
     
@@ -620,12 +638,14 @@ public class ContasPagarMB implements Serializable {
         FacesMessage msg = new FacesMessage("Sucesso! ", event.getFile().getFileName() + " upload.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
          setArquivo01(event.getFile());
+         setNomeArquivo01(event.getFile().getFileName());
     }
     
     public void upload02(FileUploadEvent event) {
         FacesMessage msg = new FacesMessage("Sucesso! ", event.getFile().getFileName() + " upload.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         setArquivo02(event.getFile());
+        setNomeArquivo02(event.getFile().getFileName());
     }
 
     public void salvarArquivoAnexado(String nome, UploadedFile arquivo) {

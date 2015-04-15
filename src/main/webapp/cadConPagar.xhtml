@@ -7,7 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/WEB-INF/templates/default.xhtml">
         <ui:define name="corpo">
-            <h:form enctype = "multipart / form-data" >>
+            <h:form enctype = "multipart / form-data" >
                 <div id="centro">
                     <p:growl id="growl" showDetail="true" sticky="true" />
                     <br></br>
@@ -15,17 +15,18 @@
                     <p:tabView class="cadastroContasPagar">
                         <p:tab title="Cadastro" >
                             <h:panelGrid columns="2" cellpadding="5" >
-                                <p:outputLabel value="Upload de Arquivo" for="upload"  class="left3"/>
+                                <p:outputLabel value="Upload de Arquivo" for="upload"  class=""/>
+                                <p:outputLabel value="Upload de Arquivo 02" for="upload2"  class="leefft"/>
                             </h:panelGrid>
-                            <h:panelGrid columns="2">
-                                <p:fileUpload id="upload" fileUploadListener="#{ContasPagarMB.upload01}" mode="advanced"
-                                              update="messages" auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
-
+                            <h:panelGrid columns="4">
+                                <p:fileUpload id="upload" fileUploadListener="#{ContasPagarMB.upload01}" mode="advanced" update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" 
+                                              auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />                               
                                 <p:growl id="messages" showDetail="true" />
-                            </h:panelGrid>
-                            <h:panelGrid columns="2">
-                                <p:fileUpload id="upload2"  mode="simple" class="left3" value="#{ContasPagarMB.arquivo02}"/>
+                                 <p:fileUpload id="upload2" fileUploadListener="#{ContasPagarMB.upload02}" mode="advanced" update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" 
+                                              auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" class="left9">
+                                </p:fileUpload>
                                 <p:growl id="message2" showDetail="true" />
+
                             </h:panelGrid>
                             <h:panelGrid columns="2" cellpadding="5" >
                                 <p:outputLabel value="Unidade" for="unidade"  class="left3"/>
@@ -81,7 +82,7 @@
                                     <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
                                     <f:selectItems value="#{ContasPagarMB.listaPlanoContas}" var="planoConta" itemLabel="#{planoConta.descricao}" itemValue="#{planoConta.idplanoContas}"/>
                                 </p:selectOneMenu>                   
-                                <p:inputText id="valor" size="16"  class="left4"  value="#{ContasPagarMB.valorConta}"/>
+                                <p:inputText id="valor" size="16"  class="valorr"  value="#{ContasPagarMB.valorConta}"/>
                             </h:panelGrid>
                             <h:panelGrid columns="2" cellpadding="3">
                                 <p:outputLabel value="Descrição" for="descricao" class="left3" /> 
