@@ -7,10 +7,8 @@ package br.com.financemate.ManageBean;
 
 import br.com.financemate.Controller.ClienteController;
 import br.com.financemate.model.Cliente;
-import br.com.financemate.model.Contaspagar;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.enterprise.context.SessionScoped;

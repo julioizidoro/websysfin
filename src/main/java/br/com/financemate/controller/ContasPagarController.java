@@ -11,7 +11,6 @@ package br.com.financemate.Controller;
 import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.model.Arquivocontaspagar;
 import br.com.financemate.model.Contaspagar;
-import br.com.financemate.modelView.Viewcontaspagar;
 import br.com.financemate.modelView.Viewcontaspagarfluxo;
 import java.sql.SQLException;
 import java.util.List;

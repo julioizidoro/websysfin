@@ -26,7 +26,8 @@
     <class>br.com.financemate.modelView.Viewrelatoriopagamento</class>
     <class>br.com.financemate.modelView.Viewrelatoriovendas</class>
     <class>br.com.financemate.modelView.Viewvendas</class>
-    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <class>br.com.financemate.model.Nomearquivo</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>
 </persistence>

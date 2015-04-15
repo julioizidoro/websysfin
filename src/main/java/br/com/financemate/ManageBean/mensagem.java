@@ -21,8 +21,9 @@ public class mensagem {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Cadastrado com Sucesso", ""));
     }
-     public void excluiMessagem() {
+    
+    public void excluiMessagem() {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Excluido com Sucesso", ""));
-    }
+    } 
 }
