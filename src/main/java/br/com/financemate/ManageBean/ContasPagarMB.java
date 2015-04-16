@@ -11,6 +11,7 @@ import br.com.financemate.Controller.MovimentoBancoController;
 import br.com.financemate.Controller.PlanoContasController;
 import br.com.financemate.Controller.UsuarioController;
 import br.com.financemate.Util.Formatacao;
+import br.com.financemate.controller.NomeArquivoController;
 import br.com.financemate.facade.NomeArquivoFacade;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
@@ -25,9 +26,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -35,7 +39,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
+
 /**
  *
  * @author Wolverine
@@ -77,9 +84,29 @@ public class ContasPagarMB implements Serializable {
     private Date dataLiberacao;
     private String nomeArquivo01;
     private String nomeArquivo02;
+    private Nomearquivo nomeArquivo;
+    private List<Nomearquivo> listaArquivo;
+    private StreamedContent file;
 
     public ContasPagarMB() {
         gerarDataInicia();
+        nomeArquivo = new Nomearquivo();
+    }
+
+    public StreamedContent getFile() {
+        return file;
+    }
+
+    public void setFile(StreamedContent file) {
+        this.file = file;
+    }
+
+    public Nomearquivo getNomeArquivo() {
+        return nomeArquivo;
+    }
+
+    public void setNomeArquivo(Nomearquivo nomeArquivo) {
+        this.nomeArquivo = nomeArquivo;
     }
 
     public ClienteMB getClienteMB() {
@@ -102,7 +129,6 @@ public class ContasPagarMB implements Serializable {
         this.nomeArquivo02 = nomeArquivo02;
     }
 
-    
     public boolean isAutorizadas() {
         return autorizadas;
     }
@@ -113,6 +139,14 @@ public class ContasPagarMB implements Serializable {
 
     public void setListaLiberadas(List<Contaspagar> listaLiberadas) {
         this.listaLiberadas = listaLiberadas;
+    }
+
+    public List<Nomearquivo> getListaArquivo() {
+        return listaArquivo;
+    }
+
+    public void setListaArquivo(List<Nomearquivo> listaArquivo) {
+        this.listaArquivo = listaArquivo;
     }
 
     public String getTotalLiberadas() {
@@ -244,8 +278,6 @@ public class ContasPagarMB implements Serializable {
         this.arquivo01 = arquivo01;
     }
 
-    
-
     public UploadedFile getArquivo02() {
         return arquivo02;
     }
@@ -253,7 +285,6 @@ public class ContasPagarMB implements Serializable {
     public void setArquivo02(UploadedFile arquivo02) {
         this.arquivo02 = arquivo02;
     }
-
 
     public void setClienteMB(ClienteMB clienteMB) {
         this.clienteMB = clienteMB;
@@ -621,26 +652,25 @@ public class ContasPagarMB implements Serializable {
             contasPagar.setValor(0.0f);
         }
         contasPagar.setVendaComissao(0);
-        
+
         ContasPagarController contasPagarController = new ContasPagarController();
         contasPagar = contasPagarController.salvar(contasPagar);
         salvarNomeArquivo();
         contasPagar = new Contaspagar();
-        
+
         clienteMB.setCliente(new Cliente());
         gerarListaContasPagar();
 
         return "consConPagar";
     }
-    private String destination = "resources/img/";
 
     public void upload01(FileUploadEvent event) {
         FacesMessage msg = new FacesMessage("Sucesso! ", event.getFile().getFileName() + " upload.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
-         setArquivo01(event.getFile());
-         setNomeArquivo01(event.getFile().getFileName());
+        setArquivo01(event.getFile());
+        setNomeArquivo01(event.getFile().getFileName());
     }
-    
+
     public void upload02(FileUploadEvent event) {
         FacesMessage msg = new FacesMessage("Sucesso! ", event.getFile().getFileName() + " upload.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -667,41 +697,41 @@ public class ContasPagarMB implements Serializable {
             System.out.println(e.getMessage());
         }
     }
-    
-    public void salvarNomeArquivo(){
+
+    public void salvarNomeArquivo() {
         Nomearquivo nomeArquivo = new Nomearquivo();
         ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-        String nome01 = servletContext.getRealPath("") + File.separator + "resources" + File.separator + "img" +
-                                    File.separator;
-        if (arquivo01!=null){
+        String nome01 = servletContext.getRealPath("") + File.separator + "resources" + File.separator + "img"
+                + File.separator;
+        if (arquivo01 != null) {
             nome01 = nome01 + String.valueOf(contasPagar.getIdcontasPagar()) + "_" + String.valueOf(contasPagar.getCliente().getIdcliente()) + arquivo01.getFileName();
             salvarArquivoAnexado(nome01, arquivo01);
             nomeArquivo.setNomearquivo01(nome01);
         }
-        
-        String nome02 = servletContext.getRealPath("") + File.separator + "resources" + File.separator + "img" +
-                                    File.separator;
-        if (arquivo02!=null){
+
+        String nome02 = servletContext.getRealPath("") + File.separator + "resources" + File.separator + "img"
+                + File.separator;
+        if (arquivo02 != null) {
             nome02 = nome02 + String.valueOf(contasPagar.getIdcontasPagar()) + "_" + String.valueOf(contasPagar.getCliente().getIdcliente()) + arquivo02.getFileName();
             salvarArquivoAnexado(nome02, arquivo02);
             nomeArquivo.setNomearquivo02(nome02);
         }
-        try{
-        NomeArquivoFacade nomeArquivoFacade = new  NomeArquivoFacade();
-        nomeArquivo.setContaspagar(contasPagar);
-        nomeArquivoFacade.salvar(nomeArquivo);        
-        }catch (Exception ex){
+        try {
+            NomeArquivoFacade nomeArquivoFacade = new NomeArquivoFacade();
+            nomeArquivo.setContaspagar(contasPagar);
+            nomeArquivoFacade.salvar(nomeArquivo);
+        } catch (Exception ex) {
             System.out.println(ex);
         }
     }
-    
-    public String liberarContasPagar(){
+
+    public String liberarContasPagar() {
         totalLiberadas = "0,00";
-        Float valorSoma=0.0f;
+        Float valorSoma = 0.0f;
         dataLiberacao = new Date();
         listaLiberadas = new ArrayList<Contaspagar>();
-        for (int i=0;i<listaContaPagar.size();i++){
-            if (listaContaPagar.get(i).isSelecionado()){
+        for (int i = 0; i < listaContaPagar.size(); i++) {
+            if (listaContaPagar.get(i).isSelecionado()) {
                 listaLiberadas.add(listaContaPagar.get(i));
                 valorSoma = valorSoma + listaContaPagar.get(i).getValor();
             }
@@ -709,18 +739,18 @@ public class ContasPagarMB implements Serializable {
         totalLiberadas = Formatacao.foramtarFloatString(valorSoma);
         return "liberacaoConPagar";
     }
-    
-    public String salvarContasLiberadas(){
+
+    public String salvarContasLiberadas() {
         ContasPagarController contasPagarController = new ContasPagarController();
-        for(int i=0;i<listaLiberadas.size();i++){
+        for (int i = 0; i < listaLiberadas.size(); i++) {
             salvarContaLiberadasMovimentoBanco(listaLiberadas.get(i));
         }
         gerarListaContasPagar();
-        listaLiberadas =null;
-        dataLiberacao=null;
+        listaLiberadas = null;
+        dataLiberacao = null;
         return "consConPagar";
     }
-    
+
     public void salvarContaLiberadasMovimentoBanco(Contaspagar conta) {
         conta.setDataLiberacao(dataLiberacao);
         conta.setContaPaga("S");
@@ -747,11 +777,11 @@ public class ContasPagarMB implements Serializable {
         ContasPagarController contasPagarController = new ContasPagarController();
         contasPagarController.salvar(conta);
     }
-    
-    public String autorizarPagamentoContasPagar(){
+
+    public String autorizarPagamentoContasPagar() {
         ContasPagarController contasPagarController = new ContasPagarController();
-        for(int i=0;i<listaContaPagar.size();i++){
-            if (listaContaPagar.get(i).isSelecionado()){
+        for (int i = 0; i < listaContaPagar.size(); i++) {
+            if (listaContaPagar.get(i).isSelecionado()) {
                 listaContaPagar.get(i).setAutorizarPagamento("S");
                 listaContaPagar.get(i).setUsuarioAutorizou(usuarioLogadoBean.getUsuario().getIdusuario());
                 String data = Formatacao.ConvercaoDataPadrao(new Date()) + "_" + Formatacao.foramtarHoraString();
@@ -761,5 +791,33 @@ public class ContasPagarMB implements Serializable {
         }
         gerarListaContasPagar();
         return "consConPagar";
+    }
+
+    
+    public String gerarListaArquivo() {
+        NomeArquivoFacade nomeArquivoFacade = new NomeArquivoFacade();
+         for (int i = 0; i < listaContaPagar.size(); i++) {
+             if (listaContaPagar.get(i).isSelecionado()){
+                 try {
+                     nomeArquivo = nomeArquivoFacade.listar(listaContaPagar.get(i).getIdcontasPagar());
+                     i=500000;
+                     System.out.println("parou");
+                 } catch (SQLException ex) {
+                     Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+                 }
+             }
+        }  
+        return "";
+    }
+    public void salvarArquivo01() {        
+        InputStream stream = ((ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext()).getResourceAsStream(nomeArquivo.getCaminho()+ nomeArquivo.getNomearquivo01());
+        file = new DefaultStreamedContent(stream, "", nomeArquivo.getNomearquivo01());
+      
+        System.out.println("teste");
+        
+    }
+     public void salvarArquivo02() {        
+        InputStream stream = ((ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext()).getResourceAsStream(nomeArquivo.getCaminho()+ nomeArquivo.getNomearquivo02());
+        file = new DefaultStreamedContent(stream, nomeArquivo.getCaminho(), nomeArquivo.getNomearquivo02());
     }
 }

@@ -42,10 +42,6 @@
                                 <p:dataExporter type="xls" target="contarReceber" fileName="cars" />
                             </h:commandLink>
 
-                            <h:commandLink>
-                                <img src="resources/img/pdf.png" width="24"/>
-                                <p:dataExporter type="pdf" target="contarReceber" fileName="cars"/>
-                            </h:commandLink>
                         </f:facet>
                         <p:column headerText="Data Vencimento" style="width: 75px;" >
                             <h:outputText value="#{contasReceber.dataVencimento}"  >
@@ -90,16 +86,7 @@
                             <p:selectBooleanCheckbox value="#{contasReceber.selecionado}"/>
                         </p:column>
                     </p:dataTable>
-                     <h:commandLink>
-                        <img src="resources/img/excel.png" width="24"/>
-                        <p:dataExporter type="xls" target="contarReceber" fileName="Contas a receber" />
-                    </h:commandLink>
-
-                    <h:commandLink>
-                        <img src="resources/img/pdf.png" width="24"/>
-                        <p:dataExporter type="pdf" target="contarReceber" fileName="Contas a receber"/>
-                    </h:commandLink>
-                    
+                     
                      <h:panelGrid columns="5" cellpadding="3">
                         <p:outputLabel value="Quantidade de Titulos" for="quantidade" class="left3" /> 
                         <p:outputLabel value="Total Valor Conta" for="totalconta" class="left"/> 

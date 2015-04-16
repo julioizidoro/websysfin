@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/WEB-INF/templates/default.xhtml">
+        <ui:define name="corpo">
+            <h:form>
+                <div id="centro">
+                    <p:growl id="growl" showDetail="true" sticky="true" />
+                    <br></br>
+                    <legend id="iUsu2" ><b></b></legend>
+
+                    <p:dataTable id="relatorioContasPagar" var="relatorioContasPagar" value="" rowStyleClass="tabela" class="tabelacontas" 
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                                 paginator="true" rows="10" style="margin-bottom:20px"> 
+
+                        <p:column headerText="Coluna"  >
+                            <h:outputText value="" />
+                        </p:column>
+                        <p:column headerText="Coluna"  >
+                            <h:outputText/>
+                        </p:column>
+                    </p:dataTable>                  
+                    <br></br>
+                    <h:panelGrid columns="10" cellpadding="1" class="cadPagar">
+                        <h:commandLink>
+                              <p:commandButton value="Exportar" class="cadastrar"  icon="ui-icon-document"/>
+                             <p:dataExporter type="xls" target="relatorioContasPagar" fileName="Relatario" />
+                        </h:commandLink>
+                        <p:commandButton value="Cancelar" class="export" icon=" ui-icon-trash "  />
+                   </h:panelGrid>
+                </div>
+            </h:form>     
+        </ui:define>
+    </ui:composition>
+</html>
+

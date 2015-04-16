@@ -35,19 +35,14 @@
                     <br></br>
                     <legend id="iUsu" ><b>Consulta de outros lançamentos </b></legend>
                    
-                 <p:dataTable id="contarPagar" var="contasPagar" value="#" rowStyleClass="tabela" class="tabelaselecionar" 
+                 <p:dataTable id="outroslancamentos" var="contasPagar" value="#" rowStyleClass="tabela" class="tabelaselecionar" 
                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                  paginator="true" rows="10" style="margin-bottom:20px"> 
                      
                 <f:facet name="{Exporters}">
                    <h:commandLink>
                        <img src="resources/img/excel.png" width="24" class="left0"/>
-                       <p:dataExporter type="xls" target="tbl" fileName="cars" />
-                   </h:commandLink>
-
-                   <h:commandLink>
-                         <img src="resources/img/pdf.png" width="24"/>
-                       <p:dataExporter type="pdf" target="tbl" fileName="cars"/>
+                       <p:dataExporter type="xls" target="outroslancamentos" fileName="cars" />
                    </h:commandLink>
                </f:facet>
                     <p:column headerText="Data">
