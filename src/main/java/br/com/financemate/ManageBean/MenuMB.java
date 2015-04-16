@@ -7,6 +7,7 @@ package br.com.financemate.ManageBean;
 
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -18,7 +19,8 @@ import javax.inject.Named;
 @SessionScoped
 public class MenuMB implements Serializable{
     
-    
+    @Inject
+    private UsuarioLogadoBean usuarioLogadoBean;
     
     public String contasPagar(){
         return "consConPagar";

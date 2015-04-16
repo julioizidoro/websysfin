@@ -26,6 +26,7 @@ public class UsuarioLogadoBean implements Serializable{
     private Usuario usuario;
     private Cliente cliente;
     private int tipoCliente;
+    private String tipoRelatorio;
 
     public UsuarioLogadoBean() {
         this.usuario = usuario;
@@ -59,6 +60,14 @@ public class UsuarioLogadoBean implements Serializable{
 
     public void setTipoCliente(int tipoCliente) {
         this.tipoCliente = tipoCliente;
+    }
+
+    public String getTipoRelatorio() {
+        return tipoRelatorio;
+    }
+
+    public void setTipoRelatorio(String tipoRelatorio) {
+        this.tipoRelatorio = tipoRelatorio;
     }
 
     
