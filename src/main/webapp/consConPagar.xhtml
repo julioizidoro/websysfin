@@ -48,7 +48,7 @@
                                 </h:commandLink>
 
                             </f:facet>
-                            <p:column headerText="Status"  style="width:35px" styleClass="Center">
+                            <p:column headerText="Status"  style="width:35px" styleClass="alinharCenter">
                                 <p:graphicImage  value="#{ContasPagarMB.verStatus(contasPagar)}"/>
                             </p:column>
                             <p:column headerText="Data Vencimento" style="width:78px">
@@ -62,13 +62,13 @@
                             <p:column headerText="Descrição"  >
                                 <h:outputText value="#{contasPagar.descricao}"/>
                             </p:column>
-                            <p:column headerText="Autorizadas"  style="width:63px" styleClass="Center" >
+                            <p:column headerText="Autorizadas"  style="width:63px" styleClass="alinharCenter" >
                                 <p:graphicImage value="#{ContasPagarMB.imagem(contasPagar)}"/>
                             </p:column>
                             <p:column headerText="Fornecedor" style="width:140px" >
                                 <h:outputText value="#{contasPagar.fornecedor}"/>
                             </p:column>
-                            <p:column headerText="Valor Conta" style="width:60px" styleClass="Center">
+                            <p:column headerText="Valor Conta" style="width:60px" styleClass="alinharCenter">
                                 <h:outputText value="#{contasPagar.valor}">
                                     <f:convertNumber currencySymbol="" type="currency"/>
                                 </h:outputText>
@@ -98,39 +98,13 @@
                             <p:commandButton value="Excluir" class="pesquisar2" icon=" ui-icon-trash " actionListener="#{mensagem.excluiMessagem()}" update="growl"/>
                             <p:commandButton value="Liberar" class="pesquisar2" icon=" ui-icon-check " action="#{ContasPagarMB.liberarContasPagar()}"  />
                             <p:commandButton value="Autorizar" class="pesquisar2" icon=" ui-icon-check " action="#{ContasPagarMB.autorizarPagamentoContasPagar()}" actionListener="#{mensagem.autorizar()}" update="growl" />
-                            <p:commandButton value="Arquivo" class="pesquisar2" icon="ui-icon-folder-open " oncomplete="PF('dlg').show()" action="#{ContasPagarMB.gerarListaArquivo()}"/>
+                            <p:commandButton value="Arquivo" class="pesquisar2" icon="ui-icon-folder-open "  action="#{ContasPagarMB.gerarListaArquivo()}" />
                             <p:commandButton value="Usuários" class="pesquisar2" action="#{ContasPagarMB.operacaoUsuario}"/>
                         </h:panelGrid>
-                        <p:dialog header="Arquivos" modal="true" showEffect="bounce" widgetVar="dlg" resizable="false"  class="dialog" width="55%">
-                            <h:panelGrid columns="2" cellpadding="5" >
-                                <p:outputLabel value="Arquivos:" for="arquivo"  class="left"/>
-                            </h:panelGrid>
-                            <h:panelGrid columns="2" cellpadding="5" >
-                                <p:inputText id="arquivo"   size="70" maxlength="100"  class="left" value="#{ContasPagarMB.nomeArquivo.nomearquivo01}"/>
-                                <p:commandButton value="Salvar" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon=" ui-icon-plusthick">
-                                    <p:fileDownload value="#{ContasPagarMB.salvarArquivo01()}" />
-                                </p:commandButton>
-                            </h:panelGrid>
-                            <h:panelGrid columns="2" cellpadding="5" >
-                                <p:inputText id="arquivo2"   size="70" maxlength="100"  class="left" value="#{ContasPagarMB.nomeArquivo.nomearquivo02}"/>
-                                <p:commandButton value="Salvar" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon=" ui-icon-plusthick">
-                                    <p:fileDownload value="#{ContasPagarMB.salvarArquivo02()}" />
-                                </p:commandButton>
-                            </h:panelGrid>
-                            <p:commandButton value="Fechar" onclick="dlg.hide();" icon=" ui-icon-carat-1-s"  class="lado"/>
-                            
-                        </p:dialog> 
+                        
                 </div>
             </h:form>     
-            <script type="text/javascript">
-            function start() {
-                PF('statusDialog').show();
-            }
-
-            function stop() {
-                PF('statusDialog').hide();
-            }
-            </script>
+           
         </ui:define>
     </ui:composition>
 </html>

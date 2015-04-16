@@ -5,6 +5,15 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <script type="text/javascript">
+        function start() {
+            PF('statusDialog').show();
+        }
+
+        function stop() {
+            PF('statusDialog').hide();
+        }
+        </script>
     <ui:composition template="/WEB-INF/templates/default.xhtml">
         <ui:define name="corpo">
             <h:form>
@@ -18,15 +27,19 @@
                             <p:outputLabel value="Arquivo 01" for="arquivo1"  class="left3" />
                         </h:panelGrid>
                          <h:panelGrid columns="2">
-                             <p:inputText id="arquivo1" size="65"  class="left3" value="#{ContasPagarMB.nomeArquivo}"/>
-                           <p:commandButton value="Salvar"  class="pesquisar2"  />
+                             <p:inputText id="arquivo1" size="65"  class="left3" value="#{ContasPagarMB.nomeArquivo.nomearquivo01}"/>
+                           <p:commandButton value="Salvar" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon=" ui-icon-plusthick">
+                                    <p:fileDownload value="#{ContasPagarMB.salvarArquivo01()}" />
+                                </p:commandButton>
                          </h:panelGrid>     
                         <h:panelGrid columns="2" cellpadding="5" >
                             <p:outputLabel value="Arquivo 02" for="arquivo2"  class="left3" />
                         </h:panelGrid>
                         <h:panelGrid columns="2">
-                            <p:inputText id="arquivo2" size="65"  class="left3" value="#{ContasPagarMB.nomeArquivo}"/>
-                           <p:commandButton value="Salvar"  class="pesquisar2"  />
+                            <p:inputText id="arquivo2" size="65"  class="left3" value="#{ContasPagarMB.nomeArquivo.nomearquivo02}"/>
+                            <p:commandButton value="Salvar" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon=" ui-icon-plusthick">
+                                <p:fileDownload value="#{ContasPagarMB.salvarArquivo02()}" />
+                            </p:commandButton>
                          </h:panelGrid>     
                             
                         </p:tab>
@@ -38,7 +51,7 @@
 
                 </div>
             </h:form>
-
+           
         </ui:define>
     </ui:composition>
 </html>

@@ -801,13 +801,12 @@ public class ContasPagarMB implements Serializable {
                  try {
                      nomeArquivo = nomeArquivoFacade.listar(listaContaPagar.get(i).getIdcontasPagar());
                      i=500000;
-                     System.out.println("parou");
                  } catch (SQLException ex) {
                      Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
                  }
              }
         }  
-        return "";
+        return "mostrarArquivos";
     }
     public void salvarArquivo01() {        
         InputStream stream = ((ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext()).getResourceAsStream(nomeArquivo.getCaminho()+ nomeArquivo.getNomearquivo01());
