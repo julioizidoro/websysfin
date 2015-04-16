@@ -13,36 +13,41 @@
                     <br></br>
                     <br></br>
                     <p:tabView class="relContasPagar">
-                        <p:tab title="Relatório de Pagamentos" >
+                        <p:tab title="Relatório de Contas" >
                             <h:panelGrid columns="2" cellpadding="5" >
                                 <p:outputLabel value="Unidade" for="unidade"  class="left3"/>
                             </h:panelGrid>
                             <h:panelGrid columns="2">
-                                <p:inputText id="unidade" size="59"  class="left3"  value="#{ClienteMB.cliente.nomeFantasia}"/>
+                                <p:inputText id="unidade" size="66"  class="left3"  value="#{ClienteMB.cliente.nomeFantasia}"/>
                                 <p:commandButton value="Selecionar" class="selecionar" action="#{ContasPagarMB.selecionarUnidadeCadastro()}"/>
                             </h:panelGrid>
-                            
+
                             <h:panelGrid columns="7" cellpadding="3">
                                 <p:outputLabel value="Data Inicio" for="dataIni" class="left3"/> 
-                                <p:outputLabel value="Data Fínal" for="dataFim" class="left9"/>
-                                <p:outputLabel value="Competência" for="competencia" class="left5"/>
-                                
+                                <p:outputLabel value="Data Fínal" for="dataFim" class="left4"/>
+                                <p:outputLabel value="Competência" for="competencia" class="left4"/>
+                                <p:outputLabel value="Tipo de Relatório" for="tipoRelatorio"  class="left4"/>
                             </h:panelGrid>
                             <h:panelGrid columns="5" cellpadding="1">
-                                <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="left3" >
+                                <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left3" >
                                     <f:convertDateTime parent="dd/MM/yyy"/>
                                 </p:calendar>
-                                <p:calendar id="dataFim"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left"  >
+                                <p:calendar id="dataFim"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left3"  >
                                     <f:convertDateTime parent="dd/MM/yyy"/>
                                 </p:calendar>
-                                <p:inputMask id="competencia" label="competencia" value="" size="19" mask="99/9999"  class="left1">
+                                <p:inputMask id="competencia" label="competencia" value="" size="13" mask="99/9999"  class="left3">
                                 </p:inputMask>
-                            </h:panelGrid> 
-                                 
+                                <p:selectOneMenu id="tipoRelatorio" class="left3" style="width:140px" >
+                                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
+                                    <f:selectItem itemLabel="Contas Vencidas" itemValue="contasVencidas" /> 
+                                    <f:selectItem itemLabel="Fluxo de Caixa" itemValue="fluxoCaixa" />  
+                                    <f:selectItem itemLabel="Pagamentos" itemValue="pagamento" />                           
+                                </p:selectOneMenu>
+                            </h:panelGrid>                   
                         </p:tab>
-                    </p:tabView>  
-                    <p:commandButton value="Confirmar" icon=" ui-icon-plusthick" class="cadastrar"  actionListener="#{mensagem.saveMessagem}" update="growl" />
-                    <p:commandButton value="Excel" class="pesquisar2"/>
+                    </p:tabView>
+                    <p:commandButton value="Confirmar" icon=" ui-icon-check " class="cadastrarrelatorio"  actionListener="#{mensagem.saveMessagem}" update="growl" />
+                    <p:commandButton value="Excel" icon="ui-icon-document" class="excel"/>
                     <p:commandButton value="Cancelar" icon=" ui-icon-cancel " class="pesquisar2"  />
                     <br></br>
                     <br></br>
