@@ -86,21 +86,24 @@ public class ContasPagarMB implements Serializable {
     private String nomeArquivo02;
     private Nomearquivo nomeArquivo;
     private List<Nomearquivo> listaArquivo;
-    private StreamedContent file;
+    private StreamedContent file01;
+    private StreamedContent file02;
+    private String messagem;
 
+    
     public ContasPagarMB() {
         gerarDataInicia();
         nomeArquivo = new Nomearquivo();
     }
 
-    public StreamedContent getFile() {
-        return file;
+   
+    public String getMessagem() {
+        return messagem;
     }
 
-    public void setFile(StreamedContent file) {
-        this.file = file;
+    public void setMessagem(String messagem) {
+        this.messagem = messagem;
     }
-
     public Nomearquivo getNomeArquivo() {
         return nomeArquivo;
     }
@@ -364,6 +367,16 @@ public class ContasPagarMB implements Serializable {
         }
         return listaContaPagar;
     }
+
+    public StreamedContent getFile01() {
+        return file01;
+    }
+
+   
+    public StreamedContent getFile02() {
+        return file02;
+    }
+
 
     public void setListaContaPagar(List<Contaspagar> listaContaPagar) {
         this.listaContaPagar = listaContaPagar;
@@ -701,20 +714,19 @@ public class ContasPagarMB implements Serializable {
     public void salvarNomeArquivo() {
         Nomearquivo nomeArquivo = new Nomearquivo();
         ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-        String nome01 = servletContext.getRealPath("") + File.separator + "resources" + File.separator + "img"
-                + File.separator;
+        String nome01 = servletContext.getRealPath("") + File.separator + "arquivo" + File.separator;
+        nomeArquivo.setCaminho(nome01);
         if (arquivo01 != null) {
-            nome01 = nome01 + String.valueOf(contasPagar.getIdcontasPagar()) + "_" + String.valueOf(contasPagar.getCliente().getIdcliente()) + arquivo01.getFileName();
+            nome01 = nome01 + String.valueOf(contasPagar.getIdcontasPagar()) + "_" + String.valueOf(contasPagar.getCliente().getIdcliente()) + "_" + arquivo01.getFileName();
             salvarArquivoAnexado(nome01, arquivo01);
-            nomeArquivo.setNomearquivo01(nome01);
+            nomeArquivo.setNomearquivo01(arquivo01.getFileName());
         }
 
-        String nome02 = servletContext.getRealPath("") + File.separator + "resources" + File.separator + "img"
-                + File.separator;
+        String nome02 = servletContext.getRealPath("") + File.separator + "arquivo" + File.separator;
         if (arquivo02 != null) {
-            nome02 = nome02 + String.valueOf(contasPagar.getIdcontasPagar()) + "_" + String.valueOf(contasPagar.getCliente().getIdcliente()) + arquivo02.getFileName();
+            nome02 = nome02 + String.valueOf(contasPagar.getIdcontasPagar()) + "_" + String.valueOf(contasPagar.getCliente().getIdcliente()) + "_" + arquivo02.getFileName();
             salvarArquivoAnexado(nome02, arquivo02);
-            nomeArquivo.setNomearquivo02(nome02);
+            nomeArquivo.setNomearquivo02(arquivo02.getFileName());
         }
         try {
             NomeArquivoFacade nomeArquivoFacade = new NomeArquivoFacade();
@@ -796,27 +808,54 @@ public class ContasPagarMB implements Serializable {
     
     public String gerarListaArquivo() {
         NomeArquivoFacade nomeArquivoFacade = new NomeArquivoFacade();
-         for (int i = 0; i < listaContaPagar.size(); i++) {
-             if (listaContaPagar.get(i).isSelecionado()){
-                 try {
-                     nomeArquivo = nomeArquivoFacade.listar(listaContaPagar.get(i).getIdcontasPagar());
-                     i=500000;
+        for (int i = 0; i < listaContaPagar.size(); i++) {
+            if (listaContaPagar.get(i).isSelecionado()) {
+                try {
+                    nomeArquivo = nomeArquivoFacade.listar(listaContaPagar.get(i).getIdcontasPagar());
+                    ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+                    String localArquivo = servletContext.getRealPath("") + File.separator +  "arquivo" + File.separator;
+                    if (nomeArquivo != null) {
+                        if (nomeArquivo.getNomearquivo01() != null) {
+                            String nomepadrao = String.valueOf(listaContaPagar.get(i).getIdcontasPagar()) + "_" + 
+                                    String.valueOf(listaContaPagar.get(i).getCliente().getIdcliente()) + "_" + nomeArquivo.getNomearquivo01();
+                            nomepadrao = "/arquivo/" + nomepadrao;
+                            InputStream stream = ((ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext()).getResourceAsStream(nomepadrao);
+                             file02 = new DefaultStreamedContent(stream, acharExtensao(nomeArquivo.getNomearquivo01()), nomeArquivo.getNomearquivo01());
+                        }
+                        if (nomeArquivo.getNomearquivo02() != null) {
+                            System.out.println(nomeArquivo.getNomearquivo02());
+                            String nomepadrao = String.valueOf(listaContaPagar.get(i).getIdcontasPagar()) + "_" + 
+                                    String.valueOf(listaContaPagar.get(i).getCliente().getIdcliente()) + "_" + nomeArquivo.getNomearquivo02();
+                            nomepadrao = "/arquivo/" + nomepadrao;
+                            InputStream stream = ((ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext()).getResourceAsStream(nomepadrao);
+                             file02 = new DefaultStreamedContent(stream, acharExtensao(nomeArquivo.getNomearquivo02()), nomeArquivo.getNomearquivo02());
+                        }
+                        return "mostrarArquivos";
+                    }
                  } catch (SQLException ex) {
                      Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
                  }
              }
         }  
-        return "mostrarArquivos";
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Selecione um Arquivo", "")); 
+        return"";
     }
-    public void salvarArquivo01() {        
-        InputStream stream = ((ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext()).getResourceAsStream(nomeArquivo.getCaminho()+ nomeArquivo.getNomearquivo01());
-        file = new DefaultStreamedContent(stream, "", nomeArquivo.getNomearquivo01());
-      
-        System.out.println("teste");
+    
+    public String acharExtensao(String nome){
+        int i = nome.length();
+        i = i - 3;
+        String extensao = nome.substring(i);
+        if (extensao.equalsIgnoreCase("jpg")){
+            extensao = "img/jpg";
+        }else if (extensao.equalsIgnoreCase("png")){
+            extensao = "img/png";
+        }else extensao = "application/pdf";
         
+        return extensao;
     }
-     public void salvarArquivo02() {        
-        InputStream stream = ((ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext()).getResourceAsStream(nomeArquivo.getCaminho()+ nomeArquivo.getNomearquivo02());
-        file = new DefaultStreamedContent(stream, nomeArquivo.getCaminho(), nomeArquivo.getNomearquivo02());
-    }
+    
+    
+    
+    
 }

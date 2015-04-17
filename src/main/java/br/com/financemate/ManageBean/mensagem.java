@@ -7,7 +7,7 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 public class mensagem {
 
-    private String messagem;
+    private String messagem="";
 
     public String getMessagem() {
         return messagem;

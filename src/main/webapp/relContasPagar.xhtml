@@ -47,7 +47,7 @@
                         </p:tab>
                     </p:tabView>
                     <p:commandButton value="Confirmar" icon=" ui-icon-check " class="cadastrarrelatorio"  actionListener="#{mensagem.saveMessagem}" update="growl" action="#{RelatoriosContasPagarMB.iniciarRelatorio()}" />
-                    <p:commandButton value="Excel" icon="ui-icon-document" class="excel" action=""/>
+                    <p:commandButton value="Excel" icon="ui-icon-document" class="excel" action="#{RelatoriosContasPagarMB.verificarTipoRelatorioExcel()}"/>
                     <p:commandButton value="Cancelar" icon=" ui-icon-cancel " class="pesquisar2"  action="#{RelatoriosContasPagarMB.cancelar()}"/>
                     <br></br>
                     <br></br>
