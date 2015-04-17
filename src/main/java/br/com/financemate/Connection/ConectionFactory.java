@@ -7,15 +7,21 @@
 package br.com.financemate.Connection;
 
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 
+
+
+
 /**
  *
  * @author Wolverine
  */
+
+@ApplicationScoped
 public class ConectionFactory {
 
     private static EntityManager manager;

@@ -7,8 +7,10 @@ package br.com.financemate.ManageBean;
 
 import br.com.financemate.Connection.ConectionFactory;
 import br.com.financemate.Relatorios.ExecutorRelatorio;
+import br.com.financemate.Relatorios.relatoriosJasper;
 import br.com.financemate.Util.Formatacao;
 import java.awt.Image;
+import java.io.File;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
@@ -18,9 +20,11 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.ImageIcon;
-import org.hibernate.Session;
+import org.eclipse.persistence.sessions.Session;
+
 
 /**
  *
@@ -38,9 +42,11 @@ public class RelatoriosContasPagarMB implements Serializable{
     private Date dataInicio;
     private Date dataTermino;
     private String competencia;
+    private String tipoRelatorio;
 
     public RelatoriosContasPagarMB() {
-
+        dataInicio = new Date();
+        dataTermino = new Date();
     }
 
     public UsuarioLogadoBean getUsuarioLogadoBean() {
@@ -53,6 +59,14 @@ public class RelatoriosContasPagarMB implements Serializable{
 
     public ClienteMB getClienteMB() {
         return clienteMB;
+    }
+
+    public String getTipoRelatorio() {
+        return tipoRelatorio;
+    }
+
+    public void setTipoRelatorio(String tipoRelatorio) {
+        this.tipoRelatorio = tipoRelatorio;
     }
 
     public void setClienteMB(ClienteMB clienteMB) {
@@ -92,13 +106,26 @@ public class RelatoriosContasPagarMB implements Serializable{
     }
     
     public String gerarRelatirio(){
-        if (usuarioLogadoBean.getTipoRelatorio().equalsIgnoreCase(competencia)){
-            
+        return null;
+    }
+    
+    public String selecionarUnidade() {
+        clienteMB.setPagina("relContasPagar");
+        return "selecionarUnidade";
+    }
+    
+    public String iniciarRelatorio(){
+        if (tipoRelatorio.equalsIgnoreCase("contasVencidas")){
+            relatorioContasVencidas();
         }
         return null;
     }
     
-    public String gerarSqlRelatorioPagamentos(){
+    public String cancelar(){
+        return "index";
+    }
+    
+    public String gerarSqlRelatorioContasVencidas(){
         String sql = "Select distinct contasPagar.dataVencimento, contasPagar.descricao, contasPagar.valor, contasPagar.dataAgendamento,cliente.nomeFantasia, contasPagar.fornecedor, contasPagar.numeroDocumento";
         sql = sql + " From ";
         sql = sql + " contasPagar join cliente on contasPagar.cliente_idcliente = cliente.idcliente ";
@@ -112,32 +139,34 @@ public class RelatoriosContasPagarMB implements Serializable{
         return sql;
     }
     
-    public void relatorioPagamentos() {
+    public void relatorioContasVencidas() {
+        ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+        String localLogo = servletContext.getRealPath("") + File.separator + "resources" + File.separator + "img" +
+                                    File.separator + "logo.jpg";
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
         response.setContentType("application/pdf");
         response.setHeader("Content-disposition","inline; filename=\"arquivo.pdf\"");
         Map parameters = new HashMap();
-        Image logo = new ImageIcon(getClass().getResource("/resources/img/logo.jpg")).getImage();
+        Image logo = new ImageIcon(localLogo).getImage();
         parameters.put("logo", logo);
         String periodo = null;
         periodo = "Período : " + Formatacao.ConvercaoDataPadrao(dataInicio) 
             + "    " + Formatacao.ConvercaoDataPadrao(dataTermino);
         parameters.put("periodo", periodo);
-        parameters.put("sql",gerarSqlRelatorioPagamentos());
+        parameters.put("sql",gerarSqlRelatorioContasVencidas());
+        new relatoriosJasper(parameters);
 
-        ExecutorRelatorio executor = new ExecutorRelatorio("/relatorios/contaspagar/reportpagamentovencidas.jasper",
-                response, parameters, "Conntas Pagar Vencidas.pdf");
-
-        EntityManager manager = ConectionFactory.getConnection();
-        Session session = manager.unwrap(Session.class);
-        session.doWork(executor);
-
-        if (executor.isRelatorioGerado()) {
-            facesContext.responseComplete();
-        } else {
-            System.out.println("Erro");
-        }
+//        ExecutorRelatorio executor = new ExecutorRelatorio("relatorios/reportpagamentovencidas.jasper",
+//        response, parameters, "Conntas Pagar Vencidas.pdf");
+//        new relatoriosJasper(null, parameters);
+//        
+//
+//        if (executor.isRelatorioGerado()) {
+//            facesContext.responseComplete();
+//        } else {
+//            System.out.println("Erro");
+//        }
     }
 
 }

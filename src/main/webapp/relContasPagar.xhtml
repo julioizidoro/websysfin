@@ -19,7 +19,7 @@
                             </h:panelGrid>
                             <h:panelGrid columns="2">
                                 <p:inputText id="unidade" size="66"  class="left3"  value="#{ClienteMB.cliente.nomeFantasia}"/>
-                                <p:commandButton value="Selecionar" class="selecionar" action="#{ContasPagarMB.selecionarUnidadeCadastro()}"/>
+                                <p:commandButton value="Selecionar" class="selecionar" action="#{RelatoriosContasPagarMB.selecionarUnidade()}"/>
                             </h:panelGrid>
 
                             <h:panelGrid columns="7" cellpadding="3">
@@ -29,15 +29,15 @@
                                 <p:outputLabel value="Tipo de Relatório" for="tipoRelatorio"  class="left4"/>
                             </h:panelGrid>
                             <h:panelGrid columns="5" cellpadding="1">
-                                <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left3" >
+                                <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left3" value="#{RelatoriosContasPagarMB.dataInicio}">
                                     <f:convertDateTime parent="dd/MM/yyy"/>
                                 </p:calendar>
-                                <p:calendar id="dataFim"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left3"  >
+                                <p:calendar id="dataFim"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left3"  value="#{RelatoriosContasPagarMB.dataTermino}">
                                     <f:convertDateTime parent="dd/MM/yyy"/>
                                 </p:calendar>
-                                <p:inputMask id="competencia" label="competencia" value="" size="13" mask="99/9999"  class="left3">
+                                <p:inputMask id="competencia" label="competencia" value="#{RelatoriosContasPagarMB.competencia}" size="13" mask="99/9999"  class="left3" >
                                 </p:inputMask>
-                                <p:selectOneMenu id="tipoRelatorio" class="left3" style="width:140px" >
+                                <p:selectOneMenu id="tipoRelatorio" class="left3" style="width:140px" value="#{RelatoriosContasPagarMB.tipoRelatorio}" >
                                     <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
                                     <f:selectItem itemLabel="Contas Vencidas" itemValue="contasVencidas" /> 
                                     <f:selectItem itemLabel="Fluxo de Caixa" itemValue="fluxoCaixa" />  
@@ -46,9 +46,9 @@
                             </h:panelGrid>                   
                         </p:tab>
                     </p:tabView>
-                    <p:commandButton value="Confirmar" icon=" ui-icon-check " class="cadastrarrelatorio"  actionListener="#{mensagem.saveMessagem}" update="growl" />
+                    <p:commandButton value="Confirmar" icon=" ui-icon-check " class="cadastrarrelatorio"  actionListener="#{mensagem.saveMessagem}" update="growl" action="#{RelatoriosContasPagarMB.iniciarRelatorio()}" />
                     <p:commandButton value="Excel" icon="ui-icon-document" class="excel"/>
-                    <p:commandButton value="Cancelar" icon=" ui-icon-cancel " class="pesquisar2"  />
+                    <p:commandButton value="Cancelar" icon=" ui-icon-cancel " class="pesquisar2"  action="#{RelatoriosContasPagarMB.cancelar()}"/>
                     <br></br>
                     <br></br>
                 </div>

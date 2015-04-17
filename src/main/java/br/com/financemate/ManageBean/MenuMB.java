@@ -42,4 +42,8 @@ public class MenuMB implements Serializable{
         return "index";
     }
     
+    public String relatorioContasPagar(){
+        return "relContasPagar";
+    }
+    
 }
