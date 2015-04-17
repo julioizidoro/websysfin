@@ -214,8 +214,8 @@ public class RelatoriosContasPagarMB implements Serializable{
             sql = sql + "c.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicio) +
                 "' and c.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataTermino) + "' and ";
         }
-        sql = sql + " c.cliente.idcliente=" + clienteMB.getCliente().getIdcliente() + " and contasPagar.contaPaga='N'";
-        sql = sql + " order by contasPagar.dataVencimento";
+        sql = sql + " c.cliente.idcliente=" + clienteMB.getCliente().getIdcliente() + " and c.contaPaga='N'";
+        sql = sql + " order by c.dataVencimento";
         listaContasPagar = contasPagarController.listar(sql);
         if (listaContasPagar!=null){
             return "exportRelatorioContas";
