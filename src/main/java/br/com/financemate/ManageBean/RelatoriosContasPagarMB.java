@@ -198,10 +198,11 @@ public class RelatoriosContasPagarMB implements Serializable{
     }
     
     public String verificarTipoRelatorioExcel(){
+        String pagina="";
         if (tipoRelatorio.equalsIgnoreCase("contasVencidas")){
-            gerarExcelContasPagarVencidas();
+             pagina = gerarExcelContasPagarVencidas();
         }
-        return "";
+        return pagina;
     }
     
     public String gerarExcelContasPagarVencidas(){
