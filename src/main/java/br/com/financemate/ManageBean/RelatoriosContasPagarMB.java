@@ -6,7 +6,8 @@
 package br.com.financemate.ManageBean;
 
 import br.com.financemate.Controller.ContasPagarController;
-import br.com.financemate.Relatorios.relatoriosJasper;
+import br.com.financemate.Relatorios.ExecutorRelatorio;
+
 import br.com.financemate.Util.Formatacao;
 import br.com.financemate.model.Contaspagar;
 import java.awt.Image;
@@ -168,7 +169,7 @@ public class RelatoriosContasPagarMB implements Serializable{
     
     public void relatorioContasVencidas() {
         ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-        String localLogo = servletContext.getRealPath("") + File.separator + "resources" + File.separator + "img" +
+        String localLogo = "/resources" + File.separator + "img" +
                                     File.separator + "logo.jpg";
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
@@ -182,18 +183,18 @@ public class RelatoriosContasPagarMB implements Serializable{
             + "    " + Formatacao.ConvercaoDataPadrao(dataTermino);
         parameters.put("periodo", periodo);
         parameters.put("sql",gerarSqlRelatorioContasVencidas());
-        new relatoriosJasper(parameters);
+        
 
-//        ExecutorRelatorio executor = new ExecutorRelatorio("relatorios/reportpagamentovencidas.jasper",
-//        response, parameters, "Conntas Pagar Vencidas.pdf");
-//        new relatoriosJasper(null, parameters);
-//        
-//
-//        if (executor.isRelatorioGerado()) {
-//            facesContext.responseComplete();
-//        } else {
-//            System.out.println("Erro");
-//        }
+        ExecutorRelatorio executor = new ExecutorRelatorio("/relatorios/contaspagar/reportpagamentovencidas.jasper",
+        response, parameters, "Conntas Pagar Vencidas.pdf");
+        
+        
+
+        if (executor.isRelatorioGerado()) {
+            facesContext.responseComplete();
+        } else {
+            System.out.println("Erro");
+        }
     }
     
     public String verificarTipoRelatorioExcel(){
@@ -210,8 +211,8 @@ public class RelatoriosContasPagarMB implements Serializable{
         ContasPagarController contasPagarController = new ContasPagarController();
         String sql = "Select c from Contaspagar c where ";
         if ((dataInicio!=null) && (dataTermino!=null)){
-            sql = sql + "c.dataVencimento>=" + Formatacao.ConvercaoDataSql(dataInicio) +
-                " and c.dataVencimento<=" + Formatacao.ConvercaoDataSql(dataTermino) + "' and ";
+            sql = sql + "c.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicio) +
+                "' and c.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataTermino) + "' and ";
         }
         sql = sql + " c.cliente.idcliente=" + clienteMB.getCliente().getIdcliente() + " and contasPagar.contaPaga='N'";
         sql = sql + " order by contasPagar.dataVencimento";
