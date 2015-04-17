@@ -5,25 +5,24 @@
  */
 package br.com.financemate.ManageBean;
 
-import br.com.financemate.Connection.ConectionFactory;
-import br.com.financemate.Relatorios.ExecutorRelatorio;
+import br.com.financemate.Controller.ContasPagarController;
 import br.com.financemate.Relatorios.relatoriosJasper;
 import br.com.financemate.Util.Formatacao;
+import br.com.financemate.model.Contaspagar;
 import java.awt.Image;
 import java.io.File;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.ImageIcon;
-import org.eclipse.persistence.sessions.Session;
 
 
 /**
@@ -43,6 +42,9 @@ public class RelatoriosContasPagarMB implements Serializable{
     private Date dataTermino;
     private String competencia;
     private String tipoRelatorio;
+    private List<Contaspagar> listaContasPagar;
+    private String titulo;
+    private String periodo;
 
     public RelatoriosContasPagarMB() {
         dataInicio = new Date();
@@ -55,6 +57,31 @@ public class RelatoriosContasPagarMB implements Serializable{
 
     public void setUsuarioLogadoBean(UsuarioLogadoBean usuarioLogadoBean) {
         this.usuarioLogadoBean = usuarioLogadoBean;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(String periodo) {
+        this.periodo = periodo;
+    }
+
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public List<Contaspagar> getListaContasPagar() {
+        return listaContasPagar;
+    }
+
+    public void setListaContasPagar(List<Contaspagar> listaContasPagar) {
+        this.listaContasPagar = listaContasPagar;
     }
 
     public ClienteMB getClienteMB() {
@@ -167,6 +194,32 @@ public class RelatoriosContasPagarMB implements Serializable{
 //        } else {
 //            System.out.println("Erro");
 //        }
+    }
+    
+    public String verificarTipoRelatorioExcel(){
+        if (tipoRelatorio.equalsIgnoreCase("contasVencidas")){
+            gerarExcelContasPagarVencidas();
+        }
+        return "";
+    }
+    
+    public String gerarExcelContasPagarVencidas(){
+        titulo = "Contas a Pagar Vencidas";
+        this.periodo = "Período : " + Formatacao.ConvercaoDataPadrao(dataInicio) 
+            + "    " + Formatacao.ConvercaoDataPadrao(dataTermino);
+        ContasPagarController contasPagarController = new ContasPagarController();
+        String sql = "Select c from Contaspagar c where ";
+        if ((dataInicio!=null) && (dataTermino!=null)){
+            sql = sql + "c.dataVencimento>=" + Formatacao.ConvercaoDataSql(dataInicio) +
+                " and c.dataVencimento<=" + Formatacao.ConvercaoDataSql(dataTermino) + "' and ";
+        }
+        sql = sql + " c.cliente.idcliente=" + clienteMB.getCliente().getIdcliente() + " and contasPagar.contaPaga='N'";
+        sql = sql + " order by contasPagar.dataVencimento";
+        listaContasPagar = contasPagarController.listar(sql);
+        if (listaContasPagar!=null){
+            return "exportRelatorioContas";
+        }
+        return null;
     }
 
 }
