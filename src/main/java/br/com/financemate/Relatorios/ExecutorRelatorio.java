@@ -1,31 +1,26 @@
 package br.com.financemate.Relatorios;
 
+import br.com.financemate.Connection.ConectionFactory;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.context.FacesContext;
-import javax.naming.Context;
-import javax.naming.InitialContext;
+import javax.servlet.ServletOutputStream;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
-import net.sf.jasperreports.engine.JRExporter;
-import net.sf.jasperreports.engine.JRExporterParameter;
+import javax.servlet.http.HttpSession;
 
 import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.JasperRunManager;
 
-import org.primefaces.model.DefaultStreamedContent;
 
 public class ExecutorRelatorio  {
 
@@ -35,6 +30,7 @@ public class ExecutorRelatorio  {
 	private String nomeArquivoSaida;
 	
 	private boolean relatorioGerado;
+        
 	
 	public ExecutorRelatorio(String caminhoRelatorio,
 			HttpServletResponse response, Map<String, Object> parametros,
@@ -45,44 +41,60 @@ public class ExecutorRelatorio  {
 		this.nomeArquivoSaida = nomeArquivoSaida;
 		
 		this.parametros.put(JRParameter.REPORT_LOCALE, new Locale("pt", "BR"));
+            try {
+                execute();
+            } catch (Exception ex) {
+                Logger.getLogger(ExecutorRelatorio.class.getName()).log(Level.SEVERE, null, ex);
+            }
 	}
 
 	
-	public void execute() throws SQLException {
-		try {
-			InputStream relatorioStream = this.getClass().getResourceAsStream(this.caminhoRelatorio);
-			
-			JasperPrint print = JasperFillManager.fillReport(relatorioStream, this.parametros, getConexao());
-			this.relatorioGerado = print.getPages().size() > 0;
-			
-			if (this.relatorioGerado) {
-				JRExporter exportador = new JRPdfExporter();
-				exportador.setParameter(JRExporterParameter.OUTPUT_STREAM, response.getOutputStream());
-				exportador.setParameter(JRExporterParameter.JASPER_PRINT, print);
-				
-				response.setContentType("application/pdf");
-				response.setHeader("Content-Disposition", "attachment; filename=\"" 
-						+ this.nomeArquivoSaida  + "\"");
-				
-				exportador.exportReport();
-			}
-		} catch (Exception e) {
-			throw new SQLException("Erro ao executar relatório " + this.caminhoRelatorio, e);
-		}
-	}
+	public void execute() throws SQLException, Exception {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+                HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+           //     String reportName =  contexto.getRealPath(this.caminhoRelatorio);
+                //verificarArquivo(reportName);
+                byte[] bytes = null;
+                JasperPrint arquivoPrint = null;
+                InputStream reportStream= session.getServletContext().getResourceAsStream(this.caminhoRelatorio);
+                System.out.println("teste");
+                Connection conn = getConexao();
+                arquivoPrint = JasperFillManager.fillReport(reportStream, parametros, conn);
+                
+                bytes = JasperRunManager.runReportToPdf(reportStream, parametros, conn);
+
+                if (bytes != null && bytes.length > 0 && arquivoPrint != null && arquivoPrint.getPages().size() > 0) {
+                    response.setHeader("Content-Disposition", "attachment; filename=" + this.nomeArquivoSaida + "_" + new Date().getTime() + ".pdf");
+                    response.setContentType("application/pdf");
+                    response.setContentLength(bytes.length);
+                    ServletOutputStream outputStream;
+                }
+    }
 
 	public boolean isRelatorioGerado() {
 		return relatorioGerado;
 	}
         
         private Connection getConexao() throws Exception {
-            Context context = new InitialContext();
-            DataSource dataSource = (DataSource) context.lookup("jdbc/websysfinDS");
-            if (dataSource.getConnection()==null){
-                System.out.println("nulo");
-            }
-            Connection conn =dataSource.getConnection();
+//            InitialContext context = new InitialContext();  
+//            Context ct = (Context)context.lookup("conexao");  
+//            DataSource dataSource = (DataSource) ct.lookup("jdbc/websysfinDS");
+//            if (dataSource.getConnection()==null){
+//                System.out.println("nulo");
+//            }
+            Connection conn = ConectionFactory.getConexao();
+            System.out.println(conn);
+            if (conn.isValid(0)){
+                System.out.println("tudo ok");
+            }else System.out.println("erro conexao");
             return conn;
+    }
+        
+    public void verificarArquivo(String arquivo){
+        File file = new File(arquivo);
+        if (file.exists()){
+            System.out.println("Arquivo existe");
+        }else System.out.println("arquivo nulo");
     }
 
 }

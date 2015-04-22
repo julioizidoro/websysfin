@@ -6,10 +6,14 @@
 package br.com.financemate.ManageBean;
 
 import br.com.financemate.Controller.ContasPagarController;
+import br.com.financemate.Controller.FluxoCaixaController;
+import br.com.financemate.Controller.MovimentoBancoController;
 import br.com.financemate.Relatorios.ExecutorRelatorio;
 
 import br.com.financemate.Util.Formatacao;
 import br.com.financemate.model.Contaspagar;
+import br.com.financemate.model.Fluxocaixa;
+import br.com.financemate.model.Movimentobanco;
 import java.awt.Image;
 import java.io.File;
 import java.io.Serializable;
@@ -24,6 +28,7 @@ import javax.inject.Named;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.ImageIcon;
+import static org.hibernate.criterion.Expression.sql;
 
 
 /**
@@ -46,6 +51,8 @@ public class RelatoriosContasPagarMB implements Serializable{
     private List<Contaspagar> listaContasPagar;
     private String titulo;
     private String periodo;
+    private List<Fluxocaixa> listaFluxoCaixa;
+    private List<Movimentobanco> listaMovimentoBanco;
 
     public RelatoriosContasPagarMB() {
         dataInicio = new Date();
@@ -64,8 +71,24 @@ public class RelatoriosContasPagarMB implements Serializable{
         return titulo;
     }
 
+    public List<Movimentobanco> getListaMovimentoBanco() {
+        return listaMovimentoBanco;
+    }
+
+    public void setListaMovimentoBanco(List<Movimentobanco> listaMovimentoBanco) {
+        this.listaMovimentoBanco = listaMovimentoBanco;
+    }
+
     public String getPeriodo() {
         return periodo;
+    }
+
+    public List<Fluxocaixa> getListaFluxoCaixa() {
+        return listaFluxoCaixa;
+    }
+
+    public void setListaFluxoCaixa(List<Fluxocaixa> listaFluxoCaixa) {
+        this.listaFluxoCaixa = listaFluxoCaixa;
     }
 
     public void setPeriodo(String periodo) {
@@ -145,12 +168,21 @@ public class RelatoriosContasPagarMB implements Serializable{
     public String iniciarRelatorio(){
         if (tipoRelatorio.equalsIgnoreCase("contasVencidas")){
             relatorioContasVencidas();
+        }else if (tipoRelatorio.equalsIgnoreCase("fluxoCaixa")){
+            
         }
         return null;
     }
     
     public String cancelar(){
-        return "index";
+        setTitulo("");
+        setCompetencia("");
+        setDataInicio(new Date());
+        setDataTermino(new Date());
+        setPeriodo("");
+        setTipoRelatorio("Selecione");
+        clienteMB = new ClienteMB();
+        return "principal";
     }
     
     public String gerarSqlRelatorioContasVencidas(){
@@ -185,7 +217,7 @@ public class RelatoriosContasPagarMB implements Serializable{
         parameters.put("sql",gerarSqlRelatorioContasVencidas());
         
 
-        ExecutorRelatorio executor = new ExecutorRelatorio("/relatorios/contaspagar/reportpagamentovencidas.jasper",
+        ExecutorRelatorio executor = new ExecutorRelatorio("/relatorios/contaspagar/reportPagamentoVencidas.jasper",
         response, parameters, "Conntas Pagar Vencidas.pdf");
         
         
@@ -201,11 +233,16 @@ public class RelatoriosContasPagarMB implements Serializable{
         String pagina="";
         if (tipoRelatorio.equalsIgnoreCase("contasVencidas")){
              pagina = gerarExcelContasPagarVencidas();
+        }else if (tipoRelatorio.equalsIgnoreCase("fluxoCaixa")){
+            pagina = gerarExcelFluxoCaixa();
+        }else if (tipoRelatorio.equalsIgnoreCase("pagamento")){
+            pagina = gerarExcelPagamentos();
         }
         return pagina;
     }
     
     public String gerarExcelContasPagarVencidas(){
+        listaContasPagar = null;
         titulo = "Contas a Pagar Vencidas";
         this.periodo = "Período : " + Formatacao.ConvercaoDataPadrao(dataInicio) 
             + "    " + Formatacao.ConvercaoDataPadrao(dataTermino);
@@ -223,5 +260,43 @@ public class RelatoriosContasPagarMB implements Serializable{
         }
         return null;
     }
+    
+    public String gerarExcelFluxoCaixa(){
+        listaFluxoCaixa = null;
+        titulo = "Fluxo de Caixa";
+        this.periodo = "Período : " + Formatacao.ConvercaoDataPadrao(dataInicio) 
+            + "    " + Formatacao.ConvercaoDataPadrao(dataTermino);
+        FluxoCaixaController fluxoCaixaController = new FluxoCaixaController();
+        listaFluxoCaixa =fluxoCaixaController.consultar(clienteMB.getCliente().getIdcliente());
+        if (listaFluxoCaixa!=null){
+            return "exportFluxoCaixa";
+        }
+        return null;
+    }
+    
+    public String gerarExcelPagamentos(){
+        listaMovimentoBanco = null;
+        titulo = "Relatório de Pagamentos";
+        this.periodo = "Período : " + Formatacao.ConvercaoDataPadrao(dataInicio) 
+            + "    " + Formatacao.ConvercaoDataPadrao(dataTermino);
+        MovimentoBancoController movimentoBancoController = new MovimentoBancoController();
+        String sql = "Select m from Movimentobanco m where ";
+        if ((dataInicio!=null) && (dataTermino!=null)){
+            sql = sql + "m.dataCompensacao>='" +  Formatacao.ConvercaoDataSql(dataInicio) +
+                    "' and m.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataTermino) + "' and ";
+        }else {
+            sql = sql + "m.compentencia='" + competencia + "' and ";
+        }
+        sql = sql + "m.cliente.idcliente=" + clienteMB.getCliente().getIdcliente();
+        sql = sql + " and m.planocontas.idplanoContas<>" + clienteMB.getCliente().getContaRecebimento();
+        sql = sql + " and m.planocontas.idplanoContas<>" + clienteMB.getCliente().getContaReceita();
+        sql = sql + " Group by m.planocontas.idplanoContas, m.dataCompensacao, m.descricao, m.valorEntrada, m.valorSaida, m.planocontas.descricao, m.banco.nome, m.cliente.nomeFantasia,  m.compentencia ";
+        sql = sql + " Order by m.planocontas.idplanoContas, m.dataCompensacao, m.descricao, m.valorEntrada, m.valorSaida, m.planocontas.descricao, m.banco.nome, m.cliente.nomeFantasia,  m.compentencia ";
+        listaMovimentoBanco = movimentoBancoController.listaMovimento(sql);
+        if (listaMovimentoBanco!=null){
+            return "exportPagamentos";
+        }
+        return null;
+    } 
 
 }

@@ -11,7 +11,6 @@ import br.com.financemate.Controller.MovimentoBancoController;
 import br.com.financemate.Controller.PlanoContasController;
 import br.com.financemate.Controller.UsuarioController;
 import br.com.financemate.Util.Formatacao;
-import br.com.financemate.controller.NomeArquivoController;
 import br.com.financemate.facade.NomeArquivoFacade;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
@@ -430,7 +429,7 @@ public class ContasPagarMB implements Serializable {
                 contasPagarController.excluir(listaContaPagar.get(i).getIdcontasPagar());
             }
         }
-        carregarListaPlanoContas();
+        gerarListaContasPagar();
         return "consConPagar";
     }
 
@@ -723,6 +722,7 @@ public class ContasPagarMB implements Serializable {
         }
 
         String nome02 = servletContext.getRealPath("") + File.separator + "arquivo" + File.separator;
+        //String nome02 = "C:" + File.separator + "arquivo" + File.separator;
         if (arquivo02 != null) {
             nome02 = nome02 + String.valueOf(contasPagar.getIdcontasPagar()) + "_" + String.valueOf(contasPagar.getCliente().getIdcliente()) + "_" + arquivo02.getFileName();
             salvarArquivoAnexado(nome02, arquivo02);

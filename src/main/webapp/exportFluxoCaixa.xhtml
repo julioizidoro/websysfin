@@ -21,31 +21,29 @@
                     </h:panelGrid>
                     <br></br>
                     <legend id="iUsu2" ><p:outputLabel value="#{RelatoriosContasPagarMB.titulo}"  class="tituloRelatorio"/> </legend>
-                    <p:dataTable id="relatorioContasPagar" var="contasPagar" value="#{RelatoriosContasPagarMB.listaContasPagar}" rowStyleClass="tabela" class="tabelacontas" 
+                    <p:dataTable id="relatorioFluxoCaixa" var="fluxoCaixa" value="#{RelatoriosContasPagarMB.listaFluxoCaixa}" rowStyleClass="tabela" class="tabelacontas" 
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
                                  paginator="true" rows="10" style="margin-bottom:20px"> 
 
-                        <p:column headerText="Data Vencimento" style="width: 75px;" >
-                            <h:outputText value="#{contasPagar.dataVencimento}"  >
+                        <p:column headerText="Data" style="width: 75px;" >
+                            <h:outputText value="#{fluxoCaixa.data}"  >
                                 <f:convertDateTime pattern="dd/MM/yyyy" />  
                             </h:outputText>
                         </p:column>
-                        <p:column headerText="Descrição"  >
-                            <h:outputText value="#{contasPagar.descricao}"/>
+                        <p:column headerText="Valor Contas Receber"  >
+                            <h:outputText value="#{fluxoCaixa.valorContasReceber}">
+                                <f:convertNumber currencySymbol="" type="currency"/>
+                            </h:outputText>
                         </p:column>
-                        <p:column headerText="Valor Saída"  style="width: 70px;"   styleClass="alinharCenter" >
-                            <h:outputText value="#{contasPagar.valor}">
+                        <p:column headerText="Valor Contas Pagar"  style="width: 70px;"   styleClass="alinharCenter" >
+                            <h:outputText value="#{fluxoCaixa.valorContasPagar}">
                                 <f:convertNumber currencySymbol="" type="currency"/>
                             </h:outputText>   
                         </p:column>
-                        
-                            <p:column headerText="Agendamento"   style="width: 120px;" >
-                                <h:outputText value="#{contasPagar.dataLiberacao}" >
-                                    <f:convertDateTime pattern="dd/MM/yyyy" />  
+                            <p:column headerText="Saldo"   style="width: 120px;" >
+                                <h:outputText value="#{fluxoCaixa.saldo}" >
+                                    <f:convertNumber currencySymbol="" type="currency"/>  
                                 </h:outputText>
-                            </p:column>
-                            <p:column headerText="Fornecedor"   style="width: 180px;" >
-                                <h:outputText value="#{contasPagar.formaPagamento}"/>
                             </p:column>
                     </p:dataTable>                  
                     <br></br>

@@ -11,55 +11,60 @@
                 <div id="centro">
                     <p:growl id="growl" showDetail="true" sticky="true" />
                     <br></br>
-                  <br></br>
+                    <br></br>
                     <p:tabView class="cadastroContasPagar">
                         <p:tab title="Recebimento de contas" >
-                         <h:panelGrid columns="2" cellpadding="5" >
-                            <p:outputLabel value="Unidade" for="unidade"  class="left3"/>
-                        </h:panelGrid>
-                         <h:panelGrid columns="2">
-                            <p:inputText id="unidade" size="81"  class="left3" />
-                          
-                         </h:panelGrid>
-                         <h:panelGrid columns="2" cellpadding="5" >
-                            <p:outputLabel value="Nome do cliente" for="nomeCliente"  class="left3"/>
-                        </h:panelGrid>
-                         <h:panelGrid columns="2">
-                            <p:inputText id="nomeCliente" size="81"  class="left3"/>
-                          
-                         </h:panelGrid>
-                <h:panelGrid columns="7" cellpadding="3">
-                    <p:outputLabel value="Data Vencimento" for="dataVenc" class="left3"/>
-                    <p:outputLabel value="Nº Documento" for="nDocumento" class="left1"/>
-                    <p:outputLabel value="Numero Parcela" for="nParcela" class="left"/>
-                    <p:outputLabel value="Valor R$" for="valor" class="left4"/>
-                </h:panelGrid>
-                <h:panelGrid columns="5" cellpadding="1">
-                    <p:calendar id="dataVenc"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left3"/>
-                    <p:inputText id="nDocumento" size="11"  class="left"/>
-                     <p:inputText id="nParcela" size="8"  class="left"/>
-                     <p:inputText id="valor" size="13"  class="left"/>
-                </h:panelGrid> 
-              <h:panelGrid columns="7" cellpadding="3">
-                    <p:outputLabel value="Data Recebimento" for="dataRece" class="left3"/>
-                    <p:outputLabel value="Desagio" for="desagio" class="left"/>
-                    <p:outputLabel value="Juros" for="juros" class="left9"/>
-                    <p:outputLabel value="Valor Recebido" for="valorRece" class="left9"/>
-                </h:panelGrid>
-                <h:panelGrid columns="5" cellpadding="1">
-                    <p:calendar id="dataRece"  pattern="dd/MM/yyyy" mask="true" size="11" maxlength="15" class="left3"/>
-                    <p:inputText id="desagio" size="10"  class="left"/>
-                     <p:inputText id="juros" size="7"  class="left"/>
-                     <p:inputText id="valorRece" size="10"  class="left"/>
-                </h:panelGrid> 
-              <h:panelGrid columns="5" cellpadding="1">        
-                 <p:outputLabel value="Conta" for="conta" class="left3"/> 
-              </h:panelGrid>   
-                <h:panelGrid columns="5" cellpadding="1">    
-                  <p:selectOneMenu id="conta" class="left3" style="width:530px" required="true" requiredMessage="Campo conta preenchimento Obrigatório">
-                        <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
-                  </p:selectOneMenu>
-                   </h:panelGrid>            
+                            <h:panelGrid columns="2" cellpadding="5" >
+                                <p:outputLabel value="Unidade" for="unidade"  class="left3"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2">
+                                <p:inputText id="unidade" size="81"  class="left3" value="#{ContasReceberMB.contasReceber.cliente.nomeFantasia}"/>
+
+                            </h:panelGrid>
+                            <h:panelGrid columns="2" cellpadding="5" >
+                                <p:outputLabel value="Nome do cliente" for="nomeCliente"  class="left3"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2">
+                                <p:inputText id="nomeCliente" size="81"  class="left3" value="#{ContasReceberMB.contasReceber.nomeCliente}"/>
+
+                            </h:panelGrid>
+                            <h:panelGrid columns="7" cellpadding="3">
+                                <p:outputLabel value="Data Vencimento" for="dataVenc" class="left3"/>
+                                <p:outputLabel value="Nº Documento" for="nDocumento" class="left1"/>
+                                <p:outputLabel value="Numero Parcela" for="nParcela" class="left"/>
+                                <p:outputLabel value="Valor R$" for="valor" class="left4"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="5" cellpadding="1">
+                                <p:calendar id="dataVenc"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left3" value="#{ContasReceberMB.contasReceber.dataVencimento}">
+                                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                                </p:calendar>
+                                <p:inputText id="nDocumento" size="11"  class="left" value="#{ContasReceberMB.contasReceber.numeroDocumento}"/>
+                                <p:inputText id="nParcela" size="8"  class="left" value="#{ContasReceberMB.numeroParcelas}"/>
+                                <p:inputText id="valor" size="13"  class="left" value="#{ContasReceberMB.valorParcela}"/>
+                            </h:panelGrid> 
+                            <h:panelGrid columns="7" cellpadding="3">
+                                <p:outputLabel value="Data Recebimento" for="dataRece" class="left3" />
+                                <p:outputLabel value="Desagio" for="desagio" class="left" />
+                                <p:outputLabel value="Juros" for="juros" class="left9" />
+                                <p:outputLabel value="Valor Recebido" for="valorRece" class="left9" />
+                            </h:panelGrid>
+                            <h:panelGrid columns="5" cellpadding="1">
+                                <p:calendar id="dataRece"  pattern="dd/MM/yyyy" mask="true" size="11" maxlength="15" class="left3" value="#{ContasReceberMB.contasReceber.dataPagamento}">
+                                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                                </p:calendar>
+                                <p:inputText id="desagio" size="10"  class="left" value="#{ContasReceberMB.desagio}" />
+                                <p:inputText id="juros" size="7"  class="left" value="#{ContasReceberMB.juros}"/>
+                                <p:inputText id="valorRece" size="10"  class="left" value="#{ContasReceberMB.valorRecebido}"/>
+                            </h:panelGrid> 
+                            <h:panelGrid columns="5" cellpadding="1">        
+                                <p:outputLabel value="Conta" for="conta" class="left3"/> 
+                            </h:panelGrid>   
+                            <h:panelGrid columns="5" cellpadding="1">    
+                                <p:selectOneMenu id="conta" class="left3" style="width:162px"  value="#{ContasReceberMB.idBanco}">
+                                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                                    <f:selectItems value="#{ContasReceberMB.listaBanco}" var="banco" itemLabel="#{banco.nome}" itemValue="#{banco.idbanco}"/>
+                                </p:selectOneMenu>    
+                            </h:panelGrid>            
                         </p:tab>
                     </p:tabView>  
                     <p:commandButton value="Cadastrar" icon=" ui-icon-plusthick" class="cadastrar"  actionListener="#{mensagem.saveMessagem}" update="growl"/>

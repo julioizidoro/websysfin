@@ -19,15 +19,15 @@
                         <h:outputText value="Recebidas"/>
                     </h:panelGrid>
                     <h:panelGrid columns="5" cellpadding="1">
-                        <p:inputText id="unidade" size="36" maxlength="100" class="unidade"  readonly="true"/>
-                        <p:commandButton value="Selecionar" class="css3button" icon=" ui-icon-arrowthickstop-1-s" />
+                        <p:inputText id="unidade" size="36" maxlength="100" class="unidade"  readonly="true" value="#{ClienteMB.cliente.nomeFantasia}"/>
+                        <p:commandButton value="Selecionar" class="css3button" icon=" ui-icon-arrowthickstop-1-s" action="#{ContasReceberMB.selecionarUnidade()}"/>
                         <p:calendar id="dataIni" value="#{ContasReceberMB.dataInicial}"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="" >
-                            <f:convertDateTime parent="dd/MM/yyyy"/>
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                         </p:calendar>
                         <p:calendar id="dataFinal" value="#{ContasReceberMB.dataFinal}" pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="left">
-                            <f:convertDateTime parent="dd/MM/yyyy"/>
+                            <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                         </p:calendar>
-                        <p:commandButton value="Pesquisar" class="pesquisarreceber"  icon=" ui-icon-search" update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}"  action="#{ContasReceberMB.pesquisar()}"/>
+                        <p:commandButton value="Pesquisar" class="pesquisarreceber"  icon=" ui-icon-search" update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}"  action="#{ContasReceberMB.pesquisarContasReceber()}"/>
                     </h:panelGrid>  
                     <br></br>
                     <legend id="iUsu2" ><b>Consulta de Contas a Receber </b></legend>

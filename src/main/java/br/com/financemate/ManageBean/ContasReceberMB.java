@@ -45,6 +45,14 @@ public class ContasReceberMB implements Serializable{
     private String totaldesconto;
     private String totalrecebido;
     String sql;
+    private String idPlanoConta;
+    private String idBanco;
+    private String valorParcela="0";
+    private String numeroParcelas="1";
+    private String desagio="0";
+    private String juros="0";
+    private String valorRecebido="0";
+    
 
    
 
@@ -59,10 +67,72 @@ public class ContasReceberMB implements Serializable{
     public void setClienteMB(ClienteMB clienteMB) {
         this.clienteMB = clienteMB;
     }
+
+    public String getIdPlanoConta() {
+        return idPlanoConta;
+    }
+
+    public void setIdPlanoConta(String idPlanoConta) {
+        this.idPlanoConta = idPlanoConta;
+    }
+
+    public String getIdBanco() {
+        return idBanco;
+    }
+
+    public String getValorRecebido() {
+        return valorRecebido;
+    }
+
+    public void setValorRecebido(String valorRecebido) {
+        this.valorRecebido = valorRecebido;
+    }
+
+    public String getValorParcela() {
+        return valorParcela;
+    }
+
+    public void setValorParcela(String valorParcela) {
+        this.valorParcela = valorParcela;
+    }
+
+    public String getNumeroParcelas() {
+        return numeroParcelas;
+    }
+
+    public void setNumeroParcelas(String numeroParcelas) {
+        this.numeroParcelas = numeroParcelas;
+    }
+
+    public String getDesagio() {
+        return desagio;
+    }
+
+    public void setDesagio(String desagio) {
+        this.desagio = desagio;
+    }
+
+    public String getJuros() {
+        return juros;
+    }
+
+    public void setJuros(String juros) {
+        this.juros = juros;
+    }
+
+    
+
+    public void setIdBanco(String idBanco) {
+        this.idBanco = idBanco;
+    }
     
     
     
     public String novo(){
+        clienteMB.setCliente(new Cliente());
+        listaBanco = new ArrayList<Banco>();
+        contasReceber = new Contasreceber();
+        carregarListaPlanoContas();
         return "cadConReceber";
     }
     
@@ -127,6 +197,11 @@ public class ContasReceberMB implements Serializable{
     }
     
     public List<Banco> getListaBanco() {
+        if ((clienteMB.getCliente() != null) && (clienteMB.getCliente().getIdcliente() != null)) {
+            if ((listaBanco == null) || (listaBanco.isEmpty())) {
+                carregarListaBanco();
+            }
+        }
         return listaBanco;
     }
 
@@ -214,22 +289,23 @@ public class ContasReceberMB implements Serializable{
             if (listaContasReceber == null) {
                 listaContasReceber = new ArrayList<Contasreceber>();
             }
+            calcularTotais();
         }
     }
     
-    public void pesquisarContasReceber(Date dataInicial, Date dataFinal, boolean recebida, Cliente cliente ){
+    public String pesquisarContasReceber(){
         this.listaContasReceber=null;
         sql = "Select c from Contasreceber c where ";
         if (recebida) {
-            if (cliente != null) {
-                sql = sql + " c.cliente.idcliente=" + cliente.getIdcliente() + " and ";
+            if ((clienteMB.getCliente() != null) && (clienteMB.getCliente().getIdcliente()!=null)) {
+                sql = sql + " c.cliente.idcliente=" + clienteMB.getCliente().getIdcliente() + " and ";
             }
             sql = sql + "c.dataPagamento>='" + Formatacao.ConvercaoDataSql(dataInicial)
                     + "' and c.dataPagamento<='" + Formatacao.ConvercaoDataSql(dataFinal)
                     + "' and c.valorPago>0 order by c.dataVencimento";
         } else {
-            if (cliente != null) {
-                sql = sql + " c.cliente,idcliente=" + cliente.getIdcliente() + " and ";
+            if ((clienteMB.getCliente() != null) && (clienteMB.getCliente().getIdcliente()!=null)) {
+                sql = sql + " c.cliente.idcliente=" + clienteMB.getCliente().getIdcliente() + " and ";
             }else {
                 sql = sql + " c.cliente.visualizacao='Operacional' and ";
             }
@@ -238,6 +314,7 @@ public class ContasReceberMB implements Serializable{
                     + "' and c.valorPago=0 order by c.dataVencimento";
         }
         carregarLista();
+        return "consConReceber";
     }
     
     
@@ -269,5 +346,123 @@ public class ContasReceberMB implements Serializable{
         String sdataFinal = anocFinal + "-" + Formatacao.retornaDataFinal(mescFinal);
         dataInicial =(Formatacao.ConvercaoStringData(sdataInicial));
         dataFinal = (Formatacao.ConvercaoStringData(sdataFinal));
+    }
+    
+    public void calcularTotais(){
+        float tconta=0.0f;
+        float tjuros=0.0f;
+        float tdesconto=0.0f;
+        float trecebido=0.0f;
+        for (int i=0;i<listaContasReceber.size();i++){
+            tconta = tconta + listaContasReceber.get(i).getValorParcela();
+            tjuros = tjuros + listaContasReceber.get(i).getJuros();
+            tdesconto = tdesconto + listaContasReceber.get(i).getDesagio();
+            trecebido = trecebido + listaContasReceber.get(i).getValorPago();
+        }
+        totalconta = Formatacao.foramtarFloatString(tconta);
+        totaljuros = Formatacao.foramtarFloatString(tjuros);
+        totaldesconto = Formatacao.foramtarFloatString(tdesconto);
+        totalrecebido = Formatacao.foramtarFloatString(trecebido);
+        quantidade = String.valueOf(listaContasReceber.size());
+    }
+    
+    public String selecionarUnidade() {
+        clienteMB.setPagina("consConReceber");
+        return "selecionarUnidade";
+    }
+    
+    public String selecionarUnidadeCadastro() {
+        clienteMB.setPagina("cadConReceber");
+        return "selecionarUnidade";
+    }
+    
+    public String salvar(){
+        if (contasReceber.getIdcontasReceber()==null){
+            contasReceber.setMovimentoBanco(0);
+            contasReceber.setVenda(0);
+            contasReceber.setVendaComissao(0);
+        }
+        if (!idBanco.equalsIgnoreCase("0")) {
+            BancoController bancoController = new BancoController();
+            Banco banco = bancoController.consultar(Integer.parseInt(idBanco));
+            contasReceber.setBanco(banco);
+        }
+        if (!idPlanoConta.equalsIgnoreCase("0")) {
+            PlanoContasController planoContasController = new PlanoContasController();
+            Planocontas plano = planoContasController.consultar(Integer.parseInt(idPlanoConta));
+            contasReceber.setPlanocontas(plano);
+        }
+        contasReceber.setCliente(clienteMB.getCliente());
+        contasReceber.setUsuario(usuarioLogadoBean.getUsuario());
+        contasReceber.setValorParcela(Formatacao.formatarStringfloat(valorParcela));
+        contasReceber.setNumeroParcela(Integer.parseInt(numeroParcelas));
+        contasReceber.setValorPago(Formatacao.formatarStringfloat(valorRecebido));
+        contasReceber.setDesagio(Formatacao.formatarStringfloat(desagio));
+        contasReceber.setJuros(Formatacao.formatarStringfloat(juros));
+        ContasReceberController contasReceberController = new ContasReceberController();
+        contasReceberController.salvar(contasReceber);
+        clienteMB.setCliente(new Cliente());
+        carregarLista();
+        contasReceber = new Contasreceber();
+        idBanco="0";
+        idPlanoConta="0";
+        valorParcela="";
+        numeroParcelas="1";
+        return "consConReceber";
+    }
+    
+    public String editar() {
+        for (int i = 0; i < listaContasReceber.size(); i++) {
+            if (listaContasReceber.get(i).isSelecionado()) {
+                contasReceber = listaContasReceber.get(i);
+                clienteMB.setCliente(contasReceber.getCliente());
+                carregarListaPlanoContas();
+                listaBanco = new ArrayList<Banco>();
+                listaContasReceber.get(i).setSelecionado(false);
+                valorParcela = Formatacao.foramtarFloatString(contasReceber.getValorParcela());
+                idBanco = String.valueOf(contasReceber.getBanco().getIdbanco());
+                idPlanoConta = String.valueOf(contasReceber.getPlanocontas().getIdplanoContas());
+                numeroParcelas = String.valueOf(contasReceber.getNumeroParcela());
+                valorRecebido = Formatacao.foramtarFloatString(contasReceber.getValorPago());
+                desagio = Formatacao.foramtarFloatString(contasReceber.getDesagio());
+                juros = Formatacao.foramtarFloatString(contasReceber.getJuros());
+                return "cadConReceber";
+            }
+        }
+        return null;
+    }
+    
+    public String receber() {
+        for (int i = 0; i < listaContasReceber.size(); i++) {
+            if (listaContasReceber.get(i).isSelecionado()) {
+                if (listaContasReceber.get(i).getValorPago() == 0) {
+                    contasReceber = listaContasReceber.get(i);
+                    clienteMB.setCliente(contasReceber.getCliente());
+                    carregarListaPlanoContas();
+                    listaBanco = new ArrayList<Banco>();
+                    listaContasReceber.get(i).setSelecionado(false);
+                    valorParcela = Formatacao.foramtarFloatString(contasReceber.getValorParcela());
+                    idBanco = String.valueOf(contasReceber.getBanco().getIdbanco());
+                    idPlanoConta = String.valueOf(contasReceber.getPlanocontas().getIdplanoContas());
+                    numeroParcelas = String.valueOf(contasReceber.getNumeroParcela());
+                    valorRecebido = Formatacao.foramtarFloatString(contasReceber.getValorPago());
+                    desagio = Formatacao.foramtarFloatString(contasReceber.getDesagio());
+                    juros = Formatacao.foramtarFloatString(contasReceber.getJuros());
+                    return "recebimentoConta";
+                }
+            }
+        }
+        return null;
+    }
+
+    public String excluir() {
+        ContasReceberController contasReceberController = new ContasReceberController();
+        for (int i = 0; i < listaContasReceber.size(); i++) {
+            if (listaContasReceber.get(i).isSelecionado()) {
+                contasReceberController.excluir(listaContasReceber.get(i).getIdcontasReceber());
+            }
+        }
+        carregarLista();
+        return "consConPagar";
     }
 }

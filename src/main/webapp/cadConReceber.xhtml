@@ -18,8 +18,8 @@
                                 <p:outputLabel value="Unidade" for="unidade"  class="left3" />
                             </h:panelGrid>
                             <h:panelGrid columns="2">
-                                <p:inputText id="unidade" size="65"  class="left3"  />
-                                <p:commandButton value="Selecionar" class="selecionar" />
+                                <p:inputText id="unidade" size="65"  class="left3"  value="#{ContasReceberMB.clienteMB.cliente.nomeFantasia}" />
+                                <p:commandButton value="Selecionar" class="selecionar" action="#{ContasReceberMB.selecionarUnidadeCadastro()}" />
 
                             </h:panelGrid>
 
@@ -28,13 +28,14 @@
                                 <p:outputLabel value="conta" for="conta" class="left7"/>
                             </h:panelGrid>  
                             <h:panelGrid columns="2" cellpadding="3">
-                                <p:selectOneMenu id="planoConta" class="left3" style="width:417px" >
-                                    <f:selectItems value="#{ContasReceberMB.listaPlanoContas}" var="planoConta" itemLabel="#{planoConta.numeroConta} + '-' + #{planoConta.descricao}" itemValue="#{planoConta.idplanoContas}"/>
-                                </p:selectOneMenu>
-                                <p:selectOneMenu id="conta" class="left4" style="width:137px" >
+                                <p:selectOneMenu id="planoConta" class="left3" style="width:417px"  value="#{ContasReceberMB.idPlanoConta}">
+                                    <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
+                                    <f:selectItems value="#{ContasReceberMB.listaPlanoContas}" var="planoConta" itemLabel="#{planoConta.descricao}" itemValue="#{planoConta.idplanoContas}"/>
+                                </p:selectOneMenu> 
+                                <p:selectOneMenu id="conta" class="left3" style="width:162px"  value="#{ContasReceberMB.idBanco}">
                                     <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
                                     <f:selectItems value="#{ContasReceberMB.listaBanco}" var="banco" itemLabel="#{banco.nome}" itemValue="#{banco.idbanco}"/>
-                                </p:selectOneMenu>
+                                </p:selectOneMenu>    
                             </h:panelGrid>
                             <h:panelGrid columns="7" cellpadding="3">
                                 <p:outputLabel value="Data Vencimento" for="dataVenc" class="left3"/> 
@@ -43,14 +44,14 @@
                                 <p:outputLabel value="Valor R$" for="valor" class="left1"/>
                             </h:panelGrid>
                             <h:panelGrid columns="5" cellpadding="1">
-                                <p:calendar id="dataVenc" value="#{ContasReceberMB.contasReceber.dataVencimento}" pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left3" required="true" requiredMessage="Campo data de vencimento de conta preenchimento Obrigatório" >
-                                    <f:convertDateTime parent="dd/MM/yyyy"/>
+                                <p:calendar id="dataVenc" value="#{ContasReceberMB.contasReceber.dataVencimento}" pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left3" >
+                                    <f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy" />
                                 </p:calendar>
                                 <p:inputText id="nDocumento" size="20"  class="left" value="#{ContasReceberMB.contasReceber.numeroDocumento}"/>
-                                <p:inputText id="nParcelas" size="9"  class="left" value="#{ContasReceberMB.contasReceber.numeroParcela}">
+                                <p:inputText id="nParcelas" size="9"  class="left" value="#{ContasReceberMB.numeroParcelas}">
                                     <f:convertNumber type="number" />
                                 </p:inputText>
-                                <p:inputText id="valor" size="18"  class="valorreceber" value="#{ContasReceberMB.contasReceber.valorParcela}">
+                                <p:inputText id="valor" size="18"  class="valorreceber" value="#{ContasReceberMB.valorParcela}">
                                     <f:convertNumber type="number" />
                                 </p:inputText>
                             </h:panelGrid> 
@@ -59,7 +60,7 @@
                                 <p:outputLabel value="Tipo de Documento" for="tipoDocumento"  class="data"/>
                             </h:panelGrid>
                             <h:panelGrid columns="2">
-                                <p:inputText id="nome" size="55"  class="left3" value="#{ContasReceberMB.contasReceber.nom}"/>
+                                <p:inputText id="nome" size="55"  class="left3" value="#{ContasReceberMB.contasReceber.nomeCliente}"/>
                                 <p:selectOneMenu id="tipoDocumento" class="left9" style="width:200px" value="#{ContasReceberMB.contasReceber.tipodocumento}">
                                     <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
                                     <f:selectItem itemLabel="Boleto" itemValue="Boleto" />  
@@ -73,7 +74,7 @@
                             </h:panelGrid>            
                         </p:tab>
                     </p:tabView>  
-                    <p:commandButton value="Cadastrar" icon=" ui-icon-plusthick" class="cadastrar"  actionListener="#{mensagem.saveMessagem}" update="growl"/>
+                    <p:commandButton value="Cadastrar" icon=" ui-icon-plusthick" class="cadastrar"  actionListener="#{mensagem.saveMessagem}" update="growl" action="#{ContasReceberMB.salvar()}" />
                     <p:commandButton value="Cancelar" icon=" ui-icon-cancel " class="pesquisar2" action="#{contasReceberMB.cancelar()}" />
                     <br></br>
                     <br></br>
