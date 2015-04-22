@@ -36,11 +36,15 @@
                     <p:outputLabel value="Data Final" for="dataFinal" class="left5"/>
                 </h:panelGrid>
                 <h:panelGrid columns="5" cellpadding="1">
-                    <p:calendar id="datainicial"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="left3" required="true" requiredMessage="Campo data de vencimento de conta preenchimento Obrigatório" />
-                    <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="left" required="true" requiredMessage="Campo data de vencimento de conta preenchimento Obrigatório" />
+                    <p:calendar id="datainicial"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="left3" required="true" requiredMessage="Campo data de vencimento de conta preenchimento Obrigatório" >
+                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                    </p:calendar>
+                    <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="left" required="true" requiredMessage="Campo data de vencimento de conta preenchimento Obrigatório" >
+                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                    </p:calendar>
                    <p:selectOneMenu  class="left9" style="width:200px" required="true" requiredMessage="Campo tipo de documento preenchimento Obrigatório">
-                                <f:selectItem itemLabel="Todas" itemValue="" noSelectionOption="true"/> 
-                          </p:selectOneMenu>
+                            <f:selectItem itemLabel="Todas" itemValue="" noSelectionOption="true"/> 
+                      </p:selectOneMenu>
                 </h:panelGrid>          
                         </p:tab>
                     </p:tabView>  

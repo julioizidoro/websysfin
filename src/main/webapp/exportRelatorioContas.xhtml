@@ -27,7 +27,7 @@
 
                         <p:column headerText="Data Vencimento" style="width: 75px;" >
                             <h:outputText value="#{contasPagar.dataVencimento}"  >
-                                <f:convertDateTime pattern="dd/MM/yyyy" />  
+                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/> 
                             </h:outputText>
                         </p:column>
                         <p:column headerText="Descrição"  >
@@ -41,7 +41,7 @@
                         
                             <p:column headerText="Agendamento"   style="width: 120px;" >
                                 <h:outputText value="#{contasPagar.dataLiberacao}" >
-                                    <f:convertDateTime pattern="dd/MM/yyyy" />  
+                                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </h:outputText>
                             </p:column>
                             <p:column headerText="Fornecedor"   style="width: 180px;" >

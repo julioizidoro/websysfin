@@ -27,10 +27,10 @@
                             <p:inputText id="unidade" size="31" maxlength="100" class="unidade" value="#{ClienteMB.cliente.nomeFantasia}"  readonly="true"/>
                             <p:commandButton value="Selecionar" class="css3button" icon=" ui-icon-arrowthickstop-1-s" action="#{ContasPagarMB.selecionarUnidade}"/>
                             <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="9" maxlength="15" class="left4" value="#{ContasPagarMB.dataInicial}" >
-                                <f:convertDateTime pattern="dd/MM/yyyy" />  
+                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </p:calendar>
                             <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="left4" value="#{ContasPagarMB.dataFinal}">
-                                <f:convertDateTime pattern="dd/MM/yyyy" />  
+                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </p:calendar>
                             <p:commandButton value="Pesquisar" class="pesquisar" icon=" ui-icon-search " update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{ContasPagarMB.pesquisar()}"/>
                         </h:panelGrid>  
@@ -50,7 +50,7 @@
                             </p:column>
                             <p:column headerText="Data Vencimento" style="width:78px">
                                 <h:outputText  value="#{contasPagar.dataVencimento}" >
-                                    <f:convertDateTime pattern="dd/MM/yyyy" />  
+                                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </h:outputText>
                             </p:column>
                             <p:column headerText="Cliente"  style="width:130px">
