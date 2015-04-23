@@ -112,8 +112,40 @@ button.css3button {
         0px -1px 0px rgba(39,242,8,0.2),
         0px 1px 0px rgba(255,255,255,1);
 }
+button.limpar {
+    margin-left:10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #3E7D62;
+    background: -moz-linear-gradient(
+        top,
+        #ffffff 0%,
+        #ffffff 50%,
+        #ffffff);
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#ffffff),
+        color-stop(0.50, #ffffff),
+        to(#ffffff));
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #7fdb15;
+    -moz-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    -webkit-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px 0px 3px rgba(255,255,255,1);
+    text-shadow:
+        0px -1px 0px rgba(39,242,8,0.2),
+        0px 1px 0px rgba(255,255,255,1);
+}
 button.pesquisar {
-    margin-left:115px;
+    margin-left:53px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
     color: #3E7D62;
@@ -358,7 +390,7 @@ button.cadastrarrelatorio {
 }
 .unidade{
     margin-left:20px;
-    font-size:15px;
+    font-size:13px;
 }
 .total{
     margin-left:60px;
@@ -500,6 +532,10 @@ button.cadastrarrelatorio {
 .left4{
     margin-left: 33px;
     font-size:15px;
+}
+.leftdata4{
+    margin-left: 33px;
+    font-size:13px;
 }
 .valorr{
     margin-left: 33px;

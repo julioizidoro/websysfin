@@ -14,7 +14,7 @@
                         
                         <h:panelGrid columns="7" cellpadding="3">
                             <p:outputLabel value="Unidade" for="unidade" class="unidade"/> 
-                            <p:outputLabel value="Data Inicia:" for="dataIni" class="left7"/> 
+                            <p:outputLabel value="Data Inicia" for="dataIni" class="left7"/> 
                             <p:outputLabel value="Data Final" for="dataFinal" class="left"/>
                             <p:selectBooleanCheckbox  class="left" value="#{ContasPagarMB.autorizadas}"/>
                             <h:outputText value="Liberadas"/>
@@ -22,17 +22,18 @@
                             <h:outputText value="Autorizadas"/>    
 
                         </h:panelGrid>
-                        <h:panelGrid columns="5" cellpadding="1">
+                        <h:panelGrid columns="6" cellpadding="1">
 
                             <p:inputText id="unidade" size="31" maxlength="100" class="unidade" value="#{ClienteMB.cliente.nomeFantasia}"  readonly="true"/>
                             <p:commandButton value="Selecionar" class="css3button" icon=" ui-icon-arrowthickstop-1-s" action="#{ContasPagarMB.selecionarUnidade}"/>
-                            <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="9" maxlength="15" class="left4" value="#{ContasPagarMB.dataInicial}" >
+                            <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="11" maxlength="15" class="leftdata4" value="#{ContasPagarMB.dataInicial}" >
                                  <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </p:calendar>
-                            <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="left4" value="#{ContasPagarMB.dataFinal}">
+                            <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="leftdata4" value="#{ContasPagarMB.dataFinal}">
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </p:calendar>
                             <p:commandButton value="Pesquisar" class="pesquisar" icon=" ui-icon-search " update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{ContasPagarMB.pesquisar()}"/>
+                            <p:commandButton value="Limpar" class="limpar"  action="#{ContasPagarMB.limpar()}"/>
                         </h:panelGrid>  
                         <br></br>
                         <legend id="iUsu2" ><b>Consulta de Contas a Pagar </b></legend>
