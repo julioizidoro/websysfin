@@ -795,10 +795,17 @@ public class ContasPagarMB implements Serializable {
         ContasPagarController contasPagarController = new ContasPagarController();
         for (int i = 0; i < listaContaPagar.size(); i++) {
             if (listaContaPagar.get(i).isSelecionado()) {
-                listaContaPagar.get(i).setAutorizarPagamento("S");
-                listaContaPagar.get(i).setUsuarioAutorizou(usuarioLogadoBean.getUsuario().getIdusuario());
                 String data = Formatacao.ConvercaoDataPadrao(new Date()) + "_" + Formatacao.foramtarHoraString();
-                listaContaPagar.get(i).setDataHoraAutorizou(data);
+                if (listaContaPagar.get(i).getAutorizarPagamento().equalsIgnoreCase("S")){
+                    listaContaPagar.get(i).setAutorizarPagamento("N");
+                    listaContaPagar.get(i).setUsuarioAutorizou(0);
+                listaContaPagar.get(i).setDataHoraAutorizou("");
+                }else {
+                    listaContaPagar.get(i).setAutorizarPagamento("S");
+                    listaContaPagar.get(i).setUsuarioAutorizou(usuarioLogadoBean.getUsuario().getIdusuario());
+                    listaContaPagar.get(i).setDataHoraAutorizou(data);
+                }
+                
                 contasPagarController.salvar(listaContaPagar.get(i));
             }
         }
