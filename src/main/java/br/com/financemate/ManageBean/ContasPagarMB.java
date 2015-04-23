@@ -749,6 +749,7 @@ public class ContasPagarMB implements Serializable {
             }
         }
         totalLiberadas = Formatacao.foramtarFloatString(valorSoma);
+        gerarListaContasPagar();
         return "liberacaoConPagar";
     }
 
