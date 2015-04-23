@@ -27,7 +27,9 @@
                         <h:outputText   />
                     </p:column>
                     <p:column headerText="Data Venda"  >
-                        <h:outputText/>
+                        <h:outputText>
+                             <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                        </h:outputText>
                     </p:column>
                     <p:column headerText="Unidade"  >
                         <h:outputText/>

@@ -45,7 +45,7 @@
                         </f:facet>
                         <p:column headerText="Data Vencimento" style="width: 75px;" >
                             <h:outputText value="#{contasReceber.dataVencimento}"  >
-                                <f:convertDateTime parent="dd/MM/yyy"/>
+                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </h:outputText>
                         </p:column>
                         <p:column headerText="Cliente"  >

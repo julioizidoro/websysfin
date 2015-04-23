@@ -51,7 +51,9 @@
                     <p:outputLabel value="Total" for="total"  class="left1"/>
                 </h:panelGrid>
                  <h:panelGrid columns="6">
-                    <p:calendar id="dataVenda"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left3" required="true" requiredMessage="Campo data venda preenchimento Obrigatório"/>
+                    <p:calendar id="dataVenda"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left3" required="true" requiredMessage="Campo data venda preenchimento Obrigatório">
+                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                    </p:calendar>
                     <p:inputText id="totalBruto" size="10" styleClass="alinharCenter" class="valoentrada" required="true" requiredMessage="Campo total bruto preenchimento Obrigatório"/>
                     <p:inputText id="valorDesconto" size="11" styleClass="alinharCenter" class="valorvenda"/>
                     <p:inputText id="valorJuros" size="9" styleClass="alinharCenter" class="valoentrada"/>
@@ -109,7 +111,9 @@
                                    <h:outputText value="#" />
                                </p:column>
                                <p:column headerText="Data Vencimento" >
-                                   <h:outputText  value="#" />
+                                   <h:outputText  value="#" >
+                                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                                   </h:outputText>
                                </p:column>
                                <p:column headerText="Nº Parcelas"  >
                                    <h:outputText value="#"/>

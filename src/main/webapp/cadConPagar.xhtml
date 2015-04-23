@@ -61,16 +61,16 @@
                             </h:panelGrid>
                             <h:panelGrid columns="5" cellpadding="1">
                                 <p:calendar id="dataEnv"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left3"  value="#{ContasPagarMB.contasPagar.dataEnvio}">
-                                    <f:convertDateTime parent="dd/MM/yyy"/>
+                                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
                                 <p:calendar id="dataVenc"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left"  value="#{ContasPagarMB.contasPagar.dataVencimento}">
-                                    <f:convertDateTime parent="dd/MM/yyy"/>
+                                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
                                 <p:calendar id="dataAgen"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="left" value="#{ContasPagarMB.contasPagar.dataAgendamento}">
-                                    <f:convertDateTime parent="dd/MM/yyy"/>
+                                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
                                 <p:calendar id="dataComp"  pattern="dd/MM/yyyy" mask="true" size="12" maxlength="15" class="left" value="#{ContasPagarMB.contasPagar.dataCompensacao}">
-                                    <f:convertDateTime parent="dd/MM/yyy"/>
+                                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
                             </h:panelGrid> 
                             <h:panelGrid columns="2" cellpadding="3">

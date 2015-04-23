@@ -30,7 +30,7 @@
                         </p:column>
                         <p:column headerText="Data Compensação" style="width: 75px;" >
                             <h:outputText value="#{movimentoBanco.dataCompensacao}"  >
-                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </h:outputText>
                         </p:column>
                         <p:column headerText="Descrição"  >

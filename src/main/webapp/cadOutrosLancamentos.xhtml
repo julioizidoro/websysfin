@@ -50,9 +50,15 @@
                     <p:outputLabel value="Data Compensação" for="dataComp" class="left13"/>
                 </h:panelGrid>
                 <h:panelGrid columns="5" cellpadding="1">
-                    <p:calendar id="dataReg"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left3" required="true" requiredMessage="Campo data registro preenchimento Obrigatório" />
-                    <p:calendar id="dataVenc"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left12" />
-                     <p:calendar id="dataComp"  pattern="dd/MM/yyyy" mask="true" size="13" maxlength="15" class="left12" />
+                    <p:calendar id="dataReg"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left3" required="true" requiredMessage="Campo data registro preenchimento Obrigatório" >
+                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                    </p:calendar>
+                    <p:calendar id="dataVenc"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left12">
+                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                    </p:calendar>
+                     <p:calendar id="dataComp"  pattern="dd/MM/yyyy" mask="true" size="13" maxlength="15" class="left12" >
+                          <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                     </p:calendar>
                 </h:panelGrid>
                <h:panelGrid columns="2" cellpadding="3">
                     <p:outputLabel value="Descrição" for="descricao" class="left3" /> 

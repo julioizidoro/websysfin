@@ -19,8 +19,12 @@
                 <h:panelGrid columns="5" cellpadding="1">
                      <p:inputText id="unidade" size="41" maxlength="100" class="left"/>
                      <p:commandButton value="Selecionar" class="css3button" icon=" ui-icon-arrowthickstop-1-s" />
-                     <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left" />
-                     <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left" />
+                     <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left" >
+                          <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                     </p:calendar>
+                     <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left" >
+                          <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                     </p:calendar>
                      
                 </h:panelGrid>  
                  <h:panelGrid columns="1" cellpadding="3">
@@ -46,7 +50,9 @@
                    </h:commandLink>
                </f:facet>
                     <p:column headerText="Data">
-                        <h:outputText />
+                        <h:outputText >
+                             <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                        </h:outputText>
                     </p:column>
                     <p:column headerText="Descrição" >
                         <h:outputText   />
