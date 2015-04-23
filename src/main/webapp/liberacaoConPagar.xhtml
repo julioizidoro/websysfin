@@ -35,7 +35,7 @@
                             <p:outputLabel value="Data da liberação" for="dataLiberação" class="left8"/> 
                         </h:panelGrid>
                         <h:panelGrid columns="5" cellpadding="1">
-                            <p:inputText id="valorTotal" size="15" maxlength="100" class="valorliberar" value="#{ContasPagarMB.totalLiberadas}" />
+                            <p:inputText id="valorTotal" size="15" maxlength="100" class="valorliberar" value="#{ContasPagarMB.totalLiberadas}"  readonly="true"/>
                             <p:calendar id="dataLiberação"  pattern="dd/MM/yyyy" mask="true" size="6" maxlength="15" class="left" value="#{ContasPagarMB.dataLiberacao}">
                                  <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </p:calendar>
