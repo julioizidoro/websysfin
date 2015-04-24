@@ -20,9 +20,9 @@
                              <p:outputLabel value="Plano de Contas" for="planoContas" class="left1"/> 
                         </h:panelGrid>
                          <h:panelGrid columns="3">
-                            <p:calendar id="dataReceb"  pattern="dd/MM/yyyy" mask="true" size="11" maxlength="15" class="left3"/>
+                            <p:calendar id="dataReceb"  pattern="dd/MM/yyyy" mask="true" size="17" maxlength="15" class="left3"/>
                              <p:inputText id="valorReceb" size="16"  class="left" />
-                             <p:selectOneMenu id="planoContas" class="left4" style="width:190px" >
+                             <p:selectOneMenu id="planoContas" class="left4" style="width:160px" >
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
                           </p:selectOneMenu>
                          </h:panelGrid>
@@ -41,7 +41,8 @@
                                 <f:selectItem itemLabel="Recibo" itemValue="Recibo" />  
                                 <f:selectItem itemLabel="Outros" itemValue="Outros" /> 
                           </p:selectOneMenu>
-                      <p:inputText id="competencia" size="9"  class="left" />
+                       <p:inputMask id="competencia" label="competencia"  size="9" mask="99/9999"  class="left" >
+                                </p:inputMask>
                        <p:commandButton value="Registrar conta a receber" class="pesquisar2"/>
                  </h:panelGrid>            
                         </p:tab>

@@ -1,5 +1,5 @@
 body {
-    font-size:15px;
+    font-size:12px;
     font-family: tahoma;
     background-color: #F0FFFF;
     color: #333;
@@ -13,8 +13,8 @@ h1 {
     position: relative;
     background: #3E7D62;
     margin: 0px 0 20px -390px;
-    width: 950px;
-    left:18%;
+    width: 750px;
+    left:19%;
     margin-top:-15px;
     border: 0px solid #aaa;
     margin-left:-10px;
@@ -23,11 +23,11 @@ h1 {
     font-family: tahoma;
     list-style:none; 
     border:1px solid aliceblue; 
-    width:940px;
+    width:740px;
     float:left;
     margin-top:-10px;
     background: #EEE5DE;
-    font-size: 15px;
+    font-size: 12px;
     color:#30b344;
 }
 #centro {
@@ -36,8 +36,8 @@ h1 {
     position: relative;
     background:#99CC33;
     margin: 0px 0 20px -390px;
-    width: 950px;
-    left:18%;
+    width: 750px;
+    left:19%;
 
     border: 0px solid #aaa;
     margin-left:-10px;
@@ -59,22 +59,19 @@ h1 {
     ///////
 }
 .tabelacontas{
-    font-size:12px;
+    font-size:10px;
 
     position:relative;
-    margin-left:19%;
-    right:18%;
     top:-1px;
-    width:920px;
+    width:750px;
 }
 .tabelaselecionar{
-    font-size:12px;
+    font-size:11px;
 
     position:relative;
-    margin-left:19%;
-    right:15%;
+    margin-left:1%;
     top:-1px;
-    width:868px;
+    width:740px;
 }
 .tabela{
     color: #4F4F4F;
@@ -82,7 +79,7 @@ h1 {
 }
 button.css3button {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     color: #3E7D62;
     padding: 1px 1px;
     background: -moz-linear-gradient(
@@ -115,7 +112,7 @@ button.css3button {
 button.limpar {
     margin-left:10px;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     color: #3E7D62;
     background: -moz-linear-gradient(
         top,
@@ -147,7 +144,7 @@ button.limpar {
 button.pesquisar {
     margin-left:53px;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     color: #3E7D62;
     background: -moz-linear-gradient(
         top,
@@ -212,10 +209,10 @@ button.pesquisarreceber {
 button.excel {
     margin-left:30px;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     color: #3E7D62;
     padding: 1px 1px;
-    width: 115px;
+    width: 100px;
     background: -moz-linear-gradient(
         top,
         #ffffff 0%,
@@ -244,9 +241,9 @@ button.excel {
         0px 1px 0px rgba(255,255,255,1);
 }
 button.pesquisar2 {
-    margin-left:30px;
+    margin-left:18px;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     color: #3E7D62;
     padding: 1px 1px;
     background: -moz-linear-gradient(
@@ -277,10 +274,9 @@ button.pesquisar2 {
         0px 1px 0px rgba(255,255,255,1);
 }
 button.export {
-    margin-left:-430px;
-    margin-top:30px;
+    margin-top:10px;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     color: #3E7D62;
     padding: 1px 15px;
     background: -moz-linear-gradient(
@@ -312,9 +308,9 @@ button.export {
 }
 button.cadastrar {
     margin-left: 330px;
-    margin-top:30px;
+    margin-top:10px;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     color: #3E7D62;
     padding: 1px 15px;
     background: -moz-linear-gradient(
@@ -348,9 +344,9 @@ button.cadastrarrelatorio {
     margin-left: 275px;
     margin-top:30px;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     color: #3E7D62;
-    width: 120px;
+    width: 100px;
     padding: 1px 15px;
     background: -moz-linear-gradient(
         top,
@@ -381,7 +377,11 @@ button.cadastrarrelatorio {
 }
 .left{
     margin-left:60px;
-    font-size:15px;
+    font-size:12px;
+}
+.dataVenc{
+    margin-left:68px;
+    font-size:12px;
 }
 .valorreceber{
     margin-left:60px;
@@ -389,42 +389,42 @@ button.cadastrarrelatorio {
     text-align: right;
 }
 .unidade{
-    margin-left:20px;
-    font-size:13px;
+    margin-left:5px;
+    font-size:12px;
 }
 .total{
     margin-left:60px;
-    font-size:15px;
+    font-size:12px;
     text-align:right;
 }
 .vermelho{
-    margin-left:60px;
-    font-size:15px;
+    margin-left:33px;
+    font-size:12px;
     background: #EE3B3B;
     color: #F0FFFF;
     text-align:right;
 }
 .amarelo{
     margin-left:60px;
-    font-size:15px;
+    font-size:12px;
     background: #FFFF00;
     text-align: right;
 }
 .imagens{
     margin-left:410px;
-    font-size:15px;
+    font-size:12px;
 }
 .imagem{
     margin-left:200px;
-    font-size:15px;
+    font-size:12px;
 }
 .left0{
     margin-left:480px;
-    font-size:15px;
+    font-size:12px;
 }
 .left1{
     margin-left:47px;
-    font-size:15px;
+    font-size:12px;
 }
 .valorvenda{
     margin-left:47px;
@@ -433,11 +433,11 @@ button.cadastrarrelatorio {
 }
 .data{
     margin-left:290px;
-    font-size:15px;
+    font-size:12px;
 }
 .left2{
     margin-left:200px;
-    font-size:15px;
+    font-size:12px;
 }
 .valorliberar{
     margin-left:200px;
@@ -445,20 +445,24 @@ button.cadastrarrelatorio {
     text-align: right;
 }
 .usuario{
-    margin-left:220px;
-    font-size:15px;
+    margin-left:208px;
+    font-size:12px;
+}
+.usuariov{
+    margin-left:217px;
+    font-size:12px;
 }
 .pesqcon{
     margin-left:243px;
-    font-size:15px;
+    font-size:12px;
 }
 .usuario2{
     margin-left:210px;
-    font-size:15px;
+    font-size:12px;
 }
 .usuario3{
     margin-left:150px;
-    font-size:15px;
+    font-size:12px;
 }
 .numeroconta{
     margin-left:135px;
@@ -469,100 +473,123 @@ button.cadastrarrelatorio {
 }
 #centro legend#iUsu b{
     margin-top:28px;
-    font-size: 15px;
+    font-size: 14px;
     font-family: tahoma;
-    margin-left:310px;
+    margin-left:300px;
     color:aliceblue;
 }
 #centro legend#iUsu {
     background: #3E7D62;
-    width: 868px;
-    margin-left:39px;
+    width: 750px;
 }
 #centro legend#iUsu2 b{
     margin-top:28px;
-    font-size: 15px;
+    font-size: 14px;
     font-family: tahoma;
-    margin-left:310px;
+    margin-left:300px;
     color:aliceblue;
 }
 #centro legend#iUsu2 {
     background: #3E7D62;
-    width: 920px;
-    margin-left:11px;
+    width: 750px;
 }
 .left3{
     margin-left:11px;
-    font-size:15px;
+   font-size:12px;
 }
 .valoentrada{
     margin-left:11px;
-    font-size:15px;
+    font-size:12px;
     text-align: right;
 }
 .total3{
     margin-left:11px;
-    font-size:15px;
+    font-size:12px;
     text-align: right;
 }
 .alinharCenter{
     text-align:right;
 }   
 .cadastroContasPagar{
-    width: 650px;
-    margin-left:130px;
+    width: 580px;
+    margin-left:65px;
     font-size: 12px;
 }
-.relContasPagar{
+.cadastroLancarVenda{
+    width: 610px;
+    margin-left:65px;
+    font-size: 12px;
+}
+.mostrararquivos{
     width: 500px;
-    margin-left:210px;
+    margin-left:120px;
+    font-size: 12px;
+}
+.pesqvenda{
+    width: 490px;
+    margin-left:120px;
     font-size: 12px;
 }
 .tabUsuario{
     width: 530px;
-    margin-left:180px;
+    margin-left:120px;
     font-size: 12px;
 }
 .selecionar{
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
+   font-size:12px;
     color: #30b344;
     padding: -4px 15px;
 }
 .left4{
     margin-left: 33px;
-    font-size:15px;
+    font-size:12px;
 }
+.valorcadR{
+    margin-left: 33px;
+    font-size:12px;
+     text-align: right;
+}
+
 .leftdata4{
     margin-left: 33px;
-    font-size:13px;
+    font-size:12px;
 }
 .valorr{
     margin-left: 33px;
-    font-size:15px;
+    font-size:12px;
     text-align: right;
 }
 .left5{
     margin-left: 73px;
-    font-size:15px;
+   font-size:12px;
 }
 .left25{
     margin-left: 205px;
-    font-size:15px;
+  font-size:12px;
+}
+.left30{
+    margin-left: 228px;
+  font-size:12px;
 }
 .left6{
     margin-left:18px;
-    font-size:15px;
+   font-size:12px;
 }
 .left7{
     margin-left:360px;
 
-    font-size:15px;
+    font-size:12px;
+}
+.leftvalor{
+    margin-left:310px;
+
+    font-size:12px;
 }
 .left8{
     margin-left:76px;
 
-    font-size:15px;
+    font-size:12px;
 }
 .valorsaida{
     margin-left:76px;
@@ -572,29 +599,29 @@ button.cadastrarrelatorio {
 .left9{
     margin-left: 90px;
 
-    font-size:15px;
+   font-size:12px;
 }
 .dialog{
-    font-size:15px;
+    font-size:12px;
     margin-left:18%;
 }
 .lado{
     margin-left:325px;
-    font-size: 14px;
+   font-size:12px;
 }
 .left10{
     margin-left:450px;
-    font-size:15px;
+    font-size:12px;
 }
     .valorliq{
     margin-left:450px;
-    font-size:15px;
+   font-size:12px;
     text-align: right;
 }
 button.pesquisar3 {
     margin-left:200px;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
+   font-size:12px;
     color: #3E7D62;
     background: -moz-linear-gradient(
         top,
@@ -626,7 +653,7 @@ button.pesquisar3 {
 button.pesquisar4 {
     margin-left:6px;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
+   font-size:12px;
     color: #3E7D62;
     padding: 1px 1px;
     background: -moz-linear-gradient(
@@ -658,38 +685,38 @@ button.pesquisar4 {
 }
 .left11{
     margin-left:430px;
-    font-size:15px;
+   font-size:12px;
 }
 .left12{
     margin-left:130px;
-    font-size:15px;
+  font-size:12px;
 }
 .leefft{
     margin-left:138px;
-    font-size:15px;
+   font-size:12px;
 }
 .left13{
     margin-left:120px;
-    font-size:15px;
+   font-size:12px;
 }
 .espaco{
     margin-left:40px;
-    font-size:15px;
+font-size:12px;
 }
 .leftt{
     margin-left:260px;
-    font-size:15px;
+   font-size:12px;
 }
 .tabelaRecebimento{
-    font-size:14px;
+   font-size:12px;
 }
 .left14{
     margin-left:276px;
-    font-size:15px;
+   font-size:12px;
 }
 .left15{
     margin-left:160px;
-    font-size:15px;
+    font-size:12px;
 }
 button.principal{
     margin-top:30px;
@@ -713,9 +740,8 @@ button.principal{
     width: 80px;
 }
 .cadPagar{
-    margin-left:1px;
     height: 85px;
-    width: 950px;
+    width: 750px;
     background: -moz-linear-gradient(
         top,
         #ffffff 0%,
@@ -746,9 +772,9 @@ button.principal{
     ///////
 }
 button.editar {
-    margin-left:-200px;
+    margin-left:-130px;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     color: #3E7D62;
     background: -moz-linear-gradient(
         top,
@@ -778,27 +804,19 @@ button.editar {
         0px 1px 0px rgba(255,255,255,1);
 }   
 .meio{
-    margin-left:35px;
-    font-size: 15px;
+    margin-left:15px;
+    font-size: 12px;
     color:#F0FFFF;
 }
 fieldset button.botaologin{
-    margin-left:227px;
+    margin-left:175px;
     margin-top:7px;
-    font-size: 15px;
-    color:  #3E7D62;
-    background: -moz-linear-gradient(
-        top,
-        #97dba5 0%,
-        #f7faf7);
-    background: -webkit-gradient(
-        linear, left top, left bottom,
-        from(#97dba5),
-        to(#f7faf7));
+    
 }
+
 .telalogin{
-    width: 346px;
-    margin-top:50px;
+    width: 200px;
+    margin-top:30px;
     background: -moz-linear-gradient(
         top,
         #3E7D62 0%,
@@ -807,7 +825,7 @@ fieldset button.botaologin{
         linear, left top, left bottom,
         from(#268a3a),
         to(#f7faf7));
-    margin-left:270px;
+    margin-left:240px;
     -webkit-border-top-left-radius: 20px;
     -webkit-border-bottom-right-radius: 20px;
     -moz-border-radius-topleft: 20px;
@@ -821,7 +839,7 @@ fieldset button.botaologin{
 button.pesquisar5 {
     margin-left:30px;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
+   font-size:12px;
     color: #3E7D62;
     padding: 1px 1px;
     background: -moz-linear-gradient(
@@ -876,7 +894,7 @@ button.pesquisar5 {
 }
 .left18{
     margin-left: 55px;
-    font-size: 15px;
+  font-size:12px;
 }
 .Center{
     margin-left:20px;
@@ -884,5 +902,5 @@ button.pesquisar5 {
 .tituloRelatorio {
     color:#F0FFFF;
     margin-left:325px;
-    font-size: 15px;
+   font-size:12px;
 }

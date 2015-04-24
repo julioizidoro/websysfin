@@ -29,15 +29,15 @@
                                 <p:outputLabel value="Tipo de Relatório" for="tipoRelatorio"  class="left4"/>
                             </h:panelGrid>
                             <h:panelGrid columns="5" cellpadding="1">
-                                <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left3" value="#{RelatoriosContasPagarMB.dataInicio}">
-                                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                                <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="11" maxlength="15" class="left3" value="#{RelatoriosContasPagarMB.dataInicio}">
+                                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
-                                <p:calendar id="dataFim"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left3"  value="#{RelatoriosContasPagarMB.dataTermino}">
-                                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                                <p:calendar id="dataFim"  pattern="dd/MM/yyyy" mask="true" size="11" maxlength="15" class="left3"  value="#{RelatoriosContasPagarMB.dataTermino}">
+                                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
-                                <p:inputMask id="competencia" label="competencia" value="#{RelatoriosContasPagarMB.competencia}" size="13" mask="99/9999"  class="left3" >
+                                <p:inputMask id="competencia" label="competencia" value="#{RelatoriosContasPagarMB.competencia}" size="14" mask="99/9999"  class="left3" >
                                 </p:inputMask>
-                                <p:selectOneMenu id="tipoRelatorio" class="left3" style="width:140px" value="#{RelatoriosContasPagarMB.tipoRelatorio}" >
+                                <p:selectOneMenu id="tipoRelatorio" class="left3" style="width:134px" value="#{RelatoriosContasPagarMB.tipoRelatorio}" >
                                     <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
                                     <f:selectItem itemLabel="Contas Vencidas" itemValue="contasVencidas" /> 
                                     <f:selectItem itemLabel="Fluxo de Caixa" itemValue="fluxoCaixa" />  

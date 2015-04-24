@@ -14,22 +14,22 @@
                         
                         <h:panelGrid columns="7" cellpadding="3">
                             <p:outputLabel value="Unidade" for="unidade" class="unidade"/> 
-                            <p:outputLabel value="Data Inicia" for="dataIni" class="left7"/> 
-                            <p:outputLabel value="Data Final" for="dataFinal" class="left"/>
-                            <p:selectBooleanCheckbox  class="left" value="#{ContasPagarMB.autorizadas}"/>
+                            <p:outputLabel value="Data Inicial" for="dataIni" class="usuario"/> 
+                            <p:outputLabel value="Data Final" for="dataFinal" class="left1"/>
+                            <p:selectBooleanCheckbox  class="left1" value="#{ContasPagarMB.autorizadas}"/>
                             <h:outputText value="Liberadas"/>
-                            <p:selectBooleanCheckbox  class="" value="#{ContasPagarMB.liberadas}" />
+                            <p:selectBooleanCheckbox  class="tabelaRecebimento" value="#{ContasPagarMB.liberadas}" />
                             <h:outputText value="Autorizadas"/>    
 
                         </h:panelGrid>
                         <h:panelGrid columns="6" cellpadding="1">
 
-                            <p:inputText id="unidade" size="31" maxlength="100" class="unidade" value="#{ClienteMB.cliente.nomeFantasia}"  readonly="true"/>
+                            <p:inputText id="unidade" size="17" maxlength="100" class="unidade" value="#{ClienteMB.cliente.nomeFantasia}"  readonly="true"/>
                             <p:commandButton value="Selecionar" class="css3button" icon=" ui-icon-arrowthickstop-1-s" action="#{ContasPagarMB.selecionarUnidade}"/>
-                            <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="11" maxlength="15" class="leftdata4" value="#{ContasPagarMB.dataInicial}" >
+                            <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="leftdata4" value="#{ContasPagarMB.dataInicial}" >
                                  <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </p:calendar>
-                            <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="leftdata4" value="#{ContasPagarMB.dataFinal}">
+                            <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="leftdata4" value="#{ContasPagarMB.dataFinal}">
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </p:calendar>
                             <p:commandButton value="Pesquisar" class="pesquisar" icon=" ui-icon-search " update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{ContasPagarMB.pesquisar()}"/>
@@ -46,27 +46,27 @@
                                     <p:dataExporter type="xls" target="contaPagar" fileName="contas" />
                                 </h:commandLink>
                             </f:facet>
-                            <p:column headerText="Status"  style="width:35px" styleClass="alinharCenter">
+                            <p:column headerText="Status"  style="width:30px" styleClass="alinharCenter">
                                 <p:graphicImage  value="#{ContasPagarMB.verStatus(contasPagar)}"/>
                             </p:column>
-                            <p:column headerText="Data Vencimento" style="width:78px">
+                            <p:column headerText="Data Vencimento" style="width:61px">
                                 <h:outputText  value="#{contasPagar.dataVencimento}" >
                                      <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </h:outputText>
                             </p:column>
-                            <p:column headerText="Cliente"  style="width:130px">
+                            <p:column headerText="Cliente"  style="width:100px">
                                 <h:outputText value="#{contasPagar.cliente.nomeFantasia}"/>
                             </p:column>
                             <p:column headerText="Descrição"  >
                                 <h:outputText value="#{contasPagar.descricao}"/>
                             </p:column>
-                            <p:column headerText="Autorizadas"  style="width:63px" styleClass="alinharCenter" >
+                            <p:column headerText="Autorizadas"  style="width:58px" styleClass="alinharCenter" >
                                 <p:graphicImage value="#{ContasPagarMB.imagem(contasPagar)}"/>
                             </p:column>
-                            <p:column headerText="Fornecedor" style="width:140px" >
+                            <p:column headerText="Fornecedor" style="width:120px" >
                                 <h:outputText value="#{contasPagar.fornecedor}"/>
                             </p:column>
-                            <p:column headerText="Valor Conta" style="width:60px" styleClass="alinharCenter">
+                            <p:column headerText="Valor Conta" style="width:55px" styleClass="alinharCenter">
                                 <h:outputText value="#{contasPagar.valor}">
                                     <f:convertNumber currencySymbol="" type="currency"/>
                                 </h:outputText>                                    
@@ -76,15 +76,15 @@
                             </p:column>
                         </p:dataTable>
                         <h:panelGrid columns="4" cellpadding="3">
-                            <p:outputLabel value="Total Contas Vencidas" for="contasVenc" class="left" /> 
-                            <p:outputLabel value="Total Contas Vencendo" for="contasVencendo" class="left"/> 
-                            <p:outputLabel value="Total Contas a Vencer" for="contasVencer" class="left5"/>
-                            <p:outputLabel value="Total Contas a Pagar" for="contasPagar" class="left"/>
+                            <p:outputLabel value="Total Contas Vencidas" for="contasVenc" class="left4" /> 
+                            <p:outputLabel value="Total Contas Vencendo" for="contasVencendo" class="left1"/> 
+                            <p:outputLabel value="Total Contas a Vencer" for="contasVencer" class="left1"/>
+                            <p:outputLabel value="Total Contas a Pagar" for="contasPagar" class="left1"/>
                         </h:panelGrid>
                         <h:panelGrid columns="5" cellpadding="1">
 
-                            <p:inputText id="contasVenc" size="16" maxlength="100" class="vermelho" value="#{ContasPagarMB.stotalvencida}"  readonly="true"/>
-                            <p:inputText id="contasVencendo" size="18" maxlength="100" class="amarelo" value="#{ContasPagarMB.stotalvencendo}"  readonly="true"/>
+                            <p:inputText id="contasVenc" size="17" maxlength="100" class="vermelho" value="#{ContasPagarMB.stotalvencida}"  readonly="true"/>
+                            <p:inputText id="contasVencendo" size="17" maxlength="100" class="amarelo" value="#{ContasPagarMB.stotalvencendo}"  readonly="true"/>
                             <p:inputText id="contasVencer" size="16" maxlength="100" class="total" value="#{ContasPagarMB.stotalvencer}"  readonly="true"/>
                             <p:inputText id="contasPagar" size="15" maxlength="100" class="total" value="#{ContasPagarMB.stotal}"  readonly="true"/>
                         </h:panelGrid>  

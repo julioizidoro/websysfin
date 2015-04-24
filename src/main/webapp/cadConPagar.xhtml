@@ -15,11 +15,11 @@
                     <p:tabView class="cadastroContasPagar">
                         <p:tab title="Cadastro" >
                             <h:panelGrid columns="2" cellpadding="5" >
-                                <p:outputLabel value="Upload de Arquivo" for="upload"  class=""/>
+                                <p:outputLabel value="Upload de Arquivo" for="upload"  class="left3"/>
                                 <p:outputLabel value="Upload de Arquivo 02" for="upload2"  class="leefft"/>
                             </h:panelGrid>
                             <h:panelGrid columns="4">
-                                <p:fileUpload id="upload" fileUploadListener="#{ContasPagarMB.upload01}" mode="advanced" update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" 
+                                <p:fileUpload id="upload" class="left3" fileUploadListener="#{ContasPagarMB.upload01}" mode="advanced" update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" 
                                               auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />                               
                                 <p:growl id="messages" showDetail="true" />
                                  <p:fileUpload id="upload2" fileUploadListener="#{ContasPagarMB.upload02}" mode="advanced" update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" 
@@ -32,7 +32,7 @@
                                 <p:outputLabel value="Unidade" for="unidade"  class="left3"/>
                             </h:panelGrid>
                             <h:panelGrid columns="2">
-                                <p:inputText id="unidade" size="90"  class="left3"  value="#{ClienteMB.cliente.nomeFantasia}"/>
+                                <p:inputText id="unidade" size="81"  class="left3"  value="#{ClienteMB.cliente.nomeFantasia}"/>
                                 <p:commandButton value="Selecionar" class="selecionar" action="#{ContasPagarMB.selecionarUnidadeCadastro()}"/>
                             </h:panelGrid>
                             <h:panelGrid columns="3" cellpadding="5" >
@@ -43,7 +43,7 @@
                             <h:panelGrid columns="3">
                                 <p:inputText id="fornecedor" size="42"  class="left3" value="#{ContasPagarMB.contasPagar.fornecedor}"/>
                                 <p:inputText id="nDocumento" size="15"  class="left4" value="#{ContasPagarMB.contasPagar.numeroDocumento}"/>
-                                <p:selectOneMenu id="tipoDocumento" class="left3" style="width:175px"  value="#{ContasPagarMB.contasPagar.tipoDocumento}">
+                                <p:selectOneMenu id="tipoDocumento" class="left3" style="width:127px"  value="#{ContasPagarMB.contasPagar.tipoDocumento}">
                                     <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
                                     <f:selectItem itemLabel="Boleto" itemValue="Boleto" />  
                                     <f:selectItem itemLabel="Guia de Imposto" itemValue="Guia de Imposto" /> 
@@ -55,30 +55,30 @@
                             </h:panelGrid>
                             <h:panelGrid columns="7" cellpadding="3">
                                 <p:outputLabel value="Data Envio" for="dataEnv" class="left3"/> 
-                                <p:outputLabel value="Data Vencimento" for="dataVenc" class="left8"/>
-                                <p:outputLabel value="Data Agendamento" for="dataAgen" class="left18"/>
-                                <p:outputLabel value="Data Compensação" for="dataComp" class="espaco"/>
+                                <p:outputLabel value="Data Vencimento" for="dataVenc" class="left1"/>
+                                <p:outputLabel value="Data Agendamento" for="dataAgen" class="left4"/>
+                                <p:outputLabel value="Data Compensação" for="dataComp" class="left1"/>
                             </h:panelGrid>
                             <h:panelGrid columns="5" cellpadding="1">
-                                <p:calendar id="dataEnv"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left3"  value="#{ContasPagarMB.contasPagar.dataEnvio}">
+                                <p:calendar id="dataEnv"  pattern="dd/MM/yyyy" mask="true" size="10" maxlength="15" class="left3"  value="#{ContasPagarMB.contasPagar.dataEnvio}">
                                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
-                                <p:calendar id="dataVenc"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left"  value="#{ContasPagarMB.contasPagar.dataVencimento}">
+                                <p:calendar id="dataVenc"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="14" class="left4"  value="#{ContasPagarMB.contasPagar.dataVencimento}">
                                      <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
-                                <p:calendar id="dataAgen"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="left" value="#{ContasPagarMB.contasPagar.dataAgendamento}">
+                                <p:calendar id="dataAgen"  pattern="dd/MM/yyyy" mask="true" size="13" maxlength="15" class="left" value="#{ContasPagarMB.contasPagar.dataAgendamento}">
                                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
-                                <p:calendar id="dataComp"  pattern="dd/MM/yyyy" mask="true" size="12" maxlength="15" class="left" value="#{ContasPagarMB.contasPagar.dataCompensacao}">
+                                <p:calendar id="dataComp"  pattern="dd/MM/yyyy" mask="true" size="17" maxlength="15" class="left" value="#{ContasPagarMB.contasPagar.dataCompensacao}">
                                      <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
                             </h:panelGrid> 
                             <h:panelGrid columns="2" cellpadding="3">
                                 <p:outputLabel value="Plano de Contas" for="planoConta" class="left3"/> 
-                                <p:outputLabel value="Valor R$" for="valor" class="left7"/>
+                                <p:outputLabel value="Valor R$" for="valor" class="leftvalor"/>
                             </h:panelGrid>  
                             <h:panelGrid columns="2" cellpadding="3">
-                                <p:selectOneMenu id="planoConta" class="left3" style="width:417px"  value="#{ContasPagarMB.idPlanoConta}">
+                                <p:selectOneMenu id="planoConta" class="left3" style="width:370px"  value="#{ContasPagarMB.idPlanoConta}">
                                     <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
                                     <f:selectItems value="#{ContasPagarMB.listaPlanoContas}" var="planoConta" itemLabel="#{planoConta.descricao}" itemValue="#{planoConta.idplanoContas}"/>
                                 </p:selectOneMenu>                   
@@ -88,7 +88,7 @@
                                 <p:outputLabel value="Descrição" for="descricao" class="left3" /> 
                             </h:panelGrid>  
                             <h:panelGrid columns="2" cellpadding="3">
-                                <p:inputTextarea rows="1" cols="108" id="descricao"  class="left3"  value="#{ContasPagarMB.contasPagar.descricao}"/>
+                                <p:inputTextarea rows="1" cols="98" id="descricao"  class="left3"  value="#{ContasPagarMB.contasPagar.descricao}"/>
                             </h:panelGrid>
                             <h:panelGrid columns="3" cellpadding="3">
                                 <p:outputLabel value="Conta" for="banco" class="left3"/> 
@@ -109,7 +109,7 @@
                                     <f:selectItem itemLabel="Cheque" itemValue="Cheque" />  
                                     <f:selectItem itemLabel="Depósito" itemValue="Depósito" /> 
                                 </p:selectOneMenu>
-                                <p:inputMask id="competencia" label="competencia" value="#{ContasPagarMB.contasPagar.competencia}" size="19" mask="99/9999"  class="left1">
+                                <p:inputMask id="competencia" label="competencia" value="#{ContasPagarMB.contasPagar.competencia}" size="9" mask="99/9999"  class="left1">
                                 </p:inputMask>
                             </h:panelGrid>            
                         </p:tab>

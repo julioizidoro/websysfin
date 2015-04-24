@@ -13,18 +13,18 @@
                     <br></br>
                     <h:panelGrid columns="7" cellpadding="3">
                         <p:outputLabel value="Unidade" for="unidade" class="unidade"/> 
-                        <p:outputLabel value="Data Inicial" for="dataIni" class="left7"/> 
+                        <p:outputLabel value="Data Inicial" for="dataIni" class="pesqcon"/> 
                         <p:outputLabel value="Data Final" for="dataFinal" class="left8"/>
                         <p:selectBooleanCheckbox  class="left5" value="#{ContasReceberMB.recebida}"/>
                         <h:outputText value="Recebidas"/>
                     </h:panelGrid>
                     <h:panelGrid columns="5" cellpadding="1">
-                        <p:inputText id="unidade" size="36" maxlength="100" class="unidade"  readonly="true" value="#{ClienteMB.cliente.nomeFantasia}"/>
+                        <p:inputText id="unidade" size="32" maxlength="100" class="unidade"  readonly="true" value="#{ClienteMB.cliente.nomeFantasia}"/>
                         <p:commandButton value="Selecionar" class="css3button" icon=" ui-icon-arrowthickstop-1-s" action="#{ContasReceberMB.selecionarUnidade()}"/>
-                        <p:calendar id="dataIni" value="#{ContasReceberMB.dataInicial}"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="" >
+                        <p:calendar id="dataIni" value="#{ContasReceberMB.dataInicial}"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="tabelaRecebimento" >
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                         </p:calendar>
-                        <p:calendar id="dataFinal" value="#{ContasReceberMB.dataFinal}" pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="left">
+                        <p:calendar id="dataFinal" value="#{ContasReceberMB.dataFinal}" pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left">
                             <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                         </p:calendar>
                         <p:commandButton value="Pesquisar" class="pesquisarreceber"  icon=" ui-icon-search" update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}"  action="#{ContasReceberMB.pesquisarContasReceber()}"/>
@@ -43,7 +43,7 @@
                             </h:commandLink>
 
                         </f:facet>
-                        <p:column headerText="Data Vencimento" style="width: 75px;" >
+                        <p:column headerText="Data Vencimento" style="width:52px;" >
                             <h:outputText value="#{contasReceber.dataVencimento}"  >
                                  <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </h:outputText>
@@ -51,52 +51,52 @@
                         <p:column headerText="Cliente"  >
                             <h:outputText value="#{contasReceber.nomeCliente}"/>
                         </p:column>
-                        <p:column headerText="Valor da Conta" style="width: 55px;" styleClass="alinharCenter">
+                        <p:column headerText="Valor da Conta" style="width:35px;" styleClass="alinharCenter">
                             <h:outputText value="#{contasReceber.valorParcela}" >
                                 <f:convertNumber currencySymbol="" type="currency"/>
                              </h:outputText>
                         </p:column>
-                        <p:column headerText="Juros" style="width: 40px;" styleClass="alinharCenter">
+                        <p:column headerText="Juros" style="width:28px;" styleClass="alinharCenter">
                             <h:outputText  value="#{contasReceber.juros}" >
                                 <f:convertNumber currencySymbol="" type="currency"/>
                              </h:outputText>
                         </p:column>
-                        <p:column headerText="Desconto" style="width: 55px;" styleClass="alinharCenter">
+                        <p:column headerText="Desconto" style="width:38px;" styleClass="alinharCenter">
                             <h:outputText  value="#{contasReceber.desagio}" >
                                 <f:convertNumber currencySymbol="" type="currency"/>
                              </h:outputText>
                         </p:column>
-                        <p:column headerText="Valor Recebido" style="width: 70px;" styleClass="alinharCenter">
+                        <p:column headerText="Valor Recebido" style="width:50px;" styleClass="alinharCenter">
                             <h:outputText  value="#{contasReceber.valorPago}" >
                                 <f:convertNumber currencySymbol="" type="currency"/>
                              </h:outputText>
                         </p:column>
-                        <p:column headerText="Data Recebimento" style="width: 75px;">
+                        <p:column headerText="Data Recebimento" style="width:58px;">
                             <h:outputText value="#{contasReceber.dataPagamento}"  >
                                 <f:convertDateTime parent="dd/MM/yyy"/>
                             </h:outputText>
                         </p:column> 
-                        <p:column headerText="Unidade"  style="width:100px;">
+                        <p:column headerText="Unidade"  style="width:75px;">
                             <h:outputText  value="#{contasReceber.cliente.nomeFantasia}"/>
                         </p:column>
-                        <p:column headerText="Nº da Venda" style="width: 45px;">
+                        <p:column headerText="Nº da Venda" style="width:30px;">
                             <h:outputText  value="#{contasReceber.venda}"/>
                         </p:column>
-                        <p:column style="width:21px">
+                        <p:column style="width:17px">
                             <p:selectBooleanCheckbox value="#{contasReceber.selecionado}"/>
                         </p:column>
                     </p:dataTable>
                      
                      <h:panelGrid columns="5" cellpadding="3">
                         <p:outputLabel value="Quantidade de Titulos" for="quantidade" class="left3" /> 
-                        <p:outputLabel value="Total Valor Conta" for="totalconta" class="left"/> 
-                        <p:outputLabel value="Total de Juros" for="totaljuros" class="left5"/>
-                        <p:outputLabel value="Total de Desconto" for="totaldesconto" class="left"/>
+                        <p:outputLabel value="Total Valor Conta" for="totalconta" class="left4"/> 
+                        <p:outputLabel value="Total de Juros" for="totaljuros" class="left"/>
+                        <p:outputLabel value="Total de Desconto" for="totaldesconto" class="left4"/>
                         <p:outputLabel value="Total Valor Recebido" for="totalrecebido" class="left"/>
                     </h:panelGrid>
                     <h:panelGrid columns="5" cellpadding="1">
 
-                        <p:inputText id="quantidade" size="16" maxlength="100" class="total3" value="#{ContasReceberMB.quantidade}"  readonly="true"/>
+                        <p:inputText id="quantidade" size="14" maxlength="100" class="total3" value="#{ContasReceberMB.quantidade}"  readonly="true"/>
                         <p:inputText id="totalconta" size="13" maxlength="100" class="total" value="#{ContasReceberMB.totalconta}"  readonly="true"/>
                         <p:inputText id="totaljuros" size="8" maxlength="100" class="total" value="#{ContasReceberMB.totaljuros}"  readonly="true"/>
                         <p:inputText id="totaldesconto" size="12" maxlength="100" class="total" value="#{ContasReceberMB.totaldesconto}"  readonly="true"/>

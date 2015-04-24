@@ -12,7 +12,7 @@
                        <p:growl id="growl" showDetail="true" sticky="true" />
                     <br></br>
                   <br></br>
-                    <p:tabView class="cadastroContasPagar">
+                    <p:tabView class="cadastroLancarVenda">
                         <p:tab title="Dados da Venda" class="tabelaRecebimento" >
                          <h:panelGrid columns="2" cellpadding="5" >
                             <p:outputLabel value="Unidade" for="unidade"  class="left3" />
@@ -51,7 +51,7 @@
                     <p:outputLabel value="Total" for="total"  class="left1"/>
                 </h:panelGrid>
                  <h:panelGrid columns="6">
-                    <p:calendar id="dataVenda"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left3" required="true" requiredMessage="Campo data venda preenchimento Obrigatório">
+                    <p:calendar id="dataVenda"  pattern="dd/MM/yyyy" mask="true" size="11" maxlength="15" class="left3" required="true" requiredMessage="Campo data venda preenchimento Obrigatório">
                          <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                     </p:calendar>
                     <p:inputText id="totalBruto" size="10" styleClass="alinharCenter" class="valoentrada" required="true" requiredMessage="Campo total bruto preenchimento Obrigatório"/>
@@ -78,7 +78,7 @@
                         </h:panelGrid>
                          <h:panelGrid columns="6">
                           <p:inputText id="comissaoter" size="21"  class="left3"/>
-                           <p:calendar id="dataPagFor"  pattern="dd/MM/yyyy" mask="true" size="15" maxlength="15" class="left" />
+                           <p:calendar id="dataPagFor"  pattern="dd/MM/yyyy" mask="true" size="22" maxlength="15" class="left" />
                             <p:inputText id="total2" size="22"  class="valorreceber"/>
                          </h:panelGrid> 
                          <h:panelGrid columns="3" cellpadding="5" >
@@ -111,7 +111,7 @@
                                    <h:outputText value="#" />
                                </p:column>
                                <p:column headerText="Data Vencimento" >
-                                   <h:outputText  value="#" >
+                                   <h:outputText  >
                                         <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                    </h:outputText>
                                </p:column>
@@ -134,14 +134,14 @@
                                 <p:outputLabel value="Nome Completo" for="nomeComple"  class="left3"/> 
                             </h:panelGrid>
                              <h:panelGrid columns="3">
-                                <p:inputText id="nomeComple" size="109"  class="left3"/>
+                                <p:inputText id="nomeComple" size="103"  class="left3"/>
 
                              </h:panelGrid>
                             <h:panelGrid columns="3" cellpadding="5" >
                                 <p:outputLabel value="Endereço" for="endereco"  class="left3"/> 
                             </h:panelGrid>
                              <h:panelGrid columns="3">
-                                <p:inputText id="endereco" size="109"  class="left3"/>
+                                <p:inputText id="endereco" size="103"  class="left3"/>
                              </h:panelGrid>
                             
                             <h:panelGrid columns="3" cellpadding="5" >
@@ -150,7 +150,7 @@
                             </h:panelGrid>
                              <h:panelGrid columns="3">
                                 <p:inputText id="complemento" size="55"  class="left3"/>
-                                <p:inputText id="bairro" size="35"  class="left"/>
+                                <p:inputText id="bairro" size="29"  class="left"/>
                              </h:panelGrid>
                              <h:panelGrid columns="3" cellpadding="5">
                                   <p:outputLabel value="Cidade" for="cidade" class="left3"/>
@@ -190,8 +190,9 @@
                                  <f:selectItem itemLabel="Sergipe" itemValue="SE" />  
                                  <f:selectItem itemLabel="Tocantins" itemValue="TO" /> 
                                    
-                          </p:selectOneMenu>
-                            <p:inputText id="cep"  size="15" class="left"/>
+                                 </p:selectOneMenu>
+                            <p:inputMask id="cep"   size="9"  maxlength="9" class="left" mask="99999-999"/>
+             
                             </h:panelGrid>
                             <h:panelGrid columns="3" cellpadding="5" >
                                 <p:outputLabel value="CNPJ/CPF" for="cnpj"  class="left3"/> 
@@ -199,7 +200,7 @@
                             </h:panelGrid>
                              <h:panelGrid columns="3">
                                 <p:inputText id="cnpj" size="61"  class="left3"/>
-                                <p:inputText id="ie" size="30"  class="left"/>
+                                <p:inputText id="ie" size="23"  class="left"/>
                              </h:panelGrid>
                         </p:tab>
                     </p:tabView>  

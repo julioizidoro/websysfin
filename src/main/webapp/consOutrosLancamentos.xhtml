@@ -12,12 +12,12 @@
                     <p:growl id="growl" showDetail="true" sticky="true" />
                     <br></br>
                  <h:panelGrid columns="7" cellpadding="3">
-                    <p:outputLabel value="Unidade:" for="unidade" class="left"/> 
-                    <p:outputLabel value="Data Inicial:" for="dataIni" class="left10"/> 
+                    <p:outputLabel value="Unidade:" for="unidade" class="unidade"/> 
+                    <p:outputLabel value="Data Inicial:" for="dataIni" class="lado"/> 
                     <p:outputLabel value="Data Final:" for="dataFinal" class="left8"/>
                 </h:panelGrid>
                 <h:panelGrid columns="5" cellpadding="1">
-                     <p:inputText id="unidade" size="41" maxlength="100" class="left"/>
+                     <p:inputText id="unidade" size="37" maxlength="100" class="unidade"/>
                      <p:commandButton value="Selecionar" class="css3button" icon=" ui-icon-arrowthickstop-1-s" />
                      <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left" >
                           <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
@@ -28,10 +28,10 @@
                      
                 </h:panelGrid>  
                  <h:panelGrid columns="1" cellpadding="3">
-                    <p:outputLabel value="Selecione a  Conta  para Utilização:" for="selConta" class="left"/> 
+                    <p:outputLabel value="Selecione a  Conta  para Utilização:" for="selConta" class="unidade"/> 
                 </h:panelGrid>
                  <h:panelGrid columns="2" cellpadding="3">
-                      <p:selectOneMenu id="selConta" class="left" style="width:220px">
+                      <p:selectOneMenu id="selConta" class="unidade" style="width:190px">
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
                           </p:selectOneMenu>
                     <p:commandButton value="Pesquisar" class="pesquisar2" icon=" ui-icon-search " />
@@ -45,7 +45,7 @@
                      
                 <f:facet name="{Exporters}">
                    <h:commandLink>
-                       <img src="resources/img/excel.png" width="24" class="left0"/>
+                       <img src="resources/img/excel.png" width="24" />
                        <p:dataExporter type="xls" target="outroslancamentos" fileName="cars" />
                    </h:commandLink>
                </f:facet>
@@ -68,7 +68,6 @@
                          <p:selectBooleanCheckbox/>
                      </p:column>
                 </p:dataTable>
-                    <br></br>
                     <br></br>
                      <h:panelGrid columns="3" cellpadding="1" class="cadPagar">
                          <p:commandButton value="Lançar" icon=" ui-icon-plus " class="pesquisar3" action="#{outrosLancamentoMB.novo()}"/>

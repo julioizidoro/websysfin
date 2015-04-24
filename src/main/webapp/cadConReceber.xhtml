@@ -18,17 +18,17 @@
                                 <p:outputLabel value="Unidade" for="unidade"  class="left3" />
                             </h:panelGrid>
                             <h:panelGrid columns="2">
-                                <p:inputText id="unidade" size="65"  class="left3"  value="#{ContasReceberMB.clienteMB.cliente.nomeFantasia}" />
+                                <p:inputText id="unidade" size="75"  class="left3"  value="#{ContasReceberMB.clienteMB.cliente.nomeFantasia}" />
                                 <p:commandButton value="Selecionar" class="selecionar" action="#{ContasReceberMB.selecionarUnidadeCadastro()}" />
 
                             </h:panelGrid>
 
                             <h:panelGrid columns="2" cellpadding="3">
                                 <p:outputLabel value="Plano de Contas" for="planoConta" class="left3"/> 
-                                <p:outputLabel value="conta" for="conta" class="left7"/>
+                                <p:outputLabel value="conta" for="conta" class="left30"/>
                             </h:panelGrid>  
                             <h:panelGrid columns="2" cellpadding="3">
-                                <p:selectOneMenu id="planoConta" class="left3" style="width:417px"  value="#{ContasReceberMB.idPlanoConta}">
+                                <p:selectOneMenu id="planoConta" class="left3" style="width:310px"  value="#{ContasReceberMB.idPlanoConta}">
                                     <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
                                     <f:selectItems value="#{ContasReceberMB.listaPlanoContas}" var="planoConta" itemLabel="#{planoConta.descricao}" itemValue="#{planoConta.idplanoContas}"/>
                                 </p:selectOneMenu> 
@@ -40,28 +40,28 @@
                             <h:panelGrid columns="7" cellpadding="3">
                                 <p:outputLabel value="Data Vencimento" for="dataVenc" class="left3"/> 
                                 <p:outputLabel value="Nº do Documento" for="nDocumento" class="left4"/>
-                                <p:outputLabel value="Nº de Parcelas" for="nParcelas" class="left9"/>
-                                <p:outputLabel value="Valor R$" for="valor" class="left1"/>
+                                <p:outputLabel value="Nº de Parcelas" for="nParcelas" class="left6"/>
+                                <p:outputLabel value="Valor R$" for="valor" class="left6"/>
                             </h:panelGrid>
                             <h:panelGrid columns="5" cellpadding="1">
-                                <p:calendar id="dataVenc" value="#{ContasReceberMB.contasReceber.dataVencimento}" pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left3" >
+                                <p:calendar id="dataVenc" value="#{ContasReceberMB.contasReceber.dataVencimento}" pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="left3" >
                                      <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
-                                <p:inputText id="nDocumento" size="20"  class="left" value="#{ContasReceberMB.contasReceber.numeroDocumento}"/>
-                                <p:inputText id="nParcelas" size="9"  class="left" value="#{ContasReceberMB.numeroParcelas}">
+                                <p:inputText id="nDocumento" size="12"  class="left" value="#{ContasReceberMB.contasReceber.numeroDocumento}"/>
+                                <p:inputText id="nParcelas" size="8"  class="left4" value="#{ContasReceberMB.numeroParcelas}">
                                     <f:convertNumber type="number" />
                                 </p:inputText>
-                                <p:inputText id="valor" size="18"  class="valorreceber" value="#{ContasReceberMB.valorParcela}">
+                                <p:inputText id="valor" size="20"  class="valorcadR" value="#{ContasReceberMB.valorParcela}">
                                     <f:convertNumber type="number" />
                                 </p:inputText>
                             </h:panelGrid> 
                             <h:panelGrid columns="2" cellpadding="5" >
                                 <p:outputLabel value="Nome do Cliente" for="nome"  class="left3"/>
-                                <p:outputLabel value="Tipo de Documento" for="tipoDocumento"  class="data"/>
+                                <p:outputLabel value="Tipo de Documento" for="tipoDocumento"  class="left2"/>
                             </h:panelGrid>
                             <h:panelGrid columns="2">
-                                <p:inputText id="nome" size="55"  class="left3" value="#{ContasReceberMB.contasReceber.nomeCliente}"/>
-                                <p:selectOneMenu id="tipoDocumento" class="left9" style="width:200px" value="#{ContasReceberMB.contasReceber.tipodocumento}">
+                                <p:inputText id="nome" size="37"  class="left3" value="#{ContasReceberMB.contasReceber.nomeCliente}"/>
+                                <p:selectOneMenu id="tipoDocumento" class="left9" style="width:185px" value="#{ContasReceberMB.contasReceber.tipodocumento}">
                                     <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
                                     <f:selectItem itemLabel="Boleto" itemValue="Boleto" />  
                                     <f:selectItem itemLabel="Guia de Imposto" itemValue="Guia de Imposto" /> 

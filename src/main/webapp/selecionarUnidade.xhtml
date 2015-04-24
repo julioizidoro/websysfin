@@ -9,7 +9,7 @@
         <ui:define name="corpo">
             <h:form>
                 <div id="centro">
-                     
+                    <br></br>
                        <h:panelGrid columns="7" cellpadding="3">
                              <p:outputLabel value="Unidade" for="unidade" class="unidade"/> 
                        </h:panelGrid>
@@ -22,7 +22,7 @@
                           <p:column headerText="Unidade"  >
                               <h:outputText value="#{clientelista.nomeFantasia}"/>
                           </p:column>
-                         <p:column style="width:120px">
+                         <p:column style="width:100px">
                              <p:commandButton value="Selecionar" icon="ui-icon-arrowstop-1-s"  action="#{ClienteMB.selecionarCliente()}">
                                  <f:param name="id_cliente" value="#{numero}"/>
                              </p:commandButton>
