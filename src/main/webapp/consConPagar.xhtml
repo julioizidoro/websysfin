@@ -33,7 +33,7 @@
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </p:calendar>
                             <p:commandButton value="Pesquisar" class="pesquisar" icon=" ui-icon-search " update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{ContasPagarMB.pesquisar()}"/>
-                            <p:commandButton value="Limpar" class="limpar"  action="#{ContasPagarMB.limpar()}"/>
+                            <p:commandButton value="Limpar" class="limpar"  update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{ContasPagarMB.limparCosulta()}"/>
                         </h:panelGrid>  
                         <br></br>
                         <legend id="iUsu2" ><b>Consulta de Contas a Pagar </b></legend>

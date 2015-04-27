@@ -863,6 +863,12 @@ public class ContasPagarMB implements Serializable {
         return extensao;
     }
     
+    public String limparCosulta(){
+        gerarDataInicia();
+        gerarSqlInicial();
+        return "consConPagar";   
+    }
+    
     
     
     

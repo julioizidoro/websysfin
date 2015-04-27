@@ -39,7 +39,7 @@ public class MenuMB implements Serializable{
     }
     
     public String home(){
-        return "index";
+        return "principal";
     }
     
     public String relatorioContasPagar(){

@@ -517,6 +517,12 @@ public class ContasReceberMB implements Serializable{
             }
         }
         carregarLista();
-        return "consConPagar";
+        return "consConReceber";
+    }
+    
+    public String limparCosulta(){
+        gerarDataInicial();
+        criarConsultaContasReceberInicial();
+        return "consConReceber";
     }
 }
