@@ -16,9 +16,9 @@
                             <p:outputLabel value="Unidade" for="unidade" class="unidade"/> 
                             <p:outputLabel value="Data Inicial" for="dataIni" class="usuario"/> 
                             <p:outputLabel value="Data Final" for="dataFinal" class="left1"/>
-                            <p:selectBooleanCheckbox  class="left1" value="#{ContasPagarMB.autorizadas}"/>
+                            <p:selectBooleanCheckbox  class="left1" value="#{ContasPagarMB.liberadas}"/>
                             <h:outputText value="Liberadas"/>
-                            <p:selectBooleanCheckbox  class="tabelaRecebimento" value="#{ContasPagarMB.liberadas}" />
+                            <p:selectBooleanCheckbox  class="tabelaRecebimento" value="#{ContasPagarMB.autorizadas}" />
                             <h:outputText value="Autorizadas"/>    
 
                         </h:panelGrid>
