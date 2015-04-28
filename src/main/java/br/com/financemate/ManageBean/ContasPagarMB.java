@@ -639,6 +639,7 @@ public class ContasPagarMB implements Serializable {
     public String salvar() {
         if (contasPagar == null) {
             contasPagar = new Contaspagar();
+            contasPagar.setAutorizarPagamento("N");
         }
         if (!idPlanoConta.equalsIgnoreCase("0")) {
             PlanoContasController planoContasController = new PlanoContasController();

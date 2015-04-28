@@ -285,14 +285,12 @@ public class ContasReceberMB implements Serializable{
     }
     
     public void carregarLista() {
+        ContasReceberController contasReceberController = new ContasReceberController();
+        listaContasReceber = contasReceberController.listar(sql);
         if (listaContasReceber == null) {
-            ContasReceberController contasReceberController = new ContasReceberController();
-            listaContasReceber = contasReceberController.listar(sql);
-            if (listaContasReceber == null) {
-                listaContasReceber = new ArrayList<Contasreceber>();
-            }
-            calcularTotais();
+            listaContasReceber = new ArrayList<Contasreceber>();
         }
+        calcularTotais();
     }
     
     public String pesquisarContasReceber(){
