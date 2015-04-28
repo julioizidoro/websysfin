@@ -54,6 +54,9 @@ public class ContasReceberMB implements Serializable{
     private String desagio="0";
     private String juros="0";
     private String valorRecebido="0";
+    private String nomeClientePesquisa;
+    private String numeroVenda;
+    private String tipoContaPesquisa;
     
 
    
@@ -74,8 +77,24 @@ public class ContasReceberMB implements Serializable{
         return idPlanoConta;
     }
 
+    public String getTipoContaPesquisa() {
+        return tipoContaPesquisa;
+    }
+
+    public void setTipoContaPesquisa(String tipoContaPesquisa) {
+        this.tipoContaPesquisa = tipoContaPesquisa;
+    }
+
     public void setIdPlanoConta(String idPlanoConta) {
         this.idPlanoConta = idPlanoConta;
+    }
+
+    public String getNumeroVenda() {
+        return numeroVenda;
+    }
+
+    public void setNumeroVenda(String numeroVenda) {
+        this.numeroVenda = numeroVenda;
     }
 
     public String getIdBanco() {
@@ -84,6 +103,14 @@ public class ContasReceberMB implements Serializable{
 
     public String getValorRecebido() {
         return valorRecebido;
+    }
+
+    public String getNomeClientePesquisa() {
+        return nomeClientePesquisa;
+    }
+
+    public void setNomeClientePesquisa(String nomeClientePesquisa) {
+        this.nomeClientePesquisa = nomeClientePesquisa;
     }
 
     public void setValorRecebido(String valorRecebido) {
@@ -376,6 +403,11 @@ public class ContasReceberMB implements Serializable{
         return "selecionarUnidade";
     }
     
+    public String selecionarUnidadePesquisa() {
+        clienteMB.setPagina("pesquisarConReceber");
+        return "selecionarUnidade";
+    }
+    
     public String salvar(){
         if (contasReceber.getIdcontasReceber()==null){
             contasReceber.setMovimentoBanco(0);
@@ -522,5 +554,72 @@ public class ContasReceberMB implements Serializable{
         gerarDataInicial();
         criarConsultaContasReceberInicial();
         return "consConReceber";
+    }
+    
+    public String iniciarPesquisa(){
+        return "pesquisarConReceber";
+    }
+    
+    public String gerarPesquisa(){
+        gerarSql();
+        carregarLista();
+        return "consConReceber";
+    }
+    
+    private void gerarSql(){
+        boolean linha = false;
+        sql = "Select v from Contasreceber v where ";
+        if (tipoContaPesquisa.equalsIgnoreCase("Todas")) {
+            if ((dataInicial != null) && (dataFinal != null)) {
+                if (!linha) {
+                    sql = sql + "  v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataInicial)
+                            + "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' ";
+                    linha = true;
+                }
+            }
+        } else {
+            if (tipoContaPesquisa.equalsIgnoreCase("Vencidas")) {
+                if (!linha) {
+                    sql = sql + "  v.dataVencimento<'" + Formatacao.ConvercaoDataSql(new Date()) + "' and v.valorPago=0 ";
+                    linha = true;
+                }
+            } else if (tipoContaPesquisa.equalsIgnoreCase("Vencer")) {
+                if (!linha) {
+                    sql = sql + "  v.dataVencimento>='" + Formatacao.ConvercaoDataSql(new Date()) + "' and v.valorPago=0 ";
+                    linha = true;
+                }
+            } else if (tipoContaPesquisa.equalsIgnoreCase("Recebidas")) {
+                if (!linha) {
+                    sql = sql + "  v.dataPagamento>='" + Formatacao.ConvercaoDataSql(dataInicial)
+                            + "' and v.dataPagamento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' and valorPago>0"  ;
+                    linha = true;
+                }
+            }
+        }
+        if (clienteMB.getCliente() != null) {
+            if (!linha) {
+                sql = sql + " v.cliente.idcliente=" + clienteMB.getCliente().getIdcliente();
+                linha = true;
+            } else {
+                sql = sql + " and v.cliente.idcliente=" + clienteMB.getCliente().getIdcliente();
+            }
+        }
+        if (numeroVenda.length()>0){
+            int numero = Integer.parseInt(numeroVenda);
+            if (!linha){
+                sql = sql + " v.venda=" + numero;
+                linha = true;
+            }else {
+                sql = sql + " and v.venda=" + numero;
+            }
+        }
+        if (nomeClientePesquisa.length()>0){
+            if (!linha){
+                sql = sql + " v.nomeCliente like '%" + nomeClientePesquisa + "%'";
+            }else{
+                sql = sql + " and v.nomeCliente like '%" + nomeClientePesquisa + "%'";
+            }
+        }
+        sql = sql + " order by v.dataVencimento";
     }
 }

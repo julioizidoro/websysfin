@@ -18,8 +18,8 @@
                                 <p:outputLabel value="Unidade" for="unidade"  class="left3" />
                             </h:panelGrid>
                             <h:panelGrid columns="2">
-                                <p:inputText id="unidade" size="65"  class="left3" required="true" requiredMessage="Campo unidade preenchimento Obrigatório"/>
-                                <p:commandButton value="Selecionar" class="selecionar" />
+                                <p:inputText id="unidade" size="65"  class="left3" readonly="true" value="#{ContasReceberMB.clienteMB.cliente.nomeFantasia}"/>
+                                <p:commandButton value="Selecionar" class="selecionar" action="#{ContasReceberMB.selecionarUnidadePesquisa()}" />
 
                             </h:panelGrid>
 
@@ -28,27 +28,30 @@
                                 <p:outputLabel value="Nº Venda" for="nVenda" class="pesqcon"/>
                             </h:panelGrid>  
                             <h:panelGrid columns="2" cellpadding="3">
-                                <p:inputText id="nomeCliente" size="51"  class="left3" required="true" requiredMessage="Campo nº do documento preenchimento Obrigatório"/>
-                                <p:inputText id="nVenda" size="12"  class="left"  requiredMessage="Campo nº do documento preenchimento Obrigatório"/>
+                                <p:inputText id="nomeCliente" size="51"  class="left3" value="#{ContasReceberMB.nomeClientePesquisa}"/>
+                                <p:inputText id="nVenda" size="12"  class="left"  value="#{ContasReceberMB.numeroVenda}"/>
                             </h:panelGrid>
                             <h:panelGrid columns="7" cellpadding="3">
-                                <p:outputLabel value="Data inicial" for="datainicial" class="left3"/> 
+                                <p:outputLabel value="Data inicial" for="datainicial" class="left3" /> 
                                 <p:outputLabel value="Data Final" for="dataFinal" class="left5"/>
                             </h:panelGrid>
                             <h:panelGrid columns="5" cellpadding="1">
-                                <p:calendar id="datainicial"  pattern="dd/MM/yyyy" mask="true" size="12" maxlength="15" class="left3" required="true" requiredMessage="Campo data de vencimento de conta preenchimento Obrigatório" >
+                                <p:calendar id="datainicial"  pattern="dd/MM/yyyy" mask="true" size="12" maxlength="15" class="left3" value="#{ContasReceberMB.dataInicial}" >
                                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
-                                <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="11" maxlength="15" class="left" required="true" requiredMessage="Campo data de vencimento de conta preenchimento Obrigatório" >
+                                <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="11" maxlength="15" class="left" required="true" value="#{ContasReceberMB.dataFinal}" >
                                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
-                                <p:selectOneMenu  class="left9" style="width:110px" required="true" requiredMessage="Campo tipo de documento preenchimento Obrigatório">
-                                    <f:selectItem itemLabel="Todas" itemValue="" noSelectionOption="true"/> 
+                                <p:selectOneMenu  class="left9" style="width:110px"  value="#{ContasReceberMB.tipoContaPesquisa}">
+                                    <f:selectItem itemLabel="Todas" itemValue="Todas" noSelectionOption="true"/> 
+                                    <f:selectItem itemLabel="Vencidas" itemValue="Vencidas" noSelectionOption="true"/> 
+                                    <f:selectItem itemLabel="Vencer" itemValue="Vencer" noSelectionOption="true"/> 
+                                    <f:selectItem itemLabel="Recebidas" itemValue="Recebidas" noSelectionOption="true"/> 
                                 </p:selectOneMenu>
                             </h:panelGrid>          
                         </p:tab>
                     </p:tabView>  
-                    <p:commandButton value="Confirmar" icon=" ui-icon-plusthick" class="cadastrar"  actionListener="#{mensagem.saveMessagem}" update="growl"/>
+                    <p:commandButton value="Confirmar" icon=" ui-icon-plusthick" class="cadastrar"  action="#{ContasReceberMB.gerarPesquisa()}"/>
                     <p:commandButton value="Cancelar" icon=" ui-icon-cancel " class="pesquisar2" action="#{contasReceberMB.cancelar()}" />
                     <br></br>
                     <br></br>

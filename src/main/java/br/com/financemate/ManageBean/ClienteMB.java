@@ -90,7 +90,6 @@ public class ClienteMB implements Serializable{
     }
     
     public String pesquisarNome(){
-        
         gerarListaClientes();
         return "selecionarUnidade";
     
