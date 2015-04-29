@@ -64,12 +64,12 @@ public class UsuarioLogadoBean implements Serializable{
 
     public String validarUsuario(){
         if ((usuario.getLogin()!=null) && (usuario.getSenha()==null)){
-            erroLogin("Erro de Login");
+             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Login Invalido."));
         }else{
                 UsuarioController  usuarioController = new UsuarioController();
             usuario = usuarioController.consultar(usuario.getLogin(), usuario.getSenha());
             if (usuario==null){
-                erroLogin("Acesso Negado");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Acesso Negado."));
             }else {
                 if (usuario.getCliente()>0){
                     ClienteController clienteController = new ClienteController();

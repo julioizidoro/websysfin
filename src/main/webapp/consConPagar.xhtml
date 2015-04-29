@@ -14,22 +14,22 @@
                         
                         <h:panelGrid columns="7" cellpadding="3">
                             <p:outputLabel value="Unidade" for="unidade" class="unidade"/> 
-                            <p:outputLabel value="Data Inicial" for="dataIni" class="usuario"/> 
-                            <p:outputLabel value="Data Final" for="dataFinal" class="left1"/>
-                            <p:selectBooleanCheckbox  class="left1" value="#{ContasPagarMB.liberadas}"/>
-                            <h:outputText value="Liberadas"/>
+                            <p:outputLabel value="Data Inicial" for="dataIni" class="pesqcon"/> 
+                            <p:outputLabel value="Data Final" for="dataFinal" class="left4"/>
+                            <p:selectBooleanCheckbox  class="left" value="#{ContasPagarMB.liberadas}"/>
+                            <h:outputText value="Liberadas"  class="checbox"/>
                             <p:selectBooleanCheckbox  class="tabelaRecebimento" value="#{ContasPagarMB.autorizadas}" />
-                            <h:outputText value="Autorizadas"/>    
+                            <h:outputText value="Autorizadas"  class="checbox"/>    
 
                         </h:panelGrid>
                         <h:panelGrid columns="6" cellpadding="1">
 
-                            <p:inputText id="unidade" size="17" maxlength="100" class="unidade" value="#{ClienteMB.cliente.nomeFantasia}"  readonly="true"/>
+                            <p:inputText id="unidade" size="31" maxlength="100" class="unidade" value="#{ClienteMB.cliente.nomeFantasia}"  readonly="true"/>
                             <p:commandButton value="Selecionar" class="css3button" icon=" ui-icon-arrowthickstop-1-s" action="#{ContasPagarMB.selecionarUnidade}"/>
-                            <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="leftdata4" value="#{ContasPagarMB.dataInicial}" >
+                            <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" value="#{ContasPagarMB.dataInicial}" class="tabelaRecebimento">
                                  <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </p:calendar>
-                            <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="leftdata4" value="#{ContasPagarMB.dataFinal}">
+                            <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left6" value="#{ContasPagarMB.dataFinal}">
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </p:calendar>
                             <p:commandButton value="Pesquisar" class="pesquisar" icon=" ui-icon-search " update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{ContasPagarMB.pesquisar()}"/>
@@ -83,10 +83,10 @@
                         </h:panelGrid>
                         <h:panelGrid columns="5" cellpadding="1">
 
-                            <p:inputText id="contasVenc" size="17" maxlength="100" class="vermelho" value="#{ContasPagarMB.stotalvencida}"  readonly="true"/>
-                            <p:inputText id="contasVencendo" size="17" maxlength="100" class="amarelo" value="#{ContasPagarMB.stotalvencendo}"  readonly="true"/>
-                            <p:inputText id="contasVencer" size="16" maxlength="100" class="total" value="#{ContasPagarMB.stotalvencer}"  readonly="true"/>
-                            <p:inputText id="contasPagar" size="15" maxlength="100" class="total" value="#{ContasPagarMB.stotal}"  readonly="true"/>
+                            <p:inputText id="contasVenc" size="19" maxlength="100" class="vermelho" value="#{ContasPagarMB.stotalvencida}"  readonly="true"/>
+                            <p:inputText id="contasVencendo" size="19" maxlength="100" class="amarelo" value="#{ContasPagarMB.stotalvencendo}"  readonly="true"/>
+                            <p:inputText id="contasVencer" size="17" maxlength="100" class="total" value="#{ContasPagarMB.stotalvencer}"  readonly="true"/>
+                            <p:inputText id="contasPagar" size="17" maxlength="100" class="total" value="#{ContasPagarMB.stotal}"  readonly="true"/>
                         </h:panelGrid>  
                         <br></br>
                         <h:panelGrid columns="10" cellpadding="1" class="cadPagar">

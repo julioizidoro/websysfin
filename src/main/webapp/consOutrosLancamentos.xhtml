@@ -13,29 +13,24 @@
                     <br></br>
                  <h:panelGrid columns="7" cellpadding="3">
                     <p:outputLabel value="Unidade:" for="unidade" class="unidade"/> 
-                    <p:outputLabel value="Data Inicial:" for="dataIni" class="lado"/> 
-                    <p:outputLabel value="Data Final:" for="dataFinal" class="left8"/>
+                    <p:outputLabel value="Data Inicial:" for="dataIni" class="pesqcon"/> 
+                    <p:outputLabel value="Data Final:" for="dataFinal" class="left4"/>
+                      <p:outputLabel value="Selecione a  Conta  para Utilização:" for="selConta" class="left4"/> 
                 </h:panelGrid>
-                <h:panelGrid columns="5" cellpadding="1">
-                     <p:inputText id="unidade" size="37" maxlength="100" class="unidade"/>
+                <h:panelGrid columns="6" cellpadding="1">
+                     <p:inputText id="unidade" size="32" maxlength="100" class="unidade"/>
                      <p:commandButton value="Selecionar" class="css3button" icon=" ui-icon-arrowthickstop-1-s" />
-                     <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left" >
+                     <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="tabelaRecebimento" >
                           <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                      </p:calendar>
-                     <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left" >
+                     <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left6" >
                           <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                      </p:calendar>
-                     
-                </h:panelGrid>  
-                 <h:panelGrid columns="1" cellpadding="3">
-                    <p:outputLabel value="Selecione a  Conta  para Utilização:" for="selConta" class="unidade"/> 
-                </h:panelGrid>
-                 <h:panelGrid columns="2" cellpadding="3">
-                      <p:selectOneMenu id="selConta" class="unidade" style="width:190px">
+                     <p:selectOneMenu id="selConta" class="left6" style="width:190px">
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
                           </p:selectOneMenu>
-                    <p:commandButton value="Pesquisar" class="pesquisar2" icon=" ui-icon-search " />
-                </h:panelGrid>
+                     <p:commandButton  class="pesquisaroutros" icon=" ui-icon-search " />
+                </h:panelGrid>  
                     <br></br>
                     <legend id="iUsu" ><b>Consulta de outros lançamentos </b></legend>
                    
@@ -68,15 +63,16 @@
                          <p:selectBooleanCheckbox/>
                      </p:column>
                 </p:dataTable>
-                    <br></br>
-                     <h:panelGrid columns="3" cellpadding="1" class="cadPagar">
+                    
+                     <h:panelGrid columns="3" cellpadding="1" class="">
                          <p:commandButton value="Lançar" icon=" ui-icon-plus " class="pesquisar3" action="#{outrosLancamentoMB.novo()}"/>
                        <p:commandButton value="Editar" class="editar" icon=" ui-icon-pencil"/>
                        <p:commandButton value="Excluir" class="pesquisar" icon=" ui-icon-trash " actionListener="#{mensagem.excluiMessagem()}" update="growl" />
                     </h:panelGrid>
+                       <br></br>
                 </div>
             </h:form>     
-           
+        
         </ui:define>
     </ui:composition>
 </html>

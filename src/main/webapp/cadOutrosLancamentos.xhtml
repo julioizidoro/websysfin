@@ -51,13 +51,13 @@
                     <p:outputLabel value="Data Compensação" for="dataComp" class="left13"/>
                 </h:panelGrid>
                 <h:panelGrid columns="5" cellpadding="1">
-                    <p:calendar id="dataReg"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="left3" required="true" requiredMessage="Campo data registro preenchimento Obrigatório" >
+                    <p:calendar id="dataReg"  pattern="dd/MM/yyyy" mask="true" size="11" maxlength="15" class="left3" required="true" requiredMessage="Campo data registro preenchimento Obrigatório" >
                          <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                     </p:calendar>
-                    <p:calendar id="dataVenc"  pattern="dd/MM/yyyy" mask="true" size="11" maxlength="15" class="left9">
+                    <p:calendar id="dataVenc"  pattern="dd/MM/yyyy" mask="true" size="13" maxlength="15" class="left8">
                          <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                     </p:calendar>
-                     <p:calendar id="dataComp"  pattern="dd/MM/yyyy" mask="true" size="19" maxlength="15" class="left12" >
+                     <p:calendar id="dataComp"  pattern="dd/MM/yyyy" mask="true" size="19" maxlength="15" class="left13" >
                           <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                      </p:calendar>
                 </h:panelGrid>
@@ -77,9 +77,9 @@
                 </h:panelGrid>         
                         </p:tab>
                     </p:tabView>  
-                    <p:commandButton value="Confirmar" icon=" ui-icon-plusthick" class="cadastrar"  actionListener="#{mensagem.saveMessagem}" update="growl"/>
-                    <p:commandButton value="Repetir" icon=" ui-icon-triangle-1-e " class="pesquisar2" />
-                    <p:commandButton value="Cancelar" icon=" ui-icon-cancel " class="pesquisar2" action="#{outrosLancamentoMB.cancelar()}" />
+                    <p:commandButton value="Confirmar" icon=" ui-icon-plusthick" class="cadastraroutros"  actionListener="#{mensagem.saveMessagem}" update="growl"/>
+                    <p:commandButton value="Repetir" icon=" ui-icon-triangle-1-e " class="pesquisar2outros" />
+                    <p:commandButton value="Cancelar" icon=" ui-icon-cancel " class="pesquisar2outros" action="#{outrosLancamentoMB.cancelar()}" />
                     <br></br>
                     <br></br>
 

@@ -32,7 +32,7 @@
                                 <p:outputLabel value="Unidade" for="unidade"  class="left3"/>
                             </h:panelGrid>
                             <h:panelGrid columns="2">
-                                <p:inputText id="unidade" size="82"  class="left3"  value="#{ClienteMB.cliente.nomeFantasia}"/>
+                                <p:inputText id="unidade" size="81"  class="left3"  value="#{ClienteMB.cliente.nomeFantasia}"/>
                                 <p:commandButton value="Selecionar" class="selecionar" action="#{ContasPagarMB.selecionarUnidadeCadastro()}"/>
                             </h:panelGrid>
                             <h:panelGrid columns="3" cellpadding="5" >
@@ -63,13 +63,13 @@
                                 <p:calendar id="dataEnv"  pattern="dd/MM/yyyy" mask="true" size="10" maxlength="15" class="left3"  value="#{ContasPagarMB.contasPagar.dataEnvio}" readonly="true">
                                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
-                                <p:calendar id="dataVenc"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="14" class="left4"  value="#{ContasPagarMB.contasPagar.dataVencimento}">
+                                <p:calendar id="dataVenc"  pattern="dd/MM/yyyy" mask="true" size="13" maxlength="14" class="left4"  value="#{ContasPagarMB.contasPagar.dataVencimento}">
                                      <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
-                                <p:calendar id="dataAgen"  pattern="dd/MM/yyyy" mask="true" size="13" maxlength="15" class="left" value="#{ContasPagarMB.contasPagar.dataAgendamento}">
+                                <p:calendar id="dataAgen"  pattern="dd/MM/yyyy" mask="true" size="16" maxlength="15" class="left4" value="#{ContasPagarMB.contasPagar.dataAgendamento}">
                                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
-                                <p:calendar id="dataComp"  pattern="dd/MM/yyyy" mask="true" size="17" maxlength="15" class="left" value="#{ContasPagarMB.contasPagar.dataCompensacao}">
+                                <p:calendar id="dataComp"  pattern="dd/MM/yyyy" mask="true" size="17" maxlength="15" class="left1" value="#{ContasPagarMB.contasPagar.dataCompensacao}">
                                      <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
                             </h:panelGrid> 

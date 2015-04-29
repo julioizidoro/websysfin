@@ -31,12 +31,12 @@
                             </p:column>
                         </p:dataTable>    
                         <h:panelGrid columns="4" cellpadding="3">
-                            <p:outputLabel value="Valor total a liberar" for="valorTotal" class="left2"/> 
+                            <p:outputLabel value="Valor total a liberar" for="valorTotal" class="left"/> 
                             <p:outputLabel value="Data da liberação" for="dataLiberação" class="left8"/> 
                         </h:panelGrid>
                         <h:panelGrid columns="5" cellpadding="1">
-                            <p:inputText id="valorTotal" size="12" maxlength="100" class="valorliberar" value="#{ContasPagarMB.totalLiberadas}"  readonly="true"/>
-                            <p:calendar id="dataLiberação"  pattern="dd/MM/yyyy" mask="true" size="6" maxlength="15" class="left" value="#{ContasPagarMB.dataLiberacao}">
+                            <p:inputText id="valorTotal" size="16" maxlength="100" class="valorliberar" value="#{ContasPagarMB.totalLiberadas}"  readonly="true"/>
+                            <p:calendar id="dataLiberação"  pattern="dd/MM/yyyy" mask="true" size="10" maxlength="15" class="left5" value="#{ContasPagarMB.dataLiberacao}">
                                  <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </p:calendar>
                             <p:commandButton value="Confirmar" icon=" ui-icon-plus " class="pesquisar" action="#{ContasPagarMB.salvarContasLiberadas()}" actionListener="#{mensagem.liberar()}" update="growl"/>

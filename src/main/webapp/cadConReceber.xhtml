@@ -44,11 +44,11 @@
                                 <p:outputLabel value="Valor R$" for="valor" class="left6"/>
                             </h:panelGrid>
                             <h:panelGrid columns="5" cellpadding="1">
-                                <p:calendar id="dataVenc" value="#{ContasReceberMB.contasReceber.dataVencimento}" pattern="dd/MM/yyyy" mask="true" size="8" maxlength="15" class="left3" >
+                                <p:calendar id="dataVenc" value="#{ContasReceberMB.contasReceber.dataVencimento}" pattern="dd/MM/yyyy" mask="true" size="14" maxlength="15" class="left3" >
                                      <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
-                                <p:inputText id="nDocumento" size="12"  class="left" value="#{ContasReceberMB.contasReceber.numeroDocumento}"/>
-                                <p:inputText id="nParcelas" size="8"  class="left4" value="#{ContasReceberMB.numeroParcelas}">
+                                <p:inputText id="nDocumento" size="14"  class="left4" value="#{ContasReceberMB.contasReceber.numeroDocumento}"/>
+                                <p:inputText id="nParcelas" size="8"  class="left6" value="#{ContasReceberMB.numeroParcelas}">
                                     <f:convertNumber type="number" />
                                 </p:inputText>
                                 <p:inputText id="valor" size="20"  class="valorcadR" value="#{ContasReceberMB.valorParcela}">
