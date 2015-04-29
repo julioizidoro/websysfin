@@ -28,6 +28,7 @@ public class ExecutorRelatorio  {
 	private HttpServletResponse response;
 	private Map<String, Object> parametros;
 	private String nomeArquivoSaida;
+        
 	
 	private boolean relatorioGerado;
         
@@ -96,5 +97,6 @@ public class ExecutorRelatorio  {
             System.out.println("Arquivo existe");
         }else System.out.println("arquivo nulo");
     }
-
+    
+   
 }

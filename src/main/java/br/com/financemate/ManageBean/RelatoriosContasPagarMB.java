@@ -5,30 +5,47 @@
  */
 package br.com.financemate.ManageBean;
 
+import br.com.financemate.Connection.ConectionFactory;
 import br.com.financemate.Controller.ContasPagarController;
 import br.com.financemate.Controller.FluxoCaixaController;
 import br.com.financemate.Controller.MovimentoBancoController;
-import br.com.financemate.Relatorios.ExecutorRelatorio;
 
 import br.com.financemate.Util.Formatacao;
 import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Fluxocaixa;
 import br.com.financemate.model.Movimentobanco;
+import static groovy.inspect.Inspector.print;
 import java.awt.Image;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.ImageIcon;
-import static org.hibernate.criterion.Expression.sql;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 
 /**
@@ -200,14 +217,18 @@ public class RelatoriosContasPagarMB implements Serializable{
     }
     
     public void relatorioContasVencidas() {
-        ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-        String localLogo = "/resources" + File.separator + "img" +
+        FacesContext facesContext = FacesContext.getCurrentInstance();  
+         ServletContext servletContext = (ServletContext)facesContext.getExternalContext().getContext();  
+         String pathRel = servletContext.getRealPath("/resources/report/reportPagamentoVencidas.jasper");  
+         String caminho = "/br/com/financemate/reportPagamentoVencidas.jasper";
+         String reportName = "/br/com/financemate/reportPagamentoVencidas.jasper";
+        URL arquivo = this.getClass().getClassLoader().getResource(reportName);
+        File arq = new File(reportName);
+        URL jasper = this.getClass().getResource(reportName); 
+        InputStream is = this.getClass().getClassLoader().getResourceAsStream(reportName); 
+         Map parameters = new HashMap();
+         String localLogo = "/resources" + File.separator + "img" +
                                     File.separator + "logo.jpg";
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
-        response.setContentType("application/pdf");
-        response.setHeader("Content-disposition","inline; filename=\"arquivo.pdf\"");
-        Map parameters = new HashMap();
         Image logo = new ImageIcon(localLogo).getImage();
         parameters.put("logo", logo);
         String periodo = null;
@@ -215,18 +236,106 @@ public class RelatoriosContasPagarMB implements Serializable{
             + "    " + Formatacao.ConvercaoDataPadrao(dataTermino);
         parameters.put("periodo", periodo);
         parameters.put("sql",gerarSqlRelatorioContasVencidas());
+        parameters.put("REPORT_LOCALE", new Locale("pt", "BR"));
         
-
-        ExecutorRelatorio executor = new ExecutorRelatorio("/relatorios/contaspagar/reportPagamentoVencidas.jasper",
-        response, parameters, "Conntas Pagar Vencidas.pdf");
-        
-        
-
-        if (executor.isRelatorioGerado()) {
-            facesContext.responseComplete();
-        } else {
-            System.out.println("Erro");
+        Connection conn = ConectionFactory.getConexao();
+         System.out.println(conn);
+        try {
+            if (conn.isValid(0)){
+                System.out.println("tudo ok");
+            }else System.out.println("erro conexao");
+        } catch (SQLException ex) {
+            Logger.getLogger(RelatoriosContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
         }
+           
+         HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();  
+        JasperPrint print=null;
+//         try {  
+////            print = JasperFillManager.fillReport(, parameters, conn);
+//        } catch (JRException ex) {
+//            Logger.getLogger(RelatoriosContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        
+        byte[] bytes;                 
+        try {
+            bytes = JasperExportManager.exportReportToPdf(print);
+        } catch (JRException ex) {
+            Logger.getLogger(RelatoriosContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //writeBytesAsAttachedTextFile(bytes, "ListaDeDepartamentos.pdf");   
+
+
+        
+        
+        
+        
+//        String reportName = "/resources/report/reportPagamentoVencidas.jrxml";
+//        URL arquivo = this.getClass().getClassLoader().getResource(reportName);
+//        File arq = new File(reportName);
+//        URL jasper = this.getClass().getResource(reportName); 
+//        InputStream is = this.getClass().getClassLoader().getResourceAsStream(reportName); 
+//        try {
+//            JasperReport report = JasperCompileManager.compileReport(reportName);
+//            JasperPrint print = JasperFillManager.fillReport(report, parameters, conn);
+//            JasperExportManager.exportReportToPdfFile(print, "c:/Relatorio_de_Clientes.pdf");
+//            
+//        } catch (JRException ex) {
+//            Logger.getLogger(RelatoriosContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        JasperReport jasperReport = null; 
+//        try {
+//            jasperReport = (JasperReport) JRLoader.loadObject(arquivo);
+//        } catch (JRException ex) {
+//            Logger.getLogger(RelatoriosContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        
+        
+        // byte[] bytes = null;
+        JasperPrint arquivoPrint = null;
+//        
+//        try {
+//            arquivoPrint = JasperFillManager.fillReport( jasperReport, parameters, conn);
+//            //arquivoPrint = JasperFillManager.fillReport(reportName, parameters, conn);
+//        } catch (JRException ex) {
+//            Logger.getLogger(RelatoriosContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        try {
+//            bytes = JasperRunManager.runReportToPdf(reportName, parameters, conn);
+//        } catch (JRException ex) {
+//            Logger.getLogger(RelatoriosContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+
+//        ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+//        FacesContext facesContext = FacesContext.getCurrentInstance();
+//        HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+//        if (bytes != null && bytes.length > 0 && arquivoPrint != null && arquivoPrint.getPages().size() > 0) {
+//            response.setHeader("Content-Disposition", "attachment; filename="+"ContasVencidas"+"_"+new Date().getTime()+".pdf");
+//            response.setContentType("application/pdf");
+//            response.setContentLength(bytes.length);
+//            ServletOutputStream outputStream = null;
+//            try {
+//                outputStream = response.getOutputStream();
+//            } catch (IOException ex) {
+//                Logger.getLogger(RelatoriosContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            try {
+//                outputStream.write(bytes, 0, bytes.length);
+//            } catch (IOException ex) {
+//                Logger.getLogger(RelatoriosContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            try {
+//                outputStream.flush();
+//            } catch (IOException ex) {
+//                Logger.getLogger(RelatoriosContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            try {
+//                outputStream.close();
+//            } catch (IOException ex) {
+//                Logger.getLogger(RelatoriosContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//                FacesContext.getCurrentInstance().responseComplete();
+//            
+//        }
     }
     
     public String verificarTipoRelatorioExcel(){
