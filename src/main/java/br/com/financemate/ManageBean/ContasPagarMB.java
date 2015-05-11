@@ -401,22 +401,24 @@ public class ContasPagarMB implements Serializable {
         clienteMB.setCliente(new Cliente());
         listaBanco = new ArrayList<Banco>();
         contasPagar = new Contaspagar();
-        carregarListaPlanoContas();
+        contasPagar.setDataEnvio(new Date());
         return "cadConPagar";
     }
 
     public String editar() {
         for (int i = 0; i < listaContaPagar.size(); i++) {
             if (listaContaPagar.get(i).isSelecionado()) {
-                contasPagar = listaContaPagar.get(i);
-                clienteMB.setCliente(contasPagar.getCliente());
-                carregarListaPlanoContas();
-                listaBanco = new ArrayList<Banco>();
-                listaContaPagar.get(i).setSelecionado(false);
-                valorConta = Formatacao.foramtarFloatString(contasPagar.getValor());
-                idBanco = String.valueOf(contasPagar.getBanco().getIdbanco());
-                idPlanoConta = String.valueOf(contasPagar.getPlanocontas().getIdplanoContas());
-                return "cadConPagar";
+                if (listaContaPagar.get(i).getAutorizarPagamento().equalsIgnoreCase("N")) {
+                    contasPagar = listaContaPagar.get(i);
+                    clienteMB.setCliente(contasPagar.getCliente());
+                    carregarListaPlanoContas();
+                    listaBanco = new ArrayList<Banco>();
+                    listaContaPagar.get(i).setSelecionado(false);
+                    valorConta = Formatacao.foramtarFloatString(contasPagar.getValor());
+                    idBanco = String.valueOf(contasPagar.getBanco().getIdbanco());
+                    idPlanoConta = String.valueOf(contasPagar.getPlanocontas().getIdplanoContas());
+                    return "cadConPagar";
+                }
             }
         }
         return null;
@@ -426,7 +428,9 @@ public class ContasPagarMB implements Serializable {
         ContasPagarController contasPagarController = new ContasPagarController();
         for (int i = 0; i < listaContaPagar.size(); i++) {
             if (listaContaPagar.get(i).isSelecionado()) {
-                contasPagarController.excluir(listaContaPagar.get(i).getIdcontasPagar());
+                if (listaContaPagar.get(i).getAutorizarPagamento().equalsIgnoreCase("N")) {
+                    contasPagarController.excluir(listaContaPagar.get(i).getIdcontasPagar());
+                }
             }
         }
         gerarListaContasPagar();
@@ -630,7 +634,7 @@ public class ContasPagarMB implements Serializable {
 
     public void carregarListaPlanoContas() {
         PlanoContasController planoContasController = new PlanoContasController();
-        listaPlanoContas = planoContasController.listar();
+        listaPlanoContas = planoContasController.listar(clienteMB.getCliente().getTipoplanocontas().getIdtipoplanocontas());
         if (listaPlanoContas == null) {
             listaPlanoContas = new ArrayList<Planocontas>();
         }
@@ -745,8 +749,10 @@ public class ContasPagarMB implements Serializable {
         listaLiberadas = new ArrayList<Contaspagar>();
         for (int i = 0; i < listaContaPagar.size(); i++) {
             if (listaContaPagar.get(i).isSelecionado()) {
-                listaLiberadas.add(listaContaPagar.get(i));
-                valorSoma = valorSoma + listaContaPagar.get(i).getValor();
+                if (listaContaPagar.get(i).getAutorizarPagamento().equalsIgnoreCase("S")) {
+                    listaLiberadas.add(listaContaPagar.get(i));
+                    valorSoma = valorSoma + listaContaPagar.get(i).getValor();
+                }
             }
         }
         totalLiberadas = Formatacao.foramtarFloatString(valorSoma);
@@ -796,18 +802,20 @@ public class ContasPagarMB implements Serializable {
         ContasPagarController contasPagarController = new ContasPagarController();
         for (int i = 0; i < listaContaPagar.size(); i++) {
             if (listaContaPagar.get(i).isSelecionado()) {
-                String data = Formatacao.ConvercaoDataPadrao(new Date()) + "_" + Formatacao.foramtarHoraString();
-                if (listaContaPagar.get(i).getAutorizarPagamento().equalsIgnoreCase("S")){
-                    listaContaPagar.get(i).setAutorizarPagamento("N");
-                    listaContaPagar.get(i).setUsuarioAutorizou(0);
-                listaContaPagar.get(i).setDataHoraAutorizou("");
-                }else {
-                    listaContaPagar.get(i).setAutorizarPagamento("S");
-                    listaContaPagar.get(i).setUsuarioAutorizou(usuarioLogadoBean.getUsuario().getIdusuario());
-                    listaContaPagar.get(i).setDataHoraAutorizou(data);
+                if (listaContaPagar.get(i).getAutorizarPagamento().equalsIgnoreCase("N")) {
+                    String data = Formatacao.ConvercaoDataPadrao(new Date()) + "_" + Formatacao.foramtarHoraString();
+                    if (listaContaPagar.get(i).getAutorizarPagamento().equalsIgnoreCase("S")) {
+                        listaContaPagar.get(i).setAutorizarPagamento("N");
+                        listaContaPagar.get(i).setUsuarioAutorizou(0);
+                        listaContaPagar.get(i).setDataHoraAutorizou("");
+                    } else {
+                        listaContaPagar.get(i).setAutorizarPagamento("S");
+                        listaContaPagar.get(i).setUsuarioAutorizou(usuarioLogadoBean.getUsuario().getIdusuario());
+                        listaContaPagar.get(i).setDataHoraAutorizou(data);
+                    }
+
+                    contasPagarController.salvar(listaContaPagar.get(i));
                 }
-                
-                contasPagarController.salvar(listaContaPagar.get(i));
             }
         }
         gerarListaContasPagar();

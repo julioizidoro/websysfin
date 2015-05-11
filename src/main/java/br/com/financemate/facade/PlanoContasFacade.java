@@ -26,9 +26,9 @@ public class PlanoContasFacade {
         return planoContasDao.salvar(plano);
     }
     
-    public List<Planocontas> listar() throws SQLException{
+    public List<Planocontas> listar(int idTipo) throws SQLException{
         planoContasDao = new PlanoContasDao();
-        return planoContasDao.listar();
+        return planoContasDao.listar(idTipo);
     }
     
     public Planocontas consultar(int idPlanoContas) throws SQLException{
@@ -36,9 +36,9 @@ public class PlanoContasFacade {
         return planoContasDao.consultar(idPlanoContas);
     }
     
-    public List<Planocontas> listar(String descricao) throws SQLException{
+    public List<Planocontas> listar(String descricao, int idTipo) throws SQLException{
         planoContasDao = new PlanoContasDao();
-        return planoContasDao.listar(descricao);
+        return planoContasDao.listar(descricao, idTipo);
     }
     
 }

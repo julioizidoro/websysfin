@@ -35,10 +35,10 @@ public class PlanoContasController {
         }
     }
     
-    public List<Planocontas> listar() {
+    public List<Planocontas> listar(int idTipo) {
         planoContasFacade = new PlanoContasFacade();
         try {
-            return planoContasFacade.listar();
+            return planoContasFacade.listar(idTipo);
         } catch (SQLException ex) {
             Logger.getLogger(PlanoContasController.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Erro Listar Plano de Contas "+ ex);
@@ -57,10 +57,10 @@ public class PlanoContasController {
         }
     }
     
-    public List<Planocontas> listar(String descricao) {
+    public List<Planocontas> listar(String descricao, int idTipo) {
         planoContasFacade = new PlanoContasFacade();
         try {
-            return planoContasFacade.listar(descricao);
+            return planoContasFacade.listar(descricao, idTipo);
         } catch (SQLException ex) {
             Logger.getLogger(PlanoContasController.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Erro Listar Plano de Contas "+ ex);

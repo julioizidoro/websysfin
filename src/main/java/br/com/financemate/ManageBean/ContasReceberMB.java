@@ -161,7 +161,6 @@ public class ContasReceberMB implements Serializable{
         clienteMB.setCliente(new Cliente());
         listaBanco = new ArrayList<Banco>();
         contasReceber = new Contasreceber();
-        carregarListaPlanoContas();
         return "cadConReceber";
     }
     
@@ -292,7 +291,7 @@ public class ContasReceberMB implements Serializable{
     
     public void carregarListaPlanoContas(){
         PlanoContasController planoContasController = new PlanoContasController();
-        listaPlanoContas = planoContasController.listar();
+        listaPlanoContas = planoContasController.listar(clienteMB.getCliente().getTipoplanocontas().getIdtipoplanocontas());
         if (listaPlanoContas==null){
             listaPlanoContas = new ArrayList<Planocontas>();
         }
@@ -496,19 +495,21 @@ public class ContasReceberMB implements Serializable{
     public String editar() {
         for (int i = 0; i < listaContasReceber.size(); i++) {
             if (listaContasReceber.get(i).isSelecionado()) {
-                contasReceber = listaContasReceber.get(i);
-                clienteMB.setCliente(contasReceber.getCliente());
-                carregarListaPlanoContas();
-                listaBanco = new ArrayList<Banco>();
-                listaContasReceber.get(i).setSelecionado(false);
-                valorParcela = Formatacao.foramtarFloatString(contasReceber.getValorParcela());
-                idBanco = String.valueOf(contasReceber.getBanco().getIdbanco());
-                idPlanoConta = String.valueOf(contasReceber.getPlanocontas().getIdplanoContas());
-                numeroParcelas = String.valueOf(contasReceber.getNumeroParcela());
-                valorRecebido = Formatacao.foramtarFloatString(contasReceber.getValorPago());
-                desagio = Formatacao.foramtarFloatString(contasReceber.getDesagio());
-                juros = Formatacao.foramtarFloatString(contasReceber.getJuros());
-                return "cadConReceber";
+                if (listaContasReceber.get(i).getValorPago() == 0) {
+                    contasReceber = listaContasReceber.get(i);
+                    clienteMB.setCliente(contasReceber.getCliente());
+                    carregarListaPlanoContas();
+                    listaBanco = new ArrayList<Banco>();
+                    listaContasReceber.get(i).setSelecionado(false);
+                    valorParcela = Formatacao.foramtarFloatString(contasReceber.getValorParcela());
+                    idBanco = String.valueOf(contasReceber.getBanco().getIdbanco());
+                    idPlanoConta = String.valueOf(contasReceber.getPlanocontas().getIdplanoContas());
+                    numeroParcelas = String.valueOf(contasReceber.getNumeroParcela());
+                    valorRecebido = Formatacao.foramtarFloatString(contasReceber.getValorPago());
+                    desagio = Formatacao.foramtarFloatString(contasReceber.getDesagio());
+                    juros = Formatacao.foramtarFloatString(contasReceber.getJuros());
+                    return "cadConReceber";
+                }
             }
         }
         return null;
@@ -621,5 +622,13 @@ public class ContasReceberMB implements Serializable{
             }
         }
         sql = sql + " order by v.dataVencimento";
+    }
+    
+    public void calcularJuroDesagio(){
+        Float vDesagio = Formatacao.formatarStringfloat(desagio);
+        Float vJuro = Formatacao.formatarStringfloat(juros);
+        Float vValorParcela = Formatacao.formatarStringfloat(valorParcela);
+        Float vValorRecebido  = vValorParcela + vJuro -(vDesagio);
+        valorRecebido = Formatacao.foramtarFloatString(vJuro);
     }
 }

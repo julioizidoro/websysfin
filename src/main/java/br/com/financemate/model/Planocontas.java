@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -26,6 +28,8 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "planocontas")
+@NamedQueries({
+    @NamedQuery(name = "Planocontas.findAll", query = "SELECT p FROM Planocontas p")})
 public class Planocontas implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,12 +45,9 @@ public class Planocontas implements Serializable {
     private String descricao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "planocontas")
     private List<Contasreceber> contasreceberList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "planocontas")
-    private List<Contaspagar> contaspagarList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "planocontas")
-    private List<Vendas> vendasList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "planocontas")
-    private List<Movimentobanco> movimentobancoList;
+    @JoinColumn(name = "tipoplanocontas_idtipoplanocontas", referencedColumnName = "idtipoplanocontas")
+    @ManyToOne(optional = false)
+    private Tipoplanocontas tipoplanocontas;
 
     public Planocontas() {
     }
@@ -87,28 +88,12 @@ public class Planocontas implements Serializable {
         this.contasreceberList = contasreceberList;
     }
 
-    public List<Contaspagar> getContaspagarList() {
-        return contaspagarList;
+    public Tipoplanocontas getTipoplanocontas() {
+        return tipoplanocontas;
     }
 
-    public void setContaspagarList(List<Contaspagar> contaspagarList) {
-        this.contaspagarList = contaspagarList;
-    }
-
-    public List<Vendas> getVendasList() {
-        return vendasList;
-    }
-
-    public void setVendasList(List<Vendas> vendasList) {
-        this.vendasList = vendasList;
-    }
-
-    public List<Movimentobanco> getMovimentobancoList() {
-        return movimentobancoList;
-    }
-
-    public void setMovimentobancoList(List<Movimentobanco> movimentobancoList) {
-        this.movimentobancoList = movimentobancoList;
+    public void setTipoplanocontas(Tipoplanocontas tipoplanocontas) {
+        this.tipoplanocontas = tipoplanocontas;
     }
 
     @Override

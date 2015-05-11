@@ -15,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,6 +29,8 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "contasreceber")
+@NamedQueries({
+    @NamedQuery(name = "Contasreceber.findAll", query = "SELECT c FROM Contasreceber c")})
 public class Contasreceber implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -66,23 +70,35 @@ public class Contasreceber implements Serializable {
     private Date dataPagamento;
     @Column(name = "vendaComissao")
     private Integer vendaComissao;
-    @JoinColumn(name = "banco_idbanco", referencedColumnName = "idbanco")
-    @ManyToOne(optional = false)
-    private Banco banco;
-    @JoinColumn(name = "cliente_idcliente", referencedColumnName = "idcliente")
-    @ManyToOne(optional = false)
-    private Cliente cliente;
-    @JoinColumn(name = "planoContas_idplanoContas", referencedColumnName = "idplanoContas")
-    @ManyToOne(optional = false)
-    private Planocontas planocontas;
+    @Size(max = 10)
+    @Column(name = "usuariocadastrou")
+    private Integer usuariocadastrou;
+    @Column(name = "datacadastro")
+    @Temporal(TemporalType.DATE)
+    private Date datacadastro;
+    @Column(name = "usuariobaixou")
+    private Integer usuariobaixou;
+    @Size(max = 45)
+    @Column(name = "databaixa")
+    private String databaixa;
     @JoinColumn(name = "usuario_idusuario", referencedColumnName = "idusuario")
     @ManyToOne(optional = false)
     private Usuario usuario;
+    @JoinColumn(name = "planoContas_idplanoContas", referencedColumnName = "idplanoContas")
+    @ManyToOne(optional = false)
+    private Planocontas planocontas;
+    @JoinColumn(name = "cliente_idcliente", referencedColumnName = "idcliente")
+    @ManyToOne(optional = false)
+    private Cliente cliente;
+    @JoinColumn(name = "banco_idbanco", referencedColumnName = "idbanco")
+    @ManyToOne(optional = false)
+    private Banco banco;
     @Transient
     private boolean selecionado=false;
+    @Transient
+    private String status="";
 
     public Contasreceber() {
-        
     }
 
     public Contasreceber(Integer idcontasReceber) {
@@ -173,6 +189,14 @@ public class Contasreceber implements Serializable {
         return venda;
     }
 
+    public boolean isSelecionado() {
+        return selecionado;
+    }
+
+    public void setSelecionado(boolean selecionado) {
+        this.selecionado = selecionado;
+    }
+
     public void setVenda(Integer venda) {
         this.venda = venda;
     }
@@ -201,28 +225,44 @@ public class Contasreceber implements Serializable {
         this.vendaComissao = vendaComissao;
     }
 
-    public Banco getBanco() {
-        return banco;
+    public String getStatus() {
+        return status;
     }
 
-    public void setBanco(Banco banco) {
-        this.banco = banco;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Integer getUsuariocadastrou() {
+        return usuariocadastrou;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setUsuariocadastrou(Integer usuariocadastrou) {
+        this.usuariocadastrou = usuariocadastrou;
     }
 
-    public Planocontas getPlanocontas() {
-        return planocontas;
+    public Date getDatacadastro() {
+        return datacadastro;
     }
 
-    public void setPlanocontas(Planocontas planocontas) {
-        this.planocontas = planocontas;
+    public void setDatacadastro(Date datacadastro) {
+        this.datacadastro = datacadastro;
+    }
+
+    public Integer getUsuariobaixou() {
+        return usuariobaixou;
+    }
+
+    public void setUsuariobaixou(Integer usuariobaixou) {
+        this.usuariobaixou = usuariobaixou;
+    }
+
+    public String getDatabaixa() {
+        return databaixa;
+    }
+
+    public void setDatabaixa(String databaixa) {
+        this.databaixa = databaixa;
     }
 
     public Usuario getUsuario() {
@@ -233,15 +273,29 @@ public class Contasreceber implements Serializable {
         this.usuario = usuario;
     }
 
-    public boolean isSelecionado() {
-        return selecionado;
+    public Planocontas getPlanocontas() {
+        return planocontas;
     }
 
-    public void setSelecionado(boolean selecionado) {
-        this.selecionado = selecionado;
+    public void setPlanocontas(Planocontas planocontas) {
+        this.planocontas = planocontas;
     }
 
-    
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Banco getBanco() {
+        return banco;
+    }
+
+    public void setBanco(Banco banco) {
+        this.banco = banco;
+    }
 
     @Override
     public int hashCode() {

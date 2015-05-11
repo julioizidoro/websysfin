@@ -14,6 +14,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
@@ -24,6 +28,8 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "cliente")
+@NamedQueries({
+    @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c")})
 public class Cliente implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -84,21 +90,12 @@ public class Cliente implements Serializable {
     @Column(name = "visualizacao")
     private String visualizacao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
-    private List<Contasreceber> contasreceberList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
     private List<Banco> bancoList;
+    @JoinColumn(name = "tipoplanocontas_idtipoplanocontas", referencedColumnName = "idtipoplanocontas")
+    @ManyToOne(optional = false)
+    private Tipoplanocontas tipoplanocontas;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
-    private List<Contaspagar> contaspagarList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
-    private List<Vendas> vendasList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
-    private List<Fluxocaixa> fluxocaixaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
-    private List<Produto> produtoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
-    private List<Dadosmunicipais> dadosmunicipaisList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
-    private List<Movimentobanco> movimentobancoList;
+    private List<Contasreceber> contasreceberList;
 
     public Cliente() {
     }
@@ -259,14 +256,6 @@ public class Cliente implements Serializable {
         this.visualizacao = visualizacao;
     }
 
-    public List<Contasreceber> getContasreceberList() {
-        return contasreceberList;
-    }
-
-    public void setContasreceberList(List<Contasreceber> contasreceberList) {
-        this.contasreceberList = contasreceberList;
-    }
-
     public List<Banco> getBancoList() {
         return bancoList;
     }
@@ -275,52 +264,20 @@ public class Cliente implements Serializable {
         this.bancoList = bancoList;
     }
 
-    public List<Contaspagar> getContaspagarList() {
-        return contaspagarList;
+    public Tipoplanocontas getTipoplanocontas() {
+        return tipoplanocontas;
     }
 
-    public void setContaspagarList(List<Contaspagar> contaspagarList) {
-        this.contaspagarList = contaspagarList;
+    public void setTipoplanocontas(Tipoplanocontas tipoplanocontas) {
+        this.tipoplanocontas = tipoplanocontas;
     }
 
-    public List<Vendas> getVendasList() {
-        return vendasList;
+    public List<Contasreceber> getContasreceberList() {
+        return contasreceberList;
     }
 
-    public void setVendasList(List<Vendas> vendasList) {
-        this.vendasList = vendasList;
-    }
-
-    public List<Fluxocaixa> getFluxocaixaList() {
-        return fluxocaixaList;
-    }
-
-    public void setFluxocaixaList(List<Fluxocaixa> fluxocaixaList) {
-        this.fluxocaixaList = fluxocaixaList;
-    }
-
-    public List<Produto> getProdutoList() {
-        return produtoList;
-    }
-
-    public void setProdutoList(List<Produto> produtoList) {
-        this.produtoList = produtoList;
-    }
-
-    public List<Dadosmunicipais> getDadosmunicipaisList() {
-        return dadosmunicipaisList;
-    }
-
-    public void setDadosmunicipaisList(List<Dadosmunicipais> dadosmunicipaisList) {
-        this.dadosmunicipaisList = dadosmunicipaisList;
-    }
-
-    public List<Movimentobanco> getMovimentobancoList() {
-        return movimentobancoList;
-    }
-
-    public void setMovimentobancoList(List<Movimentobanco> movimentobancoList) {
-        this.movimentobancoList = movimentobancoList;
+    public void setContasreceberList(List<Contasreceber> contasreceberList) {
+        this.contasreceberList = contasreceberList;
     }
 
     @Override

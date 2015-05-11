@@ -60,7 +60,7 @@
                                 <p:outputLabel value="Data Compensação" for="dataComp" class="left1"/>
                             </h:panelGrid>
                             <h:panelGrid columns="5" cellpadding="1">
-                                <p:calendar id="dataEnv"  pattern="dd/MM/yyyy" mask="true" size="10" maxlength="15" class="left3"  value="#{ContasPagarMB.contasPagar.dataEnvio}">
+                                <p:calendar id="dataEnv"  pattern="dd/MM/yyyy" mask="true" size="10" maxlength="15" class="left3"  value="#{ContasPagarMB.contasPagar.dataEnvio}" readonly="true">
                                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
                                 <p:calendar id="dataVenc"  pattern="dd/MM/yyyy" mask="true" size="8" maxlength="14" class="left4"  value="#{ContasPagarMB.contasPagar.dataVencimento}">
@@ -114,7 +114,7 @@
                             </h:panelGrid>            
                         </p:tab>
                     </p:tabView>  
-                    <p:commandButton value="Cadastrar" icon=" ui-icon-plusthick" class="cadastrar"  actionListener="#{mensagem.saveMessagem}" update="growl" action="#{ContasPagarMB.salvar()}"/>
+                    <p:commandButton value="Confirmar" icon=" ui-icon-plusthick" class="cadastrar"  actionListener="#{mensagem.saveMessagem}" update="growl" action="#{ContasPagarMB.salvar()}"/>
                     <p:commandButton value="Cancelar" icon=" ui-icon-cancel " class="pesquisar2"  action="#{ContasPagarMB.cancelar()}"/>
                     <br></br>
                     <br></br>

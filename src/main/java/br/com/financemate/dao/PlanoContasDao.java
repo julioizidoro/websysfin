@@ -29,19 +29,19 @@ public class PlanoContasDao {
         return plano;
     }
     
-    public List<Planocontas> listar() throws SQLException{
+    public List<Planocontas> listar(int idTipo) throws SQLException{
         EntityManager manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
-        Query q = manager.createQuery("Select p from Planocontas p order by p.descricao");
+        Query q = manager.createQuery("Select p from Planocontas p where p.tipoplanocontas.idtipoplanocontas="+ idTipo  + " order by p.descricao");
         List<Planocontas> lista = q.getResultList();
         manager.getTransaction().commit();
         return lista;
     }
     
-    public List<Planocontas> listar(String descricao) throws SQLException{
+    public List<Planocontas> listar(String descricao, int idTipo) throws SQLException{
         EntityManager manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
-        Query q = manager.createQuery("Select p from Planocontas p where p.descricao like '%" + descricao + "%'  order by p.descricao"); 
+        Query q = manager.createQuery("Select p from Planocontas p where p.descricao like '%" + descricao + "%'  and p.tipoplanocontas.idtipoplanocontas="+ idTipo  + " order by p.descricao");
         List<Planocontas> lista = q.getResultList();
         manager.getTransaction().commit();
         return lista;

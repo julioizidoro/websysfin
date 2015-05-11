@@ -76,6 +76,10 @@
                                 <f:convertDateTime parent="dd/MM/yyy"/>
                             </h:outputText>
                         </p:column> 
+                        <p:column headerText="Forma Recebimento" style="width:58px;">
+                            <h:outputText value="#{contasReceber.tipodocumento}" /> 
+                        </p:column> 
+                        
                         <p:column headerText="Unidade"  style="width:75px;">
                             <h:outputText  value="#{contasReceber.cliente.nomeFantasia}"/>
                         </p:column>

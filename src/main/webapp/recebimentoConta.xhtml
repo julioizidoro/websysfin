@@ -44,7 +44,7 @@
                             </h:panelGrid> 
                             <h:panelGrid columns="7" cellpadding="3">
                                 <p:outputLabel value="Data Recebimento" for="dataRece" class="left3" />
-                                <p:outputLabel value="Desagio" for="desagio" class="left" />
+                                <p:outputLabel value="Desagio/Desconto" for="desagio" class="left" />
                                 <p:outputLabel value="Juros" for="juros" class="left9" />
                                 <p:outputLabel value="Valor Recebido" for="valorRece" class="left9" />
                             </h:panelGrid>
@@ -52,9 +52,13 @@
                                 <p:calendar id="dataRece"  pattern="dd/MM/yyyy" mask="true" size="15" maxlength="15" class="left3" value="#{ContasReceberMB.contasReceber.dataPagamento}">
                                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
-                                <p:inputText id="desagio" size="11"  class="left" value="#{ContasReceberMB.desagio}" />
-                                <p:inputText id="juros" size="7"  class="left" value="#{ContasReceberMB.juros}"/>
-                                <p:inputText id="valorRece" size="10"  class="left" value="#{ContasReceberMB.valorRecebido}"/>
+                                <p:inputText id="desagio" size="11"  class="left" value="#{ContasReceberMB.desagio}" >
+                                    <p:ajax event="blur" update="valorRece" listener="#{ContasReceberMB.calcularJuroDesagio()}" />
+                                </p:inputText>
+                                <p:inputText id="juros" size="7"  class="left" value="#{ContasReceberMB.juros}" immediate="false">
+                                    <p:ajax event="blur" update="valorRece" listener="#{ContasReceberMB.calcularJuroDesagio()}" immediate="false"/>
+                                </p:inputText>
+                                <p:inputText id="valorRece" size="10"  class="left" value="#{ContasReceberMB.valorRecebido}" readonly="true"/>
                             </h:panelGrid> 
                             <h:panelGrid columns="5" cellpadding="1">        
                                 <p:outputLabel value="Conta" for="conta" class="left3"/> 
