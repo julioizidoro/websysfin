@@ -65,6 +65,14 @@ h1 {
     top:-1px;
     width:750px;
 }
+.tabelatipo{
+    font-size:11px;
+
+    position:relative;
+    margin-left:12%;
+    top:-1px;
+    width:550px;
+}
 .tabelaselecionar{
     font-size:11px;
 
@@ -659,6 +667,11 @@ button.cadastrarrelatorio {
 .cadastroContasPagar{
     width: 600px;
     margin-left:65px;
+    font-size: 12px;
+}
+.cadastroplanoconta{
+    width: 340px;
+    margin-left:200px;
     font-size: 12px;
 }
 .cadastroLancarVenda{

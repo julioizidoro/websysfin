@@ -32,8 +32,8 @@
                                 <p:outputLabel value="Unidade" for="unidade"  class="left3"/>
                             </h:panelGrid>
                             <h:panelGrid columns="2">
-                                <p:inputText id="unidade" size="81"  class="left3"  value="#{ClienteMB.cliente.nomeFantasia}"/>
-                                <p:commandButton value="Selecionar" class="selecionar" action="#{ContasPagarMB.selecionarUnidadeCadastro()}"/>
+                                <p:inputText id="unidade" size="81"  class="left3"  value="#{ClienteMB.cliente.nomeFantasia}" />
+                                <p:commandButton value="Selecionar" class="selecionar" action="#{ContasPagarMB.selecionarUnidadeCadastro()}"  update="planoConta"  oncomplete="popAprovar.hide(); #{meuBean.objetos}" />
                             </h:panelGrid>
                             <h:panelGrid columns="3" cellpadding="5" >
                                 <p:outputLabel value="Fornecedor" for="fornecedor"  class="left3"/>
@@ -60,9 +60,9 @@
                                 <p:outputLabel value="Data Compensação" for="dataComp" class="left1"/>
                             </h:panelGrid>
                             <h:panelGrid columns="5" cellpadding="1">
-                                <p:calendar id="dataEnv"  pattern="dd/MM/yyyy" mask="true" size="10" maxlength="15" class="left3"  value="#{ContasPagarMB.contasPagar.dataEnvio}" readonly="true">
+                                <p:inputText id="dataEnv" size="10"  class="left3" value="#{ContasPagarMB.contasPagar.dataEnvio}" readonly="true">
                                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                                </p:calendar>
+                                </p:inputText>
                                 <p:calendar id="dataVenc"  pattern="dd/MM/yyyy" mask="true" size="13" maxlength="14" class="left4"  value="#{ContasPagarMB.contasPagar.dataVencimento}">
                                      <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
