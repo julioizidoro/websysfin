@@ -19,12 +19,12 @@
                                 <p:outputLabel value="Descrição" for="descricao" class="left3" /> 
                             </h:panelGrid>  
                             <h:panelGrid columns="2" cellpadding="3">
-                                <p:inputTextarea rows="2" cols="50" id="descricao"  class="left3"  value="#{ContasPagarMB.contasPagar.descricao}"/>
+                                <p:inputTextarea rows="2" cols="50" id="descricao"  class="left3"  value="#{tipoPlanoContasMB.tipoplanocontas.descricao}"/>
                             </h:panelGrid>
                         </p:tab>
                     </p:tabView>  
-                    <p:commandButton value="Confirmar" icon=" ui-icon-plusthick" class="cadastrar"  actionListener="#{mensagem.saveMessagem}" update="growl" action="#{ContasPagarMB.salvar()}"/>
-                    <p:commandButton value="Cancelar" icon=" ui-icon-cancel " class="pesquisar2"  action="#{ContasPagarMB.cancelar()}"/>
+                    <p:commandButton value="Confirmar" icon=" ui-icon-plusthick" class="cadastrar"  actionListener="#{mensagem.saveMessagem}" update="growl" action="#{tipoPlanoContasMB.salvarTipoPlanoContas()}"/>
+                    <p:commandButton value="Cancelar" icon=" ui-icon-cancel " class="pesquisar2"  action="#{tipoPlanoContasMB.cancelar()}"/>
                     <br></br>
                     <br></br>
                 </div>

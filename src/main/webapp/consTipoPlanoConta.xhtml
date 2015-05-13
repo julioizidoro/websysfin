@@ -15,12 +15,12 @@
                     <br></br>
                     <legend id="iUsu" ><b>Consulta Tipo Plano de Contas</b></legend>
                    
-                 <p:dataTable id="planoconta" var="planoconta" value="" rowStyleClass="tabela" class="tabelatipo" 
+                    <p:dataTable id="planoconta" var="planoconta" value="#{tipoPlanoContasMB.listarTipoPlanoContas}" rowStyleClass="tabela" class="tabelatipo" 
                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
                  paginator="true" rows="10" style="margin-bottom:20px"> 
                      
                     <p:column headerText="Descrição"  >
-                        <h:outputText value="#"/>
+                        <h:outputText value="#{planoconta.descricao}"/>
                     </p:column>
                      <p:column style="width:28px">
                          <p:selectBooleanCheckbox/>
@@ -28,7 +28,7 @@
               
                 </p:dataTable>
                      <h:panelGrid columns="2" cellpadding="1">
-                         <p:commandButton value="Adicionar" icon=" ui-icon-plus " class="cadastrar" action="#{vendasMB.novo()}"/>
+                         <p:commandButton value="Adicionar" icon=" ui-icon-plus " class="cadastrar" action="#{tipoPlanoContasMB.novo()}"/>
                          <p:commandButton value="Excluir" class="export" icon=" ui-icon-trash " actionListener="#{mensagem.excluiMessagem()}" update="growl" />
                     </h:panelGrid>
                     <br></br>

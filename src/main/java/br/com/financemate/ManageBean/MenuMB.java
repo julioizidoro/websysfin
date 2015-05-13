@@ -38,6 +38,10 @@ public class MenuMB implements Serializable{
         clienteMB.setCliente(null);
         return "consOutrosLancamentos";
     }
+    public String TipoPlanoContas(){
+        clienteMB.setCliente(null);
+        return "consTipoPlanoConta";
+    }
     
     public String Vendas(){
         clienteMB.setCliente(null);
