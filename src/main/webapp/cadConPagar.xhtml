@@ -33,7 +33,7 @@
                             </h:panelGrid>
                             <h:panelGrid columns="2">
                                 <p:inputText id="unidade" size="81"  class="left3"  value="#{ClienteMB.cliente.nomeFantasia}" />
-                                <p:commandButton value="Selecionar" class="selecionar" action="#{ContasPagarMB.selecionarUnidadeCadastro()}"  update="planoConta"  oncomplete="popAprovar.hide(); #{meuBean.objetos}" />
+                                <p:commandButton value="Selecionar" class="selecionar" action="#{ContasPagarMB.selecionarUnidadeCadastro()}" />
                             </h:panelGrid>
                             <h:panelGrid columns="3" cellpadding="5" >
                                 <p:outputLabel value="Fornecedor" for="fornecedor"  class="left3"/>
@@ -44,7 +44,7 @@
                                 <p:inputText id="fornecedor" size="42"  class="left3" value="#{ContasPagarMB.contasPagar.fornecedor}"/>
                                 <p:inputText id="nDocumento" size="15"  class="left4" value="#{ContasPagarMB.contasPagar.numeroDocumento}"/>
                                 <p:selectOneMenu id="tipoDocumento" class="left3" style="width:127px"  value="#{ContasPagarMB.contasPagar.tipoDocumento}">
-                                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
+                                    <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
                                     <f:selectItem itemLabel="Boleto" itemValue="Boleto" />  
                                     <f:selectItem itemLabel="Guia de Imposto" itemValue="Guia de Imposto" /> 
                                     <f:selectItem itemLabel="Holerite" itemValue="Holerite" />  

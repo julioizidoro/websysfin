@@ -46,8 +46,8 @@
 	<title>
 		<band height="197" splitType="Stretch">
 			<image>
-				<reportElement x="8" y="6" width="255" height="94" uuid="40fae967-115c-4cd6-8e9d-2e8b709725db"/>
-				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+				<reportElement x="8" y="6" width="255" height="100" uuid="40fae967-115c-4cd6-8e9d-2e8b709725db"/>
+				<imageExpression><![CDATA["logo.jpg"]]></imageExpression>
 			</image>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="89" y="149" width="246" height="20" uuid="97f66d0c-62c8-4c04-b2db-46022e48e104"/>

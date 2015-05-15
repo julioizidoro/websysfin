@@ -6,7 +6,6 @@
 
 package br.com.financemate.Controller;
 
-
 import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.model.Planocontas;
 import java.sql.SQLException;
@@ -14,7 +13,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
 
 /**
  *
@@ -35,7 +33,7 @@ public class PlanoContasController {
         }
     }
     
-    public List<Planocontas> listar(int idTipo) {
+    public List<Planocontas> listar(int idTipo){
         planoContasFacade = new PlanoContasFacade();
         try {
             return planoContasFacade.listar(idTipo);
@@ -67,4 +65,5 @@ public class PlanoContasController {
             return null;
         }
     }
+    
 }

@@ -25,7 +25,7 @@ public class TipoPlanoContasController {
         try {
             return tipoPlanoContasFacede.salvar(tipoplano);
         } catch (SQLException ex) {
-            Logger.getLogger(PlanoContasController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TipoPlanoContasController.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Erro Salvar Tipo de Plano de Contas "+ ex);
             return null;
         }
@@ -35,7 +35,7 @@ public class TipoPlanoContasController {
         try {
             return tipoPlanoContasFacede.listar();
         } catch (SQLException ex) {
-            Logger.getLogger(PlanoContasController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TipoPlanoContasController.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Erro Listar Tipo de Plano de Contas "+ ex);
             return null;
         }
@@ -45,7 +45,7 @@ public class TipoPlanoContasController {
         try {
             return tipoPlanoContasFacede.consultar(idtipoplanocontas);
         } catch (SQLException ex) {
-            Logger.getLogger(PlanoContasController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TipoPlanoContasController.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Erro Consultar Tipo dePlano de Contas "+ ex);
             return null;
         }

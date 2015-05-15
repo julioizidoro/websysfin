@@ -28,7 +28,6 @@ public class ExecutorRelatorio  {
 	private HttpServletResponse response;
 	private Map<String, Object> parametros;
 	private String nomeArquivoSaida;
-        
 	
 	private boolean relatorioGerado;
         
@@ -58,7 +57,6 @@ public class ExecutorRelatorio  {
                 byte[] bytes = null;
                 JasperPrint arquivoPrint = null;
                 InputStream reportStream= session.getServletContext().getResourceAsStream(this.caminhoRelatorio);
-                System.out.println("teste");
                 Connection conn = getConexao();
                 arquivoPrint = JasperFillManager.fillReport(reportStream, parametros, conn);
                 
@@ -97,6 +95,5 @@ public class ExecutorRelatorio  {
             System.out.println("Arquivo existe");
         }else System.out.println("arquivo nulo");
     }
-    
-   
+
 }

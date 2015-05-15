@@ -54,7 +54,7 @@ public class MenuMB implements Serializable{
     }
     
     public String relatorioContasPagar(){
-        clienteMB.setCliente(null);
+        clienteMB.setCliente(new Cliente());
         return "relContasPagar";
     } 
 }

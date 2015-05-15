@@ -18,7 +18,7 @@
                                 <p:outputLabel value="Unidade" for="unidade"  class="left3"/>
                             </h:panelGrid>
                             <h:panelGrid columns="2">
-                                <p:inputText id="unidade" size="66"  class="left3"  value="#{ClienteMB.cliente.nomeFantasia}"/>
+                                <p:inputText id="unidade" size="66"  class="left3"  value="#{RelatoriosContasPagarMB.clienteMB.cliente.nomeFantasia}"/>
                                 <p:commandButton value="Selecionar" class="selecionar" action="#{RelatoriosContasPagarMB.selecionarUnidade()}"/>
                             </h:panelGrid>
 
@@ -46,7 +46,7 @@
                             </h:panelGrid>                   
                         </p:tab>
                     </p:tabView>
-                    <p:commandButton value="Confirmar" icon=" ui-icon-check " class="cadastrarrelatorio"  actionListener="#{mensagem.saveMessagem}" update="growl" action="#{RelatoriosContasPagarMB.iniciarRelatorio()}" />
+                    <p:commandButton value="Confirmar" icon=" ui-icon-check " class="cadastrarrelatorio"  actionListener="#{mensagem.saveMessagem}" update="growl" action="#{RelatoriosContasPagarMB.verificarTipoRelatorioJasper()}" />
                     <p:commandButton value="Excel" icon="ui-icon-document" class="excel" action="#{RelatoriosContasPagarMB.verificarTipoRelatorioExcel()}"/>
                     <p:commandButton value="Cancelar" icon=" ui-icon-cancel " class="pesquisar2"  action="#{RelatoriosContasPagarMB.cancelar()}"/>
                     <br></br>
