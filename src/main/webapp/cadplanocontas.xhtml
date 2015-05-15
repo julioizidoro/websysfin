@@ -19,9 +19,11 @@
                                 <p:outputLabel value="Modelo" for="modelo"  class="left5"  />   
                             </h:panelGrid>
                             <h:panelGrid columns="3">
-                                <p:inputText id="numero" size="8"  class="left3" value="#"/>
-                                <p:selectOneMenu id="modelo" class="left" style="width:127px"  value="#">
-                                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
+                                <p:inputText id="numero" size="8"  class="left3" value="#{planoContasMB.planocontas.numeroConta}"/>
+                                
+                                <p:selectOneMenu id="modelo" class="left" style="width:127px"  value="#{planoContasMB.idTipoPlanoConta}">
+                                    <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
+                                    <f:selectItems value="#{planoContasMB.listarTipoPlanoContas}" var="tipoSelecionado" itemLabel="#{tipoSelecionado.descricao}" itemValue="#{tipoSelecionado.idtipoplanocontas}"/>
                                 </p:selectOneMenu>
                             </h:panelGrid>
                            
@@ -29,12 +31,12 @@
                                 <p:outputLabel value="Descrição" for="descricao" class="left3" /> 
                             </h:panelGrid>  
                             <h:panelGrid columns="2" cellpadding="3">
-                                <p:inputTextarea rows="2" cols="47" id="descricao"  class="left3"  value="#{ContasPagarMB.contasPagar.descricao}"/>
+                                <p:inputTextarea rows="2" cols="47" id="descricao"  class="left3"  value="#{planoContasMB.planocontas.descricao}"/>
                             </h:panelGrid>
                         </p:tab>
                     </p:tabView>  
-                    <p:commandButton value="Confirmar" icon=" ui-icon-plusthick" class="cadastrar"  actionListener="#{mensagem.saveMessagem}" update="growl" action="#{ContasPagarMB.salvar()}"/>
-                    <p:commandButton value="Cancelar" icon=" ui-icon-cancel " class="pesquisar2"  action="#{ContasPagarMB.cancelar()}"/>
+                    <p:commandButton value="Confirmar" icon=" ui-icon-plusthick" class="cadastrar"  actionListener="#{mensagem.saveMessagem}" update="growl" action="#{planoContasMB.salvarPlanoContas()}"/>
+                    <p:commandButton value="Cancelar" icon=" ui-icon-cancel " class="pesquisar2"  action="#{planoContasMB.cancelar()}"/>
                     <br></br>
                     <br></br>
                 </div>

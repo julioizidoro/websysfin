@@ -43,6 +43,10 @@ public class MenuMB implements Serializable{
         return "consTipoPlanoConta";
     }
     
+    public String planoContas(){
+        clienteMB.setCliente(null);
+        return "consPlanoConta";
+    }
     public String vendas(){
         clienteMB.setCliente(null);
         return "consVendas";
@@ -56,5 +60,9 @@ public class MenuMB implements Serializable{
     public String relatorioContasPagar(){
         clienteMB.setCliente(new Cliente());
         return "relContasPagar";
+    } 
+    public String banco(){
+        clienteMB.setCliente(new Cliente());
+        return "consbanco";
     } 
 }

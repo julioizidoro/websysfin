@@ -66,7 +66,6 @@ public class Banco implements Serializable {
     private List<Contaspagar> contaspagarList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "banco")
     private List<Movimentobanco> movimentobancoList;
-    private String teste;
 
     public Banco() {
     }

@@ -15,7 +15,7 @@ h1 {
     margin: 0px 0 20px -390px;
     width: 750px;
     left:22%;
-    margin-top:-15px;
+    margin-top:-5px;
     border: 0px solid #aaa;
     margin-left:-10px;
 }
@@ -32,7 +32,7 @@ h1 {
 }
 #centro {
     font-size:15px;
-    top:-68px;
+    top:-60px;
     position: relative;
     background:#99CC33;
     margin: 0px 0 20px -390px;

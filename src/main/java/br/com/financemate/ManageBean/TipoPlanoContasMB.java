@@ -68,7 +68,7 @@ public class TipoPlanoContasMB implements Serializable {
     public String consultarTipoPlanoContas() throws SQLException {
         FacesContext fc = FacesContext.getCurrentInstance();
         Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-        int idtipoplanocontas = Integer.parseInt(params.get("id_aluno"));
+        int idtipoplanocontas = Integer.parseInt(params.get("idtipoplanocontas"));
         if (idtipoplanocontas > 0) {
             TipoPlanoContasFacede tipoPlanoContasFacede = new TipoPlanoContasFacede();
             tipoplanocontas = tipoPlanoContasFacede.consultar(idtipoplanocontas);

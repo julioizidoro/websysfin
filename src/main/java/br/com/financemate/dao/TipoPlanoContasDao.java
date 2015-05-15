@@ -28,7 +28,7 @@ public class TipoPlanoContasDao {
     public List<Tipoplanocontas> listar() throws SQLException{
         EntityManager manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
-        Query q = manager.createQuery("Select * from Tipoplanocontas");
+        Query q = manager.createQuery("select t from Tipoplanocontas t order by t.descricao");
         List<Tipoplanocontas> lista = q.getResultList();
         manager.getTransaction().commit();
         return lista;

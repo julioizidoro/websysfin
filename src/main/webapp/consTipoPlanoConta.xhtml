@@ -15,16 +15,18 @@
                     <br></br>
                     <legend id="iUsu" ><b>Consulta Tipo Plano de Contas</b></legend>
                    
-                    <p:dataTable id="planoconta" var="planoconta" value="#{tipoPlanoContasMB.listarTipoPlanoContas}" rowStyleClass="tabela" class="tabelatipo" 
-                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-                 paginator="true" rows="10" style="margin-bottom:20px"> 
+                    <p:dataTable id="planoconta" var="tipoplanoconta" value="#{tipoPlanoContasMB.listarTipoPlanoContas}" rowStyleClass="tabela" class="tabelatipo" 
+                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                     paginator="true" rows="10" style="margin-bottom:20px"> 
                      
                     <p:column headerText="Descrição"  >
-                        <h:outputText value="#{planoconta.descricao}"/>
+                        <h:outputText value="#{tipoplanoconta.descricao}"/>
                     </p:column>
-                     <p:column style="width:28px">
-                         <p:selectBooleanCheckbox/>
-                     </p:column>
+                     <p:column style="width:26px">
+                         <p:commandButton  id="iconOnly" icon="ui-icon-pencil" title="Editar" action="#{tipoPlanoContasMB.consultarTipoPlanoContas()}" >
+                             <f:param name="idtipoplanocontas" value="#{tipoplanoconta.idtipoplanocontas}"/>
+                       </p:commandButton>
+                   </p:column>
               
                 </p:dataTable>
                      <h:panelGrid columns="2" cellpadding="1">
