@@ -38,7 +38,7 @@
                                 <p:inputMask id="competencia" label="competencia" value="#{RelatoriosContasPagarMB.competencia}" size="14" mask="99/9999"  class="left3" >
                                 </p:inputMask>
                                 <p:selectOneMenu id="tipoRelatorio" class="left3" style="width:134px" value="#{RelatoriosContasPagarMB.tipoRelatorio}" >
-                                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
+                                    <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
                                     <f:selectItem itemLabel="Contas Vencidas" itemValue="contasVencidas" /> 
                                     <f:selectItem itemLabel="Fluxo de Caixa" itemValue="fluxoCaixa" />  
                                     <f:selectItem itemLabel="Pagamentos" itemValue="pagamento" />                           
@@ -46,7 +46,7 @@
                             </h:panelGrid>                   
                         </p:tab>
                     </p:tabView>
-                    <p:commandButton value="Confirmar" icon=" ui-icon-check " class="cadastrarrelatorio"  actionListener="#{mensagem.saveMessagem}" update="growl" action="#{RelatoriosContasPagarMB.verificarTipoRelatorioJasper()}" />
+                    <p:commandButton value="Confirmar" icon=" ui-icon-check " class="cadastrarrelatorio"  actionListener="#{mensagem.saveMessagem}" update="growl" ajax="false" action="#{RelatoriosContasPagarMB.verificarTipoRelatorioJasper()}" />
                     <p:commandButton value="Excel" icon="ui-icon-document" class="excel" action="#{RelatoriosContasPagarMB.verificarTipoRelatorioExcel()}"/>
                     <p:commandButton value="Cancelar" icon=" ui-icon-cancel " class="pesquisar2"  action="#{RelatoriosContasPagarMB.cancelar()}"/>
                     <br></br>

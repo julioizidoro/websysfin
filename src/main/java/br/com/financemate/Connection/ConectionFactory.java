@@ -17,6 +17,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 
 
@@ -66,4 +69,20 @@ public class ConectionFactory {
         return conn;
         
     }
+    
+    public static Connection getConexaoDS(){
+        Connection conexao = null;
+        try {
+            Context initContext = new InitialContext();
+            Context envContext = (Context) initContext.lookup("java:/comp/env/");
+            javax.sql.DataSource ds = (javax.sql.DataSource) envContext.lookup("jdbc/websysfinDS");//estou usando o Spring nessecaso por isso utilizo essa sinxtaxe
+            conexao = (Connection) ds.getConnection();
+        } catch (NamingException ex) {
+            Logger.getLogger(ConectionFactory.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ConectionFactory.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return conexao;
+    }
+    
 }

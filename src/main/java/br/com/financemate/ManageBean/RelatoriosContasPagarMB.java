@@ -23,6 +23,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import net.sf.jasperreports.engine.JRException;
@@ -237,16 +239,33 @@ public class RelatoriosContasPagarMB implements Serializable{
     //Relatorios Jasper
     
     
-    public String verificarTipoRelatorioJasper(){
-        String pagina="";
-        if (tipoRelatorio.equalsIgnoreCase("contasVencidas")){
-             relatorioContasPagarVencidas();
-        }else if (tipoRelatorio.equalsIgnoreCase("fluxoCaixa")){
-            pagina = gerarExcelFluxoCaixa();
-        }else if (tipoRelatorio.equalsIgnoreCase("pagamento")){
-            relatorioContasPagarPagamentos();
+    public String verificarTipoRelatorioJasper() {
+        String pagina = "";
+        String msg = validarDadosRelatorios();
+        if (msg.length() < 5) {
+            if (tipoRelatorio.equalsIgnoreCase("contasVencidas")) {
+                relatorioContasPagarVencidas();
+            } else if (tipoRelatorio.equalsIgnoreCase("fluxoCaixa")) {
+                pagina = gerarExcelFluxoCaixa();
+            } else if (tipoRelatorio.equalsIgnoreCase("pagamento")) {
+                relatorioContasPagarPagamentos();
+            }
+        } else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", msg);
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
         }
         return pagina;
+    }
+    
+    public String validarDadosRelatorios(){
+        String msg="";
+        if (clienteMB.getCliente()==null){
+            msg = msg + "Selecione um Cliente\r\n";
+        }
+        if (tipoRelatorio.equalsIgnoreCase("sn")){
+            msg = msg + "Selecione tipo de relatório\r\n";
+        }
+        return msg;
     }
     
     public void relatorioContasPagarVencidas()   {
@@ -262,8 +281,6 @@ public class RelatoriosContasPagarMB implements Serializable{
         sql = sql + " order by contasPagar.dataVencimento";
         String caminhoRelatorio = "/resources/report/contaspagar/reportPagamentoVencidas.jasper";  
         Map parameters = new HashMap();
-         String localLogo = "/resources" + File.separator + "img" +
-                                    File.separator + "logo.jpg";
         String periodo = null;
         periodo = "Período : " + Formatacao.ConvercaoDataPadrao(dataInicio) 
             + "    " + Formatacao.ConvercaoDataPadrao(dataTermino);

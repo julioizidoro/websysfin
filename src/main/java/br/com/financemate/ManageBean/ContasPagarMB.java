@@ -683,7 +683,7 @@ public class ContasPagarMB implements Serializable {
 
             return "consConPagar";
         } else {
-            FacesMessage mensagem = new FacesMessage("Sucesso! ", msg);
+            FacesMessage mensagem = new FacesMessage("Erro! ", msg);
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
             return "";
         }

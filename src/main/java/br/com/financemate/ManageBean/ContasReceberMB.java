@@ -9,12 +9,14 @@ import br.com.financemate.Controller.BancoController;
 import br.com.financemate.Controller.ContasReceberController;
 import br.com.financemate.Controller.MovimentoBancoController;
 import br.com.financemate.Controller.PlanoContasController;
+import br.com.financemate.Controller.UsuarioController;
 import br.com.financemate.Util.Formatacao;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Movimentobanco;
 import br.com.financemate.model.Planocontas;
+import br.com.financemate.model.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,6 +59,8 @@ public class ContasReceberMB implements Serializable{
     private String nomeClientePesquisa;
     private String numeroVenda;
     private String tipoContaPesquisa;
+    private String usuarioCadastrou;
+    private String usuarioBaixou;
     
 
    
@@ -153,6 +157,22 @@ public class ContasReceberMB implements Serializable{
 
     public void setIdBanco(String idBanco) {
         this.idBanco = idBanco;
+    }
+
+    public String getUsuariCadastrou() {
+        return usuarioCadastrou;
+    }
+
+    public void setUsuariCadastrou(String usuarioCadastrou) {
+        this.usuarioCadastrou = usuarioCadastrou;
+    }
+
+    public String getUsuarioBaixou() {
+        return usuarioBaixou;
+    }
+
+    public void setUsuarioBaixou(String usuarioBaixou) {
+        this.usuarioBaixou = usuarioBaixou;
     }
     
     
@@ -630,5 +650,39 @@ public class ContasReceberMB implements Serializable{
         Float vValorParcela = Formatacao.formatarStringfloat(valorParcela);
         Float vValorRecebido  = vValorParcela + vJuro -(vDesagio);
         valorRecebido = Formatacao.foramtarFloatString(vJuro);
+    }
+    
+    public String operacaoUsuario() {
+        usuarioBaixou="";
+        usuarioCadastrou="";
+        UsuarioController usuarioController = new UsuarioController();
+        Usuario usuario;
+        boolean achouUser = false;
+        for (int i = 0; i < listaContasReceber.size(); i++) {
+            if (listaContasReceber.get(i).isSelecionado()) {
+                listaContasReceber.get(i).setSelecionado(false);
+                contasReceber = listaContasReceber.get(i);
+                if ((listaContasReceber.get(i).getUsuariocadastrou()> 0) && (listaContasReceber.get(i).getUsuariocadastrou()!= null)) {
+                    usuario = usuarioController.consultar(listaContasReceber.get(i).getUsuariocadastrou());
+                    if (usuario != null) {
+                        usuarioCadastrou = usuario.getNome();
+                        achouUser = true;
+                    }
+                }
+                if ((listaContasReceber.get(i).getUsuariobaixou()> 0) && (listaContasReceber.get(i).getUsuariobaixou()!= null)) {
+                    usuario = usuarioController.consultar(listaContasReceber.get(i).getUsuariobaixou());
+                    if (usuario != null) {
+                        usuarioBaixou = usuario.getNome();
+                        achouUser = true;
+                    }
+                }
+                if (achouUser) {
+                    return "operUsuContasReceber";
+                } else {
+                    return "operUsuContasReceber";
+                }
+            }
+        }
+        return null;
     }
 }
