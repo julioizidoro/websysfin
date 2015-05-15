@@ -65,4 +65,8 @@ public class MenuMB implements Serializable{
         clienteMB.setCliente(new Cliente());
         return "consbanco";
     } 
+    public String cliente(){
+        clienteMB.setCliente(new Cliente());
+        return "consCliente";
+    } 
 }

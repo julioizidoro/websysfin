@@ -11,40 +11,43 @@
                 <div id="centro">
                     <p:growl id="growl" showDetail="true" sticky="true" />
                     <br></br>
-                
+                    <h:panelGrid columns="2" cellpadding="5" >
+                        <p:outputLabel value="Cliente" for="nome"  class="left3" />
+                    </h:panelGrid>
+                    <h:panelGrid columns="2">
+                        <p:inputText id="nome" size="45"  class="left3"  value="#{ClienteMB.nomeCliente}" />
+                        <p:commandButton value="Pesquisar" class="pesquisar2outros" icon=" ui-icon-search " update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{ClienteMB.pesquisarNome()}"/>
+                    </h:panelGrid>
                     <br></br>
                     <legend id="iUsu" ><b>Consulta de Clientes </b></legend>
-                   
-                 <p:dataTable id="cliente" var="cliente" value="#" rowStyleClass="tabela" class="tabelaselecionar" 
-                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-                 paginator="true" rows="10" style="margin-bottom:20px"> 
-                     
-                
-                    <p:column headerText="Nome">
-                        <h:outputText />
-                    </p:column>
-                    <p:column headerText="Fone Fixo" >
-                        <h:outputText   />
-                    </p:column>
-                    <p:column headerText="Email"  >
-                        <h:outputText/>
-                    </p:column>
-                     
-                     <p:column style="width:28px">
-                         <p:selectBooleanCheckbox/>
-                     </p:column>
-                </p:dataTable>
+
+                    <p:dataTable id="cliente" var="cliente" value="#{ClienteMB.listaClientes}" rowStyleClass="tabela" class="tabelaselecionar" 
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                                 paginator="true" rows="10" style="margin-bottom:20px"> 
+                        <p:column headerText="Nome" style="width:140px">
+                            <h:outputText value="#{cliente.nomeFantasia}"/>
+                        </p:column>
+                        <p:column headerText="Fone Fixo" >
+                            <h:outputText  value="#{cliente.foneFixo}"/>
+                        </p:column>
+                        <p:column headerText="Email" style="width:140px" >
+                            <h:outputText  value="#{cliente.email}"/>
+                        </p:column>
+                        <p:column style="width:28px">
+                            <p:selectBooleanCheckbox/>
+                        </p:column>
+                    </p:dataTable>
                     <br></br>
                     <br></br>
-                     <h:panelGrid columns="10" cellpadding="1" class="cadPagar">
-                         <p:commandButton value="Novo" icon=" ui-icon-plus " class="pesquisar" />
-                       <p:commandButton value="Editar" class="pesquisar2" icon=" ui-icon-pencil"/>
-                       <p:commandButton value="Municipais" class="pesquisar2"  actionListener="#{mensagem.excluiMessagem()}" update="growl" />
-                       <p:commandButton value="Fechar" class="pesquisar2" icon=" ui-icon-check "/>
+                    <h:panelGrid columns="10" cellpadding="1" class="cadPagar">
+                        <p:commandButton value="Novo" icon=" ui-icon-plus " class="pesquisar" action="#{ClienteMB.novo()}"/>
+                        <p:commandButton value="Editar" class="pesquisar2" icon=" ui-icon-pencil"/>
+                        <p:commandButton value="Municipais" class="pesquisar2"  actionListener="#{mensagem.excluiMessagem()}" update="growl" />
+                        <p:commandButton value="Voltar" class="pesquisar2" icon=" ui-icon-check "/>
                     </h:panelGrid>
                 </div>
             </h:form>     
-           
+
         </ui:define>
     </ui:composition>
 </html>

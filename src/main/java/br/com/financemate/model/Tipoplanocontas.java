@@ -84,7 +84,7 @@ public class Tipoplanocontas implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.financemate.model.Tipoplanocontas[ idtipoplanocontas=" + idtipoplanocontas + " ]";
+        return getDescricao();
     }
 
     public List<Cliente> getClienteList() {

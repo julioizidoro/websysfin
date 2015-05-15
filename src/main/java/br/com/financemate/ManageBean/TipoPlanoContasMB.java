@@ -54,6 +54,7 @@ public class TipoPlanoContasMB implements Serializable {
     public String salvarTipoPlanoContas() throws SQLException {
         TipoPlanoContasFacede tipoPlanoContasFacede = new TipoPlanoContasFacede();
         tipoPlanoContasFacede.salvar(tipoplanocontas);
+        gerarListaTipoPlanoConta();
         return "consTipoPlanoConta";
     }
 

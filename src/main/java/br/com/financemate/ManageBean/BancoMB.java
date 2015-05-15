@@ -3,9 +3,12 @@ package br.com.financemate.ManageBean;
 import br.com.financemate.Controller.BancoController;
 import br.com.financemate.model.Banco;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -17,6 +20,9 @@ public class BancoMB  implements Serializable {
      private Banco banco;
      private String nomeBanco;
      private List<Banco> listaBancos;
+     @Inject
+     private ClienteMB clienteMB;
+     
 
     public UsuarioLogadoBean getUsuarioLogadoBean() {
         return usuarioLogadoBean;
@@ -43,29 +49,33 @@ public class BancoMB  implements Serializable {
     }
 
     public List<Banco> getListaBancos() {
-        if (listaBancos == null) {
-          gerarListaBanco();
-        }
         return listaBancos;
     }
 
     public void setListaBancos(List<Banco> listaBancos) {
         this.listaBancos = listaBancos;
     }
+
+    public ClienteMB getClienteMB() {
+        return clienteMB;
+    }
+
+    public void setClienteMB(ClienteMB clienteMB) {
+        this.clienteMB = clienteMB;
+    }
     
      public void gerarListaBanco() {
-        BancoController bancoController = new BancoController();
-        if (nomeBanco == null) {
-            nomeBanco = "";
+        if ((clienteMB.getCliente() != null) && (clienteMB.getCliente().getIdcliente() != null)) {
+            BancoController bancoController = new BancoController();
+            listaBancos = bancoController.listar(clienteMB.getCliente().getIdcliente());
+            if (listaBancos == null) {
+                listaBancos = new ArrayList<Banco>();
+            }
         }
-        listaBancos = bancoController.listar(nomeBanco);
-        if (listaBancos == null) {
-            listaBancos = new ArrayList<Banco>();
-        }
-       
     }
      public String salvar(){
         BancoController bancoController = new BancoController();
+        banco.setCliente(clienteMB.getCliente());
         bancoController.salvar(banco);
         banco = new Banco();
         return "consbanco";
@@ -76,7 +86,23 @@ public class BancoMB  implements Serializable {
     }
      
       public String novo(){
-        return "cadbanco";
+        if ((clienteMB.getCliente()!=null) && (clienteMB.getCliente().getIdcliente()!=null)){
+            banco = new Banco();
+            return "cadbanco";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Selecione um cliente");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        }
+    }
+    public String pesquisar(){
+       gerarListaBanco();
+       return "consbanco";
+    }
+    public String selecionarUnidade(){
+        clienteMB.setPagina("consbanco");
+        gerarListaBanco();
+        return "selecionarUnidade";
     }
 }
     

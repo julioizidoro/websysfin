@@ -6,8 +6,12 @@
 package br.com.financemate.ManageBean;
 
 import br.com.financemate.Controller.ClienteController;
+import br.com.financemate.facade.ClienteFacade;
+import br.com.financemate.facade.TipoPlanoContasFacede;
 import br.com.financemate.model.Cliente;
+import br.com.financemate.model.Tipoplanocontas;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +35,8 @@ public class ClienteMB implements Serializable{
     private String nomeCliente;
     private List<Cliente> listaClientes;
     private String pagina;
+    private String idTipoPlanoConta="0";
+    private List<Tipoplanocontas> listarTipoPlanoContas;
 
     public ClienteMB() {
         cliente = new Cliente();
@@ -77,6 +83,30 @@ public class ClienteMB implements Serializable{
     public void setListaClientes(List<Cliente> listaClientes) {
         this.listaClientes = listaClientes;
     }
+
+    public String getIdTipoPlanoConta() {
+        return idTipoPlanoConta;
+    }
+
+    public void setIdTipoPlanoConta(String idTipoPlanoConta) {
+        this.idTipoPlanoConta = idTipoPlanoConta;
+    }
+
+    public List<Tipoplanocontas> getListarTipoPlanoContas() {
+        return listarTipoPlanoContas;
+    }
+
+    public void setListarTipoPlanoContas(List<Tipoplanocontas> listarTipoPlanoContas) {
+        this.listarTipoPlanoContas = listarTipoPlanoContas;
+    }
+    
+    public void listarTipoPlanoContas() throws SQLException{
+        TipoPlanoContasFacede tipoPlanoContasFacede = new TipoPlanoContasFacede();
+        listarTipoPlanoContas = tipoPlanoContasFacede.listar();
+        if (listarTipoPlanoContas==null){
+            listarTipoPlanoContas = new ArrayList<Tipoplanocontas>();
+        }
+    }
     
     public void gerarListaClientes() {
         ClienteController clienteController = new ClienteController();
@@ -91,7 +121,7 @@ public class ClienteMB implements Serializable{
     
     public String pesquisarNome(){
         gerarListaClientes();
-        return "selecionarUnidade";
+        return "consCliente";
     
     }  
     
@@ -101,6 +131,33 @@ public class ClienteMB implements Serializable{
         int idCliente=  Integer.parseInt(params.get("id_cliente"));
         cliente = listaClientes.get(idCliente);
         return pagina;
+    }
+    public String novo() throws SQLException{
+        listarTipoPlanoContas();
+        cliente = new Cliente();
+        return "cadCliente";
+    }
+    public String cancelar(){
+        return "consCliente";
+    }
+    public String salvar(){
+        ClienteController clienteController = new ClienteController();
+        clienteController.salvar(cliente);
+        cliente = new Cliente();
+        return "consCliente";
+    }
+    public String consultarTipoPlanoContas() throws SQLException {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+        int idCliente = Integer.parseInt(params.get("idCliente"));
+        if (idCliente > 0) {
+            ClienteFacade clienteFacade = new ClienteFacade();
+            cliente = clienteFacade.consultar(idCliente);
+            if (cliente != null) {
+                return "cadCliente";
+            }
+        }
+        return null;
     }
 }
     

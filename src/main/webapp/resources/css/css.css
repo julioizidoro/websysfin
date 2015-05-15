@@ -523,6 +523,10 @@ button.cadastrarrelatorio {
     margin-left:60px;
     font-size:12px;
 }
+.cliente4{
+    margin-left:105px;
+    font-size:12px;
+}
 .dataVenc{
     margin-left:68px;
     font-size:12px;
@@ -550,6 +554,10 @@ button.cadastrarrelatorio {
     margin-left:74px;
     font-size:12px;
     text-align:right;
+}
+.cliente3{
+    margin-left:150px;
+    font-size:12px;
 }
 .vermelho{
     margin-left:33px;
@@ -589,6 +597,10 @@ button.cadastrarrelatorio {
     margin-left:290px;
     font-size:12px;
 }
+.cliente{
+    margin-left:275px;
+    font-size:12px;
+}
 .left2{
     margin-left:200px;
     font-size:12px;
@@ -604,6 +616,10 @@ button.cadastrarrelatorio {
 }
 .usuariov{
     margin-left:217px;
+    font-size:12px;
+}
+.cliente2{
+    margin-left:260px;
     font-size:12px;
 }
 .pesqcon{
@@ -1068,4 +1084,8 @@ button.pesquisar5 {
     color:#F0FFFF;
     margin-left:325px;
    font-size:12px;
+}
+.numero2{
+    margin-left: 355px;
+  font-size:12px;
 }

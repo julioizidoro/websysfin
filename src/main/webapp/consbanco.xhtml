@@ -10,46 +10,44 @@
             <h:form>
                 <div id="centro">
                     <p:growl id="growl" showDetail="true" sticky="true" />
-                     <br></br>
-                    <legend id="iUsu" ><b>Consulta de Banco </b></legend>
                     <br></br>
-                
-                    <p:dataTable id="consultabanco" var="consultabanco" value="#{BancoMB.listaBancos}" rowStyleClass="tabela" class="tabelaselecionar" 
-                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-                 paginator="true" rows="10" style="margin-bottom:20px"> 
-                     
-                
-                    <p:column headerText="Nome">
-                        <h:outputText value="#{consultabanco.nome}" />
-                    </p:column>
-                    <p:column headerText="Agencia" style="width:160px">
-                        <h:outputText   value="#{consultabanco.agencia}"/>
-                    </p:column>
-                    <p:column headerText="Conta"  style="width:160px">
-                        <h:outputText value="#{consultabanco.conta}"/>
-                    </p:column>
-                     <p:column style="width:28px">
-                         <p:selectBooleanCheckbox/>
-                     </p:column>
-                 <f:facet name="{Exporters}">
-                   <h:commandLink>
-                       <img src="resources/img/excel.png" width="24"/>
-                       <p:dataExporter type="xls" target="consultabanco" fileName="consulta de bancos" />
-                   </h:commandLink>
-
-               </f:facet>
-                </p:dataTable>
-                    <br></br>
-                   
-                     <h:panelGrid columns="10" cellpadding="1" >
-                         <p:commandButton value="Novo" icon=" ui-icon-plus " class="novo" action="#{BancoMB.novo()}"/>
-                       <p:commandButton value="Editar" class="pesquisar2" icon=" ui-icon-pencil"/>
-                     
+                    <h:panelGrid columns="2" cellpadding="5" >
+                        <p:outputLabel value="Cliente" for="cliente"  class="left3" />
                     </h:panelGrid>
-                     <br></br>
+                    <h:panelGrid columns="2">
+                            <p:inputText id="cliente" size="45"  class="left3"  value="#{ClienteMB.cliente.nomeFantasia}" />
+                        <p:commandButton value="Selecionar" class="css3button" icon=" ui-icon-arrowthickstop-1-s" action="#{BancoMB.selecionarUnidade}"/>
+                    </h:panelGrid>
+                    <legend id="iUsu" ><b>Consulta de Banco </b></legend>
+                    <p:dataTable id="consultabanco" var="consultabanco" value="#{BancoMB.listaBancos}" rowStyleClass="tabela" class="tabelaselecionar" 
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                 paginator="true" rows="10" style="margin-bottom:20px"> 
+
+                        <p:column headerText="Nome">
+                            <h:outputText value="#{consultabanco.nome}" />
+                        </p:column>
+                        <p:column headerText="Agencia" style="width:160px">
+                            <h:outputText   value="#{consultabanco.agencia}"/>
+                        </p:column>
+                        <p:column headerText="Conta"  style="width:160px">
+                            <h:outputText value="#{consultabanco.conta}"/>
+                        </p:column>
+                        <p:column style="width:28px">
+                            <p:selectBooleanCheckbox/>
+                        </p:column>
+
+                    </p:dataTable>
+                    <br></br>
+
+                    <h:panelGrid columns="10" cellpadding="1" >
+                        <p:commandButton value="Novo" icon=" ui-icon-plus " class="pesquisar2" action="#{BancoMB.novo()}"/>
+                        <p:commandButton value="Editar" class="pesquisar2" icon=" ui-icon-pencil"/>
+
+                    </h:panelGrid>
+                    <br></br>
                 </div>
             </h:form>     
-           
+
         </ui:define>
     </ui:composition>
 </html>

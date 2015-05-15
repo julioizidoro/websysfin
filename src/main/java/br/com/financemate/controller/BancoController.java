@@ -68,8 +68,5 @@ public class BancoController {
         }
     }
 
-    public List<Banco> listar(String nomeBanco) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
 }
