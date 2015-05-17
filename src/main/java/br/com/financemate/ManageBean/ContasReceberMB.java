@@ -159,20 +159,20 @@ public class ContasReceberMB implements Serializable{
         this.idBanco = idBanco;
     }
 
-    public String getUsuariCadastrou() {
-        return usuarioCadastrou;
-    }
-
-    public void setUsuariCadastrou(String usuarioCadastrou) {
-        this.usuarioCadastrou = usuarioCadastrou;
-    }
-
     public String getUsuarioBaixou() {
         return usuarioBaixou;
     }
 
     public void setUsuarioBaixou(String usuarioBaixou) {
         this.usuarioBaixou = usuarioBaixou;
+    }
+
+    public String getUsuarioCadastrou() {
+        return usuarioCadastrou;
+    }
+
+    public void setUsuarioCadastrou(String usuarioCadastrou) {
+        this.usuarioCadastrou = usuarioCadastrou;
     }
     
     
@@ -258,7 +258,7 @@ public class ContasReceberMB implements Serializable{
     }
 
     public List<Contasreceber> getListaContasReceber() {
-         if (listaContasReceber==null){
+          if (listaContasReceber==null){
              criarConsultaContasReceberInicial();
         }
         return listaContasReceber;
@@ -267,6 +267,8 @@ public class ContasReceberMB implements Serializable{
     public void setListaContasReceber(List<Contasreceber> listaContasReceber) {
         this.listaContasReceber = listaContasReceber;
     }
+
+   
 
     public Contasreceber getContasReceber() {
         return contasReceber;

@@ -34,10 +34,8 @@ public class ContasReceberDao {
     
     public List<Contasreceber> listar(String sql) throws SQLException{
         EntityManager manager = ConectionFactory.getConnection();
-        manager.getTransaction().begin();
         Query q = manager.createQuery(sql);
         List<Contasreceber> lista = q.getResultList();
-        manager.getTransaction().commit();
         return lista;
     }
     
