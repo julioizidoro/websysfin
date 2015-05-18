@@ -20,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 /**
@@ -48,7 +49,9 @@ public class Planocontas implements Serializable {
     @JoinColumn(name = "tipoplanocontas_idtipoplanocontas", referencedColumnName = "idtipoplanocontas")
     @ManyToOne(optional = false)
     private Tipoplanocontas tipoplanocontas;
-
+    @Transient
+    private boolean selecionado;
+    
     public Planocontas() {
     }
 
@@ -78,6 +81,14 @@ public class Planocontas implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public boolean isSelecionado() {
+        return selecionado;
+    }
+
+    public void setSelecionado(boolean selecionado) {
+        this.selecionado = selecionado;
     }
 
     public List<Contasreceber> getContasreceberList() {

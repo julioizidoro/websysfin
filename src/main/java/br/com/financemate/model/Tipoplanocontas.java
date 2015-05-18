@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 /**
@@ -38,7 +39,9 @@ public class Tipoplanocontas implements Serializable {
     @Size(max = 50)
     @Column(name = "descricao")
     private String descricao;
-
+    @Transient
+    private boolean selecionado;
+    
     public Tipoplanocontas() {
     }
 
@@ -60,6 +63,13 @@ public class Tipoplanocontas implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+    public boolean isSelecionado() {
+        return selecionado;
+    }
+
+    public void setSelecionado(boolean selecionado) {
+        this.selecionado = selecionado;
     }
 
     @Override

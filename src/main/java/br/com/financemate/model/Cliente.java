@@ -20,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 /**
@@ -96,6 +97,8 @@ public class Cliente implements Serializable {
     private Tipoplanocontas tipoplanocontas;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
     private List<Contasreceber> contasreceberList;
+    @Transient
+    private boolean selecionado;
 
     public Cliente() {
     }
@@ -278,6 +281,14 @@ public class Cliente implements Serializable {
 
     public void setContasreceberList(List<Contasreceber> contasreceberList) {
         this.contasreceberList = contasreceberList;
+    }
+
+    public boolean isSelecionado() {
+        return selecionado;
+    }
+
+    public void setSelecionado(boolean selecionado) {
+        this.selecionado = selecionado;
     }
 
     @Override

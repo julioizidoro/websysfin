@@ -19,7 +19,7 @@ public class mensagem {
 
     public void saveMessagem() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Cadastrado com Sucesso", ""));
+        context.addMessage(null, new FacesMessage("Confirmado com Sucesso", ""));
     }
 
     public void excluiMessagem() {

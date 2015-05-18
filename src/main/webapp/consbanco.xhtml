@@ -33,15 +33,15 @@
                             <h:outputText value="#{consultabanco.conta}"/>
                         </p:column>
                         <p:column style="width:28px">
-                            <p:selectBooleanCheckbox/>
+                            <p:selectBooleanCheckbox value="#{consultabanco.selecionado}"/>
                         </p:column>
 
                     </p:dataTable>
                     <br></br>
 
                     <h:panelGrid columns="10" cellpadding="1" >
-                        <p:commandButton value="Novo" icon=" ui-icon-plus " class="pesquisar2" action="#{BancoMB.novo()}"/>
-                        <p:commandButton value="Editar" class="pesquisar2" icon=" ui-icon-pencil"/>
+                        <p:commandButton value="Novo" icon=" ui-icon-plus " class="fechar" action="#{BancoMB.novo()}"/>
+                        <p:commandButton value="Editar" class="export" icon=" ui-icon-pencil" action="#{BancoMB.editar()}"/>
 
                     </h:panelGrid>
                     <br></br>

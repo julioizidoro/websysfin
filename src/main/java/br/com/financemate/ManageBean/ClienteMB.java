@@ -132,6 +132,7 @@ public class ClienteMB implements Serializable{
         cliente = listaClientes.get(idCliente);
         return pagina;
     }
+    
     public String novo() throws SQLException{
         listarTipoPlanoContas();
         cliente = new Cliente();
@@ -140,12 +141,17 @@ public class ClienteMB implements Serializable{
     public String cancelar(){
         return "consCliente";
     }
-    public String salvar(){
+    public String salvar() throws SQLException{
         ClienteController clienteController = new ClienteController();
+        TipoPlanoContasFacede tipoPlanoContasFacede = new TipoPlanoContasFacede();
+        Tipoplanocontas tipo = tipoPlanoContasFacede.consultar(Integer.parseInt(idTipoPlanoConta));
+        cliente.setTipoplanocontas(tipo);
         clienteController.salvar(cliente);
         cliente = new Cliente();
+        gerarListaClientes();
         return "consCliente";
     }
+    
     public String consultarTipoPlanoContas() throws SQLException {
         FacesContext fc = FacesContext.getCurrentInstance();
         Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
@@ -158,6 +164,22 @@ public class ClienteMB implements Serializable{
             }
         }
         return null;
+    }
+    
+    public String editar() throws SQLException{
+        if (listaClientes!=null){
+            for(int i=0;i<listaClientes.size();i++){
+                if (listaClientes.get(i).isSelecionado()){
+                    cliente = listaClientes.get(i);
+                    listaClientes.get(i).setSelecionado(false);
+                    listarTipoPlanoContas();
+                    idTipoPlanoConta = String.valueOf(cliente.getTipoplanocontas().getIdtipoplanocontas());
+                    i=100000;
+                    return "cadCliente";
+                }
+            }
+        }
+        return  "";
     }
 }
     

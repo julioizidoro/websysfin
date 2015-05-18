@@ -23,15 +23,15 @@
                         <h:outputText value="#{tipoplanoconta.descricao}"/>
                     </p:column>
                      <p:column style="width:26px">
-                         <p:commandButton  id="iconOnly" icon="ui-icon-pencil" title="Editar" action="#{tipoPlanoContasMB.consultarTipoPlanoContas()}" >
-                             <f:param name="idtipoplanocontas" value="#{tipoplanoconta.idtipoplanocontas}"/>
-                       </p:commandButton>
+                          <p:selectBooleanCheckbox value="#{tipoplanoconta.selecionado}"/>
                    </p:column>
               
                 </p:dataTable>
-                     <h:panelGrid columns="2" cellpadding="1">
-                         <p:commandButton value="Adicionar" icon=" ui-icon-plus " class="cadastrar" action="#{tipoPlanoContasMB.novo()}"/>
+                     <h:panelGrid columns="5" cellpadding="1">
+                         <p:commandButton value="Adicionar" icon=" ui-icon-plus " class="cadastraroutros" action="#{tipoPlanoContasMB.novo()}"/>
                          <p:commandButton value="Excluir" class="export" icon=" ui-icon-trash " actionListener="#{mensagem.excluiMessagem()}" update="growl" />
+                         <p:commandButton  value="Editar" class="export"  icon="ui-icon-pencil" action="#{tipoPlanoContasMB.editar()}" />
+                         <p:commandButton value="Clonar" class="export"  icon="ui-icon-pencil"  />
                     </h:panelGrid>
                     <br></br>
                 </div>

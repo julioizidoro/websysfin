@@ -49,6 +49,9 @@ public class BancoMB  implements Serializable {
     }
 
     public List<Banco> getListaBancos() {
+        if (listaBancos==null){
+            gerarListaBanco();
+        }
         return listaBancos;
     }
 
@@ -101,8 +104,21 @@ public class BancoMB  implements Serializable {
     }
     public String selecionarUnidade(){
         clienteMB.setPagina("consbanco");
-        gerarListaBanco();
+        listaBancos = null;
         return "selecionarUnidade";
+    }
+     public String editar() throws SQLException{
+        if (listaBancos!=null){
+            for(int i=0;i<listaBancos.size();i++){
+                if (listaBancos.get(i).isSelecionado()){
+                    banco = listaBancos.get(i);
+                    listaBancos.get(i).setSelecionado(false);
+                    i=100000;
+                    return "cadbanco";
+                }
+            }
+        }
+        return  "";
     }
 }
     

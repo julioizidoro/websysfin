@@ -66,18 +66,18 @@ public class TipoPlanoContasMB implements Serializable {
         return "cadTipoPlanoConta";
     }
 
-    public String consultarTipoPlanoContas() throws SQLException {
-        FacesContext fc = FacesContext.getCurrentInstance();
-        Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-        int idtipoplanocontas = Integer.parseInt(params.get("idtipoplanocontas"));
-        if (idtipoplanocontas > 0) {
-            TipoPlanoContasFacede tipoPlanoContasFacede = new TipoPlanoContasFacede();
-            tipoplanocontas = tipoPlanoContasFacede.consultar(idtipoplanocontas);
-            if (tipoplanocontas != null) {
-                return "cadTipoPlanoConta";
+    public String editar() throws SQLException {
+         if (listarTipoPlanoContas!=null){
+            for(int i=0;i<listarTipoPlanoContas.size();i++){
+                if (listarTipoPlanoContas.get(i).isSelecionado()){
+                    tipoplanocontas = listarTipoPlanoContas.get(i);
+                    listarTipoPlanoContas.get(i).setSelecionado(false);
+                    i=100000;
+                    return "cadTipoPlanoConta";
+                }
             }
         }
-        return null;
+        return  "";
     }
 
     public void gerarListaTipoPlanoConta() throws SQLException {

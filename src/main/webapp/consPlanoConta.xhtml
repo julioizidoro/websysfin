@@ -41,14 +41,13 @@
                             <h:outputText value="#{planoconta.tipoplanocontas}"/>
                         </p:column>
                         <p:column style="width:26px">
-                            <p:commandButton  id="iconOnly" icon="ui-icon-pencil" title="Editar" action="#{planoContasMB.consultarPlanoContas()}" >
-                                <f:param name="idPlanoContas" value="#{planoconta.idplanoContas}"/>
-                            </p:commandButton>
+                             <p:selectBooleanCheckbox value="#{planoconta.selecionado}"/>
                         </p:column>
                     </p:dataTable>
-                    <h:panelGrid columns="2" cellpadding="1">
+                    <h:panelGrid columns="3" cellpadding="1">
                         <p:commandButton value="Adicionar" icon=" ui-icon-plus " class="cadastrar" action="#{planoContasMB.novo()}"/>
                         <p:commandButton value="Excluir" class="export" icon=" ui-icon-trash " actionListener="#{mensagem.excluiMessagem()}" update="growl" />
+                        <p:commandButton value="Editar" class="export" icon="ui-icon-pencil" action="#{planoContasMB.editar()}" />
                     </h:panelGrid>
                     <br></br>
                 </div>

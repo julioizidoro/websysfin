@@ -101,18 +101,18 @@ public class PlanoContasMB implements Serializable {
         return "consPlanoConta";
     }
 
-    public String consultarPlanoContas() throws SQLException {
-        FacesContext fc = FacesContext.getCurrentInstance();
-        Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-        int idPlanoContas = Integer.parseInt(params.get("idPlanoContas"));
-        if (idPlanoContas > 0) {
-            PlanoContasFacade planoContasFacade = new PlanoContasFacade();
-            planocontas = planoContasFacade.consultar(idPlanoContas);
-            if (planocontas != null) {
-                return "cadplanocontas";
+    public String editar() throws SQLException {
+         if (listarPlanoContas!=null){
+            for(int i=0;i<listarPlanoContas.size();i++){
+                if (listarPlanoContas.get(i).isSelecionado()){
+                    planocontas = listarPlanoContas.get(i);
+                    listarPlanoContas.get(i).setSelecionado(false);
+                    i=100000;
+                    return "cadplanocontas";
+                }
             }
         }
-        return null;
+        return  "";
     }
     public void listarTipoPlanoContas() throws SQLException{
         TipoPlanoContasFacede tipoPlanoContasFacede = new TipoPlanoContasFacede();
