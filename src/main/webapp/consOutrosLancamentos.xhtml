@@ -18,12 +18,12 @@
                       <p:outputLabel value="Selecione a  Conta  para Utilização:" for="selConta" class="left4"/> 
                 </h:panelGrid>
                 <h:panelGrid columns="6" cellpadding="1">
-                     <p:inputText id="unidade" size="32" maxlength="100" class="unidade"/>
-                     <p:commandButton value="Selecionar" class="css3button" icon=" ui-icon-arrowthickstop-1-s" />
-                     <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="tabelaRecebimento" >
+                    <p:inputText id="unidade" size="31" maxlength="100" readonly="false" class="unidade" value="#{ClienteMB.cliente.nomeFantasia}"/>
+                    <p:commandButton value="Selecionar" class="css3button" icon=" ui-icon-arrowthickstop-1-s" action="#{outrosLancamentoMB.selecionarUnidade()}"/>
+                    <p:calendar id="dataIni" value="#{outrosLancamentoMB.dataInicial}" pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="tabelaRecebimento" >
                           <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                      </p:calendar>
-                     <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left6" >
+                    <p:calendar id="dataFinal" #{outrosLancamentoMB.dataFinal} pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left6" >
                           <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                      </p:calendar>
                      <p:selectOneMenu id="selConta" class="left6" style="width:190px">
@@ -34,39 +34,33 @@
                     <br></br>
                     <legend id="iUsu" ><b>Consulta de outros lançamentos </b></legend>
                    
-                 <p:dataTable id="outroslancamentos" var="contasPagar" value="#" rowStyleClass="tabela" class="tabelaselecionar" 
-                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                    <p:dataTable id="outroslancamentos" var="outroslancamentos" value="#{outrosLancamentoMB.listarMovimentobancos}" rowStyleClass="tabela" class="tabelaselecionar" 
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                  paginator="true" rows="10" style="margin-bottom:20px"> 
-                     
-                <f:facet name="{Exporters}">
-                   <h:commandLink>
-                       <img src="resources/img/excel.png" width="24" />
-                       <p:dataExporter type="xls" target="outroslancamentos" fileName="cars" />
-                   </h:commandLink>
-               </f:facet>
+                  
                     <p:column headerText="Data">
                         <h:outputText >
                              <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                         </h:outputText>
                     </p:column>
                     <p:column headerText="Descrição" >
-                        <h:outputText   />
+                        <h:outputText  value="#{outroslancamentos.descricao}" />
                     </p:column>
                     <p:column headerText="Valor Entrada"  >
-                        <h:outputText/>
+                        <h:outputText value="#{outroslancamentos.valorEntrada}"/>
                     </p:column>
                     <p:column headerText="Valor Saída"  >
-                        <h:outputText/>
+                        <h:outputText value="#{outroslancamentos.valorSaida}"/>
                     </p:column>
                      
                      <p:column style="width:28px">
-                         <p:selectBooleanCheckbox/>
+                         <p:selectBooleanCheckbox value="#{outroslancamentos.selecionado}"/>
                      </p:column>
                 </p:dataTable>
                     
                      <h:panelGrid columns="3" cellpadding="1" class="">
                          <p:commandButton value="Lançar" icon=" ui-icon-plus " class="pesquisar3" action="#{outrosLancamentoMB.novo()}"/>
-                       <p:commandButton value="Editar" class="editar" icon=" ui-icon-pencil"/>
+                         <p:commandButton value="Editar" class="editar" icon=" ui-icon-pencil" action="#{outrosLancamentoMB.editar()}"/>
                        <p:commandButton value="Excluir" class="pesquisar" icon=" ui-icon-trash " actionListener="#{mensagem.excluiMessagem()}" update="growl" />
                     </h:panelGrid>
                        <br></br>
