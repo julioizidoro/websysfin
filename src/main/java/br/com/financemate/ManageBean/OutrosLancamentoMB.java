@@ -8,8 +8,7 @@ package br.com.financemate.ManageBean;
 import br.com.financemate.Controller.BancoController;
 import br.com.financemate.Controller.MovimentoBancoController;
 import br.com.financemate.Controller.PlanoContasController;
-import br.com.financemate.facade.MovimentoBancoFacade;
-import br.com.financemate.facade.PlanoContasFacade;
+import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Movimentobanco;
 import br.com.financemate.model.Planocontas;
@@ -26,24 +25,30 @@ import javax.inject.Named;
  *
  * @author Wolverine
  */
-@Named
+@Named("OutrosLancamentosMB")
 @SessionScoped
 public class OutrosLancamentoMB implements Serializable {
 
+    @Inject private ClienteMB clienteMB;
     private List<Planocontas> listarPlanoContas;
     private Planocontas planocontas;
     private Movimentobanco movimentobanco;
     private List<Movimentobanco> listarMovimentobancos;
-    @Inject private ClienteMB clienteMB;
     private List<Banco> listaBanco;
-    private String idBanco;
+    private String idBanco = "0";
+    private Banco banco;
+    String sql;
     private Date dataInicial;
     private Date dataFinal;
+    private String idPlanoConta = "0";
+    private String descricao;
+
+    public OutrosLancamentoMB() {
+    }
+    
+    
 
     public List<Movimentobanco> getListarMovimentobancos() throws SQLException {
-        if (listarMovimentobancos == null) {
-            gerarListaoutroslancamentos();
-        }
         return listarMovimentobancos;
     }
 
@@ -58,8 +63,7 @@ public class OutrosLancamentoMB implements Serializable {
     public void setMovimentobanco(Movimentobanco movimentobanco) {
         this.movimentobanco = movimentobanco;
     }
-    private String idPlanoConta = "0";
-    private String descricao;
+    
 
     public List<Planocontas> getListarPlanoContas() {
         return listarPlanoContas;
@@ -103,9 +107,7 @@ public class OutrosLancamentoMB implements Serializable {
 
     public List<Banco> getListaBanco() {
         if ((clienteMB.getCliente() != null) && (clienteMB.getCliente().getIdcliente() != null)) {
-            if ((listaBanco == null) || (listaBanco.isEmpty())) {
-                carregarListaBanco();
-            }
+           carregarListaBanco();
         }
         return listaBanco;
     }
@@ -136,6 +138,14 @@ public class OutrosLancamentoMB implements Serializable {
 
     public void setDataFinal(Date dataFinal) {
         this.dataFinal = dataFinal;
+    }
+
+    public Banco getBanco() {
+        return banco;
+    }
+
+    public void setBanco(Banco banco) {
+        this.banco = banco;
     }
     
     
@@ -187,8 +197,12 @@ public class OutrosLancamentoMB implements Serializable {
     }
     public String selecionarUnidade(){
         clienteMB.setPagina("consOutrosLancamentos");
+        listaBanco = null;
         return "selecionarUnidade";
     }
+    
+    
+    
      public String editar() throws SQLException{
         if (listarMovimentobancos!=null){
             for(int i=0;i<listarMovimentobancos.size();i++){
@@ -202,4 +216,5 @@ public class OutrosLancamentoMB implements Serializable {
         }
         return  "";
     }
+      
 }

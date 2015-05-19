@@ -20,13 +20,13 @@
                     <p:outputLabel value="Plano de Contas" for="planoConta" class="lado"/> 
                 </h:panelGrid>  
                <h:panelGrid columns="2" cellpadding="3">
-                   <p:selectOneMenu id="conta" class="left3" style="width:162px"  value="#{outrosLancamentoMB.idBanco}">
+                   <p:selectOneMenu id="conta" class="left3" style="width:162px"  value="#{OutrosLancamentoMB.idBanco}">
                         <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
-                        <f:selectItems value="#{outrosLancamentoMB.listaBanco}" var="banco" itemLabel="#{banco.nome}" itemValue="#{banco.idbanco}"/>
+                        <f:selectItems value="#{OutrosLancamentoMB.listaBanco}" var="banco" itemLabel="#{banco.nome}" itemValue="#{banco.idbanco}"/>
                     </p:selectOneMenu>  
-                   <p:selectOneMenu id="planoConta" class="left3" style="width:310px"  value="#{outrosLancamentoMB.idPlanoConta}">
+                   <p:selectOneMenu id="planoConta" class="left3" style="width:310px"  value="#{OutrosLancamentoMB.idPlanoConta}">
                         <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
-                        <f:selectItems value="#{outrosLancamentoMB.listarPlanoContas}" var="planoConta" itemLabel="#{planoConta.descricao}" itemValue="#{planoConta.idplanoContas}"/>
+                        <f:selectItems value="#{OutrosLancamentoMB.listarPlanoContas}" var="planoConta" itemLabel="#{planoConta.descricao}" itemValue="#{planoConta.idplanoContas}"/>
                     </p:selectOneMenu> 
                 </h:panelGrid>
                 <h:panelGrid columns="2" cellpadding="5" >
@@ -34,7 +34,7 @@
                       <p:outputLabel value="Competência" for="competencia" class="pesqcon"/> 
                 </h:panelGrid>
                  <h:panelGrid columns="2">
-                     <p:selectOneMenu id="tipoDocumento" value="#{outrosLancamentoMB.movimentobanco.tipoDocumento}" class="left3" style="width:297px" >
+                     <p:selectOneMenu id="tipoDocumento" value="#{OutrosLancamentoMB.movimentobanco.tipoDocumento}" class="left3" style="width:297px" >
                                 <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
                                 <f:selectItem itemLabel="Boleto" itemValue="Boleto" />  
                                 <f:selectItem itemLabel="Guia de Imposto" itemValue="Guia de Imposto" /> 
@@ -43,7 +43,7 @@
                                 <f:selectItem itemLabel="Recibo" itemValue="Recibo" />  
                                 <f:selectItem itemLabel="Outros" itemValue="Outros" /> 
                           </p:selectOneMenu>
-                     <p:inputMask id="competencia" label="competencia" value="#{outrosLancamentoMB.movimentobanco.compentencia}" size="20" mask="99/9999"  class="left8" >
+                     <p:inputMask id="competencia" label="competencia" value="#{OutrosLancamentoMB.movimentobanco.compentencia}" size="20" mask="99/9999"  class="left8" >
                             </p:inputMask>
                  </h:panelGrid>
                 <h:panelGrid columns="7" cellpadding="3">
@@ -52,13 +52,13 @@
                     <p:outputLabel value="Data Compensação" for="dataComp" class="left13"/>
                 </h:panelGrid>
                 <h:panelGrid columns="5" cellpadding="1">
-                    <p:calendar id="dataReg" value="#{outrosLancamentoMB.movimentobanco.dataRegistro}" pattern="dd/MM/yyyy" mask="true" size="11" maxlength="15" class="left3" >
+                    <p:calendar id="dataReg" value="#{OutrosLancamentoMB.movimentobanco.dataRegistro}" pattern="dd/MM/yyyy" mask="true" size="11" maxlength="15" class="left3" >
                          <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                     </p:calendar>
-                    <p:calendar id="dataVenc" value="#{outrosLancamentoMB.movimentobanco.dataVencimento}" pattern="dd/MM/yyyy" mask="true" size="13" maxlength="15" class="left8">
+                    <p:calendar id="dataVenc" value="#{OutrosLancamentoMB.movimentobanco.dataVencimento}" pattern="dd/MM/yyyy" mask="true" size="13" maxlength="15" class="left8">
                          <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                     </p:calendar>
-                    <p:calendar id="dataComp" value="#{outrosLancamentoMB.movimentobanco.dataCompensacao}" pattern="dd/MM/yyyy" mask="true" size="19" maxlength="15" class="left13" >
+                    <p:calendar id="dataComp" value="#{OutrosLancamentoMB.movimentobanco.dataCompensacao}" pattern="dd/MM/yyyy" mask="true" size="19" maxlength="15" class="left13" >
                           <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                      </p:calendar>
                 </h:panelGrid>
@@ -66,21 +66,21 @@
                     <p:outputLabel value="Descrição" for="descricao" class="left3" /> 
                 </h:panelGrid>  
                <h:panelGrid columns="2" cellpadding="3">
-                   <p:inputTextarea rows="1" value="#{outrosLancamentoMB.movimentobanco.descricao}" cols="95" id="descricao"  class="left3"/>
+                   <p:inputTextarea rows="1" value="#{OutrosLancamentoMB.movimentobanco.descricao}" cols="95" id="descricao"  class="left3"/>
                 </h:panelGrid>
                   <h:panelGrid columns="7" cellpadding="3">
                     <p:outputLabel value="Valor Entrada" for="valorEntrada:" class="left3"/> 
                     <p:outputLabel value="Valor Saída" for="valorSaída" class="left9"/>
                 </h:panelGrid>
                 <h:panelGrid columns="5" cellpadding="1">
-                    <p:inputText id="valorEntrada" size="12" value="#{outrosLancamentoMB.movimentobanco.valorEntrada}" class="valoentrada"/>
-                    <p:inputText id="valorSaída" size="12" value="#{outrosLancamentoMB.movimentobanco.valorSaida}"  class="valorsaida"/>
+                    <p:inputText id="valorEntrada" size="12" value="#{OutrosLancamentoMB.movimentobanco.valorEntrada}" class="valoentrada"/>
+                    <p:inputText id="valorSaída" size="12" value="#{OutrosLancamentoMB.movimentobanco.valorSaida}"  class="valorsaida"/>
                 </h:panelGrid>         
                         </p:tab>
                     </p:tabView>  
-                  <p:commandButton value="Confirmar" icon=" ui-icon-plusthick" class="cadastraroutros" action="#{outrosLancamentoMB.salvar()}" actionListener="#{mensagem.saveMessagem}" update="growl"/>
+                  <p:commandButton value="Confirmar" icon=" ui-icon-plusthick" class="cadastraroutros" action="#{OutrosLancamentoMB.salvar()}" actionListener="#{mensagem.saveMessagem}" update="growl"/>
                     <p:commandButton value="Repetir" icon=" ui-icon-triangle-1-e " class="pesquisar2outros" />
-                    <p:commandButton value="Cancelar" icon=" ui-icon-cancel " class="pesquisar2outros" action="#{outrosLancamentoMB.cancelar()}" />
+                    <p:commandButton value="Cancelar" icon=" ui-icon-cancel " class="pesquisar2outros" action="#{OutrosLancamentoMB.cancelar()}" />
                     <br></br>
                     <br></br>
 

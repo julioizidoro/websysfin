@@ -99,7 +99,6 @@ public class BancoMB  implements Serializable {
         }
     }
     public String pesquisar(){
-       gerarListaBanco();
        return "consbanco";
     }
     public String selecionarUnidade(){
