@@ -8,6 +8,7 @@ package br.com.financemate.ManageBean;
 import br.com.financemate.Controller.BancoController;
 import br.com.financemate.Controller.MovimentoBancoController;
 import br.com.financemate.Controller.PlanoContasController;
+import br.com.financemate.Util.Formatacao;
 import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Movimentobanco;
@@ -20,6 +21,7 @@ import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -44,6 +46,7 @@ public class OutrosLancamentoMB implements Serializable {
     private String descricao;
 
     public OutrosLancamentoMB() {
+        gerarDataInicial();
     }
     
     
@@ -159,6 +162,11 @@ public class OutrosLancamentoMB implements Serializable {
     public String cancelar() {
         return "consOutrosLancamentos";
     }
+    
+    public String pesquisar(){
+        gerarPesquisa();
+        return "consOutrosLancamentos";
+    }
 
      
     
@@ -171,6 +179,7 @@ public class OutrosLancamentoMB implements Serializable {
     }
     
      public void carregarListaBanco(){
+        gerarDataInicial();
         BancoController bancoController = new BancoController();
         listaBanco = bancoController.listar(clienteMB.getCliente().getIdcliente());
         if (listaBanco==null){
@@ -216,5 +225,51 @@ public class OutrosLancamentoMB implements Serializable {
         }
         return  "";
     }
-      
+     
+     public void gerarDataInicial(){
+        String data = Formatacao.ConvercaoDataPadrao(new Date());
+        String mesString = data.substring(3, 5);
+        String anoString = data.substring(6, 10);
+        int mesInicio = Integer.parseInt(mesString);
+        int anoInicio = Integer.parseInt(anoString);
+        int mescInicio;
+        int mescFinal;
+        int anocInicio = 0;
+        int anocFinal = 0;
+        if (mesInicio==1){
+            mescInicio=12;
+            anocInicio=anoInicio - 1;
+        }else {
+            mescInicio = mesInicio - 1;
+            anocInicio = anoInicio;
+        }
+        if (mesInicio==12){
+            mescFinal=1;
+            anocFinal=anoInicio+1;
+        }else {
+            mescFinal = mesInicio  + 1;
+            anocFinal = anoInicio;
+        }
+        String sdataInicial = anocInicio + "-" + Formatacao.retornaDataInicia(mescInicio);
+        String sdataFinal = anocFinal + "-" + Formatacao.retornaDataFinal(mescFinal);
+        dataInicial =(Formatacao.ConvercaoStringData(sdataInicial));
+        dataFinal = (Formatacao.ConvercaoStringData(sdataFinal));
+    }
+     
+     public void gerarPesquisa() {
+        if ((!idBanco.equalsIgnoreCase("0")) && (dataFinal != null) && (dataInicial != null)
+                && (clienteMB.getCliente() != null)) {
+            sql = "Select m from Movimentobanco m where m.banco.idbanco=" + Integer.parseInt(idBanco)
+                    + "  and m.dataCompensacao>='" + Formatacao.ConvercaoDataSql(dataInicial)
+                    + "'  and m.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal)
+                    + "' and m.cliente.idcliente=" + clienteMB.getCliente().getIdcliente();
+
+            MovimentoBancoController movimentoBancoController = new MovimentoBancoController();
+            listarMovimentobancos = movimentoBancoController.listaMovimento(sql);
+            if (listarMovimentobancos == null) {
+                listarMovimentobancos = new ArrayList<Movimentobanco>();
+            }
+        }
+    }
+
 }

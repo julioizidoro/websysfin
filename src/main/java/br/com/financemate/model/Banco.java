@@ -63,10 +63,6 @@ public class Banco implements Serializable {
     @JoinColumn(name = "cliente_idcliente", referencedColumnName = "idcliente")
     @ManyToOne(optional = false)
     private Cliente cliente;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "banco")
-    private List<Contaspagar> contaspagarList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "banco")
-    private List<Movimentobanco> movimentobancoList;
     @Transient
     private boolean selecionado;
     
@@ -173,22 +169,6 @@ public class Banco implements Serializable {
         this.selecionado = selecionado;
     }
     
-    public List<Contaspagar> getContaspagarList() {
-        return contaspagarList;
-    }
-
-    public void setContaspagarList(List<Contaspagar> contaspagarList) {
-        this.contaspagarList = contaspagarList;
-    }
-
-    public List<Movimentobanco> getMovimentobancoList() {
-        return movimentobancoList;
-    }
-
-    public void setMovimentobancoList(List<Movimentobanco> movimentobancoList) {
-        this.movimentobancoList = movimentobancoList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;

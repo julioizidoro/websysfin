@@ -30,20 +30,20 @@
                           <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                      </p:calendar>
                     <p:selectOneMenu id="selConta" class="left3" style="width:162px"  value="#{OutrosLancamentosMB.idBanco}">
-                        <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
+                        <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
                         <f:selectItems value="#{OutrosLancamentosMB.listaBanco}" var="banco" itemLabel="#{banco.nome}" itemValue="#{banco.idbanco}"/>
                     </p:selectOneMenu> 
-                     <p:commandButton  class="pesquisaroutros" icon=" ui-icon-search " />
+                    <p:commandButton  class="pesquisaroutros" icon=" ui-icon-search " action="#{OutrosLancamentosMB.pesquisar()}" update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}"/>
                 </h:panelGrid>  
                     <br></br>
                     <legend id="iUsu" ><b>Consulta de outros lançamentos </b></legend>
                    
-                    <p:dataTable id="outroslancamentos" var="outroslancamentos" value="#{OutrosLancamentosMB.listarMovimentobancos}" rowStyleClass="tabela" class="tabelaselecionar" 
+                    <p:dataTable id="outroslanca" var="outroslancamentos" value="#{OutrosLancamentosMB.listarMovimentobancos}" rowStyleClass="tabela" class="tabelaselecionar" 
                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                  paginator="true" rows="10" style="margin-bottom:20px"> 
                   
                     <p:column headerText="Data">
-                        <h:outputText >
+                        <h:outputText value="#{outroslancamentos.dataCompensacao}">
                              <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                         </h:outputText>
                     </p:column>
