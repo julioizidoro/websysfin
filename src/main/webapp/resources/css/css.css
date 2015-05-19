@@ -15,7 +15,7 @@ h1 {
     margin: 0px 0 20px -390px;
     width: 750px;
     left:22%;
-    margin-top:-5px;
+    margin-top:-10px;
     border: 0px solid #aaa;
     margin-left:-10px;
 }
@@ -528,7 +528,7 @@ button.cadastrarrelatorio {
     font-size:12px;
 }
 .dataVenc{
-    margin-left:68px;
+    margin-left:76px;
     font-size:12px;
 }
 .valorreceber{
@@ -639,7 +639,7 @@ button.cadastrarrelatorio {
     font-size:15px;
 }
 .logo{
-    margin-top:-9px;
+    margin-top:0px;
 }
 #centro legend#iUsu b{
     margin-top:28px;
@@ -1088,4 +1088,14 @@ button.pesquisar5 {
 .numero2{
     margin-left: 355px;
   font-size:12px;
+}
+.tabelaRecebimento{
+   font-size:12px;
+   color:#F0FFFF;
+}
+.usuariologado{
+    margin-top:-100px;
+    margin-left:450px;
+    color:#F0FFFF;
+    font-size:11px;
 }

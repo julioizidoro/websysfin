@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.swing.JOptionPane;
@@ -31,7 +33,10 @@ import javax.swing.JOptionPane;
 @SessionScoped
 public class OutrosLancamentoMB implements Serializable {
 
-    @Inject private ClienteMB clienteMB;
+    @Inject
+    UsuarioLogadoBean usuarioLogadoBean;
+    @Inject
+    private ClienteMB clienteMB;
     private List<Planocontas> listarPlanoContas;
     private Planocontas planocontas;
     private Movimentobanco movimentobanco;
@@ -48,8 +53,6 @@ public class OutrosLancamentoMB implements Serializable {
     public OutrosLancamentoMB() {
         gerarDataInicial();
     }
-    
-    
 
     public List<Movimentobanco> getListarMovimentobancos() throws SQLException {
         return listarMovimentobancos;
@@ -66,7 +69,6 @@ public class OutrosLancamentoMB implements Serializable {
     public void setMovimentobanco(Movimentobanco movimentobanco) {
         this.movimentobanco = movimentobanco;
     }
-    
 
     public List<Planocontas> getListarPlanoContas() {
         return listarPlanoContas;
@@ -110,7 +112,7 @@ public class OutrosLancamentoMB implements Serializable {
 
     public List<Banco> getListaBanco() {
         if ((clienteMB.getCliente() != null) && (clienteMB.getCliente().getIdcliente() != null)) {
-           carregarListaBanco();
+            carregarListaBanco();
         }
         return listaBanco;
     }
@@ -150,83 +152,90 @@ public class OutrosLancamentoMB implements Serializable {
     public void setBanco(Banco banco) {
         this.banco = banco;
     }
-    
-    
+
+    public UsuarioLogadoBean getUsuarioLogadoBean() {
+        return usuarioLogadoBean;
+    }
+
+    public void setUsuarioLogadoBean(UsuarioLogadoBean usuarioLogadoBean) {
+        this.usuarioLogadoBean = usuarioLogadoBean;
+    }
 
     public String novo() throws SQLException {
-        carregarListaPlanoContas();
-        carregarListaBanco();
-        return "cadOutrosLancamentos";
+        if ((clienteMB.getCliente() != null) && (clienteMB.getCliente().getIdcliente() != null)) {
+            movimentobanco = new Movimentobanco();
+            carregarListaBanco();
+            carregarListaPlanoContas();
+            return "cadOutrosLancamentos";
+        } else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Selecione um cliente");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        }
     }
 
     public String cancelar() {
         return "consOutrosLancamentos";
     }
-    
-    public String pesquisar(){
+
+    public String pesquisar() {
         gerarPesquisa();
         return "consOutrosLancamentos";
     }
 
-     
-    
-    public void carregarListaPlanoContas(){
+    public void carregarListaPlanoContas() {
         PlanoContasController planoContasController = new PlanoContasController();
         listarPlanoContas = planoContasController.listar(clienteMB.getCliente().getTipoplanocontas().getIdtipoplanocontas());
-        if (listarPlanoContas==null){
+        if (listarPlanoContas == null) {
             listarPlanoContas = new ArrayList<Planocontas>();
         }
     }
-    
-     public void carregarListaBanco(){
+
+    public void carregarListaBanco() {
         gerarDataInicial();
         BancoController bancoController = new BancoController();
         listaBanco = bancoController.listar(clienteMB.getCliente().getIdcliente());
-        if (listaBanco==null){
+        if (listaBanco == null) {
             listaBanco = new ArrayList<Banco>();
         }
     }
 
-     public String salvar(){
+    public String salvar() {
         MovimentoBancoController movimentoBancoController = new MovimentoBancoController();
         movimentobanco.setCliente(clienteMB.getCliente());
+        BancoController bancoController = new BancoController();
+        Banco banco = bancoController.consultar(Integer.parseInt(idBanco));
+        movimentobanco.setBanco(banco);
+        PlanoContasController planoContasController = new PlanoContasController();
+        Planocontas planocontas = planoContasController.consultar(Integer.parseInt(idPlanoConta));
+        movimentobanco.setPlanocontas(planocontas);
+        movimentobanco.setUsuario(usuarioLogadoBean.getUsuario());
         movimentoBancoController.salvar(movimentobanco);
         movimentobanco = new Movimentobanco();
         return "consOutrosLancamentos";
     }
 
-    public void gerarListaoutroslancamentos() throws SQLException {
-       if ((clienteMB.getCliente() != null) && (clienteMB.getCliente().getIdcliente() != null)) {
-            MovimentoBancoController movimentoBancoController = new MovimentoBancoController();
-            listarMovimentobancos = movimentoBancoController.listaMovimento(idBanco);
-            if (listarMovimentobancos == null) {
-                listarMovimentobancos = new ArrayList<Movimentobanco>();
-            }
-        }
-    }
-    public String selecionarUnidade(){
+    public String selecionarUnidade() {
         clienteMB.setPagina("consOutrosLancamentos");
         listaBanco = null;
         return "selecionarUnidade";
     }
-    
-    
-    
-     public String editar() throws SQLException{
-        if (listarMovimentobancos!=null){
-            for(int i=0;i<listarMovimentobancos.size();i++){
-                if (listarMovimentobancos.get(i).isSelecionado()){
+
+    public String editar() throws SQLException {
+        if (listarMovimentobancos != null) {
+            for (int i = 0; i < listarMovimentobancos.size(); i++) {
+                if (listarMovimentobancos.get(i).isSelecionado()) {
                     movimentobanco = listarMovimentobancos.get(i);
                     listarMovimentobancos.get(i).setSelecionado(false);
-                    i=100000;
+                    i = 100000;
                     return "cadOutrosLancamentos";
                 }
             }
         }
-        return  "";
+        return "";
     }
-     
-     public void gerarDataInicial(){
+
+    public void gerarDataInicial() {
         String data = Formatacao.ConvercaoDataPadrao(new Date());
         String mesString = data.substring(3, 5);
         String anoString = data.substring(6, 10);
@@ -236,27 +245,27 @@ public class OutrosLancamentoMB implements Serializable {
         int mescFinal;
         int anocInicio = 0;
         int anocFinal = 0;
-        if (mesInicio==1){
-            mescInicio=12;
-            anocInicio=anoInicio - 1;
-        }else {
+        if (mesInicio == 1) {
+            mescInicio = 12;
+            anocInicio = anoInicio - 1;
+        } else {
             mescInicio = mesInicio - 1;
             anocInicio = anoInicio;
         }
-        if (mesInicio==12){
-            mescFinal=1;
-            anocFinal=anoInicio+1;
-        }else {
-            mescFinal = mesInicio  + 1;
+        if (mesInicio == 12) {
+            mescFinal = 1;
+            anocFinal = anoInicio + 1;
+        } else {
+            mescFinal = mesInicio + 1;
             anocFinal = anoInicio;
         }
         String sdataInicial = anocInicio + "-" + Formatacao.retornaDataInicia(mescInicio);
         String sdataFinal = anocFinal + "-" + Formatacao.retornaDataFinal(mescFinal);
-        dataInicial =(Formatacao.ConvercaoStringData(sdataInicial));
+        dataInicial = (Formatacao.ConvercaoStringData(sdataInicial));
         dataFinal = (Formatacao.ConvercaoStringData(sdataFinal));
     }
-     
-     public void gerarPesquisa() {
+
+    public void gerarPesquisa() {
         if ((!idBanco.equalsIgnoreCase("0")) && (dataFinal != null) && (dataInicial != null)
                 && (clienteMB.getCliente() != null)) {
             sql = "Select m from Movimentobanco m where m.banco.idbanco=" + Integer.parseInt(idBanco)
@@ -272,4 +281,15 @@ public class OutrosLancamentoMB implements Serializable {
         }
     }
 
+    public String excluir() throws SQLException {
+        MovimentoBancoController movimentoBancoController = new MovimentoBancoController();
+        for (int i = 0; i < listarMovimentobancos.size(); i++) {
+            if (listarMovimentobancos.get(i).isSelecionado()) {
+                movimentoBancoController.excluir(listarMovimentobancos.get(i).getIdmovimentoBanco());
+                gerarPesquisa();
+                return "consOutrosLancamentos";
+            }
+        }
+        return "";
+    }
 }
