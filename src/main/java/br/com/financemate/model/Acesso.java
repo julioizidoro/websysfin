@@ -28,116 +28,115 @@ public class Acesso implements Serializable {
     @Column(name = "idacesso")
     private Integer idacesso;
     @Column(name = "cadastro")
-    private Integer cadastro;
+    private Boolean cadastro;
     @Column(name = "cliente")
-    private Integer cliente;
+    private Boolean cliente;
     @Column(name = "acliente")
-    private Integer acliente;
+    private Boolean acliente;
     @Column(name = "ecliente")
-    private Integer ecliente;
+    private Boolean ecliente;
     @Column(name = "icliente")
-    private Integer icliente;
+    private Boolean icliente;
     @Column(name = "banco")
-    private Integer banco;
+    private Boolean banco;
     @Column(name = "ibanco")
-    private Integer ibanco;
+    private Boolean ibanco;
     @Column(name = "abanco")
-    private Integer abanco;
+    private Boolean abanco;
     @Column(name = "ebanco")
-    private Integer ebanco;
+    private Boolean ebanco;
     @Column(name = "planocontas")
-    private Integer planocontas;
+    private Boolean planocontas;
     @Column(name = "iplanocontas")
-    private Integer iplanocontas;
+    private Boolean iplanocontas;
     @Column(name = "aplanocontas")
-    private Integer aplanocontas;
+    private Boolean aplanocontas;
     @Column(name = "eplanocontas")
-    private Integer eplanocontas;
+    private Boolean eplanocontas;
     @Column(name = "usuario")
-    private Integer usuario;
+    private Boolean usuario;
     @Column(name = "iusuario")
-    private Integer iusuario;
+    private Boolean iusuario;
     @Column(name = "ausuario")
-    private Integer ausuario;
+    private Boolean ausuario;
     @Column(name = "eusuario")
-    private Integer eusuario;
+    private Boolean eusuario;
     @Column(name = "produto")
-    private Integer produto;
+    private Boolean produto;
     @Column(name = "iproduto")
-    private Integer iproduto;
+    private Boolean iproduto;
     @Column(name = "aproduto")
-    private Integer aproduto;
+    private Boolean aproduto;
     @Column(name = "eproduto")
-    private Integer eproduto;
+    private Boolean eproduto;
     @Column(name = "contaspagar")
-    private Integer contaspagar;
+    private Boolean contaspagar;
     @Column(name = "icontaspagar")
-    private Integer icontaspagar;
+    private Boolean icontaspagar;
     @Column(name = "acontaspargar")
-    private Integer acontaspargar;
+    private Boolean acontaspargar;
     @Column(name = "econtaspargar")
-    private Integer econtaspargar;
-    @Column(name = "lcontaspargar")
-    private Integer lcontaspargar;
+    private Boolean econtaspargar;
     @Column(name = "arqcontaspargar")
-    private Integer arqcontaspargar;
+    private Boolean arqcontaspargar;
+    @Column(name = "lcontaspargar")
+    private Boolean lcontaspargar;
     @Column(name = "ucontaspargar")
-    private Integer ucontaspargar;
-    @Column(name = "autcontaspargar")
-    private Integer autcontaspargar;
-     @Column(name = "contasreceber")
-    private Integer contasreceber;
-    @Column(name = "icontasreceber")
-    private Integer icontasreceber;
-    @Column(name = "acontasreceber")
-    private Integer acontasreceber;
-    @Column(name = "econtasreceber")
-    private Integer econtasreceber;
-    @Column(name = "rcontasreceber")
-    private Integer rcontasreceber;
-    @Column(name = "outroslancamentos")
-    private Integer outroslancamentos;
-    @Column(name = "ioutroslancamentos")
-    private Integer ioutroslancamentos;
-    @Column(name = "aoutroslancamentos")
-    private Integer aoutroslancamentos;
-    @Column(name = "eoutroslancamentos")
-    private Integer eoutroslancamentos;
-    @Column(name = "rvendas")
-    private Integer rvendas;
+    private Boolean ucontaspargar;
+    @Column(name = "contasreceber")
+    private Boolean contasreceber;
     @Column(name = "rpagamentos")
-    private Integer rpagamentos;
+    private Boolean rpagamentos;
+    @Column(name = "autcontaspargar")
+    private Boolean autcontaspargar;
+    @Column(name = "icontasreceber")
+    private Boolean icontasreceber;
+    @Column(name = "acontasreceber")
+    private Boolean acontasreceber;
+    @Column(name = "econtasreceber")
+    private Boolean econtasreceber;
+    @Column(name = "rcontasreceber")
+    private Boolean rcontasreceber;
+    @Column(name = "outroslancamentos")
+    private Boolean outroslancamentos;
+    @Column(name = "ioutroslancamentos")
+    private Boolean ioutroslancamentos;
+    @Column(name = "aoutroslancamentos")
+    private Boolean aoutroslancamentos;
+    @Column(name = "eoutroslancamentos")
+    private Boolean eoutroslancamentos;
+    @Column(name = "rvendas")
+    private Boolean rvendas;
     @Column(name = "rconciliacao")
-    private Integer rconciliacao;
+    private Boolean rconciliacao;
     @Column(name = "rreceber")
-    private Integer rreceber;
+    private Boolean rreceber;
     @Column(name = "rpagar")
-    private Integer rpagar;
+    private Boolean rpagar;
     @Column(name = "rfluxo")
-    private Integer rfluxo;
+    private Boolean rfluxo;
     @Column(name = "vendas")
-    private Integer vendas;
+    private Boolean vendas;
     @Column(name = "ivendas")
-    private Integer ivendas;
+    private Boolean ivendas;
     @Column(name = "evendas")
-    private Integer evendas;
+    private Boolean evendas;
     @Column(name = "avendas")
-    private Integer avendas;
+    private Boolean avendas;
     @Column(name = "pvendas")
-    private Integer pvendas;
+    private Boolean pvendas;
     @Column(name = "cvendas")
-    private Integer cvendas;
+    private Boolean cvendas;
     @Column(name = "fvendas")
-    private Integer fvendas;
+    private Boolean fvendas;
     @Column(name = "tipoplanocontas")
-    private Integer tipoplanocontas;
+    private Boolean tipoplanocontas;
     @Column(name = "itipoplanocontas")
-    private Integer itipoplanocontas;
+    private Boolean itipoplanocontas;
     @Column(name = "atipoplanocontas")
-    private Integer atipoplanocontas;
+    private Boolean atipoplanocontas;
     @Column(name = "etipoplanocontas")
-    private Integer etipoplanocontas;
-    
+    private Boolean etipoplanocontas;
 
     public Acesso() {
     }
@@ -154,443 +153,443 @@ public class Acesso implements Serializable {
         this.idacesso = idacesso;
     }
 
-    public Integer getCadastro() {
+    public Boolean getCadastro() {
         return cadastro;
     }
 
-    public void setCadastro(Integer cadastro) {
+    public void setCadastro(Boolean cadastro) {
         this.cadastro = cadastro;
     }
 
-    public Integer getCliente() {
+    public Boolean getCliente() {
         return cliente;
     }
 
-    public void setCliente(Integer cliente) {
+    public void setCliente(Boolean cliente) {
         this.cliente = cliente;
     }
 
-    public Integer getAcliente() {
+    public Boolean getAcliente() {
         return acliente;
     }
 
-    public Integer getContasreceber() {
-        return contasreceber;
-    }
-
-    public void setContasreceber(Integer contasreceber) {
-        this.contasreceber = contasreceber;
-    }
-
-    public Integer getOutroslancamentos() {
-        return outroslancamentos;
-    }
-
-    public void setOutroslancamentos(Integer outroslancamentos) {
-        this.outroslancamentos = outroslancamentos;
-    }
-
-    public void setAcliente(Integer acliente) {
+    public void setAcliente(Boolean acliente) {
         this.acliente = acliente;
     }
 
-    public Integer getEcliente() {
+    public Boolean getEcliente() {
         return ecliente;
     }
 
-    public void setEcliente(Integer ecliente) {
+    public void setEcliente(Boolean ecliente) {
         this.ecliente = ecliente;
     }
 
-    public Integer getIcliente() {
+    public Boolean getIcliente() {
         return icliente;
     }
 
-    public void setIcliente(Integer icliente) {
+    public void setIcliente(Boolean icliente) {
         this.icliente = icliente;
     }
 
-    public Integer getBanco() {
+    public Boolean getBanco() {
         return banco;
     }
 
-    public void setBanco(Integer banco) {
+    public void setBanco(Boolean banco) {
         this.banco = banco;
     }
 
-    public Integer getIbanco() {
+    public Boolean getIbanco() {
         return ibanco;
     }
 
-    public void setIbanco(Integer ibanco) {
+    public void setIbanco(Boolean ibanco) {
         this.ibanco = ibanco;
     }
 
-    public Integer getAbanco() {
+    public Boolean getAbanco() {
         return abanco;
     }
 
-    public void setAbanco(Integer abanco) {
+    public void setAbanco(Boolean abanco) {
         this.abanco = abanco;
     }
 
-    public Integer getEbanco() {
+    public Boolean getEbanco() {
         return ebanco;
     }
 
-    public void setEbanco(Integer ebanco) {
+    public void setEbanco(Boolean ebanco) {
         this.ebanco = ebanco;
     }
 
-    public Integer getPlanocontas() {
+    public Boolean getPlanocontas() {
         return planocontas;
     }
 
-    public void setPlanocontas(Integer planocontas) {
+    public void setPlanocontas(Boolean planocontas) {
         this.planocontas = planocontas;
     }
 
-    public Integer getIplanocontas() {
+    public Boolean getIplanocontas() {
         return iplanocontas;
     }
 
-    public void setIplanocontas(Integer iplanocontas) {
+    public void setIplanocontas(Boolean iplanocontas) {
         this.iplanocontas = iplanocontas;
     }
 
-    public Integer getAplanocontas() {
+    public Boolean getAplanocontas() {
         return aplanocontas;
     }
 
-    public void setAplanocontas(Integer aplanocontas) {
+    public void setAplanocontas(Boolean aplanocontas) {
         this.aplanocontas = aplanocontas;
     }
 
-    public Integer getEplanocontas() {
+    public Boolean getEplanocontas() {
         return eplanocontas;
     }
 
-    public void setEplanocontas(Integer eplanocontas) {
+    public void setEplanocontas(Boolean eplanocontas) {
         this.eplanocontas = eplanocontas;
     }
 
-    public Integer getUsuario() {
+    public Boolean getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Integer usuario) {
+    public void setUsuario(Boolean usuario) {
         this.usuario = usuario;
     }
 
-    public Integer getIusuario() {
+    public Boolean getIusuario() {
         return iusuario;
     }
 
-    public void setIusuario(Integer iusuario) {
+    public void setIusuario(Boolean iusuario) {
         this.iusuario = iusuario;
     }
 
-    public Integer getAusuario() {
+    public Boolean getAusuario() {
         return ausuario;
     }
 
-    public void setAusuario(Integer ausuario) {
+    public void setAusuario(Boolean ausuario) {
         this.ausuario = ausuario;
     }
 
-    public Integer getEusuario() {
+    public Boolean getEusuario() {
         return eusuario;
     }
 
-    public void setEusuario(Integer eusuario) {
+    public void setEusuario(Boolean eusuario) {
         this.eusuario = eusuario;
     }
 
-    public Integer getProduto() {
+    public Boolean getProduto() {
         return produto;
     }
 
-    public void setProduto(Integer produto) {
+    public void setProduto(Boolean produto) {
         this.produto = produto;
     }
 
-    public Integer getIproduto() {
+    public Boolean getIproduto() {
         return iproduto;
     }
 
-    public void setIproduto(Integer iproduto) {
+    public void setIproduto(Boolean iproduto) {
         this.iproduto = iproduto;
     }
 
-    public Integer getAproduto() {
+    public Boolean getAproduto() {
         return aproduto;
     }
 
-    public void setAproduto(Integer aproduto) {
+    public void setAproduto(Boolean aproduto) {
         this.aproduto = aproduto;
     }
 
-    public Integer getEproduto() {
+    public Boolean getEproduto() {
         return eproduto;
     }
 
-    public void setEproduto(Integer eproduto) {
+    public void setEproduto(Boolean eproduto) {
         this.eproduto = eproduto;
     }
 
-    public Integer getContaspagar() {
+    public Boolean getContaspagar() {
         return contaspagar;
     }
 
-    public void setContaspagar(Integer contaspagar) {
+    public void setContaspagar(Boolean contaspagar) {
         this.contaspagar = contaspagar;
     }
 
-    public Integer getIcontaspagar() {
+    public Boolean getIcontaspagar() {
         return icontaspagar;
     }
 
-    public void setIcontaspagar(Integer icontaspagar) {
+    public void setIcontaspagar(Boolean icontaspagar) {
         this.icontaspagar = icontaspagar;
     }
 
-    public Integer getAcontaspargar() {
+    public Boolean getAcontaspargar() {
         return acontaspargar;
     }
 
-    public void setAcontaspargar(Integer acontaspargar) {
+    public void setAcontaspargar(Boolean acontaspargar) {
         this.acontaspargar = acontaspargar;
     }
 
-    public Integer getEcontaspargar() {
+    public Boolean getEcontaspargar() {
         return econtaspargar;
     }
 
-    public void setEcontaspargar(Integer econtaspargar) {
+    public void setEcontaspargar(Boolean econtaspargar) {
         this.econtaspargar = econtaspargar;
     }
 
-    public Integer getLcontaspargar() {
-        return lcontaspargar;
-    }
-
-    public void setLcontaspargar(Integer lcontaspargar) {
-        this.lcontaspargar = lcontaspargar;
-    }
-
-    public Integer getArqcontaspargar() {
+    public Boolean getArqcontaspargar() {
         return arqcontaspargar;
     }
 
-    public void setArqcontaspargar(Integer arqcontaspargar) {
+    public void setArqcontaspargar(Boolean arqcontaspargar) {
         this.arqcontaspargar = arqcontaspargar;
     }
 
-    public Integer getUcontaspargar() {
+    public Boolean getLcontaspargar() {
+        return lcontaspargar;
+    }
+
+    public void setLcontaspargar(Boolean lcontaspargar) {
+        this.lcontaspargar = lcontaspargar;
+    }
+
+    public Boolean getUcontaspargar() {
         return ucontaspargar;
     }
 
-    public void setUcontaspargar(Integer ucontaspargar) {
+    public void setUcontaspargar(Boolean ucontaspargar) {
         this.ucontaspargar = ucontaspargar;
     }
 
-    public Integer getAutcontaspargar() {
-        return autcontaspargar;
+    public Boolean getContasreceber() {
+        return contasreceber;
     }
 
-    public void setAutcontaspargar(Integer autcontaspargar) {
-        this.autcontaspargar = autcontaspargar;
+    public void setContasreceber(Boolean contasreceber) {
+        this.contasreceber = contasreceber;
     }
 
-    public Integer getIcontasreceber() {
-        return icontasreceber;
-    }
-
-    public void setIcontasreceber(Integer icontasreceber) {
-        this.icontasreceber = icontasreceber;
-    }
-
-    public Integer getAcontasreceber() {
-        return acontasreceber;
-    }
-
-    public void setAcontasreceber(Integer acontasreceber) {
-        this.acontasreceber = acontasreceber;
-    }
-
-    public Integer getEcontasreceber() {
-        return econtasreceber;
-    }
-
-    public void setEcontasreceber(Integer econtasreceber) {
-        this.econtasreceber = econtasreceber;
-    }
-
-    public Integer getRcontasreceber() {
-        return rcontasreceber;
-    }
-
-    public void setRcontasreceber(Integer rcontasreceber) {
-        this.rcontasreceber = rcontasreceber;
-    }
-
-    public Integer getIoutroslancamentos() {
-        return ioutroslancamentos;
-    }
-
-    public void setIoutroslancamentos(Integer ioutroslancamentos) {
-        this.ioutroslancamentos = ioutroslancamentos;
-    }
-
-    public Integer getAoutroslancamentos() {
-        return aoutroslancamentos;
-    }
-
-    public void setAoutroslancamentos(Integer aoutroslancamentos) {
-        this.aoutroslancamentos = aoutroslancamentos;
-    }
-
-    public Integer getEoutroslancamentos() {
-        return eoutroslancamentos;
-    }
-
-    public void setEoutroslancamentos(Integer eoutroslancamentos) {
-        this.eoutroslancamentos = eoutroslancamentos;
-    }
-
-    public Integer getRvendas() {
-        return rvendas;
-    }
-
-    public void setRvendas(Integer rvendas) {
-        this.rvendas = rvendas;
-    }
-
-    public Integer getRpagamentos() {
+    public Boolean getRpagamentos() {
         return rpagamentos;
     }
 
-    public void setRpagamentos(Integer rpagamentos) {
+    public void setRpagamentos(Boolean rpagamentos) {
         this.rpagamentos = rpagamentos;
     }
 
-    public Integer getRconciliacao() {
+    public Boolean getAutcontaspargar() {
+        return autcontaspargar;
+    }
+
+    public void setAutcontaspargar(Boolean autcontaspargar) {
+        this.autcontaspargar = autcontaspargar;
+    }
+
+    public Boolean getIcontasreceber() {
+        return icontasreceber;
+    }
+
+    public void setIcontasreceber(Boolean icontasreceber) {
+        this.icontasreceber = icontasreceber;
+    }
+
+    public Boolean getAcontasreceber() {
+        return acontasreceber;
+    }
+
+    public void setAcontasreceber(Boolean acontasreceber) {
+        this.acontasreceber = acontasreceber;
+    }
+
+    public Boolean getEcontasreceber() {
+        return econtasreceber;
+    }
+
+    public void setEcontasreceber(Boolean econtasreceber) {
+        this.econtasreceber = econtasreceber;
+    }
+
+    public Boolean getRcontasreceber() {
+        return rcontasreceber;
+    }
+
+    public void setRcontasreceber(Boolean rcontasreceber) {
+        this.rcontasreceber = rcontasreceber;
+    }
+
+    public Boolean getOutroslancamentos() {
+        return outroslancamentos;
+    }
+
+    public void setOutroslancamentos(Boolean outroslancamentos) {
+        this.outroslancamentos = outroslancamentos;
+    }
+
+    public Boolean getIoutroslancamentos() {
+        return ioutroslancamentos;
+    }
+
+    public void setIoutroslancamentos(Boolean ioutroslancamentos) {
+        this.ioutroslancamentos = ioutroslancamentos;
+    }
+
+    public Boolean getAoutroslancamentos() {
+        return aoutroslancamentos;
+    }
+
+    public void setAoutroslancamentos(Boolean aoutroslancamentos) {
+        this.aoutroslancamentos = aoutroslancamentos;
+    }
+
+    public Boolean getEoutroslancamentos() {
+        return eoutroslancamentos;
+    }
+
+    public void setEoutroslancamentos(Boolean eoutroslancamentos) {
+        this.eoutroslancamentos = eoutroslancamentos;
+    }
+
+    public Boolean getRvendas() {
+        return rvendas;
+    }
+
+    public void setRvendas(Boolean rvendas) {
+        this.rvendas = rvendas;
+    }
+
+    public Boolean getRconciliacao() {
         return rconciliacao;
     }
 
-    public void setRconciliacao(Integer rconciliacao) {
+    public void setRconciliacao(Boolean rconciliacao) {
         this.rconciliacao = rconciliacao;
     }
 
-    public Integer getRreceber() {
+    public Boolean getRreceber() {
         return rreceber;
     }
 
-    public void setRreceber(Integer rreceber) {
+    public void setRreceber(Boolean rreceber) {
         this.rreceber = rreceber;
     }
 
-    public Integer getRpagar() {
+    public Boolean getRpagar() {
         return rpagar;
     }
 
-    public void setRpagar(Integer rpagar) {
+    public void setRpagar(Boolean rpagar) {
         this.rpagar = rpagar;
     }
 
-    public Integer getRfluxo() {
+    public Boolean getRfluxo() {
         return rfluxo;
     }
 
-    public void setRfluxo(Integer rfluxo) {
+    public void setRfluxo(Boolean rfluxo) {
         this.rfluxo = rfluxo;
     }
 
-    public Integer getVendas() {
+    public Boolean getVendas() {
         return vendas;
     }
 
-    public void setVendas(Integer vendas) {
+    public void setVendas(Boolean vendas) {
         this.vendas = vendas;
     }
 
-    public Integer getIvendas() {
+    public Boolean getIvendas() {
         return ivendas;
     }
 
-    public void setIvendas(Integer ivendas) {
+    public void setIvendas(Boolean ivendas) {
         this.ivendas = ivendas;
     }
 
-    public Integer getEvendas() {
+    public Boolean getEvendas() {
         return evendas;
     }
 
-    public void setEvendas(Integer evendas) {
+    public void setEvendas(Boolean evendas) {
         this.evendas = evendas;
     }
 
-    public Integer getAvendas() {
+    public Boolean getAvendas() {
         return avendas;
     }
 
-    public void setAvendas(Integer avendas) {
+    public void setAvendas(Boolean avendas) {
         this.avendas = avendas;
     }
 
-    public Integer getPvendas() {
+    public Boolean getPvendas() {
         return pvendas;
     }
 
-    public void setPvendas(Integer pvendas) {
+    public void setPvendas(Boolean pvendas) {
         this.pvendas = pvendas;
     }
 
-    public Integer getCvendas() {
+    public Boolean getCvendas() {
         return cvendas;
     }
 
-    public void setCvendas(Integer cvendas) {
+    public void setCvendas(Boolean cvendas) {
         this.cvendas = cvendas;
     }
 
-    public Integer getFvendas() {
+    public Boolean getFvendas() {
         return fvendas;
     }
 
-    public void setFvendas(Integer fvendas) {
+    public void setFvendas(Boolean fvendas) {
         this.fvendas = fvendas;
     }
 
-    public Integer getTipoplanocontas() {
+    public Boolean getTipoplanocontas() {
         return tipoplanocontas;
     }
 
-    public void setTipoplanocontas(Integer tipoplanocontas) {
+    public void setTipoplanocontas(Boolean tipoplanocontas) {
         this.tipoplanocontas = tipoplanocontas;
     }
 
-    public Integer getItipoplanocontas() {
+    public Boolean getItipoplanocontas() {
         return itipoplanocontas;
     }
 
-    public void setItipoplanocontas(Integer itipoplanocontas) {
+    public void setItipoplanocontas(Boolean itipoplanocontas) {
         this.itipoplanocontas = itipoplanocontas;
     }
 
-    public Integer getAtipoplanocontas() {
+    public Boolean getAtipoplanocontas() {
         return atipoplanocontas;
     }
 
-    public void setAtipoplanocontas(Integer atipoplanocontas) {
+    public void setAtipoplanocontas(Boolean atipoplanocontas) {
         this.atipoplanocontas = atipoplanocontas;
     }
 
-    public Integer getEtipoplanocontas() {
+    public Boolean getEtipoplanocontas() {
         return etipoplanocontas;
     }
 
-    public void setEtipoplanocontas(Integer etipoplanocontas) {
+    public void setEtipoplanocontas(Boolean etipoplanocontas) {
         this.etipoplanocontas = etipoplanocontas;
     }
 

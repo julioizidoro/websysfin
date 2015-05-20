@@ -43,7 +43,7 @@ public class MenuMB implements Serializable{
     }
     
     public String contasPagar(){
-        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getContaspagar()==1){
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getContaspagar()){
             clienteMB.setCliente(null);
             return "consConPagar";
         }else {
@@ -55,7 +55,7 @@ public class MenuMB implements Serializable{
     }
     
     public String contasReceber(){
-        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getContasreceber()==1){
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getContasreceber()){
             clienteMB.setCliente(null);
             return "consConReceber";    
         }else {
@@ -67,7 +67,7 @@ public class MenuMB implements Serializable{
     }
     
     public String outrosLancamento(){
-        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getOutroslancamentos()==1){
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getOutroslancamentos()){
             clienteMB.setCliente(null);
             return "consOutrosLancamentos";
         }else {
@@ -78,7 +78,7 @@ public class MenuMB implements Serializable{
     }
     
     public String tipoPlanoContas(){
-        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getTipoplanocontas()==1){
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getTipoplanocontas()){
             clienteMB.setCliente(null);
             return "consTipoPlanoConta";
         }else {
@@ -89,7 +89,7 @@ public class MenuMB implements Serializable{
     }
     
     public String planoContas(){
-        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getPlanocontas()==1){
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getPlanocontas()){
             clienteMB.setCliente(null);
             return "consPlanoConta";
         }else {
@@ -100,7 +100,7 @@ public class MenuMB implements Serializable{
     }
     
     public String vendas(){
-        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getVendas()==1){
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getVendas()){
             clienteMB.setCliente(null);
             return "consVendas";
         }else {
@@ -116,7 +116,7 @@ public class MenuMB implements Serializable{
     }
     
     public String relatorioContasPagar(){
-        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getRpagar()==1){
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getRpagar()){
             clienteMB.setCliente(new Cliente());
             return "relContasPagar";
         }else {
@@ -127,7 +127,7 @@ public class MenuMB implements Serializable{
     } 
     
     public String banco(){
-        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getBanco()==1){
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getBanco()){
             clienteMB.setCliente(new Cliente());
             return "consbanco";   
         }else {
@@ -138,7 +138,7 @@ public class MenuMB implements Serializable{
     } 
     
     public String cliente(){
-        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getCliente()==1){
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getCliente()){
             clienteMB.setCliente(new Cliente());
             return "consCliente";
         }else {
@@ -148,7 +148,7 @@ public class MenuMB implements Serializable{
         }
     } 
     public String relatorioVenda(){
-        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getVendas()==1){
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getVendas()){
             clienteMB.setCliente(new Cliente());
             return "relVendas";
         }else {
