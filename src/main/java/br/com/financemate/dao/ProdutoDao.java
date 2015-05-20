@@ -26,7 +26,7 @@ public class ProdutoDao {
     public List<Produto> listar(int idCliente) throws SQLException{
         EntityManager manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
-        Query q = manager.createQuery("Select p from Produto p where p.cliente=" + idCliente);
+        Query q = manager.createQuery("Select p from Produto p where p.cliente.idcliente=" + idCliente);
         List<Produto> lista = q.getResultList();
         manager.getTransaction().commit();
         return lista;

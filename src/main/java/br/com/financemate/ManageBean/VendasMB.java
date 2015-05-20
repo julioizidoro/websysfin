@@ -30,6 +30,12 @@ public class VendasMB implements Serializable{
     private List<Vendas> listaVendas;
     private String sql;
     private String order;
+    private String nomeClientePesquisa;
+    private Date dataInicial;
+    private Date dataFinal;
+    private String numeroVenda;
+    private String tipoContaPesquisa;
+    
 
     public UsuarioLogadoBean getUsuarioLogadoBean() {
         return usuarioLogadoBean;
@@ -66,6 +72,64 @@ public class VendasMB implements Serializable{
     public void setListaVendas(List<Vendas> listaVendas) {
         this.listaVendas = listaVendas;
     }
+
+    public String getSql() {
+        return sql;
+    }
+
+    public void setSql(String sql) {
+        this.sql = sql;
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
+
+    public String getNomeClientePesquisa() {
+        return nomeClientePesquisa;
+    }
+
+    public void setNomeClientePesquisa(String nomeClientePesquisa) {
+        this.nomeClientePesquisa = nomeClientePesquisa;
+    }
+
+    public Date getDataInicial() {
+        return dataInicial;
+    }
+
+    public void setDataInicial(Date dataInicial) {
+        this.dataInicial = dataInicial;
+    }
+
+    public Date getDataFinal() {
+        return dataFinal;
+    }
+
+    public void setDataFinal(Date dataFinal) {
+        this.dataFinal = dataFinal;
+    }
+
+    public String getNumeroVenda() {
+        return numeroVenda;
+    }
+
+    public void setNumeroVenda(String numeroVenda) {
+        this.numeroVenda = numeroVenda;
+    }
+
+    public String getTipoContaPesquisa() {
+        return tipoContaPesquisa;
+    }
+
+    public void setTipoContaPesquisa(String tipoContaPesquisa) {
+        this.tipoContaPesquisa = tipoContaPesquisa;
+    }
+    
+    
     
      public String novo(){
         return "cadLancarVendas";
@@ -128,5 +192,24 @@ public class VendasMB implements Serializable{
         clienteMB.setPagina("relVendas");
         return "selecionarUnidade";
     }
+     
+     
+     public String selecionarUnidadePesquisa() {
+        clienteMB.setPagina("pesquisarVendas");
+        return "selecionarUnidade";
+    }
     
+     public String pesquisar(){
+         return "pesquisarVendas";
+     }
+     
+     public String cancelarPesquisa(){
+         return "consVendas";
+     }
+     
+     public String gerarPesquisa(){
+        gerarDataInicial();
+        gerarListaVendas();
+        return "consConReceber";
+    }
 }

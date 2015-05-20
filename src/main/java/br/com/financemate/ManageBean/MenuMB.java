@@ -157,4 +157,14 @@ public class MenuMB implements Serializable{
             return "";
         }
     } 
+    public String produto(){
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getProduto()){
+            clienteMB.setCliente(new Cliente());
+            return "consProduto";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        }
+    } 
 }
