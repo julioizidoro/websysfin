@@ -9,7 +9,6 @@ import br.com.financemate.Controller.BancoController;
 import br.com.financemate.Controller.MovimentoBancoController;
 import br.com.financemate.Controller.PlanoContasController;
 import br.com.financemate.Util.Formatacao;
-import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Movimentobanco;
 import br.com.financemate.model.Planocontas;
@@ -23,7 +22,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.swing.JOptionPane;
 
 /**
  *

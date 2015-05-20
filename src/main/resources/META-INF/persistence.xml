@@ -30,4 +30,9 @@
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>
+  <persistence-unit name="systmPU" transaction-type="JTA">
+    <jta-data-source>jdbc/websystmDS</jta-data-source>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <properties/>
+  </persistence-unit>
 </persistence>

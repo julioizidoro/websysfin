@@ -11,7 +11,6 @@ package br.com.financemate.Controller;
 import br.com.financemate.facade.VendasFacade;
 import br.com.financemate.model.Emissaonota;
 import br.com.financemate.model.Vendas;
-import br.com.financemate.modelView.Viewvendas;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,6 +22,11 @@ import javax.swing.JOptionPane;
  * @author Wolverine
  */
 public class VendasController {
+
+    public VendasController() {
+    }
+    
+    
     
     VendasFacade vendasFacade;
     
@@ -37,7 +41,7 @@ public class VendasController {
         }
     }
     
-    public List<Viewvendas> listar(String sql) {
+    public List<Vendas> listar(String sql) {
         vendasFacade = new VendasFacade();
         try {
             return vendasFacade.listar(sql);

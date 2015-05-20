@@ -23,6 +23,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 /**
@@ -31,8 +32,6 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "vendas")
-@NamedQueries({
-    @NamedQuery(name = "Vendas.findAll", query = "SELECT v FROM Vendas v")})
 public class Vendas implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -102,6 +101,8 @@ public class Vendas implements Serializable {
     private Usuario usuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "vendas")
     private List<Formapagamento> formapagamentoList;
+    @Transient
+    private Boolean selecionado;
 
     public Vendas() {
     }
@@ -316,6 +317,14 @@ public class Vendas implements Serializable {
 
     public void setFormapagamentoList(List<Formapagamento> formapagamentoList) {
         this.formapagamentoList = formapagamentoList;
+    }
+
+    public Boolean getSelecionado() {
+        return selecionado;
+    }
+
+    public void setSelecionado(Boolean selecionado) {
+        this.selecionado = selecionado;
     }
 
     @Override

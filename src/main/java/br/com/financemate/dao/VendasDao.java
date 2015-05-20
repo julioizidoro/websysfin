@@ -30,11 +30,11 @@ public class VendasDao {
         return venda;
     }
     
-    public List<Viewvendas> listar(String sql) throws SQLException{
+    public List<Vendas> listar(String sql) throws SQLException{
         EntityManager manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
         Query q = manager.createQuery(sql);
-        List<Viewvendas> lista = q.getResultList();
+        List<Vendas> lista = q.getResultList();
         manager.getTransaction().commit();
         return lista;
     }

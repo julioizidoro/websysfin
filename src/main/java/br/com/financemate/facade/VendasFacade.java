@@ -27,7 +27,7 @@ public class VendasFacade {
         return vendasDao.salvar(venda);
     }
     
-    public List<Viewvendas> listar(String sql) throws SQLException{
+    public List<Vendas> listar(String sql) throws SQLException{
         vendasDao = new VendasDao();
         return vendasDao.listar(sql);
     }

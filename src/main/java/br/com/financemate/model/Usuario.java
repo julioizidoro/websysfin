@@ -6,17 +6,14 @@
 package br.com.financemate.model;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -26,8 +23,6 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "usuario")
-@NamedQueries({
-    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")})
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -53,12 +48,9 @@ public class Usuario implements Serializable {
     @Size(max = 200)
     @Column(name = "localSalvar")
     private String localSalvar;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private List<Contasreceber> contasreceberList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private List<Vendas> vendasList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private List<Movimentobanco> movimentobancoList;
+    @JoinColumn(name = "tipoacesso_idtipoacesso", referencedColumnName = "idtipoacesso")
+    @ManyToOne(optional = false)
+    private Tipoacesso tipoacesso;
 
     public Usuario() {
     }
@@ -123,28 +115,12 @@ public class Usuario implements Serializable {
         this.localSalvar = localSalvar;
     }
 
-    public List<Contasreceber> getContasreceberList() {
-        return contasreceberList;
+    public Tipoacesso getTipoacesso() {
+        return tipoacesso;
     }
 
-    public void setContasreceberList(List<Contasreceber> contasreceberList) {
-        this.contasreceberList = contasreceberList;
-    }
-
-    public List<Vendas> getVendasList() {
-        return vendasList;
-    }
-
-    public void setVendasList(List<Vendas> vendasList) {
-        this.vendasList = vendasList;
-    }
-
-    public List<Movimentobanco> getMovimentobancoList() {
-        return movimentobancoList;
-    }
-
-    public void setMovimentobancoList(List<Movimentobanco> movimentobancoList) {
-        this.movimentobancoList = movimentobancoList;
+    public void setTipoacesso(Tipoacesso tipoacesso) {
+        this.tipoacesso = tipoacesso;
     }
 
     @Override

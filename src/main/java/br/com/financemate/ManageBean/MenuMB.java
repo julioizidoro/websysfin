@@ -8,6 +8,8 @@ package br.com.financemate.ManageBean;
 import br.com.financemate.model.Cliente;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -23,33 +25,89 @@ public class MenuMB implements Serializable{
     @Inject
     private UsuarioLogadoBean usuarioLogadoBean;
     @Inject ClienteMB clienteMB;
+
+    public UsuarioLogadoBean getUsuarioLogadoBean() {
+        return usuarioLogadoBean;
+    }
+
+    public void setUsuarioLogadoBean(UsuarioLogadoBean usuarioLogadoBean) {
+        this.usuarioLogadoBean = usuarioLogadoBean;
+    }
+
+    public ClienteMB getClienteMB() {
+        return clienteMB;
+    }
+
+    public void setClienteMB(ClienteMB clienteMB) {
+        this.clienteMB = clienteMB;
+    }
     
     public String contasPagar(){
-        clienteMB.setCliente(null);
-        return "consConPagar";
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getContaspagar()==1){
+            clienteMB.setCliente(null);
+            return "consConPagar";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        }
+        
     }
     
     public String contasReceber(){
-        clienteMB.setCliente(null);
-        return "consConReceber";
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getContasreceber()==1){
+            clienteMB.setCliente(null);
+            return "consConReceber";    
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        }
+        
     }
     
     public String outrosLancamento(){
-        clienteMB.setCliente(null);
-        return "consOutrosLancamentos";
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getOutroslancamentos()==1){
+            clienteMB.setCliente(null);
+            return "consOutrosLancamentos";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        }
     }
+    
     public String tipoPlanoContas(){
-        clienteMB.setCliente(null);
-        return "consTipoPlanoConta";
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getTipoplanocontas()==1){
+            clienteMB.setCliente(null);
+            return "consTipoPlanoConta";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        }
     }
     
     public String planoContas(){
-        clienteMB.setCliente(null);
-        return "consPlanoConta";
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getPlanocontas()==1){
+            clienteMB.setCliente(null);
+            return "consPlanoConta";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        }
     }
+    
     public String vendas(){
-        clienteMB.setCliente(null);
-        return "consVendas";
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getVendas()==1){
+            clienteMB.setCliente(null);
+            return "consVendas";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        }
     }
     
     public String home(){
@@ -58,15 +116,35 @@ public class MenuMB implements Serializable{
     }
     
     public String relatorioContasPagar(){
-        clienteMB.setCliente(new Cliente());
-        return "relContasPagar";
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getRpagar()==1){
+            clienteMB.setCliente(new Cliente());
+            return "relContasPagar";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        }
     } 
+    
     public String banco(){
-        clienteMB.setCliente(new Cliente());
-        return "consbanco";
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getBanco()==1){
+            clienteMB.setCliente(new Cliente());
+            return "consbanco";   
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        }
     } 
+    
     public String cliente(){
-        clienteMB.setCliente(new Cliente());
-        return "consCliente";
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getCliente()==1){
+            clienteMB.setCliente(new Cliente());
+            return "consCliente";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        }
     } 
 }

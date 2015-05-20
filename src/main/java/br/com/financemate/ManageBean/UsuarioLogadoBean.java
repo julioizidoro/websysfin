@@ -25,15 +25,13 @@ public class UsuarioLogadoBean implements Serializable{
     
     private Usuario usuario;
     private Cliente cliente;
-    private int tipoCliente;
+    //private int tipoCliente;
+    private String nomeCliente;
     
 
     public UsuarioLogadoBean() {
         this.usuario = usuario;
     }
-    
-    
-    
     
     public Usuario getUsuario() {
         if (usuario==null){
@@ -54,12 +52,12 @@ public class UsuarioLogadoBean implements Serializable{
         this.cliente = cliente;
     }
 
-    public int getTipoCliente() {
-        return tipoCliente;
+    public String getNomeCliente() {
+        return nomeCliente;
     }
 
-    public void setTipoCliente(int tipoCliente) {
-        this.tipoCliente = tipoCliente;
+    public void setNomeCliente(String nomeCliente) {
+        this.nomeCliente = nomeCliente;
     }
 
     public String validarUsuario(){
@@ -74,10 +72,10 @@ public class UsuarioLogadoBean implements Serializable{
                 if (usuario.getCliente()>0){
                     ClienteController clienteController = new ClienteController();
                     cliente = clienteController.consultar(usuario.getCliente());
-                    tipoCliente=1;
+                    nomeCliente = cliente.getNomeFantasia();
                 }else {
                     cliente = null;
-                    tipoCliente=0;
+                    nomeCliente = "FINANCEMATE - Assessoria Contábil & Financeira";
                 }
                 return "principal";
             }

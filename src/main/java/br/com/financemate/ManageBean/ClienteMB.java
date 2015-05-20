@@ -62,7 +62,9 @@ public class ClienteMB implements Serializable{
     }
 
     public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+        if (usuarioLogadoBean.getUsuario().getCliente()>0){
+            this.cliente = usuarioLogadoBean.getCliente();
+        }else this.cliente = cliente;   
     }
 
     public String getPagina() {

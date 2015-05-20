@@ -15,37 +15,37 @@
                     <br></br>
                     <legend id="iUsu" ><b>Consulta de Vendas </b></legend>
                    
-                 <p:dataTable id="contaVenda" var="contaVenda" value="" rowStyleClass="tabela" class="tabelaselecionar" 
+                    <p:dataTable id="contaVenda" var="contaVenda" value="#{VendasMB.listaVendas}" rowStyleClass="tabela" class="tabelaselecionar"  
                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                  paginator="true" rows="10" style="margin-bottom:20px"> 
                      
                 
                     <p:column headerText="Nº Venda">
-                        <h:outputText />
+                        <h:outputText value="#{contaVenda.idvendas}"/>
                     </p:column>
                     <p:column headerText="Situação" >
-                        <h:outputText   />
+                        <h:outputText  value="#{contaVenda.situacao}"/>
                     </p:column>
                     <p:column headerText="Data Venda"  >
-                        <h:outputText>
+                        <h:outputText value="#{contaVenda.dataVenda}">
                              <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                         </h:outputText>
                     </p:column>
                     <p:column headerText="Unidade"  >
-                        <h:outputText/>
+                        <h:outputText value="#{contaVenda.cliente.nomeFantasia}"/>
                     </p:column>
                     <p:column headerText="Cliente" >
-                        <h:outputText  />
+                        <h:outputText  value="#{contaVenda.nomeCliente}" />
                     </p:column>
                        <p:column headerText="Valor Total"  >
-                        <h:outputText/>
+                           <h:outputText value="#{contaVenda.valorBruto-contaVenda.valorDesconto}" />
                     </p:column>
                     <p:column headerText="Produto" >
-                        <h:outputText  />
+                        <h:outputText  value="#{contaVenda.produto.descricao}" />
                     </p:column>
                      
                      <p:column style="width:28px">
-                         <p:selectBooleanCheckbox/>
+                         <p:selectBooleanCheckbox value="#{contaVenda.selecionado}" />
                      </p:column>
                  <f:facet name="{Exporters}">
                    <h:commandLink>

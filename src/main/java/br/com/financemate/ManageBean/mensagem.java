@@ -46,4 +46,9 @@ public class mensagem {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Editado com Sucesso", ""));
     }
+    
+    public void acesso() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Acesso Negado", ""));
+    }
 }
