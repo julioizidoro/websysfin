@@ -119,7 +119,7 @@ public class VendasMB implements Serializable{
         }else {
             sql = " Select v from Viewvendas v where v.visualizacao='Operacional' and "
                     + "v.dataVenda>='" + dataInicial + 
-                "' and v.dataVenda<='" + dataFinal + "' and situacao<>'verde'";
+                "' and v.dataVenda<='" + dataFinal + "' and v.situacao<>'verde'";
             order = " order by v.dataVenda";
         }
     }
