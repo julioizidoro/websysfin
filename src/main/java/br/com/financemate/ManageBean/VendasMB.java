@@ -67,12 +67,6 @@ public class VendasMB implements Serializable{
         this.listaVendas = listaVendas;
     }
     
-    
-    
-    
-    
-    
-    
      public String novo(){
         return "cadLancarVendas";
     }
@@ -80,10 +74,6 @@ public class VendasMB implements Serializable{
     public String cancelar(){
         return "consVendas";
     }
-    
-    
-    
-    
     
     public void gerarListaVendas(){
         sql = sql + order;
@@ -134,6 +124,9 @@ public class VendasMB implements Serializable{
         }
     }
     
-    
+     public String selecionarUnidade() {
+        clienteMB.setPagina("relVendas");
+        return "selecionarUnidade";
+    }
     
 }
