@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/WEB-INF/templates/default.xhtml">
+        <ui:define name="corpo">
+            <h:form>
+                <div id="centro">
+                    <p:growl id="growl" showDetail="true" sticky="true" />
+                    <br></br>
+                    <legend id="iUsu" ><b>Dados de Identificação</b></legend>
+                    <p:tabView class="cadastroContasPagar">
+                        <p:tab title="Dados" >
+                            
+                            <h:panelGrid columns="6" cellpadding="5">   
+                                <p:outputLabel value="Nome" for="nome" class="left3"/>
+                                <p:outputLabel value="E-mail" for="email" class="left30"/>
+                            </h:panelGrid>       
+                            <h:panelGrid columns="6" cellpadding="5">   
+                                <p:inputText id="nome"  size="47" class="left3" value="#{UsuarioMB.usuario.nome}"/>
+                                <p:inputText id="email" value="#{UsuarioMB.usuario.email}"  size="40" class=""/>
+                            </h:panelGrid> 
+                            <h:panelGrid columns="6" cellpadding="5">   
+                                <p:outputLabel value="Cargo" for="cargo" class="left3"/>
+                                <p:outputLabel value="Login" for="login" class="left30"/>
+                            </h:panelGrid>       
+                            <h:panelGrid columns="6" cellpadding="5">   
+                                <p:inputText id="cargo"  size="47" class="left3" value="#"/>
+                                <p:inputText id="login" value="#{UsuarioMB.usuario.login}"  size="40" class=""/>
+                            </h:panelGrid> 
+                            <h:panelGrid columns="2" cellpadding="5" >
+                                <p:outputLabel value="Unidade" for="unidade"  class="left3"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2">
+                                <p:inputText id="unidade" size="78"  class="left3"  value="#{ClienteMB.cliente.nomeFantasia}" />
+                                <p:commandButton value="Selecionar" class="selecionar" action="#{UsuarioMB.selecionar()}" />
+                            </h:panelGrid>
+                            <h:panelGrid columns="2" cellpadding="3">
+                                <p:outputLabel value="Tipo de Acesso" for="tipoacesso" class="left3" />
+                                <p:outputLabel value="Grupo de Acesso" for="grupoacesso" class="usuario3"/> 
+                            </h:panelGrid>  
+                            <h:panelGrid columns="2" cellpadding="3">
+                                <p:selectOneMenu id="tipoacesso" class="left3" style="width:220px"  value="#{UsuarioMB.usuario.tipoacesso}">
+                                    <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
+                                     <f:selectItem itemLabel="Unidade" itemValue="Unidade" />  
+                                     <f:selectItem itemLabel="Gerencial" itemValue="Gerencial" /> 
+                                </p:selectOneMenu>  
+                                <p:selectOneMenu id="grupoacesso" class="left3" style="width:268px"  value="#">
+                                    <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
+                                    <f:selectItems value="#" var="planoConta" itemLabel="#" itemValue="#"/>
+                                </p:selectOneMenu> 
+                            </h:panelGrid>
+                        </p:tab>
+                    </p:tabView>  
+                    <p:commandButton value="Confirmar" icon=" ui-icon-plusthick" class="cadastrar" action="#{UsuarioMB.salvar()}" actionListener="#{mensagem.saveMessagem}" update="growl" />
+                    <p:commandButton value="Cancelar" icon="ui-icon-closethick" class="pesquisar2" action="#{UsuarioMB.cancelar()}"  />
+                    <br></br>
+                    <br></br>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

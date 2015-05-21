@@ -399,43 +399,51 @@ public class ContasPagarMB implements Serializable {
     }
 
     public String novo() {
-        clienteMB.setCliente(new Cliente());
-        listaBanco = new ArrayList<Banco>();
-        contasPagar = new Contaspagar();
-        contasPagar.setDataEnvio(new Date());
-        return "cadConPagar";
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIcontaspagar()){
+            clienteMB.setCliente(new Cliente());
+            listaBanco = new ArrayList<Banco>();
+            contasPagar = new Contaspagar();
+            contasPagar.setDataEnvio(new Date());
+            return "cadConPagar";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        }
     }
 
     public String editar() {
-        for (int i = 0; i < listaContaPagar.size(); i++) {
-            if (listaContaPagar.get(i).isSelecionado()) {
-                if (listaContaPagar.get(i).getAutorizarPagamento().equalsIgnoreCase("N")) {
-                    contasPagar = listaContaPagar.get(i);
-                    clienteMB.setCliente(contasPagar.getCliente());
-                    carregarListaPlanoContas();
-                    listaBanco = new ArrayList<Banco>();
-                    listaContaPagar.get(i).setSelecionado(false);
-                    valorConta = Formatacao.foramtarFloatString(contasPagar.getValor());
-                    idBanco = String.valueOf(contasPagar.getBanco().getIdbanco());
-                    idPlanoConta = String.valueOf(contasPagar.getPlanocontas().getIdplanoContas());
-                    return "cadConPagar";
-                }
-            }
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getAcontaspargar()){
+            clienteMB.setCliente(new Cliente());
+            listaBanco = new ArrayList<Banco>();
+            contasPagar = new Contaspagar();
+            contasPagar.setDataEnvio(new Date());
+            return "cadConPagar";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
         }
-        return null;
+        
     }
 
     public String excluir() {
-        ContasPagarController contasPagarController = new ContasPagarController();
-        for (int i = 0; i < listaContaPagar.size(); i++) {
-            if (listaContaPagar.get(i).isSelecionado()) {
-                if (listaContaPagar.get(i).getAutorizarPagamento().equalsIgnoreCase("N")) {
-                    contasPagarController.excluir(listaContaPagar.get(i).getIdcontasPagar());
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getEcontaspargar()) {
+            ContasPagarController contasPagarController = new ContasPagarController();
+            for (int i = 0; i < listaContaPagar.size(); i++) {
+                if (listaContaPagar.get(i).isSelecionado()) {
+                    if (listaContaPagar.get(i).getAutorizarPagamento().equalsIgnoreCase("N")) {
+                        contasPagarController.excluir(listaContaPagar.get(i).getIdcontasPagar());
+                    }
                 }
             }
+            gerarListaContasPagar();
+            return "consConPagar";
+        } else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
         }
-        gerarListaContasPagar();
-        return "consConPagar";
     }
 
     public String cancelar() {
@@ -642,48 +650,54 @@ public class ContasPagarMB implements Serializable {
     }
 
     public String salvar() {
-        if (contasPagar.getIdcontasPagar() == null) {
-            contasPagar.setAutorizarPagamento("N");
-        }
-        String msg = validarSalvar();
-        if (msg.length() <= 5) {
-            if (!idPlanoConta.equalsIgnoreCase("0")) {
-                PlanoContasController planoContasController = new PlanoContasController();
-                Planocontas plano = planoContasController.consultar(Integer.parseInt(idPlanoConta));
-                contasPagar.setPlanocontas(plano);
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIcontaspagar()) {
+            if (contasPagar.getIdcontasPagar() == null) {
+                contasPagar.setAutorizarPagamento("N");
             }
-            if (!idBanco.equalsIgnoreCase("0")) {
-                BancoController bancoController = new BancoController();
-                Banco banco = bancoController.consultar(Integer.parseInt(idBanco));
-                contasPagar.setBanco(banco);
-            }
-            contasPagar.setCliente(clienteMB.getCliente());
-            contasPagar.setContaPaga("N");
-            contasPagar.setMovimentoBanco(0);
-            contasPagar.setUsuarioAgendou(0);
-            contasPagar.setUsuarioAutorizou(0);
-            contasPagar.setUsuarioBaixou(0);
-            contasPagar.setUsuarioCadastrou(usuarioLogadoBean.getUsuario().getIdusuario());
-            String data = Formatacao.ConvercaoDataPadrao(new Date()) + "_" + Formatacao.foramtarHoraString();
-            contasPagar.setDataHoraCadastrou(data);
-            if (valorConta.length() > 0) {
-                contasPagar.setValor(Formatacao.ConvercaoMonetariaFloat(valorConta));
+            String msg = validarSalvar();
+            if (msg.length() <= 5) {
+                if (!idPlanoConta.equalsIgnoreCase("0")) {
+                    PlanoContasController planoContasController = new PlanoContasController();
+                    Planocontas plano = planoContasController.consultar(Integer.parseInt(idPlanoConta));
+                    contasPagar.setPlanocontas(plano);
+                }
+                if (!idBanco.equalsIgnoreCase("0")) {
+                    BancoController bancoController = new BancoController();
+                    Banco banco = bancoController.consultar(Integer.parseInt(idBanco));
+                    contasPagar.setBanco(banco);
+                }
+                contasPagar.setCliente(clienteMB.getCliente());
+                contasPagar.setContaPaga("N");
+                contasPagar.setMovimentoBanco(0);
+                contasPagar.setUsuarioAgendou(0);
+                contasPagar.setUsuarioAutorizou(0);
+                contasPagar.setUsuarioBaixou(0);
+                contasPagar.setUsuarioCadastrou(usuarioLogadoBean.getUsuario().getIdusuario());
+                String data = Formatacao.ConvercaoDataPadrao(new Date()) + "_" + Formatacao.foramtarHoraString();
+                contasPagar.setDataHoraCadastrou(data);
+                if (valorConta.length() > 0) {
+                    contasPagar.setValor(Formatacao.ConvercaoMonetariaFloat(valorConta));
+                } else {
+                    contasPagar.setValor(0.0f);
+                }
+                contasPagar.setVendaComissao(0);
+
+                ContasPagarController contasPagarController = new ContasPagarController();
+                contasPagar = contasPagarController.salvar(contasPagar);
+                salvarNomeArquivo();
+                contasPagar = new Contaspagar();
+
+                clienteMB.setCliente(new Cliente());
+                gerarListaContasPagar();
+
+                return "consConPagar";
             } else {
-                contasPagar.setValor(0.0f);
+                FacesMessage mensagem = new FacesMessage("Erro! ", msg);
+                FacesContext.getCurrentInstance().addMessage(null, mensagem);
+                return "";
             }
-            contasPagar.setVendaComissao(0);
-
-            ContasPagarController contasPagarController = new ContasPagarController();
-            contasPagar = contasPagarController.salvar(contasPagar);
-            salvarNomeArquivo();
-            contasPagar = new Contaspagar();
-
-            clienteMB.setCliente(new Cliente());
-            gerarListaContasPagar();
-
-            return "consConPagar";
         } else {
-            FacesMessage mensagem = new FacesMessage("Erro! ", msg);
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
             return "";
         }
@@ -751,32 +765,46 @@ public class ContasPagarMB implements Serializable {
     }
 
     public String liberarContasPagar() {
-        totalLiberadas = "0,00";
-        Float valorSoma = 0.0f;
-        dataLiberacao = new Date();
-        listaLiberadas = new ArrayList<Contaspagar>();
-        for (int i = 0; i < listaContaPagar.size(); i++) {
-            if (listaContaPagar.get(i).isSelecionado()) {
-                if (listaContaPagar.get(i).getAutorizarPagamento().equalsIgnoreCase("S")) {
-                    listaLiberadas.add(listaContaPagar.get(i));
-                    valorSoma = valorSoma + listaContaPagar.get(i).getValor();
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getContaspagar()){
+            totalLiberadas = "0,00";
+            Float valorSoma = 0.0f;
+            dataLiberacao = new Date();
+            listaLiberadas = new ArrayList<Contaspagar>();
+            for (int i = 0; i < listaContaPagar.size(); i++) {
+                if (listaContaPagar.get(i).isSelecionado()) {
+                    if (listaContaPagar.get(i).getAutorizarPagamento().equalsIgnoreCase("S")) {
+                        listaLiberadas.add(listaContaPagar.get(i));
+                        valorSoma = valorSoma + listaContaPagar.get(i).getValor();
+                    }
                 }
             }
+            totalLiberadas = Formatacao.foramtarFloatString(valorSoma);
+            gerarListaContasPagar();
+            return "liberacaoConPagar";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
         }
-        totalLiberadas = Formatacao.foramtarFloatString(valorSoma);
-        gerarListaContasPagar();
-        return "liberacaoConPagar";
+        
     }
 
     public String salvarContasLiberadas() {
-        ContasPagarController contasPagarController = new ContasPagarController();
-        for (int i = 0; i < listaLiberadas.size(); i++) {
-            salvarContaLiberadasMovimentoBanco(listaLiberadas.get(i));
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIcontaspagar()){
+            ContasPagarController contasPagarController = new ContasPagarController();
+            for (int i = 0; i < listaLiberadas.size(); i++) {
+                salvarContaLiberadasMovimentoBanco(listaLiberadas.get(i));
+            }
+            gerarListaContasPagar();
+            listaLiberadas = null;
+            dataLiberacao = null;
+            return "consConPagar";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
         }
-        gerarListaContasPagar();
-        listaLiberadas = null;
-        dataLiberacao = null;
-        return "consConPagar";
+        
     }
 
     public void salvarContaLiberadasMovimentoBanco(Contaspagar conta) {
@@ -807,29 +835,36 @@ public class ContasPagarMB implements Serializable {
     }
 
     public String autorizarPagamentoContasPagar() {
-        ContasPagarController contasPagarController = new ContasPagarController();
-        for (int i = 0; i < listaContaPagar.size(); i++) {
-            if (listaContaPagar.get(i).isSelecionado()) {
-                if (listaContaPagar.get(i).getAutorizarPagamento().equalsIgnoreCase("N")) {
-                    String data = Formatacao.ConvercaoDataPadrao(new Date()) + "_" + Formatacao.foramtarHoraString();
-                    if (listaContaPagar.get(i).getAutorizarPagamento().equalsIgnoreCase("S")) {
-                        listaContaPagar.get(i).setAutorizarPagamento("N");
-                        listaContaPagar.get(i).setUsuarioAutorizou(0);
-                        listaContaPagar.get(i).setDataHoraAutorizou("");
-                    } else {
-                        listaContaPagar.get(i).setAutorizarPagamento("S");
-                        listaContaPagar.get(i).setUsuarioAutorizou(usuarioLogadoBean.getUsuario().getIdusuario());
-                        listaContaPagar.get(i).setDataHoraAutorizou(data);
-                    }
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getContaspagar()){
+           ContasPagarController contasPagarController = new ContasPagarController();
+            for (int i = 0; i < listaContaPagar.size(); i++) {
+                if (listaContaPagar.get(i).isSelecionado()) {
+                    if (listaContaPagar.get(i).getAutorizarPagamento().equalsIgnoreCase("N")) {
+                        String data = Formatacao.ConvercaoDataPadrao(new Date()) + "_" + Formatacao.foramtarHoraString();
+                        if (listaContaPagar.get(i).getAutorizarPagamento().equalsIgnoreCase("S")) {
+                            listaContaPagar.get(i).setAutorizarPagamento("N");
+                            listaContaPagar.get(i).setUsuarioAutorizou(0);
+                            listaContaPagar.get(i).setDataHoraAutorizou("");
+                        } else {
+                            listaContaPagar.get(i).setAutorizarPagamento("S");
+                            listaContaPagar.get(i).setUsuarioAutorizou(usuarioLogadoBean.getUsuario().getIdusuario());
+                            listaContaPagar.get(i).setDataHoraAutorizou(data);
+                        }
 
-                    contasPagarController.salvar(listaContaPagar.get(i));
+                        contasPagarController.salvar(listaContaPagar.get(i));
+                    }
                 }
             }
+            gerarListaContasPagar();
+            return "consConPagar";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
         }
-        gerarListaContasPagar();
-        return "consConPagar";
+        
     }
-
+    
     
     public String gerarListaArquivo() {
         NomeArquivoFacade nomeArquivoFacade = new NomeArquivoFacade();

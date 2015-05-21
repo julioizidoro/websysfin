@@ -7,6 +7,7 @@ package br.com.financemate.ManageBean;
 
 import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.facade.TipoPlanoContasFacede;
+import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Planocontas;
 import br.com.financemate.model.Tipoplanocontas;
 import java.io.Serializable;
@@ -14,6 +15,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 /**
@@ -29,6 +32,7 @@ public class PlanoContasMB implements Serializable {
     private String idTipoPlanoConta="0";
     private List<Tipoplanocontas> listarTipoPlanoContas;
     private String descricao;
+    private UsuarioLogadoBean usuarioLogadoBean;
     
     public PlanoContasMB() throws SQLException {
         planocontas = new Planocontas();
@@ -78,21 +82,42 @@ public class PlanoContasMB implements Serializable {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
+    public UsuarioLogadoBean getUsuarioLogadoBean() {
+        return usuarioLogadoBean;
+    }
+
+    public void setUsuarioLogadoBean(UsuarioLogadoBean usuarioLogadoBean) {
+        this.usuarioLogadoBean = usuarioLogadoBean;
+    }
+    
     
     
     public String salvarPlanoContas() throws SQLException {
-        PlanoContasFacade planoContasFacede = new PlanoContasFacade();
-        TipoPlanoContasFacede tipoPlanoContasFacede = new TipoPlanoContasFacede();
-        Tipoplanocontas tipo = tipoPlanoContasFacede.consultar(Integer.parseInt(idTipoPlanoConta));
-        planocontas.setTipoplanocontas(tipo);
-        planoContasFacede.salvar(planocontas);
-        gerarListaPlanoConta();
-        return "consPlanoConta";
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIplanocontas()){
+            PlanoContasFacade planoContasFacede = new PlanoContasFacade();
+            TipoPlanoContasFacede tipoPlanoContasFacede = new TipoPlanoContasFacede();
+            Tipoplanocontas tipo = tipoPlanoContasFacede.consultar(Integer.parseInt(idTipoPlanoConta));
+            planocontas.setTipoplanocontas(tipo);
+            planoContasFacede.salvar(planocontas);
+            gerarListaPlanoConta();
+            return "consPlanoConta";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        }
     }
 
     public String novo() throws SQLException {
-        listarTipoPlanoContas();
-        return "cadplanocontas";
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIplanocontas()){
+            listarTipoPlanoContas();
+            return "cadplanocontas";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        }
     }
 
     public String cancelar() {
@@ -100,17 +125,23 @@ public class PlanoContasMB implements Serializable {
     }
 
     public String editar() throws SQLException {
-         if (listarPlanoContas!=null){
-            for(int i=0;i<listarPlanoContas.size();i++){
-                if (listarPlanoContas.get(i).isSelecionado()){
-                    planocontas = listarPlanoContas.get(i);
-                    listarPlanoContas.get(i).setSelecionado(false);
-                    i=100000;
-                    return "cadplanocontas";
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getAplanocontas()){
+            if (listarPlanoContas!=null){
+                for(int i=0;i<listarPlanoContas.size();i++){
+                    if (listarPlanoContas.get(i).isSelecionado()){
+                        planocontas = listarPlanoContas.get(i);
+                        listarPlanoContas.get(i).setSelecionado(false);
+                        i=100000;
+                        return "cadplanocontas";
+                    }
                 }
             }
+            return  "";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
         }
-        return  "";
     }
     public void listarTipoPlanoContas() throws SQLException{
         TipoPlanoContasFacede tipoPlanoContasFacede = new TipoPlanoContasFacede();

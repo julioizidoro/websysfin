@@ -25,6 +25,7 @@
                 <br></br>
                 <br></br>
                 <br></br>
+                
                 <p:fieldset style="margin-bottom:20px" class="telalogin"> 
                      <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
                     <h:panelGrid >
@@ -40,9 +41,26 @@
                         <p:password id="senha" size="27"  class="meio" value="#{UsuarioLogadoBean.usuario.senha}" required="required" requiredMessage="Campo Obrigatorio"/>
                     </h:panelGrid>
                     <p:commandButton value="Login" class="botaologin" action="#{UsuarioLogadoBean.validarUsuario()}"/>
-
+                    <p:commandButton value="Alterar Senha" action="#{UsuarioLogadoBean.validarTrocarSenha()}" class="botaologin2"  oncomplete="PF('dll').show()"  />
                     <br></br>
-                </p:fieldset>     
+                </p:fieldset>  
+                <p:dialog header="Alterar Senha" modal="true" showEffect="bounce" widgetVar="dll" resizable="false"  class="tabelaRecebimento" width="22%" height="60%">
+                    <h:panelGrid columns="2" cellpadding="5" >
+                        <p:outputLabel value="Nova Senha" for="novasenha"  class="left"/>
+                    </h:panelGrid>        
+                    <h:panelGrid columns="2" cellpadding="5" >
+                        <p:inputText  id="novasenha" value="#{UsuarioLogadoBean.novaSenha}"  size="25" maxlength="50"  class="left" type="password"/> 
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" cellpadding="5" >
+                        <p:outputLabel value="Confirmar Senha" for="confirmarsenha"  class="left" />
+                    </h:panelGrid>        
+                    <h:panelGrid columns="2" cellpadding="5" >
+                        <p:inputText  id="confirmarsenha" value="#{UsuarioLogadoBean.confirmaNovaSenha}"  size="25" maxlength="50"  class="left" type="password"/> 
+                    </h:panelGrid>
+                    <p:commandButton value="Confirmar" icon="ui-icon-plusthick" class="excel" onclick="dll.hide();" action="#{UsuarioLogadoBean.confirmaNovaSenha}" />
+                    <p:commandButton value="Cancelar" onclick="dll.hide();" icon="ui-icon-closethick" class="excel" action="#{UsuarioLogadoBean.cancelarTrocaSenha()}"/>  
+
+                </p:dialog>
                 <br></br>
             </div>
 

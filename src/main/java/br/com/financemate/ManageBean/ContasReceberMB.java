@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -178,10 +180,17 @@ public class ContasReceberMB implements Serializable{
     
     
     public String novo(){
-        clienteMB.setCliente(new Cliente());
-        listaBanco = new ArrayList<Banco>();
-        contasReceber = new Contasreceber();
-        return "cadConReceber";
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIcontasreceber()){
+            clienteMB.setCliente(new Cliente());
+            listaBanco = new ArrayList<Banco>();
+            contasReceber = new Contasreceber();
+            return "cadConReceber";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        }
+        
     }
     
     public String cancelar(){
@@ -430,147 +439,179 @@ public class ContasReceberMB implements Serializable{
     }
     
     public String salvar(){
-        if (contasReceber.getIdcontasReceber()==null){
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIcontasreceber()){
+            if (contasReceber.getIdcontasReceber()==null){
             contasReceber.setMovimentoBanco(0);
             contasReceber.setVenda(0);
             contasReceber.setVendaComissao(0);
+            }
+            if (!idBanco.equalsIgnoreCase("0")) {
+                BancoController bancoController = new BancoController();
+                Banco banco = bancoController.consultar(Integer.parseInt(idBanco));
+                contasReceber.setBanco(banco);
+            }
+            if (!idPlanoConta.equalsIgnoreCase("0")) {
+                PlanoContasController planoContasController = new PlanoContasController();
+                Planocontas plano = planoContasController.consultar(Integer.parseInt(idPlanoConta));
+                contasReceber.setPlanocontas(plano);
+            }
+            contasReceber.setCliente(clienteMB.getCliente());
+            contasReceber.setUsuario(usuarioLogadoBean.getUsuario());
+            contasReceber.setValorParcela(Formatacao.formatarStringfloat(valorParcela));
+            contasReceber.setNumeroParcela(Integer.parseInt(numeroParcelas));
+            contasReceber.setValorPago(Formatacao.formatarStringfloat(valorRecebido));
+            contasReceber.setDesagio(Formatacao.formatarStringfloat(desagio));
+            contasReceber.setJuros(Formatacao.formatarStringfloat(juros));
+            ContasReceberController contasReceberController = new ContasReceberController();
+            contasReceberController.salvar(contasReceber);
+            clienteMB.setCliente(new Cliente());
+            carregarLista();
+            contasReceber = new Contasreceber();
+            idBanco="0";
+            idPlanoConta="0";
+            valorParcela="";
+            numeroParcelas="1";
+            return "consConReceber";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
         }
-        if (!idBanco.equalsIgnoreCase("0")) {
-            BancoController bancoController = new BancoController();
-            Banco banco = bancoController.consultar(Integer.parseInt(idBanco));
-            contasReceber.setBanco(banco);
-        }
-        if (!idPlanoConta.equalsIgnoreCase("0")) {
-            PlanoContasController planoContasController = new PlanoContasController();
-            Planocontas plano = planoContasController.consultar(Integer.parseInt(idPlanoConta));
-            contasReceber.setPlanocontas(plano);
-        }
-        contasReceber.setCliente(clienteMB.getCliente());
-        contasReceber.setUsuario(usuarioLogadoBean.getUsuario());
-        contasReceber.setValorParcela(Formatacao.formatarStringfloat(valorParcela));
-        contasReceber.setNumeroParcela(Integer.parseInt(numeroParcelas));
-        contasReceber.setValorPago(Formatacao.formatarStringfloat(valorRecebido));
-        contasReceber.setDesagio(Formatacao.formatarStringfloat(desagio));
-        contasReceber.setJuros(Formatacao.formatarStringfloat(juros));
-        ContasReceberController contasReceberController = new ContasReceberController();
-        contasReceberController.salvar(contasReceber);
-        clienteMB.setCliente(new Cliente());
-        carregarLista();
-        contasReceber = new Contasreceber();
-        idBanco="0";
-        idPlanoConta="0";
-        valorParcela="";
-        numeroParcelas="1";
-        return "consConReceber";
+        
     }
     
     public String salvarRecebida(){
-        if (!idBanco.equalsIgnoreCase("0")) {
-            BancoController bancoController = new BancoController();
-            Banco banco = bancoController.consultar(Integer.parseInt(idBanco));
-            contasReceber.setBanco(banco);
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIcontasreceber()){
+             if (!idBanco.equalsIgnoreCase("0")) {
+                BancoController bancoController = new BancoController();
+                Banco banco = bancoController.consultar(Integer.parseInt(idBanco));
+                contasReceber.setBanco(banco);
+                }
+                contasReceber.setUsuario(usuarioLogadoBean.getUsuario());
+                contasReceber.setValorPago(Formatacao.formatarStringfloat(valorRecebido));
+                contasReceber.setDesagio(Formatacao.formatarStringfloat(desagio));
+                contasReceber.setJuros(Formatacao.formatarStringfloat(juros));
+                ContasReceberController contasReceberController = new ContasReceberController();
+
+                // Salvar Banco
+
+                Movimentobanco mb = new Movimentobanco();
+                mb.setBanco(contasReceber.getBanco());
+                mb.setCliente(contasReceber.getCliente());
+                mb.setDataVencimento(contasReceber.getDataVencimento());
+                mb.setDataRegistro(new Date());
+                mb.setPlanocontas(contasReceber.getPlanocontas());
+                mb.setUsuario(usuarioLogadoBean.getUsuario());
+                mb.setValorEntrada(contasReceber.getValorPago());
+                mb.setValorSaida(0.0f);
+                mb.setDataCompensacao(contasReceber.getDataPagamento());
+                String data = Formatacao.ConvercaoDataPadrao(contasReceber.getDataVencimento());
+                String mesString = data.substring(3, 5);
+                String anoString = data.substring(6, 10);
+                int mesInicio = Integer.parseInt(mesString);
+                int anoInicio = Integer.parseInt(anoString);
+                mb.setCompentencia(mesString + "/" + anoString);
+                String nome = contasReceber.getNomeCliente();
+                if (contasReceber.getNomeCliente().length()>80){
+                    nome = nome.substring(0,79);
+                }
+                mb.setDescricao("Recebimento " + nome);
+                mb.setTipoDocumento(contasReceber.getTipodocumento());
+                MovimentoBancoController movimentoBancoController = new MovimentoBancoController();
+                mb = movimentoBancoController.salvar(mb);
+                contasReceber.setMovimentoBanco(mb.getIdmovimentoBanco());
+                contasReceberController.salvar(contasReceber);
+                clienteMB.setCliente(new Cliente());
+                carregarLista();
+                contasReceber = new Contasreceber();
+                idBanco="0";
+                idPlanoConta="0";
+                valorParcela="";
+                numeroParcelas="1";
+                return "consConReceber";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
         }
-        contasReceber.setUsuario(usuarioLogadoBean.getUsuario());
-        contasReceber.setValorPago(Formatacao.formatarStringfloat(valorRecebido));
-        contasReceber.setDesagio(Formatacao.formatarStringfloat(desagio));
-        contasReceber.setJuros(Formatacao.formatarStringfloat(juros));
-        ContasReceberController contasReceberController = new ContasReceberController();
-        
-        // Salvar Banco
-        
-        Movimentobanco mb = new Movimentobanco();
-        mb.setBanco(contasReceber.getBanco());
-        mb.setCliente(contasReceber.getCliente());
-        mb.setDataVencimento(contasReceber.getDataVencimento());
-        mb.setDataRegistro(new Date());
-        mb.setPlanocontas(contasReceber.getPlanocontas());
-        mb.setUsuario(usuarioLogadoBean.getUsuario());
-        mb.setValorEntrada(contasReceber.getValorPago());
-        mb.setValorSaida(0.0f);
-        mb.setDataCompensacao(contasReceber.getDataPagamento());
-        String data = Formatacao.ConvercaoDataPadrao(contasReceber.getDataVencimento());
-        String mesString = data.substring(3, 5);
-        String anoString = data.substring(6, 10);
-        int mesInicio = Integer.parseInt(mesString);
-        int anoInicio = Integer.parseInt(anoString);
-        mb.setCompentencia(mesString + "/" + anoString);
-        String nome = contasReceber.getNomeCliente();
-        if (contasReceber.getNomeCliente().length()>80){
-            nome = nome.substring(0,79);
-        }
-        mb.setDescricao("Recebimento " + nome);
-        mb.setTipoDocumento(contasReceber.getTipodocumento());
-        MovimentoBancoController movimentoBancoController = new MovimentoBancoController();
-        mb = movimentoBancoController.salvar(mb);
-        contasReceber.setMovimentoBanco(mb.getIdmovimentoBanco());
-        contasReceberController.salvar(contasReceber);
-        clienteMB.setCliente(new Cliente());
-        carregarLista();
-        contasReceber = new Contasreceber();
-        idBanco="0";
-        idPlanoConta="0";
-        valorParcela="";
-        numeroParcelas="1";
-        return "consConReceber";
+       
     }
     
     public String editar() {
-        for (int i = 0; i < listaContasReceber.size(); i++) {
-            if (listaContasReceber.get(i).isSelecionado()) {
-                if (listaContasReceber.get(i).getValorPago() == 0) {
-                    contasReceber = listaContasReceber.get(i);
-                    clienteMB.setCliente(contasReceber.getCliente());
-                    carregarListaPlanoContas();
-                    listaBanco = new ArrayList<Banco>();
-                    listaContasReceber.get(i).setSelecionado(false);
-                    valorParcela = Formatacao.foramtarFloatString(contasReceber.getValorParcela());
-                    idBanco = String.valueOf(contasReceber.getBanco().getIdbanco());
-                    idPlanoConta = String.valueOf(contasReceber.getPlanocontas().getIdplanoContas());
-                    numeroParcelas = String.valueOf(contasReceber.getNumeroParcela());
-                    valorRecebido = Formatacao.foramtarFloatString(contasReceber.getValorPago());
-                    desagio = Formatacao.foramtarFloatString(contasReceber.getDesagio());
-                    juros = Formatacao.foramtarFloatString(contasReceber.getJuros());
-                    return "cadConReceber";
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getAcontasreceber()){
+            for (int i = 0; i < listaContasReceber.size(); i++) {
+                if (listaContasReceber.get(i).isSelecionado()) {
+                    if (listaContasReceber.get(i).getValorPago() == 0) {
+                        contasReceber = listaContasReceber.get(i);
+                        clienteMB.setCliente(contasReceber.getCliente());
+                        carregarListaPlanoContas();
+                        listaBanco = new ArrayList<Banco>();
+                        listaContasReceber.get(i).setSelecionado(false);
+                        valorParcela = Formatacao.foramtarFloatString(contasReceber.getValorParcela());
+                        idBanco = String.valueOf(contasReceber.getBanco().getIdbanco());
+                        idPlanoConta = String.valueOf(contasReceber.getPlanocontas().getIdplanoContas());
+                        numeroParcelas = String.valueOf(contasReceber.getNumeroParcela());
+                        valorRecebido = Formatacao.foramtarFloatString(contasReceber.getValorPago());
+                        desagio = Formatacao.foramtarFloatString(contasReceber.getDesagio());
+                        juros = Formatacao.foramtarFloatString(contasReceber.getJuros());
+                        return "cadConReceber";
+                    }
                 }
             }
+            return null;
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
         }
-        return null;
     }
     
     public String receber() {
-        for (int i = 0; i < listaContasReceber.size(); i++) {
-            if (listaContasReceber.get(i).isSelecionado()) {
-                if (listaContasReceber.get(i).getValorPago() == 0) {
-                    contasReceber = listaContasReceber.get(i);
-                    contasReceber.setDataPagamento(new Date());
-                    clienteMB.setCliente(contasReceber.getCliente());
-                    carregarListaPlanoContas();
-                    listaBanco = new ArrayList<Banco>();
-                    listaContasReceber.get(i).setSelecionado(false);
-                    valorParcela = Formatacao.foramtarFloatString(contasReceber.getValorParcela());
-                    idBanco = String.valueOf(contasReceber.getBanco().getIdbanco());
-                    idPlanoConta = String.valueOf(contasReceber.getPlanocontas().getIdplanoContas());
-                    numeroParcelas = String.valueOf(contasReceber.getNumeroParcela());
-                    valorRecebido = Formatacao.foramtarFloatString(contasReceber.getValorPago());
-                    desagio = Formatacao.foramtarFloatString(contasReceber.getDesagio());
-                    juros = Formatacao.foramtarFloatString(contasReceber.getJuros());
-                    valorRecebido = valorParcela;
-                    return "recebimentoConta";
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getContasreceber()){
+            for (int i = 0; i < listaContasReceber.size(); i++) {
+                if (listaContasReceber.get(i).isSelecionado()) {
+                    if (listaContasReceber.get(i).getValorPago() == 0) {
+                        contasReceber = listaContasReceber.get(i);
+                        contasReceber.setDataPagamento(new Date());
+                        clienteMB.setCliente(contasReceber.getCliente());
+                        carregarListaPlanoContas();
+                        listaBanco = new ArrayList<Banco>();
+                        listaContasReceber.get(i).setSelecionado(false);
+                        valorParcela = Formatacao.foramtarFloatString(contasReceber.getValorParcela());
+                        idBanco = String.valueOf(contasReceber.getBanco().getIdbanco());
+                        idPlanoConta = String.valueOf(contasReceber.getPlanocontas().getIdplanoContas());
+                        numeroParcelas = String.valueOf(contasReceber.getNumeroParcela());
+                        valorRecebido = Formatacao.foramtarFloatString(contasReceber.getValorPago());
+                        desagio = Formatacao.foramtarFloatString(contasReceber.getDesagio());
+                        juros = Formatacao.foramtarFloatString(contasReceber.getJuros());
+                        valorRecebido = valorParcela;
+                        return "recebimentoConta";
+                    }
                 }
             }
+            return null;
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
         }
-        return null;
     }
 
     public String excluir() {
-        ContasReceberController contasReceberController = new ContasReceberController();
-        for (int i = 0; i < listaContasReceber.size(); i++) {
-            if (listaContasReceber.get(i).isSelecionado()) {
-                contasReceberController.excluir(listaContasReceber.get(i).getIdcontasReceber());
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getEcontasreceber()){
+            ContasReceberController contasReceberController = new ContasReceberController();
+            for (int i = 0; i < listaContasReceber.size(); i++) {
+                if (listaContasReceber.get(i).isSelecionado()) {
+                    contasReceberController.excluir(listaContasReceber.get(i).getIdcontasReceber());
+                }
             }
+            carregarLista();
+            return "consConReceber";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
         }
-        carregarLista();
-        return "consConReceber";
     }
     
     public String limparCosulta(){

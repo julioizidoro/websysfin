@@ -18,6 +18,7 @@ public class ProdutoMB implements Serializable {
     @Inject private ClienteMB clienteMB;
     private Produto produto;
     private List<Produto> listaProduto;
+    private UsuarioLogadoBean usuarioLogadoBean;
 
     public ClienteMB getClienteMB() {
         return clienteMB;
@@ -45,6 +46,15 @@ public class ProdutoMB implements Serializable {
     public void setListaProduto(List<Produto> listaProduto) {
         this.listaProduto = listaProduto;
     }
+
+    public UsuarioLogadoBean getUsuarioLogadoBean() {
+        return usuarioLogadoBean;
+    }
+
+    public void setUsuarioLogadoBean(UsuarioLogadoBean usuarioLogadoBean) {
+        this.usuarioLogadoBean = usuarioLogadoBean;
+    }
+    
     
     
     public String cancelar(){
@@ -52,22 +62,36 @@ public class ProdutoMB implements Serializable {
     }
     
     public String novo(){
-        if ((clienteMB.getCliente()!=null) && (clienteMB.getCliente().getIdcliente()!=null)){
-            produto = new Produto();
-            return "cadProduto";
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIproduto()){
+            if ((clienteMB.getCliente()!=null) && (clienteMB.getCliente().getIdcliente()!=null)){
+                produto = new Produto();
+                return "cadProduto";
+            }else {
+                FacesMessage mensagem = new FacesMessage("Erro! ", "Selecione um cliente");
+                FacesContext.getCurrentInstance().addMessage(null, mensagem);
+                return "";
+            }
         }else {
-            FacesMessage mensagem = new FacesMessage("Erro! ", "Selecione um cliente");
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
             return "";
         }
+        
     }
     public String salvar(){
-        ProdutoController produtoController = new ProdutoController();
-        produto.setCliente(clienteMB.getCliente());
-        produtoController.salvar(produto);
-        produto = new Produto();
-        gerarListaProduto();
-        return "consProduto";
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIproduto()){
+            ProdutoController produtoController = new ProdutoController();
+            produto.setCliente(clienteMB.getCliente());
+            produtoController.salvar(produto);
+            produto = new Produto();
+            gerarListaProduto();
+            return "consProduto";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        }
+        
     }
     
     public void gerarListaProduto() {
@@ -80,17 +104,24 @@ public class ProdutoMB implements Serializable {
         }
     }
     public String editar(){
-        if (listaProduto!=null){
-            for(int i=0;i<listaProduto.size();i++){
-                if (listaProduto.get(i).isSelecionado()){
-                    produto = listaProduto.get(i);
-                    listaProduto.get(i).setSelecionado(false);
-                    i=100000;
-                    return "cadProduto";
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getAproduto()){
+            if (listaProduto!=null){
+                for(int i=0;i<listaProduto.size();i++){
+                    if (listaProduto.get(i).isSelecionado()){
+                        produto = listaProduto.get(i);
+                        listaProduto.get(i).setSelecionado(false);
+                        i=100000;
+                        return "cadProduto";
+                    }
                 }
             }
+            return  "";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
         }
-        return  "";
+        
     }
     
     public String voltar(){

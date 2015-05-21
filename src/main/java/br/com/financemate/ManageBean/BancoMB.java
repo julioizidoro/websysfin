@@ -77,26 +77,38 @@ public class BancoMB  implements Serializable {
         }
     }
      public String salvar(){
-        BancoController bancoController = new BancoController();
-        banco.setCliente(clienteMB.getCliente());
-        bancoController.salvar(banco);
-        banco = new Banco();
-        return "consbanco";
+         if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIbanco()){
+            BancoController bancoController = new BancoController();
+            banco.setCliente(clienteMB.getCliente());
+            bancoController.salvar(banco);
+            banco = new Banco();
+            return "consbanco";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        }
     }
-     
      public String cancelar(){
         return "consbanco";
     }
      
-      public String novo(){
-        if ((clienteMB.getCliente()!=null) && (clienteMB.getCliente().getIdcliente()!=null)){
-            banco = new Banco();
-            return "cadbanco";
-        }else {
-            FacesMessage mensagem = new FacesMessage("Erro! ", "Selecione um cliente");
+      public String novo() {
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIbanco()) {
+            if ((clienteMB.getCliente() != null) && (clienteMB.getCliente().getIdcliente() != null)) {
+                banco = new Banco();
+                return "cadbanco";
+            } else {
+                FacesMessage mensagem = new FacesMessage("Erro! ", "Selecione um cliente");
+                FacesContext.getCurrentInstance().addMessage(null, mensagem);
+                return "";
+            }
+        } else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
             return "";
         }
+
     }
     public String pesquisar(){
        return "consbanco";
@@ -106,18 +118,24 @@ public class BancoMB  implements Serializable {
         listaBancos = null;
         return "selecionarUnidade";
     }
-     public String editar() throws SQLException{
-        if (listaBancos!=null){
-            for(int i=0;i<listaBancos.size();i++){
-                if (listaBancos.get(i).isSelecionado()){
-                    banco = listaBancos.get(i);
-                    listaBancos.get(i).setSelecionado(false);
-                    i=100000;
-                    return "cadbanco";
+    public String editar() throws SQLException {
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getAbanco()) {
+            if (listaBancos != null) {
+                for (int i = 0; i < listaBancos.size(); i++) {
+                    if (listaBancos.get(i).isSelecionado()) {
+                        banco = listaBancos.get(i);
+                        listaBancos.get(i).setSelecionado(false);
+                        i = 100000;
+                        return "cadbanco";
+                    }
                 }
             }
+            return "";
+        } else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
         }
-        return  "";
     }
 }
     

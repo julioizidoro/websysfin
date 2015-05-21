@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -136,22 +137,35 @@ public class ClienteMB implements Serializable{
     }
     
     public String novo() throws SQLException{
-        listarTipoPlanoContas();
-        cliente = new Cliente();
-        return "cadCliente";
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIcliente()){
+             listarTipoPlanoContas();
+            cliente = new Cliente();
+            return "cadCliente";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        }
+       
     }
     public String cancelar(){
         return "consCliente";
     }
     public String salvar() throws SQLException{
-        ClienteController clienteController = new ClienteController();
-        TipoPlanoContasFacede tipoPlanoContasFacede = new TipoPlanoContasFacede();
-        Tipoplanocontas tipo = tipoPlanoContasFacede.consultar(Integer.parseInt(idTipoPlanoConta));
-        cliente.setTipoplanocontas(tipo);
-        clienteController.salvar(cliente);
-        cliente = new Cliente();
-        gerarListaClientes();
-        return "consCliente";
+         if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIcliente()){
+            ClienteController clienteController = new ClienteController();
+            TipoPlanoContasFacede tipoPlanoContasFacede = new TipoPlanoContasFacede();
+            Tipoplanocontas tipo = tipoPlanoContasFacede.consultar(Integer.parseInt(idTipoPlanoConta));
+            cliente.setTipoplanocontas(tipo);
+            clienteController.salvar(cliente);
+            cliente = new Cliente();
+            gerarListaClientes();
+            return "consCliente";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        }
     }
     
     public String consultarTipoPlanoContas() throws SQLException {
@@ -169,7 +183,8 @@ public class ClienteMB implements Serializable{
     }
     
     public String editar() throws SQLException{
-        if (listaClientes!=null){
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getAcliente()){
+            if (listaClientes!=null){
             for(int i=0;i<listaClientes.size();i++){
                 if (listaClientes.get(i).isSelecionado()){
                     cliente = listaClientes.get(i);
@@ -182,6 +197,11 @@ public class ClienteMB implements Serializable{
             }
         }
         return  "";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        }
     }
 }
     

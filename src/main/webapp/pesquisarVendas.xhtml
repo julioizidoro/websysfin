@@ -36,7 +36,7 @@
                                 <p:outputLabel value="Data Final" for="dataFinal" class="left5"/>
                             </h:panelGrid>
                             <h:panelGrid columns="5" cellpadding="1">
-                                <p:calendar id="datainicial"  pattern="dd/MM/yyyy" mask="true" size="12" maxlength="15" class="left3" value="#{VendasMB.dataInicial}">
+                                <p:calendar id="datainicial"  pattern="dd/MM/yyyy" mask="true" size="10" maxlength="15" class="left3" value="#{VendasMB.dataInicial}">
                                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
                                 <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="11" maxlength="15" class="left" value="#{VendasMB.dataFinal}" >

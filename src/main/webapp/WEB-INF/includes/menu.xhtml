@@ -12,7 +12,7 @@
                                 <p:outputLabel value="Usuário:"  class="tabelaRecebimento"/> 
                                 <p:outputLabel value="#{UsuarioLogadoBean.usuario.nome}" /> 
                                 <p:outputLabel value="Unidade:"  class="tabelaRecebimento"/> 
-                                <p:outputLabel value="#{UsuarioLogadoBean.nomeCliente}" /> 
+                                <p:outputLabel value="#{UsuarioLogadoBean.nomeCliente}"/> 
                             </h:panelGrid><br></br><br></br></td>
                     </tr>
                 </table></td></tr><br></br>
@@ -23,6 +23,7 @@
                 <p:menuitem class="submenu" value="Tipo Plano de Contas" action="#{menuMB.tipoPlanoContas()}" update="growl"/>
                 <p:menuitem class="submenu" value="Plano de Contas" action="#{menuMB.planoContas()}" update="growl"/>
                 <p:menuitem class="submenu" value="Produto" action="#{menuMB.produto()}" update="growl"/>
+                <p:menuitem class="submenu" value="TIpo de Usuário" action="#{menuMB.usuario()}" update="growl"/>
             </p:submenu>
 
             <p:submenu label="Relatórios" >

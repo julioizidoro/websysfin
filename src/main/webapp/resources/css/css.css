@@ -917,9 +917,6 @@ font-size:12px;
     margin-left:260px;
    font-size:12px;
 }
-.tabelaRecebimento{
-   font-size:12px;
-}
 .checbox{
    font-size:13px;
 }
@@ -1022,11 +1019,15 @@ button.editar {
     color:#F0FFFF;
 }
 fieldset button.botaologin{
-    margin-left:175px;
+    margin-left:25px;
     margin-top:7px;
     
 }
-
+fieldset button.botaologin2{
+    margin-left:5px;
+    margin-top:7px;
+    
+}
 .telalogin{
     width: 200px;
     margin-top:30px;
@@ -1126,8 +1127,8 @@ button.pesquisar5 {
    color:#F0FFFF;
 }
 .usuariologado{
-    margin-top:-100px;
-    margin-left:450px;
+    margin-top:-85px;
+    margin-left:380px;
     color:#F0FFFF;
     font-size:11px;
 }

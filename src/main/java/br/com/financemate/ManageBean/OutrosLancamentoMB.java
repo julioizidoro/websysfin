@@ -160,13 +160,19 @@ public class OutrosLancamentoMB implements Serializable {
     }
 
     public String novo() throws SQLException {
-        if ((clienteMB.getCliente() != null) && (clienteMB.getCliente().getIdcliente() != null)) {
-            movimentobanco = new Movimentobanco();
-            carregarListaBanco();
-            carregarListaPlanoContas();
-            return "cadOutrosLancamentos";
-        } else {
-            FacesMessage mensagem = new FacesMessage("Erro! ", "Selecione um cliente");
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIoutroslancamentos()){
+            if ((clienteMB.getCliente() != null) && (clienteMB.getCliente().getIdcliente() != null)) {
+                movimentobanco = new Movimentobanco();
+                carregarListaBanco();
+                carregarListaPlanoContas();
+                return "cadOutrosLancamentos";
+            } else {
+                FacesMessage mensagem = new FacesMessage("Erro! ", "Selecione um cliente");
+                FacesContext.getCurrentInstance().addMessage(null, mensagem);
+                return "";
+            }
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
             return "";
         }
@@ -199,18 +205,24 @@ public class OutrosLancamentoMB implements Serializable {
     }
 
     public String salvar() {
-        MovimentoBancoController movimentoBancoController = new MovimentoBancoController();
-        movimentobanco.setCliente(clienteMB.getCliente());
-        BancoController bancoController = new BancoController();
-        Banco banco = bancoController.consultar(Integer.parseInt(idBanco));
-        movimentobanco.setBanco(banco);
-        PlanoContasController planoContasController = new PlanoContasController();
-        Planocontas planocontas = planoContasController.consultar(Integer.parseInt(idPlanoConta));
-        movimentobanco.setPlanocontas(planocontas);
-        movimentobanco.setUsuario(usuarioLogadoBean.getUsuario());
-        movimentoBancoController.salvar(movimentobanco);
-        movimentobanco = new Movimentobanco();
-        return "consOutrosLancamentos";
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIoutroslancamentos()){
+            MovimentoBancoController movimentoBancoController = new MovimentoBancoController();
+            movimentobanco.setCliente(clienteMB.getCliente());
+            BancoController bancoController = new BancoController();
+            Banco banco = bancoController.consultar(Integer.parseInt(idBanco));
+            movimentobanco.setBanco(banco);
+            PlanoContasController planoContasController = new PlanoContasController();
+            Planocontas planocontas = planoContasController.consultar(Integer.parseInt(idPlanoConta));
+            movimentobanco.setPlanocontas(planocontas);
+            movimentobanco.setUsuario(usuarioLogadoBean.getUsuario());
+            movimentoBancoController.salvar(movimentobanco);
+            movimentobanco = new Movimentobanco();
+            return "consOutrosLancamentos";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        }
     }
 
     public String selecionarUnidade() {
@@ -220,17 +232,24 @@ public class OutrosLancamentoMB implements Serializable {
     }
 
     public String editar() throws SQLException {
-        if (listarMovimentobancos != null) {
-            for (int i = 0; i < listarMovimentobancos.size(); i++) {
-                if (listarMovimentobancos.get(i).isSelecionado()) {
-                    movimentobanco = listarMovimentobancos.get(i);
-                    listarMovimentobancos.get(i).setSelecionado(false);
-                    i = 100000;
-                    return "cadOutrosLancamentos";
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getAoutroslancamentos()){
+            if (listarMovimentobancos != null) {
+                for (int i = 0; i < listarMovimentobancos.size(); i++) {
+                    if (listarMovimentobancos.get(i).isSelecionado()) {
+                        movimentobanco = listarMovimentobancos.get(i);
+                        listarMovimentobancos.get(i).setSelecionado(false);
+                        i = 100000;
+                        return "cadOutrosLancamentos";
+                    }
                 }
             }
+            return "";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
         }
-        return "";
+        
     }
 
     public void gerarDataInicial() {
@@ -280,14 +299,20 @@ public class OutrosLancamentoMB implements Serializable {
     }
 
     public String excluir() throws SQLException {
-        MovimentoBancoController movimentoBancoController = new MovimentoBancoController();
-        for (int i = 0; i < listarMovimentobancos.size(); i++) {
-            if (listarMovimentobancos.get(i).isSelecionado()) {
-                movimentoBancoController.excluir(listarMovimentobancos.get(i).getIdmovimentoBanco());
-                gerarPesquisa();
-                return "consOutrosLancamentos";
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getContaspagar()){
+            MovimentoBancoController movimentoBancoController = new MovimentoBancoController();
+            for (int i = 0; i < listarMovimentobancos.size(); i++) {
+                if (listarMovimentobancos.get(i).isSelecionado()) {
+                    movimentoBancoController.excluir(listarMovimentobancos.get(i).getIdmovimentoBanco());
+                    gerarPesquisa();
+                    return "consOutrosLancamentos";
+                }
             }
+            return "";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
         }
-        return "";
     }
 }

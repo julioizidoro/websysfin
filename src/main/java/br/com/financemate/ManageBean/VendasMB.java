@@ -7,12 +7,15 @@ package br.com.financemate.ManageBean;
 
 import br.com.financemate.Controller.VendasController;
 import br.com.financemate.Util.Formatacao;
+import br.com.financemate.model.Usuario;
 import br.com.financemate.model.Vendas;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -135,11 +138,14 @@ public class VendasMB implements Serializable{
     }
 
     
-    
-    
-    
      public String novo(){
-        return "cadLancarVendas";
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIvendas()){
+             return "cadLancarVendas";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        }
     }
     
     public String cancelar(){
@@ -271,5 +277,20 @@ public class VendasMB implements Serializable{
         }
         order = " order by v.dataVenda";
         sql = sql;
+    }
+    
+    public String verStatus(Vendas vendas) {
+        for (int i = 0; i < listaVendas.size(); i++) {
+           if (venda.getSituacao().equalsIgnoreCase("vermelho")) {
+                return "resources/img/bolaVermelha.png";
+            } else {
+                if (venda.getSituacao().equalsIgnoreCase("amarelo")) {
+                    return "resources/img/bolaAmarela.png";
+                } else {
+                    return "resources/img/bolaVerde.png";
+                }
+            }
+        }
+        return "resources/img/bolaVerde.png";
     }
 }

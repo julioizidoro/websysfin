@@ -12,36 +12,40 @@
                     <p:growl id="growl" showDetail="true" sticky="true" />
                     <br></br>
                     <h:panelGrid columns="2" cellpadding="5" >
-                        <p:outputLabel value="Cliente" for="cliente"  class="left3" />
+                        <p:outputLabel value="Nome do Usuário" for="cliente"  class="left3" />
                     </h:panelGrid>
                     <h:panelGrid columns="2">
-                            <p:inputText id="cliente" size="45"  class="left3"  value="#{ClienteMB.cliente.nomeFantasia}" />
-                        <p:commandButton value="Selecionar" class="css3button" icon=" ui-icon-arrowthickstop-1-s" action="#{BancoMB.selecionarUnidade}"/>
+                        <p:inputText id="cliente" size="45"  class="left3"  value="#{UsuarioMB.nomeUsuario}" />
+                        <p:commandButton value="Pesquisar" class="css3button" icon="ui-icon-search" update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{UsuarioMB.pesquisarnome()}"/>
                     </h:panelGrid>
-                    <legend id="iUsu" ><b>Consulta de Banco </b></legend>
-                    <p:dataTable id="consultabanco" var="consultabanco" value="#{BancoMB.listaBancos}" rowStyleClass="tabela" class="tabelaselecionar" 
+                    <legend id="iUsu" ><b>Consulta Tipo de Usuário </b></legend>
+                    <p:dataTable id="usuario" var="usuario" value="#" rowStyleClass="tabela" class="tabelaselecionar" 
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                  paginator="true" rows="10" style="margin-bottom:20px"> 
 
                         <p:column headerText="Nome">
-                            <h:outputText value="#{consultabanco.nome}" />
+                            <h:outputText value="#" />
                         </p:column>
-                        <p:column headerText="Agencia" style="width:160px">
-                            <h:outputText   value="#{consultabanco.agencia}"/>
+                        <p:column headerText="Login" style="width:160px">
+                            <h:outputText   value="#"/>
                         </p:column>
-                        <p:column headerText="Conta"  style="width:160px">
-                            <h:outputText value="#{consultabanco.conta}"/>
+                        <p:column headerText="Usuário Negócio"  style="width:160px">
+                            <h:outputText value="#"/>
+                        </p:column>
+                         <p:column headerText="Situação"  style="width:160px">
+                             <h:outputText value="#"/>
                         </p:column>
                         <p:column style="width:28px">
-                            <p:selectBooleanCheckbox value="#{consultabanco.selecionado}"/>
+                            <p:selectBooleanCheckbox value="#}"/>
                         </p:column>
 
                     </p:dataTable>
                     <br></br>
 
                     <h:panelGrid columns="10" cellpadding="1" >
-                        <p:commandButton value="Novo" icon=" ui-icon-plus " class="fechar" action="#{BancoMB.novo()}" update="grow"/>
-                        <p:commandButton value="Editar" class="export" icon=" ui-icon-pencil" action="#{BancoMB.editar()}" update="growl"/>
+                        <p:commandButton value="Novo" icon=" ui-icon-plus " class="fechar" action="#{UsuarioMB.novo()}"/>
+                        <p:commandButton value="Editar" class="export" icon=" ui-icon-pencil" action="#{UsuarioMB.editar()}" />
+                        <p:commandButton value="Desativar" class="export" icon=" ui-icon-pencil" action="#"/>
 
                     </h:panelGrid>
                     <br></br>

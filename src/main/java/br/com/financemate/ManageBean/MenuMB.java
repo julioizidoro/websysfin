@@ -44,7 +44,7 @@ public class MenuMB implements Serializable{
     
     public String contasPagar(){
         if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getContaspagar()){
-            clienteMB.setCliente(null);
+            clienteMB.setCliente(new Cliente());
             return "consConPagar";
         }else {
             FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
@@ -56,7 +56,7 @@ public class MenuMB implements Serializable{
     
     public String contasReceber(){
         if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getContasreceber()){
-            clienteMB.setCliente(null);
+            clienteMB.setCliente(new Cliente());
             return "consConReceber";    
         }else {
             FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
@@ -68,7 +68,7 @@ public class MenuMB implements Serializable{
     
     public String outrosLancamento(){
         if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getOutroslancamentos()){
-            clienteMB.setCliente(null);
+            clienteMB.setCliente(new Cliente());
             return "consOutrosLancamentos";
         }else {
             FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
@@ -79,7 +79,7 @@ public class MenuMB implements Serializable{
     
     public String tipoPlanoContas(){
         if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getTipoplanocontas()){
-            clienteMB.setCliente(null);
+            clienteMB.setCliente(new Cliente());
             return "consTipoPlanoConta";
         }else {
              FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
@@ -90,7 +90,7 @@ public class MenuMB implements Serializable{
     
     public String planoContas(){
         if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getPlanocontas()){
-            clienteMB.setCliente(null);
+           clienteMB.setCliente(new Cliente());
             return "consPlanoConta";
         }else {
             FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
@@ -101,7 +101,7 @@ public class MenuMB implements Serializable{
     
     public String vendas(){
         if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getVendas()){
-            clienteMB.setCliente(null);
+            clienteMB.setCliente(new Cliente());
             return "consVendas";
         }else {
             FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
@@ -111,7 +111,7 @@ public class MenuMB implements Serializable{
     }
     
     public String home(){
-        clienteMB.setCliente(null);
+        clienteMB.setCliente(new Cliente());
         return "principal";
     }
     
@@ -161,6 +161,16 @@ public class MenuMB implements Serializable{
         if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getProduto()){
             clienteMB.setCliente(new Cliente());
             return "consProduto";
+        }else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        }
+    } 
+    public String usuario(){
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getUsuario()){
+            clienteMB.setCliente(new Cliente());
+            return "consTipoUsuario";
         }else {
             FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
