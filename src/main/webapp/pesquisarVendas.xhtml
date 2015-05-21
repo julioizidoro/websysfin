@@ -39,11 +39,11 @@
                                 <p:calendar id="datainicial"  pattern="dd/MM/yyyy" mask="true" size="12" maxlength="15" class="left3" value="#{VendasMB.dataInicial}">
                                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
-                                <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="11" maxlength="15" class="left" value="#{VendasMB.dataInicial}" >
+                                <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="11" maxlength="15" class="left" value="#{VendasMB.dataFinal}" >
                                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
-                                <p:selectOneMenu  class="left9" style="width:110px" value="#{VendasMB.tipoContaPesquisa}">
-                                    <f:selectItem itemLabel="Todas" itemValue="" noSelectionOption="true"/> 
+                                <p:selectOneMenu  class="left9" style="width:110px" value="#{VendasMB.situacao}">
+                                    <f:selectItem itemLabel="Todas" itemValue="Todas" noSelectionOption="true"/> 
                                     <f:selectItem itemLabel="Vencidas" itemValue="Vencidas" noSelectionOption="true"/> 
                                     <f:selectItem itemLabel="Vencer" itemValue="Vencer" noSelectionOption="true"/> 
                                     <f:selectItem itemLabel="Recebidas" itemValue="Recebidas" noSelectionOption="true"/> 
@@ -51,7 +51,7 @@
                             </h:panelGrid>          
                         </p:tab>
                     </p:tabView>  
-                    <p:commandButton value="Confirmar" icon=" ui-icon-plusthick" class="cadastrar"  action="#{VendasMB.gerarListaVendas()}"/>
+                    <p:commandButton value="Confirmar" icon=" ui-icon-plusthick" class="cadastrar"  action="#{VendasMB.confirmaPesquisa()}"/>
                     <p:commandButton value="Cancelar" icon=" ui-icon-cancel " class="pesquisar2" action="#{VendasMB.cancelarPesquisa()}" />
                     <br></br>
                     <br></br>

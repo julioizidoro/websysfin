@@ -34,7 +34,12 @@ public class VendasMB implements Serializable{
     private Date dataInicial;
     private Date dataFinal;
     private String numeroVenda;
-    private String tipoContaPesquisa;
+    private String situacao;
+
+    public VendasMB() {
+    }
+   
+    
     
 
     public UsuarioLogadoBean getUsuarioLogadoBean() {
@@ -121,13 +126,15 @@ public class VendasMB implements Serializable{
         this.numeroVenda = numeroVenda;
     }
 
-    public String getTipoContaPesquisa() {
-        return tipoContaPesquisa;
+    public String getSituacao() {
+        return situacao;
     }
 
-    public void setTipoContaPesquisa(String tipoContaPesquisa) {
-        this.tipoContaPesquisa = tipoContaPesquisa;
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
     }
+
+    
     
     
     
@@ -176,12 +183,12 @@ public class VendasMB implements Serializable{
         String dataFinal = anocFinal + "-" + Formatacao.retornaDataFinal(mescFinal);
          sql =null;
         if (usuarioLogadoBean.getUsuario().getCliente()>0){
-            sql = " Select v from Viewvendas v where v.dataVenda>='" + dataInicial + 
-                "' and v.dataVenda<='" + dataFinal + "' and situacao<>'verde' and clienteIdcliente=" + 
+            sql = " Select v from Vendas v where v.dataVenda>='" + dataInicial + 
+                "' and v.dataVenda<='" + dataFinal + "' and v.cliente.situacao<>'verde' and v.cliente.idcliente=" + 
                     usuarioLogadoBean.getUsuario().getCliente();
             order = " order by v.dataVenda";
         }else {
-            sql = " Select v from Viewvendas v where v.visualizacao='Operacional' and "
+            sql = " Select v from Vendas v where v.cliente.visualizacao='Operacional' and "
                     + "v.dataVenda>='" + dataInicial + 
                 "' and v.dataVenda<='" + dataFinal + "' and v.situacao<>'verde'";
             order = " order by v.dataVenda";
@@ -203,13 +210,66 @@ public class VendasMB implements Serializable{
          return "pesquisarVendas";
      }
      
-     public String cancelarPesquisa(){
+     public String confirmaPesquisa(){
+         gerarSqlPesquisa();
+         gerarListaVendas();
          return "consVendas";
      }
      
-     public String gerarPesquisa(){
-        gerarDataInicial();
-        gerarListaVendas();
-        return "consConReceber";
+     public String cancelarPesquisa(){
+         return "consVendas";
+    }
+     
+    private void gerarSqlPesquisa(){
+        boolean linha = false;
+        sql = " Select v from Vendas v where ";
+        if ((dataInicial != null) && (dataFinal != null)) {
+            if (!linha) {
+                sql = sql + "  v.dataVenda>='" + Formatacao.ConvercaoDataSql(dataInicial)
+                        + "' and v.dataVenda<='" + Formatacao.ConvercaoDataSql(dataFinal) + "'";
+                linha = true;
+            }
+        }
+        if (!situacao.equalsIgnoreCase("Todas")){
+            if (!linha){
+                sql = sql + " v.situacao='" + situacao + "'";
+                linha = true;
+            }else{
+                sql = sql + " and v.situacao='" + situacao + "'";
+            }
+        }
+        if (clienteMB.getCliente().getIdcliente()!=null){
+            if (!linha){
+                sql = sql + " v.cliente.idcliente=" + clienteMB.getCliente().getIdcliente();
+                linha = true;
+            }else {
+                sql = sql + " and v.cliente.idcliente=" + clienteMB.getCliente().getIdcliente();
+            }
+        }else {
+            if (!linha){
+                sql = sql + " v.cliente.visualizacao='Operacional'";
+                linha=true;
+            }else {
+                sql = sql + " and v.cliente.visualizacao='Operacional'";
+            }
+        }
+        if (numeroVenda.length()>0){
+            int numero = Integer.parseInt(numeroVenda);
+            if (!linha){
+                sql = sql + " v.idvendas=" + numero;
+                linha = true;
+            }else {
+                sql = sql + " and v.idvendas=" + numero;
+            }
+        }
+        if (nomeClientePesquisa.length()>0){
+            if (!linha){
+                sql = sql + " v.nomeCliente like '%" + nomeClientePesquisa + "%'";
+            }else{
+                sql = sql + " and v.nomeCliente like '%" + nomeClientePesquisa + "%'";
+            }
+        }
+        order = " order by v.dataVenda";
+        sql = sql;
     }
 }
