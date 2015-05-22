@@ -336,17 +336,15 @@ public class ContasPagarMB implements Serializable {
     public String verStatus(Contaspagar conta) {
         Date data = new Date();
         String diaData = Formatacao.ConvercaoDataPadrao(data);
-        for (int i = 0; i < listaContaPagar.size(); i++) {
-            String vencData = Formatacao.ConvercaoDataPadrao(listaContaPagar.get(i).getDataVencimento());
-            if (listaContaPagar.get(i).getDataVencimento().after(data)) {
-                return "resources/img/bolaVerde.png";
+        String vencData = Formatacao.ConvercaoDataPadrao(conta.getDataVencimento());
+        if (conta.getDataVencimento().after(data)) {
+            return "resources/img/bolaVerde.png";
+        } else {
+            if (!conta.getDataVencimento().after(data)) {
+                return "resources/img/bolaVermelha.png";
             } else {
-                if (!conta.getDataVencimento().after(data)) {
-                    return "resources/img/bolaVermelha.png";
-                } else {
-                    if (diaData.equalsIgnoreCase(vencData)) {
-                        return "resources/img/bolaAmarela.png";
-                    }
+                if (diaData.equalsIgnoreCase(vencData)) {
+                    return "resources/img/bolaAmarela.png";
                 }
             }
         }

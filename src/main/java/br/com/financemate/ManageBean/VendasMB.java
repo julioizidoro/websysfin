@@ -280,17 +280,12 @@ public class VendasMB implements Serializable{
     }
     
     public String verStatus(Vendas vendas) {
-        for (int i = 0; i < listaVendas.size(); i++) {
-           if (venda.getSituacao().equalsIgnoreCase("vermelho")) {
-                return "resources/img/bolaVermelha.png";
-            } else {
-                if (venda.getSituacao().equalsIgnoreCase("amarelo")) {
-                    return "resources/img/bolaAmarela.png";
-                } else {
-                    return "resources/img/bolaVerde.png";
-                }
-            }
+        if (vendas.getSituacao().equalsIgnoreCase("vermelho")) {
+            return "resources/img/bolaVermelha.png";
+        } else if (vendas.getSituacao().equalsIgnoreCase("amarelo")) {
+            return "resources/img/bolaAmarela.png";
+        } else {
+            return "resources/img/bolaVerde.png";
         }
-        return "resources/img/bolaVerde.png";
     }
 }

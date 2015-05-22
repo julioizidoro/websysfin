@@ -18,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 /**
@@ -41,6 +42,8 @@ public class Tipoacesso implements Serializable {
     @JoinColumn(name = "acesso_idacesso", referencedColumnName = "idacesso")
     @ManyToOne(optional = false)
     private Acesso acesso;
+    @Transient
+    private boolean selecionado;
 
     public Tipoacesso() {
     }
@@ -80,6 +83,15 @@ public class Tipoacesso implements Serializable {
     public void setAcesso(Acesso acesso) {
         this.acesso = acesso;
     }
+
+    public boolean isSelecionado() {
+        return selecionado;
+    }
+
+    public void setSelecionado(boolean selecionado) {
+        this.selecionado = selecionado;
+    }
+    
 
     @Override
     public int hashCode() {

@@ -11,47 +11,29 @@
                 <div id="centro">
                     <p:growl id="growl" showDetail="true" sticky="true" />
                     <br></br>
-                    <h:panelGrid columns="2" cellpadding="5" >
-                        <p:outputLabel value="Nome do Usuário" for="cliente"  class="left3" />
-                    </h:panelGrid>
-                    <h:panelGrid columns="2">
-                        <p:inputText id="cliente" size="45"  class="left3"  value="#{UsuarioMB.nomeUsuario}" />
-                        <p:commandButton value="Pesquisar" class="css3button" icon="ui-icon-search" update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{UsuarioMB.pesquisarnome()}"/>
-                    </h:panelGrid>
                     <legend id="iUsu" ><b>Consulta Tipo de Usuário </b></legend>
-                    <p:dataTable id="usuario" var="usuario" value="#" rowStyleClass="tabela" class="tabelaselecionar" 
+                    <p:dataTable id="tipousuario" var="tipousuario" value="#{TipoAcessoMB.listarTipoAcesso}" rowStyleClass="tabela" class="tabelaselecionar" 
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                  paginator="true" rows="10" style="margin-bottom:20px"> 
 
-                        <p:column headerText="Nome">
-                            <h:outputText value="#" />
+                        <p:column headerText="Código" style="width:60px"  styleClass="alinhar">
+                            <h:outputText value="#{tipousuario.idtipoacesso}" />
                         </p:column>
-                        <p:column headerText="Login" style="width:160px">
-                            <h:outputText   value="#"/>
-                        </p:column>
-                        <p:column headerText="Usuário Negócio"  style="width:160px">
-                            <h:outputText value="#"/>
-                        </p:column>
-                         <p:column headerText="Situação"  style="width:160px">
-                             <h:outputText value="#"/>
+                        <p:column headerText="Descrição">
+                            <h:outputText value="#{tipousuario.descricao}" />
                         </p:column>
                         <p:column style="width:28px">
-                            <p:selectBooleanCheckbox value="#}"/>
+                            <p:selectBooleanCheckbox value="#{tipousuario.selecionado}"/>
                         </p:column>
-
                     </p:dataTable>
                     <br></br>
-
                     <h:panelGrid columns="10" cellpadding="1" >
-                        <p:commandButton value="Novo" icon=" ui-icon-plus " class="fechar" action="#{UsuarioMB.novo()}"/>
-                        <p:commandButton value="Editar" class="export" icon=" ui-icon-pencil" action="#{UsuarioMB.editar()}" />
-                        <p:commandButton value="Desativar" class="export" icon=" ui-icon-pencil" action="#"/>
-
+                        <p:commandButton value="Novo" icon=" ui-icon-plus " class="fechar" action="#{TipoAcessoMB.novo()}"/>
+                        <p:commandButton value="Editar" class="export" icon=" ui-icon-pencil" action="#{TipoAcessoMB.editar()}" />
                     </h:panelGrid>
                     <br></br>
                 </div>
             </h:form>     
-
         </ui:define>
     </ui:composition>
 </html>

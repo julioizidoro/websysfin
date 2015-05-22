@@ -712,6 +712,9 @@ button.cadastrarrelatorio {
 .alinharCenter{
     text-align:right;
 }   
+.alinhar{
+    text-align:center;
+}   
 .cadastroContasPagar{
     width: 600px;
     margin-left:65px;
@@ -1131,4 +1134,23 @@ button.pesquisar5 {
     margin-left:380px;
     color:#F0FFFF;
     font-size:11px;
+}
+.panelgrid{
+    width:570px;
+    box-shadow: 5px 4px 10px #828282;
+    -moz-box-shadow: 5px 4px 10px #828282;
+    -webkit-box-shadow: 5px 4px 10px #828282;
+    -khtml-box-shadow: 5px 4px 10px #828282;
+}
+.box{
+    margin-left:-31px;
+}
+.box2{
+    margin-left:-10px;
+}
+.box3{
+    margin-left:10px;
+}
+.box4{
+    margin-left:-21px;
 }
