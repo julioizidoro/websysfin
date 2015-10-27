@@ -61,8 +61,6 @@ public class Acesso implements Serializable {
     private Boolean ausuario;
     @Column(name = "eusuario")
     private Boolean eusuario;
-    @Column(name = "produto")
-    private Boolean produto;
     @Column(name = "iproduto")
     private Boolean iproduto;
     @Column(name = "aproduto")
@@ -289,13 +287,6 @@ public class Acesso implements Serializable {
         this.eusuario = eusuario;
     }
 
-    public Boolean getProduto() {
-        return produto;
-    }
-
-    public void setProduto(Boolean produto) {
-        this.produto = produto;
-    }
 
     public Boolean getIproduto() {
         return iproduto;
@@ -617,5 +608,6 @@ public class Acesso implements Serializable {
     public String toString() {
         return "br.com.financemate.model.Acesso[ idacesso=" + idacesso + " ]";
     }
+
     
 }

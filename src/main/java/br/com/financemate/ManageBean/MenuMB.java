@@ -158,14 +158,14 @@ public class MenuMB implements Serializable{
         }
     } 
     public String produto(){
-        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getProduto()){
+        //if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getProduto()){
             clienteMB.setCliente(new Cliente());
             return "consProduto";
-        }else {
-            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
-            FacesContext.getCurrentInstance().addMessage(null, mensagem);
-            return "";
-        }
+        //}else {
+          //  FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+           // FacesContext.getCurrentInstance().addMessage(null, mensagem);
+           // return "";
+       // }
     } 
     public String usuario(){
         if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getUsuario()){
