@@ -5,7 +5,7 @@
  */
 package br.com.financemate.ManageBean;
 
-import br.com.financemate.Controller.ClienteController;
+
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.TipoPlanoContasFacede;
 import br.com.financemate.model.Cliente;
@@ -15,6 +15,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -110,16 +112,26 @@ public class ClienteMB implements Serializable{
             listarTipoPlanoContas = new ArrayList<Tipoplanocontas>();
         }
     }
-    
+
     public void gerarListaClientes() {
-        ClienteController clienteController = new ClienteController();
-        if (nomeCliente == null) {
-            nomeCliente = "";
+        ClienteFacade clienteFacade = new ClienteFacade();
+        try {
+            if (nomeCliente == null) {
+                nomeCliente = "";
+            }
+            listaClientes = clienteFacade.listar(nomeCliente);
+            if (listaClientes == null) {
+                listaClientes = new ArrayList<Cliente>();
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteMB.class.getName()).log(Level.SEVERE, null, ex);
+            FacesMessage mensagem = new FacesMessage("Erro! " + ex);
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+             
         }
-        listaClientes = clienteController.listar(nomeCliente);
-        if (listaClientes == null) {
-            listaClientes = new ArrayList<Cliente>();
-        }
+        
+
     }
     
     public String pesquisarNome(){
@@ -153,11 +165,11 @@ public class ClienteMB implements Serializable{
     }
     public String salvar() throws SQLException{
          if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIcliente()){
-            ClienteController clienteController = new ClienteController();
+            ClienteFacade clienteFacade = new ClienteFacade();
             TipoPlanoContasFacede tipoPlanoContasFacede = new TipoPlanoContasFacede();
             Tipoplanocontas tipo = tipoPlanoContasFacede.consultar(Integer.parseInt(idTipoPlanoConta));
             cliente.setTipoplanocontas(tipo);
-            clienteController.salvar(cliente);
+            clienteFacade.salvar(cliente);
             cliente = new Cliente();
             gerarListaClientes();
             return "consCliente";

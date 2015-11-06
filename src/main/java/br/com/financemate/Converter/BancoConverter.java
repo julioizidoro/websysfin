@@ -5,8 +5,13 @@
  */
 package br.com.financemate.Converter;
 
-import br.com.financemate.Controller.BancoController;
+
+import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.model.Banco;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -21,10 +26,18 @@ public class BancoConverter implements Converter{
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        BancoController bancoController = new BancoController();
-        int idBanco = Integer.parseInt(value);
-        Banco banco = bancoController.consultar(idBanco);
-        return banco;
+        try {
+            BancoFacade bancoFacade = new BancoFacade();
+            int idBanco = Integer.parseInt(value);
+            Banco banco = bancoFacade.consultar(idBanco);
+            return banco;
+        } catch (SQLException ex) {
+            Logger.getLogger(BancoConverter.class.getName()).log(Level.SEVERE, null, ex);
+            context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Erro!" + ex));
+            
+        }
+        return "";
     }
 
     @Override

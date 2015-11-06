@@ -5,12 +5,9 @@
  */
 package br.com.financemate.ManageBean;
 
-import br.com.financemate.Controller.BancoController;
-import br.com.financemate.Controller.ContasPagarController;
-import br.com.financemate.Controller.MovimentoBancoController;
-import br.com.financemate.Controller.PlanoContasController;
-import br.com.financemate.Controller.UsuarioController;
+
 import br.com.financemate.Util.Formatacao;
+import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.NomeArquivoFacade;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
@@ -426,23 +423,31 @@ public class ContasPagarMB implements Serializable {
     }
 
     public String excluir() {
-        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getEcontaspargar()) {
-            ContasPagarController contasPagarController = new ContasPagarController();
-            for (int i = 0; i < listaContaPagar.size(); i++) {
-                if (listaContaPagar.get(i).isSelecionado()) {
-                    if (listaContaPagar.get(i).getAutorizarPagamento().equalsIgnoreCase("N")) {
-                        contasPagarController.excluir(listaContaPagar.get(i).getIdcontasPagar());
+        try {
+            if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getEcontaspargar()) {
+                ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+                for (int i = 0; i < listaContaPagar.size(); i++) {
+                    if (listaContaPagar.get(i).isSelecionado()) {
+                        if (listaContaPagar.get(i).getAutorizarPagamento().equalsIgnoreCase("N")) {
+
+                            contasPagarFacade.excluir(listaContaPagar.get(i).getIdcontasPagar());
+
+                        }
                     }
                 }
+                gerarListaContasPagar();
+                return "consConPagar";
+            } else {
+                FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+                FacesContext.getCurrentInstance().addMessage(null, mensagem);
             }
-            gerarListaContasPagar();
-            return "consConPagar";
-        } else {
-            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
-            FacesContext.getCurrentInstance().addMessage(null, mensagem);
-            return "";
+        } catch (SQLException ex) {
+            Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
+        return null;
     }
+
 
     public String cancelar() {
         clienteMB.setCliente(new Cliente());
@@ -460,16 +465,26 @@ public class ContasPagarMB implements Serializable {
     }
 
     public void gerarListaContasPagar() {
-        ContasPagarController contasPagarController = new ContasPagarController();
-        listaContaPagar = contasPagarController.listar(sql);
-        if (listaContaPagar == null) {
-            listaContaPagar = new ArrayList<Contaspagar>();
+        ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+        try {
+            if (listaContaPagar == null) {
+                listaContaPagar = new ArrayList<Contaspagar>();
+            }
+            for (int i = 0; i < listaContaPagar.size(); i++) {
+                listaContaPagar.get(i).setStatus(verStatus(listaContaPagar.get(i)));
+                listaContaPagar = contasPagarFacade.listar(sql);
+            }
+            calcularTotal();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+            FacesMessage mensagem = new FacesMessage("Erro! " + ex);
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            
         }
-        for (int i = 0; i < listaContaPagar.size(); i++) {
-            listaContaPagar.get(i).setStatus(verStatus(listaContaPagar.get(i)));
-        }
-        calcularTotal();
+        return null;
     }
+
 
     public void gerarDataInicia() {
         String data = Formatacao.ConvercaoDataPadrao(new Date());
