@@ -14,15 +14,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 /**
  *
- * @author Wolverine
+ * @author Greici
  */
 @Entity
 @Table(name = "nomearquivo")
+@NamedQueries({
+    @NamedQuery(name = "Nomearquivo.findAll", query = "SELECT n FROM Nomearquivo n")})
 public class Nomearquivo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -70,16 +74,16 @@ public class Nomearquivo implements Serializable {
         return nomearquivo02;
     }
 
+    public void setNomearquivo02(String nomearquivo02) {
+        this.nomearquivo02 = nomearquivo02;
+    }
+
     public String getCaminho() {
         return caminho;
     }
 
     public void setCaminho(String caminho) {
         this.caminho = caminho;
-    }
-
-    public void setNomearquivo02(String nomearquivo02) {
-        this.nomearquivo02 = nomearquivo02;
     }
 
     public Contaspagar getContaspagar() {

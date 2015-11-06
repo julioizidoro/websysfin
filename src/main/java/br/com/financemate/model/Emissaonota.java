@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Wolverine
+ * @author Greici
  */
 @Entity
 @Table(name = "emissaonota")

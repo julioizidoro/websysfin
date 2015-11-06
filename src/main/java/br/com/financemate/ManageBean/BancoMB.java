@@ -12,7 +12,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-@Named("BancoMB")
+@Named
 @SessionScoped
 public class BancoMB  implements Serializable {
      @Inject

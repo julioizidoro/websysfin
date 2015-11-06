@@ -16,6 +16,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -23,10 +25,12 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Wolverine
+ * @author Greici
  */
 @Entity
 @Table(name = "tipoacesso")
+@NamedQueries({
+    @NamedQuery(name = "Tipoacesso.findAll", query = "SELECT t FROM Tipoacesso t")})
 public class Tipoacesso implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -76,14 +80,6 @@ public class Tipoacesso implements Serializable {
         this.usuarioList = usuarioList;
     }
 
-    public Acesso getAcesso() {
-        return acesso;
-    }
-
-    public void setAcesso(Acesso acesso) {
-        this.acesso = acesso;
-    }
-
     public boolean isSelecionado() {
         return selecionado;
     }
@@ -91,7 +87,14 @@ public class Tipoacesso implements Serializable {
     public void setSelecionado(boolean selecionado) {
         this.selecionado = selecionado;
     }
-    
+
+    public Acesso getAcesso() {
+        return acesso;
+    }
+
+    public void setAcesso(Acesso acesso) {
+        this.acesso = acesso;
+    }
 
     @Override
     public int hashCode() {

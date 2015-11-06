@@ -25,7 +25,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Wolverine
+ * @author Greici
  */
 @Entity
 @Table(name = "produto")
@@ -43,11 +43,11 @@ public class Produto implements Serializable {
     private String descricao;
     @Column(name = "codigosystm")
     private Integer codigosystm;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "produto")
-    private List<Vendas> vendasList;
     @JoinColumn(name = "cliente_idcliente", referencedColumnName = "idcliente")
     @ManyToOne(optional = false)
     private Cliente cliente;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "produto")
+    private List<Vendas> vendasList;
     @Transient
     private boolean selecionado;
 
@@ -82,20 +82,16 @@ public class Produto implements Serializable {
         this.codigosystm = codigosystm;
     }
 
-    public List<Vendas> getVendasList() {
-        return vendasList;
-    }
-
-    public void setVendasList(List<Vendas> vendasList) {
-        this.vendasList = vendasList;
-    }
-
     public Cliente getCliente() {
         return cliente;
     }
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public List<Vendas> getVendasList() {
+        return vendasList;
     }
 
     public boolean isSelecionado() {
@@ -105,7 +101,10 @@ public class Produto implements Serializable {
     public void setSelecionado(boolean selecionado) {
         this.selecionado = selecionado;
     }
-    
+
+    public void setVendasList(List<Vendas> vendasList) {
+        this.vendasList = vendasList;
+    }
 
     @Override
     public int hashCode() {

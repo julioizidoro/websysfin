@@ -16,7 +16,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -24,50 +23,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 /**
  *
- * @author Wolverine
+ * @author Greici
  */
 @Entity
 @Table(name = "vendas")
+@NamedQueries({
+    @NamedQuery(name = "Vendas.findAll", query = "SELECT v FROM Vendas v")})
 public class Vendas implements Serializable {
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "valor")
-    private Float valor;
-    @Lob
-    @Size(max = 2147483647)
-    @Column(name = "Obstm")
-    private String obstm;
-    @Size(max = 1)
-    @Column(name = "vendasMatriz")
-    private String vendasMatriz;
-    @Column(name = "vendaimportada")
-    private Integer vendaimportada;
-    @Size(max = 200)
-    @Column(name = "obsCancelar")
-    private String obsCancelar;
-    @Column(name = "datacancelamento")
-    @Temporal(TemporalType.DATE)
-    private Date datacancelamento;
-    @Column(name = "usuariocancelamento")
-    private Integer usuariocancelamento;
-    @JoinColumn(name = "fornecedor_idfornecedor", referencedColumnName = "idfornecedor")
-    @ManyToOne(optional = false)
-    private Fornecedor fornecedor;
-    @JoinColumn(name = "fornecedorcidade_idfornecedorcidade", referencedColumnName = "idfornecedorcidade")
-    @ManyToOne(optional = false)
-    private Fornecedorcidade fornecedorcidade;
-    @JoinColumn(name = "produtos_idprodutos", referencedColumnName = "idprodutos")
-    @ManyToOne(optional = false)
-    private Produtos produtos;
-    @JoinColumn(name = "unidadeNegocio_idunidadeNegocio", referencedColumnName = "idunidadeNegocio")
-    @ManyToOne(optional = false)
-    private Unidadenegocio unidadenegocio;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vendas")
-    private List<Invoices> invoicesList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -121,23 +87,21 @@ public class Vendas implements Serializable {
     @Column(name = "observacao")
     private String observacao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "vendas")
+    private List<Formapagamento> formapagamentoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vendas")
     private List<Emissaonota> emissaonotaList;
-    @JoinColumn(name = "cliente_idcliente", referencedColumnName = "idcliente")
-    @ManyToOne(optional = false)
-    private Cliente cliente;
-    @JoinColumn(name = "planoContas_idplanoContas", referencedColumnName = "idplanoContas")
-    @ManyToOne(optional = false)
-    private Planocontas planocontas;
-    @JoinColumn(name = "produto_idproduto", referencedColumnName = "idproduto")
-    @ManyToOne(optional = false)
-    private Produto produto;
     @JoinColumn(name = "usuario_idusuario", referencedColumnName = "idusuario")
     @ManyToOne(optional = false)
     private Usuario usuario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vendas")
-    private List<Formapagamento> formapagamentoList;
-    @Transient
-    private Boolean selecionado;
+    @JoinColumn(name = "produto_idproduto", referencedColumnName = "idproduto")
+    @ManyToOne(optional = false)
+    private Produto produto;
+    @JoinColumn(name = "planoContas_idplanoContas", referencedColumnName = "idplanoContas")
+    @ManyToOne(optional = false)
+    private Planocontas planocontas;
+    @JoinColumn(name = "cliente_idcliente", referencedColumnName = "idcliente")
+    @ManyToOne(optional = false)
+    private Cliente cliente;
 
     public Vendas() {
     }
@@ -306,36 +270,20 @@ public class Vendas implements Serializable {
         this.observacao = observacao;
     }
 
+    public List<Formapagamento> getFormapagamentoList() {
+        return formapagamentoList;
+    }
+
+    public void setFormapagamentoList(List<Formapagamento> formapagamentoList) {
+        this.formapagamentoList = formapagamentoList;
+    }
+
     public List<Emissaonota> getEmissaonotaList() {
         return emissaonotaList;
     }
 
     public void setEmissaonotaList(List<Emissaonota> emissaonotaList) {
         this.emissaonotaList = emissaonotaList;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public Planocontas getPlanocontas() {
-        return planocontas;
-    }
-
-    public void setPlanocontas(Planocontas planocontas) {
-        this.planocontas = planocontas;
-    }
-
-    public Produto getProduto() {
-        return produto;
-    }
-
-    public void setProduto(Produto produto) {
-        this.produto = produto;
     }
 
     public Usuario getUsuario() {
@@ -346,20 +294,28 @@ public class Vendas implements Serializable {
         this.usuario = usuario;
     }
 
-    public List<Formapagamento> getFormapagamentoList() {
-        return formapagamentoList;
+    public Produto getProduto() {
+        return produto;
     }
 
-    public void setFormapagamentoList(List<Formapagamento> formapagamentoList) {
-        this.formapagamentoList = formapagamentoList;
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 
-    public Boolean getSelecionado() {
-        return selecionado;
+    public Planocontas getPlanocontas() {
+        return planocontas;
     }
 
-    public void setSelecionado(Boolean selecionado) {
-        this.selecionado = selecionado;
+    public void setPlanocontas(Planocontas planocontas) {
+        this.planocontas = planocontas;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     @Override
@@ -385,102 +341,6 @@ public class Vendas implements Serializable {
     @Override
     public String toString() {
         return "br.com.financemate.model.Vendas[ idvendas=" + idvendas + " ]";
-    }
-
-    public Float getValor() {
-        return valor;
-    }
-
-    public void setValor(Float valor) {
-        this.valor = valor;
-    }
-
-    public String getObstm() {
-        return obstm;
-    }
-
-    public void setObstm(String obstm) {
-        this.obstm = obstm;
-    }
-
-    public String getVendasMatriz() {
-        return vendasMatriz;
-    }
-
-    public void setVendasMatriz(String vendasMatriz) {
-        this.vendasMatriz = vendasMatriz;
-    }
-
-    public Integer getVendaimportada() {
-        return vendaimportada;
-    }
-
-    public void setVendaimportada(Integer vendaimportada) {
-        this.vendaimportada = vendaimportada;
-    }
-
-    public String getObsCancelar() {
-        return obsCancelar;
-    }
-
-    public void setObsCancelar(String obsCancelar) {
-        this.obsCancelar = obsCancelar;
-    }
-
-    public Date getDatacancelamento() {
-        return datacancelamento;
-    }
-
-    public void setDatacancelamento(Date datacancelamento) {
-        this.datacancelamento = datacancelamento;
-    }
-
-    public Integer getUsuariocancelamento() {
-        return usuariocancelamento;
-    }
-
-    public void setUsuariocancelamento(Integer usuariocancelamento) {
-        this.usuariocancelamento = usuariocancelamento;
-    }
-
-    public Fornecedor getFornecedor() {
-        return fornecedor;
-    }
-
-    public void setFornecedor(Fornecedor fornecedor) {
-        this.fornecedor = fornecedor;
-    }
-
-    public Fornecedorcidade getFornecedorcidade() {
-        return fornecedorcidade;
-    }
-
-    public void setFornecedorcidade(Fornecedorcidade fornecedorcidade) {
-        this.fornecedorcidade = fornecedorcidade;
-    }
-
-    public Produtos getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(Produtos produtos) {
-        this.produtos = produtos;
-    }
-
-    public Unidadenegocio getUnidadenegocio() {
-        return unidadenegocio;
-    }
-
-    public void setUnidadenegocio(Unidadenegocio unidadenegocio) {
-        this.unidadenegocio = unidadenegocio;
-    }
-
-    public List<Invoices> getInvoicesList() {
-        return invoicesList;
-    }
-
-    public void setInvoicesList(List<Invoices> invoicesList) {
-        this.invoicesList = invoicesList;
     }
     
 }

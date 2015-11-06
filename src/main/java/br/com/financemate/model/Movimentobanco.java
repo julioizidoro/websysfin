@@ -25,10 +25,12 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Wolverine
+ * @author Greici
  */
 @Entity
 @Table(name = "movimentobanco")
+@NamedQueries({
+    @NamedQuery(name = "Movimentobanco.findAll", query = "SELECT m FROM Movimentobanco m")})
 public class Movimentobanco implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -59,18 +61,18 @@ public class Movimentobanco implements Serializable {
     @Size(max = 10)
     @Column(name = "compentencia")
     private String compentencia;
-    @JoinColumn(name = "banco_idbanco", referencedColumnName = "idbanco")
-    @ManyToOne(optional = false)
-    private Banco banco;
-    @JoinColumn(name = "cliente_idcliente", referencedColumnName = "idcliente")
-    @ManyToOne(optional = false)
-    private Cliente cliente;
-    @JoinColumn(name = "planoContas_idplanoContas", referencedColumnName = "idplanoContas")
-    @ManyToOne(optional = false)
-    private Planocontas planocontas;
     @JoinColumn(name = "usuario_idusuario", referencedColumnName = "idusuario")
     @ManyToOne(optional = false)
     private Usuario usuario;
+    @JoinColumn(name = "planoContas_idplanoContas", referencedColumnName = "idplanoContas")
+    @ManyToOne(optional = false)
+    private Planocontas planocontas;
+    @JoinColumn(name = "cliente_idcliente", referencedColumnName = "idcliente")
+    @ManyToOne(optional = false)
+    private Cliente cliente;
+    @JoinColumn(name = "banco_idbanco", referencedColumnName = "idbanco")
+    @ManyToOne(optional = false)
+    private Banco banco;
     @Transient
     private boolean selecionado;
 
@@ -105,14 +107,6 @@ public class Movimentobanco implements Serializable {
         this.descricao = descricao;
     }
 
-    public boolean isSelecionado() {
-        return selecionado;
-    }
-
-    public void setSelecionado(boolean selecionado) {
-        this.selecionado = selecionado;
-    }
-    
     public Float getValorEntrada() {
         return valorEntrada;
     }
@@ -149,6 +143,14 @@ public class Movimentobanco implements Serializable {
         return tipoDocumento;
     }
 
+    public boolean isSelecionado() {
+        return selecionado;
+    }
+
+    public void setSelecionado(boolean selecionado) {
+        this.selecionado = selecionado;
+    }
+
     public void setTipoDocumento(String tipoDocumento) {
         this.tipoDocumento = tipoDocumento;
     }
@@ -161,20 +163,12 @@ public class Movimentobanco implements Serializable {
         this.compentencia = compentencia;
     }
 
-    public Banco getBanco() {
-        return banco;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setBanco(Banco banco) {
-        this.banco = banco;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public Planocontas getPlanocontas() {
@@ -185,12 +179,20 @@ public class Movimentobanco implements Serializable {
         this.planocontas = planocontas;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Banco getBanco() {
+        return banco;
+    }
+
+    public void setBanco(Banco banco) {
+        this.banco = banco;
     }
 
     @Override

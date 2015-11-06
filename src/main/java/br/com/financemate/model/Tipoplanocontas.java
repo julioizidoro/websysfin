@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -21,15 +23,13 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Wolverine
+ * @author Greici
  */
 @Entity
 @Table(name = "tipoplanocontas")
+@NamedQueries({
+    @NamedQuery(name = "Tipoplanocontas.findAll", query = "SELECT t FROM Tipoplanocontas t")})
 public class Tipoplanocontas implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoplanocontas")
-    private List<Cliente> clienteList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoplanocontas")
-    private List<Planocontas> planocontasList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,9 +39,13 @@ public class Tipoplanocontas implements Serializable {
     @Size(max = 50)
     @Column(name = "descricao")
     private String descricao;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoplanocontas")
+    private List<Cliente> clienteList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoplanocontas")
+    private List<Planocontas> planocontasList;
     @Transient
     private boolean selecionado;
-    
+
     public Tipoplanocontas() {
     }
 
@@ -64,6 +68,23 @@ public class Tipoplanocontas implements Serializable {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
+    public List<Cliente> getClienteList() {
+        return clienteList;
+    }
+
+    public void setClienteList(List<Cliente> clienteList) {
+        this.clienteList = clienteList;
+    }
+
+    public List<Planocontas> getPlanocontasList() {
+        return planocontasList;
+    }
+
+    public void setPlanocontasList(List<Planocontas> planocontasList) {
+        this.planocontasList = planocontasList;
+    }
+
     public boolean isSelecionado() {
         return selecionado;
     }
@@ -94,23 +115,7 @@ public class Tipoplanocontas implements Serializable {
 
     @Override
     public String toString() {
-        return getDescricao();
-    }
-
-    public List<Cliente> getClienteList() {
-        return clienteList;
-    }
-
-    public void setClienteList(List<Cliente> clienteList) {
-        this.clienteList = clienteList;
-    }
-
-    public List<Planocontas> getPlanocontasList() {
-        return planocontasList;
-    }
-
-    public void setPlanocontasList(List<Planocontas> planocontasList) {
-        this.planocontasList = planocontasList;
+        return "br.com.financemate.model.Tipoplanocontas[ idtipoplanocontas=" + idtipoplanocontas + " ]";
     }
     
 }

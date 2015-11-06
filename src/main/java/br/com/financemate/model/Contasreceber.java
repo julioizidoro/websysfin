@@ -25,7 +25,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Wolverine
+ * @author Greici
  */
 @Entity
 @Table(name = "contasreceber")
@@ -71,6 +71,8 @@ public class Contasreceber implements Serializable {
     @Column(name = "vendaComissao")
     private Integer vendaComissao;
     @Size(max = 10)
+    @Column(name = "status")
+    private String status;
     @Column(name = "usuariocadastrou")
     private Integer usuariocadastrou;
     @Column(name = "datacadastro")
@@ -94,9 +96,7 @@ public class Contasreceber implements Serializable {
     @ManyToOne(optional = false)
     private Banco banco;
     @Transient
-    private boolean selecionado=false;
-    @Transient
-    private String status="";
+    private boolean selecionado;
 
     public Contasreceber() {
     }
@@ -187,14 +187,6 @@ public class Contasreceber implements Serializable {
 
     public Integer getVenda() {
         return venda;
-    }
-
-    public boolean isSelecionado() {
-        return selecionado;
-    }
-
-    public void setSelecionado(boolean selecionado) {
-        this.selecionado = selecionado;
     }
 
     public void setVenda(Integer venda) {
@@ -295,6 +287,14 @@ public class Contasreceber implements Serializable {
 
     public void setBanco(Banco banco) {
         this.banco = banco;
+    }
+
+    public boolean isSelecionado() {
+        return selecionado;
+    }
+
+    public void setSelecionado(boolean selecionado) {
+        this.selecionado = selecionado;
     }
 
     @Override

@@ -18,7 +18,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Wolverine
+ * @author Greici
  */
 @Entity
 @Table(name = "produtovalores")

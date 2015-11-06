@@ -16,44 +16,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 /**
  *
- * @author Wolverine
+ * @author Greici
  */
 @Entity
 @Table(name = "usuario")
+@NamedQueries({
+    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")})
 public class Usuario implements Serializable {
-    @Size(max = 9)
-    @Column(name = "tipo")
-    private String tipo;
-    @Size(max = 7)
-    @Column(name = "situacao")
-    private String situacao;
-    @Size(max = 50)
-    @Column(name = "cargo")
-    private String cargo;
-    @Size(max = 200)
-    @Column(name = "localsalvar")
-    private String localsalvar;
-    @Size(max = 200)
-    @Column(name = "locarlvisualizar")
-    private String locarlvisualizar;
-    @Size(max = 50)
-    @Column(name = "departamento")
-    private String departamento;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private List<Vendas> vendasList;
-    @JoinColumn(name = "grupoAcesso_idgrupoAcesso", referencedColumnName = "idgrupoAcesso")
-    @ManyToOne(optional = false)
-    private Grupoacesso grupoacesso;
-    @JoinColumn(name = "unidadeNegocio_idunidadeNegocio", referencedColumnName = "idunidadeNegocio")
-    @ManyToOne(optional = false)
-    private Unidadenegocio unidadenegocio;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -81,8 +58,12 @@ public class Usuario implements Serializable {
     @JoinColumn(name = "tipoacesso_idtipoacesso", referencedColumnName = "idtipoacesso")
     @ManyToOne(optional = false)
     private Tipoacesso tipoacesso;
-    @Transient
-    private boolean selecionado;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private List<Contasreceber> contasreceberList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private List<Movimentobanco> movimentobancoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private List<Vendas> vendasList;
 
     public Usuario() {
     }
@@ -155,14 +136,29 @@ public class Usuario implements Serializable {
         this.tipoacesso = tipoacesso;
     }
 
-    public boolean isSelecionado() {
-        return selecionado;
+    public List<Contasreceber> getContasreceberList() {
+        return contasreceberList;
     }
 
-    public void setSelecionado(boolean selecionado) {
-        this.selecionado = selecionado;
+    public void setContasreceberList(List<Contasreceber> contasreceberList) {
+        this.contasreceberList = contasreceberList;
     }
-    
+
+    public List<Movimentobanco> getMovimentobancoList() {
+        return movimentobancoList;
+    }
+
+    public void setMovimentobancoList(List<Movimentobanco> movimentobancoList) {
+        this.movimentobancoList = movimentobancoList;
+    }
+
+    public List<Vendas> getVendasList() {
+        return vendasList;
+    }
+
+    public void setVendasList(List<Vendas> vendasList) {
+        this.vendasList = vendasList;
+    }
 
     @Override
     public int hashCode() {
@@ -187,78 +183,6 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "br.com.financemate.model.Usuario[ idusuario=" + idusuario + " ]";
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public String getSituacao() {
-        return situacao;
-    }
-
-    public void setSituacao(String situacao) {
-        this.situacao = situacao;
-    }
-
-    public String getCargo() {
-        return cargo;
-    }
-
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
-    }
-
-    public String getLocalsalvar() {
-        return localsalvar;
-    }
-
-    public void setLocalsalvar(String localsalvar) {
-        this.localsalvar = localsalvar;
-    }
-
-    public String getLocarlvisualizar() {
-        return locarlvisualizar;
-    }
-
-    public void setLocarlvisualizar(String locarlvisualizar) {
-        this.locarlvisualizar = locarlvisualizar;
-    }
-
-    public String getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(String departamento) {
-        this.departamento = departamento;
-    }
-
-    public List<Vendas> getVendasList() {
-        return vendasList;
-    }
-
-    public void setVendasList(List<Vendas> vendasList) {
-        this.vendasList = vendasList;
-    }
-
-    public Grupoacesso getGrupoacesso() {
-        return grupoacesso;
-    }
-
-    public void setGrupoacesso(Grupoacesso grupoacesso) {
-        this.grupoacesso = grupoacesso;
-    }
-
-    public Unidadenegocio getUnidadenegocio() {
-        return unidadenegocio;
-    }
-
-    public void setUnidadenegocio(Unidadenegocio unidadenegocio) {
-        this.unidadenegocio = unidadenegocio;
     }
     
 }

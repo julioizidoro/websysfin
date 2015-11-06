@@ -25,7 +25,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Wolverine
+ * @author Greici
  */
 @Entity
 @Table(name = "planocontas")
@@ -46,12 +46,18 @@ public class Planocontas implements Serializable {
     private String descricao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "planocontas")
     private List<Contasreceber> contasreceberList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "planocontas")
+    private List<Movimentobanco> movimentobancoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "planocontas")
+    private List<Contaspagar> contaspagarList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "planocontas")
+    private List<Vendas> vendasList;
     @JoinColumn(name = "tipoplanocontas_idtipoplanocontas", referencedColumnName = "idtipoplanocontas")
     @ManyToOne(optional = false)
     private Tipoplanocontas tipoplanocontas;
     @Transient
     private boolean selecionado;
-    
+
     public Planocontas() {
     }
 
@@ -83,6 +89,26 @@ public class Planocontas implements Serializable {
         this.descricao = descricao;
     }
 
+    public List<Contasreceber> getContasreceberList() {
+        return contasreceberList;
+    }
+
+    public void setContasreceberList(List<Contasreceber> contasreceberList) {
+        this.contasreceberList = contasreceberList;
+    }
+
+    public List<Movimentobanco> getMovimentobancoList() {
+        return movimentobancoList;
+    }
+
+    public void setMovimentobancoList(List<Movimentobanco> movimentobancoList) {
+        this.movimentobancoList = movimentobancoList;
+    }
+
+    public List<Contaspagar> getContaspagarList() {
+        return contaspagarList;
+    }
+
     public boolean isSelecionado() {
         return selecionado;
     }
@@ -91,12 +117,16 @@ public class Planocontas implements Serializable {
         this.selecionado = selecionado;
     }
 
-    public List<Contasreceber> getContasreceberList() {
-        return contasreceberList;
+    public void setContaspagarList(List<Contaspagar> contaspagarList) {
+        this.contaspagarList = contaspagarList;
     }
 
-    public void setContasreceberList(List<Contasreceber> contasreceberList) {
-        this.contasreceberList = contasreceberList;
+    public List<Vendas> getVendasList() {
+        return vendasList;
+    }
+
+    public void setVendasList(List<Vendas> vendasList) {
+        this.vendasList = vendasList;
     }
 
     public Tipoplanocontas getTipoplanocontas() {
@@ -129,7 +159,7 @@ public class Planocontas implements Serializable {
 
     @Override
     public String toString() {
-        return getDescricao();
+        return "br.com.financemate.model.Planocontas[ idplanoContas=" + idplanoContas + " ]";
     }
     
 }

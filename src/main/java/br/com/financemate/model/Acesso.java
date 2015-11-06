@@ -6,20 +6,27 @@
 package br.com.financemate.model;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
  *
- * @author Wolverine
+ * @author Greici
  */
 @Entity
 @Table(name = "acesso")
+@NamedQueries({
+    @NamedQuery(name = "Acesso.findAll", query = "SELECT a FROM Acesso a")})
 public class Acesso implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -61,6 +68,8 @@ public class Acesso implements Serializable {
     private Boolean ausuario;
     @Column(name = "eusuario")
     private Boolean eusuario;
+    @Column(name = "produto")
+    private Boolean produto;
     @Column(name = "iproduto")
     private Boolean iproduto;
     @Column(name = "aproduto")
@@ -135,6 +144,8 @@ public class Acesso implements Serializable {
     private Boolean atipoplanocontas;
     @Column(name = "etipoplanocontas")
     private Boolean etipoplanocontas;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "acesso")
+    private List<Tipoacesso> tipoacessoList;
 
     public Acesso() {
     }
@@ -287,6 +298,13 @@ public class Acesso implements Serializable {
         this.eusuario = eusuario;
     }
 
+    public Boolean getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Boolean produto) {
+        this.produto = produto;
+    }
 
     public Boolean getIproduto() {
         return iproduto;
@@ -584,6 +602,14 @@ public class Acesso implements Serializable {
         this.etipoplanocontas = etipoplanocontas;
     }
 
+    public List<Tipoacesso> getTipoacessoList() {
+        return tipoacessoList;
+    }
+
+    public void setTipoacessoList(List<Tipoacesso> tipoacessoList) {
+        this.tipoacessoList = tipoacessoList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -608,6 +634,5 @@ public class Acesso implements Serializable {
     public String toString() {
         return "br.com.financemate.model.Acesso[ idacesso=" + idacesso + " ]";
     }
-
     
 }

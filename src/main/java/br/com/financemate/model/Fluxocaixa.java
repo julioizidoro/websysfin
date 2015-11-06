@@ -15,16 +15,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
  *
- * @author Wolverine
+ * @author Greici
  */
 @Entity
 @Table(name = "fluxocaixa")
+@NamedQueries({
+    @NamedQuery(name = "Fluxocaixa.findAll", query = "SELECT f FROM Fluxocaixa f")})
 public class Fluxocaixa implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,13 +51,6 @@ public class Fluxocaixa implements Serializable {
     private Cliente cliente;
 
     public Fluxocaixa() {
-    }
-    
-    public Fluxocaixa(Date data, float ValorContasPagar, float valorContasReceber, float saldo) {
-        this.data = data;
-        this.valorContasPagar = ValorContasPagar;
-        this.valorContasReceber = valorContasReceber;
-        this.saldo = saldo;
     }
 
     public Fluxocaixa(Integer idfluxoCaixa) {

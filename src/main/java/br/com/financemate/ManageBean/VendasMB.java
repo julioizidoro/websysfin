@@ -5,14 +5,17 @@
  */
 package br.com.financemate.ManageBean;
 
-import br.com.financemate.Controller.VendasController;
+
 import br.com.financemate.Util.Formatacao;
-import br.com.financemate.model.Usuario;
+import br.com.financemate.facade.VendasFacade;
 import br.com.financemate.model.Vendas;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -154,10 +157,15 @@ public class VendasMB implements Serializable{
     
     public void gerarListaVendas(){
         sql = sql + order;
-        VendasController vendasController = new VendasController();
-        listaVendas = vendasController.listar(sql);
-        if (listaVendas==null){
-            listaVendas = new ArrayList<Vendas>();
+        VendasFacade vendasFacade = new VendasFacade();
+        try {
+            listaVendas = vendasFacade.listar(sql);
+            if (listaVendas == null) {
+                listaVendas = new ArrayList<Vendas>();
+        }
+        } catch (SQLException ex) {
+            Logger.getLogger(VendasMB.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
     }
     
