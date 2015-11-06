@@ -9,6 +9,7 @@ package br.com.financemate.ManageBean;
 import br.com.financemate.Util.Formatacao;
 import br.com.financemate.facade.ContasPagarFacade;
 import br.com.financemate.facade.NomeArquivoFacade;
+import br.com.financemate.facade.UsuarioFacade;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contaspagar;
@@ -482,7 +483,7 @@ public class ContasPagarMB implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
             
         }
-        return null;
+        return;
     }
 
 
@@ -589,48 +590,8 @@ public class ContasPagarMB implements Serializable {
     }
 
     public String operacaoUsuario() {
-        UsuarioController usuarioController = new UsuarioController();
-        Usuario usuario;
-        boolean achouUser = false;
-        for (int i = 0; i < listaContaPagar.size(); i++) {
-            if (listaContaPagar.get(i).isSelecionado()) {
-                listaContaPagar.get(i).setSelecionado(false);
-                contasPagar = listaContaPagar.get(i);
-                if ((listaContaPagar.get(i).getUsuarioAgendou() > 0) && (listaContaPagar.get(i).getUsuarioAgendou() != null)) {
-                    usuario = usuarioController.consultar(listaContaPagar.get(i).getUsuarioAgendou());
-                    if (usuario != null) {
-                        usuarioAgendou = usuario.getNome();
-                        achouUser = true;
-                    }
-                }
-                if ((listaContaPagar.get(i).getUsuarioAutorizou() > 0) && (listaContaPagar.get(i).getUsuarioAutorizou() != null)) {
-                    usuario = usuarioController.consultar(listaContaPagar.get(i).getUsuarioAutorizou());
-                    if (usuario != null) {
-                        usuarioAutorizou = usuario.getNome();
-                        achouUser = true;
-                    }
-                }
-                if ((listaContaPagar.get(i).getUsuarioBaixou() > 0) && (listaContaPagar.get(i).getUsuarioBaixou() != null)) {
-                    usuario = usuarioController.consultar(listaContaPagar.get(i).getUsuarioBaixou());
-                    if (usuario != null) {
-                        usuarioBaixou = usuario.getNome();
-                        achouUser = true;
-                    }
-                }
-                if ((listaContaPagar.get(i).getUsuarioCadastrou() > 0) && (listaContaPagar.get(i).getUsuarioCadastrou() != null)) {
-                    usuario = usuarioController.consultar(listaContaPagar.get(i).getUsuarioCadastrou());
-                    if (usuario != null) {
-                        usuarioCadastrou = usuario.getNome();
-                        achouUser = true;
-                    }
-                }
-                if (achouUser) {
-                    return "operacoesUsuario";
-                } else {
-                    return "consConPagar";
-                }
-            }
-        }
+        //refazer
+
         return null;
     }
 

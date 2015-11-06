@@ -165,7 +165,8 @@ public class VendasMB implements Serializable{
         }
         } catch (SQLException ex) {
             Logger.getLogger(VendasMB.class.getName()).log(Level.SEVERE, null, ex);
-            
+             FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Erro!" + ex));
         }
     }
     
