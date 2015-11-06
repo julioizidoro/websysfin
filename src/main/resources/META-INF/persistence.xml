@@ -33,6 +33,7 @@
     <class>br.com.financemate.modelView.Viewrelatoriopagamento</class>
     <class>br.com.financemate.modelView.Viewrelatoriovendas</class>
     <class>br.com.financemate.modelView.Viewvendas</class>
+    <class>br.com.financemate.model.Operacaousuairo</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <shared-cache-mode>NONE</shared-cache-mode>
     <validation-mode>NONE</validation-mode>
