@@ -5,17 +5,19 @@
  */
 package br.com.financemate.ManageBean;
 
-import br.com.financemate.Controller.ContasPagarController;
-import br.com.financemate.Controller.FluxoCaixaController;
-import br.com.financemate.Controller.MovimentoBancoController;
+
 import br.com.financemate.Util.Formatacao;
 import br.com.financemate.Util.GerarRelatorio;
+import br.com.financemate.facade.ContasPagarFacade;
+import br.com.financemate.facade.FluxoCaixaFacade;
+import br.com.financemate.facade.MovimentoBancoFacade;
 import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Fluxocaixa;
 import br.com.financemate.model.Movimentobanco;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -177,23 +179,28 @@ public class RelatoriosContasPagarMB implements Serializable{
         return pagina;
     }
     
-    public String gerarExcelContasPagarVencidas(){
+    public String gerarExcelContasPagarVencidas() {
         listaContasPagar = null;
         titulo = "Contas a Pagar Vencidas";
-        this.periodo = "Período : " + Formatacao.ConvercaoDataPadrao(dataInicio) 
-            + "    " + Formatacao.ConvercaoDataPadrao(dataTermino);
-        ContasPagarController contasPagarController = new ContasPagarController();
+        this.periodo = "Período : " + Formatacao.ConvercaoDataPadrao(dataInicio)
+                + "    " + Formatacao.ConvercaoDataPadrao(dataTermino);
+        ContasPagarFacade contasPagarController = new ContasPagarFacade();
         String sql = "Select c from Contaspagar c where ";
-        if ((dataInicio!=null) && (dataTermino!=null)){
-            sql = sql + "c.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicio) +
-                "' and c.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataTermino) + "' and ";
+        if ((dataInicio != null) && (dataTermino != null)) {
+            sql = sql + "c.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicio)
+                    + "' and c.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataTermino) + "' and ";
         }
         sql = sql + " c.cliente.idcliente=" + clienteMB.getCliente().getIdcliente() + " and c.contaPaga='N'";
         sql = sql + " order by c.dataVencimento";
-        listaContasPagar = contasPagarController.listar(sql);
-        if (listaContasPagar!=null){
-            return "exportRelatorioContas";
+        try {
+            listaContasPagar = contasPagarController.listar(sql);
+            if (listaContasPagar != null) {
+                return "exportRelatorioContas";
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RelatoriosContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         return null;
     }
     
@@ -202,25 +209,26 @@ public class RelatoriosContasPagarMB implements Serializable{
         titulo = "Fluxo de Caixa";
         this.periodo = "Período : " + Formatacao.ConvercaoDataPadrao(dataInicio) 
             + "    " + Formatacao.ConvercaoDataPadrao(dataTermino);
-        FluxoCaixaController fluxoCaixaController = new FluxoCaixaController();
-        listaFluxoCaixa =fluxoCaixaController.consultar(clienteMB.getCliente().getIdcliente());
+        FluxoCaixaFacade fluxoCaixaFacade = new FluxoCaixaFacade();
+        // Rever depois com o metodo consultar
+        //listaFluxoCaixa =fluxoCaixaFacade.consultar(clienteMB.getCliente().getIdcliente());
         if (listaFluxoCaixa!=null){
             return "exportFluxoCaixa";
         }
         return null;
     }
     
-    public String gerarExcelPagamentos(){
+    public String gerarExcelPagamentos() {
         listaMovimentoBanco = null;
         titulo = "Relatório de Pagamentos";
-        this.periodo = "Período : " + Formatacao.ConvercaoDataPadrao(dataInicio) 
-            + "    " + Formatacao.ConvercaoDataPadrao(dataTermino);
-        MovimentoBancoController movimentoBancoController = new MovimentoBancoController();
+        this.periodo = "Período : " + Formatacao.ConvercaoDataPadrao(dataInicio)
+                + "    " + Formatacao.ConvercaoDataPadrao(dataTermino);
+        MovimentoBancoFacade movimentoBancoFacade = new MovimentoBancoFacade();
         String sql = "Select m from Movimentobanco m where ";
-        if ((dataInicio!=null) && (dataTermino!=null)){
-            sql = sql + "m.dataCompensacao>='" +  Formatacao.ConvercaoDataSql(dataInicio) +
-                    "' and m.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataTermino) + "' and ";
-        }else {
+        if ((dataInicio != null) && (dataTermino != null)) {
+            sql = sql + "m.dataCompensacao>='" + Formatacao.ConvercaoDataSql(dataInicio)
+                    + "' and m.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataTermino) + "' and ";
+        } else {
             sql = sql + "m.compentencia='" + competencia + "' and ";
         }
         sql = sql + "m.cliente.idcliente=" + clienteMB.getCliente().getIdcliente();
@@ -228,12 +236,17 @@ public class RelatoriosContasPagarMB implements Serializable{
         sql = sql + " and m.planocontas.idplanoContas<>" + clienteMB.getCliente().getContaReceita();
         sql = sql + " Group by m.planocontas.idplanoContas, m.dataCompensacao, m.descricao, m.valorEntrada, m.valorSaida, m.planocontas.descricao, m.banco.nome, m.cliente.nomeFantasia,  m.compentencia ";
         sql = sql + " Order by m.planocontas.idplanoContas, m.dataCompensacao, m.descricao, m.valorEntrada, m.valorSaida, m.planocontas.descricao, m.banco.nome, m.cliente.nomeFantasia,  m.compentencia ";
-        listaMovimentoBanco = movimentoBancoController.listaMovimento(sql);
-        if (listaMovimentoBanco!=null){
-            return "exportPagamentos";
+        try {
+            listaMovimentoBanco = movimentoBancoFacade.listaMovimento(sql);
+            if (listaMovimentoBanco != null) {
+                return "exportPagamentos";
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RelatoriosContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         return null;
-    } 
+    }
     
     
     //Relatorios Jasper

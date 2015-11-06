@@ -5,8 +5,12 @@
  */
 package br.com.financemate.Converter;
 
-import br.com.financemate.Controller.PlanoContasController;
+
+import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.model.Planocontas;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -21,10 +25,16 @@ public class PlanoContasConverter implements Converter{
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        PlanoContasController planoContasController = new PlanoContasController();
+        PlanoContasFacade planoContasFacade = new PlanoContasFacade();
         int idPlano = Integer.parseInt(value);
-        Planocontas plano = planoContasController.consultar(idPlano);
-        return plano;
+        Planocontas plano;
+        try {
+            plano = planoContasFacade.consultar(idPlano);
+            return plano;
+        } catch (SQLException ex) {
+            Logger.getLogger(PlanoContasConverter.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
     @Override

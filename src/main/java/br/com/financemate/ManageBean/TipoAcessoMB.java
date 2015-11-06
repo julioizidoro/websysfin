@@ -1,7 +1,7 @@
 package br.com.financemate.ManageBean;
 
 
-import br.com.financemate.controller.TipoAcessoController;
+
 import br.com.financemate.facade.TipoAcessoFacade;
 import br.com.financemate.model.Acesso;
 import br.com.financemate.model.Tipoacesso;

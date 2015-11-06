@@ -5,12 +5,12 @@
  */
 package br.com.financemate.ManageBean;
 
-import br.com.financemate.Controller.BancoController;
-import br.com.financemate.Controller.ContasReceberController;
-import br.com.financemate.Controller.MovimentoBancoController;
-import br.com.financemate.Controller.PlanoContasController;
-import br.com.financemate.Controller.UsuarioController;
 import br.com.financemate.Util.Formatacao;
+import br.com.financemate.facade.BancoFacade;
+import br.com.financemate.facade.ContasReceberFacade;
+import br.com.financemate.facade.MovimentoBancoFacade;
+import br.com.financemate.facade.PlanoContasFacade;
+import br.com.financemate.facade.UsuarioFacade;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contasreceber;
@@ -18,9 +18,12 @@ import br.com.financemate.model.Movimentobanco;
 import br.com.financemate.model.Planocontas;
 import br.com.financemate.model.Usuario;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -33,11 +36,12 @@ import javax.inject.Named;
  */
 @Named("ContasReceberMB")
 @SessionScoped
-public class ContasReceberMB implements Serializable{
-    
-    
-    @Inject private UsuarioLogadoBean usuarioLogadoBean;
-    @Inject private ClienteMB clienteMB;
+public class ContasReceberMB implements Serializable {
+
+    @Inject
+    private UsuarioLogadoBean usuarioLogadoBean;
+    @Inject
+    private ClienteMB clienteMB;
     private List<Contasreceber> listaContasReceber;
     private Contasreceber contasReceber;
     private Date dataInicial;
@@ -53,19 +57,16 @@ public class ContasReceberMB implements Serializable{
     String sql;
     private String idPlanoConta;
     private String idBanco;
-    private String valorParcela="0";
-    private String numeroParcelas="1";
-    private String desagio="0";
-    private String juros="0";
-    private String valorRecebido="0";
+    private String valorParcela = "0";
+    private String numeroParcelas = "1";
+    private String desagio = "0";
+    private String juros = "0";
+    private String valorRecebido = "0";
     private String nomeClientePesquisa;
     private String numeroVenda;
     private String tipoContaPesquisa;
     private String usuarioCadastrou;
     private String usuarioBaixou;
-    
-
-   
 
     public ContasReceberMB() {
         gerarDataInicial();
@@ -155,8 +156,6 @@ public class ContasReceberMB implements Serializable{
         this.juros = juros;
     }
 
-    
-
     public void setIdBanco(String idBanco) {
         this.idBanco = idBanco;
     }
@@ -176,24 +175,22 @@ public class ContasReceberMB implements Serializable{
     public void setUsuarioCadastrou(String usuarioCadastrou) {
         this.usuarioCadastrou = usuarioCadastrou;
     }
-    
-    
-    
-    public String novo(){
-        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIcontasreceber()){
+
+    public String novo() {
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIcontasreceber()) {
             clienteMB.setCliente(new Cliente());
             listaBanco = new ArrayList<Banco>();
             contasReceber = new Contasreceber();
             return "cadConReceber";
-        }else {
+        } else {
             FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
             return "";
         }
-        
+
     }
-    
-    public String cancelar(){
+
+    public String cancelar() {
         return "consConReceber";
     }
 
@@ -252,7 +249,7 @@ public class ContasReceberMB implements Serializable{
     public void setTotalrecebido(String totalrecebido) {
         this.totalrecebido = totalrecebido;
     }
-    
+
     public List<Banco> getListaBanco() {
         if ((clienteMB.getCliente() != null) && (clienteMB.getCliente().getIdcliente() != null)) {
             if ((listaBanco == null) || (listaBanco.isEmpty())) {
@@ -267,8 +264,8 @@ public class ContasReceberMB implements Serializable{
     }
 
     public List<Contasreceber> getListaContasReceber() {
-          if (listaContasReceber==null){
-             criarConsultaContasReceberInicial();
+        if (listaContasReceber == null) {
+            criarConsultaContasReceberInicial();
         }
         return listaContasReceber;
     }
@@ -276,8 +273,6 @@ public class ContasReceberMB implements Serializable{
     public void setListaContasReceber(List<Contasreceber> listaContasReceber) {
         this.listaContasReceber = listaContasReceber;
     }
-
-   
 
     public Contasreceber getContasReceber() {
         return contasReceber;
@@ -303,7 +298,6 @@ public class ContasReceberMB implements Serializable{
         this.dataInicial = dataInicial;
     }
 
-    
     public Date getDataFinal() {
         return dataFinal;
     }
@@ -311,59 +305,74 @@ public class ContasReceberMB implements Serializable{
     public void setDataFinal(Date dataFinal) {
         this.dataFinal = dataFinal;
     }
-    
-    public void carregarListaBanco(){
-        BancoController bancoController = new BancoController();
-        listaBanco = bancoController.listar(clienteMB.getCliente().getIdcliente());
-        if (listaBanco==null){
-            listaBanco = new ArrayList<Banco>();
+
+    public void carregarListaBanco() {
+        BancoFacade bancoFacade = new BancoFacade();
+        try {
+            listaBanco = bancoFacade.listar(clienteMB.getCliente().getIdcliente());
+            if (listaBanco == null) {
+                listaBanco = new ArrayList<Banco>();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
-    
-    public void carregarListaPlanoContas(){
-        PlanoContasController planoContasController = new PlanoContasController();
-        listaPlanoContas = planoContasController.listar(clienteMB.getCliente().getTipoplanocontas().getIdtipoplanocontas());
-        if (listaPlanoContas==null){
-            listaPlanoContas = new ArrayList<Planocontas>();
+
+    public void carregarListaPlanoContas() {
+        PlanoContasFacade planoContasFacade = new PlanoContasFacade();
+        try {
+            listaPlanoContas = planoContasFacade.listar(clienteMB.getCliente().getTipoplanocontas().getIdtipoplanocontas());
+            if (listaPlanoContas == null) {
+                listaPlanoContas = new ArrayList<Planocontas>();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
-    
-    public void criarConsultaContasReceberInicial(){
-        if ((clienteMB.getCliente()!=null) && (clienteMB.getCliente().getIdcliente()!=null)){
-            sql = " Select c from Contasreceber c where c.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + 
-                "' and c.valorPago=0 and c.cliente.idcliente=" + clienteMB.getCliente().getIdcliente() + 
-                    " order by c.dataVencimento";
-        }else {
+
+    public void criarConsultaContasReceberInicial() {
+        if ((clienteMB.getCliente() != null) && (clienteMB.getCliente().getIdcliente() != null)) {
+            sql = " Select c from Contasreceber c where c.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal)
+                    + "' and c.valorPago=0 and c.cliente.idcliente=" + clienteMB.getCliente().getIdcliente()
+                    + " order by c.dataVencimento";
+        } else {
             sql = " Select c from Contasreceber c where c.cliente.visualizacao='Operacional' and "
-                    + "c.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + 
-                "' and c.valorPago=0 order by c.dataVencimento";
+                    + "c.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal)
+                    + "' and c.valorPago=0 order by c.dataVencimento";
         }
         carregarLista();
     }
-    
+
     public void carregarLista() {
-        ContasReceberController contasReceberController = new ContasReceberController();
-        listaContasReceber = contasReceberController.listar(sql);
-        if (listaContasReceber == null) {
-            listaContasReceber = new ArrayList<Contasreceber>();
+        ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+        try {
+            listaContasReceber = contasReceberFacade.listar(sql);
+            if (listaContasReceber == null) {
+                listaContasReceber = new ArrayList<Contasreceber>();
+            }
+            calcularTotais();
+        } catch (SQLException ex) {
+            Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
         }
-        calcularTotais();
+
     }
-    
-    public String pesquisarContasReceber(){
-        this.listaContasReceber=null;
+
+    public String pesquisarContasReceber() {
+        this.listaContasReceber = null;
         sql = "Select c from Contasreceber c where ";
         if (recebida) {
-            if ((clienteMB.getCliente() != null) && (clienteMB.getCliente().getIdcliente()!=null)) {
+            if ((clienteMB.getCliente() != null) && (clienteMB.getCliente().getIdcliente() != null)) {
                 sql = sql + " c.cliente.idcliente=" + clienteMB.getCliente().getIdcliente() + " and ";
             }
             sql = sql + "c.dataPagamento>='" + Formatacao.ConvercaoDataSql(dataInicial)
                     + "' and c.dataPagamento<='" + Formatacao.ConvercaoDataSql(dataFinal)
                     + "' and c.valorPago>0 order by c.dataVencimento";
         } else {
-            if ((clienteMB.getCliente() != null) && (clienteMB.getCliente().getIdcliente()!=null)) {
+            if ((clienteMB.getCliente() != null) && (clienteMB.getCliente().getIdcliente() != null)) {
                 sql = sql + " c.cliente.idcliente=" + clienteMB.getCliente().getIdcliente() + " and ";
-            }else {
+            } else {
                 sql = sql + " c.cliente.visualizacao='Operacional' and ";
             }
             sql = sql + "c.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicial)
@@ -373,9 +382,8 @@ public class ContasReceberMB implements Serializable{
         carregarLista();
         return "consConReceber";
     }
-    
-    
-    public void gerarDataInicial(){
+
+    public void gerarDataInicial() {
         String data = Formatacao.ConvercaoDataPadrao(new Date());
         String mesString = data.substring(3, 5);
         String anoString = data.substring(6, 10);
@@ -385,32 +393,32 @@ public class ContasReceberMB implements Serializable{
         int mescFinal;
         int anocInicio = 0;
         int anocFinal = 0;
-        if (mesInicio==1){
-            mescInicio=12;
-            anocInicio=anoInicio - 1;
-        }else {
+        if (mesInicio == 1) {
+            mescInicio = 12;
+            anocInicio = anoInicio - 1;
+        } else {
             mescInicio = mesInicio - 1;
             anocInicio = anoInicio;
         }
-        if (mesInicio==12){
-            mescFinal=1;
-            anocFinal=anoInicio+1;
-        }else {
-            mescFinal = mesInicio  + 1;
+        if (mesInicio == 12) {
+            mescFinal = 1;
+            anocFinal = anoInicio + 1;
+        } else {
+            mescFinal = mesInicio + 1;
             anocFinal = anoInicio;
         }
         String sdataInicial = anocInicio + "-" + Formatacao.retornaDataInicia(mescInicio);
         String sdataFinal = anocFinal + "-" + Formatacao.retornaDataFinal(mescFinal);
-        dataInicial =(Formatacao.ConvercaoStringData(sdataInicial));
+        dataInicial = (Formatacao.ConvercaoStringData(sdataInicial));
         dataFinal = (Formatacao.ConvercaoStringData(sdataFinal));
     }
-    
-    public void calcularTotais(){
-        float tconta=0.0f;
-        float tjuros=0.0f;
-        float tdesconto=0.0f;
-        float trecebido=0.0f;
-        for (int i=0;i<listaContasReceber.size();i++){
+
+    public void calcularTotais() {
+        float tconta = 0.0f;
+        float tjuros = 0.0f;
+        float tdesconto = 0.0f;
+        float trecebido = 0.0f;
+        for (int i = 0; i < listaContasReceber.size(); i++) {
             tconta = tconta + listaContasReceber.get(i).getValorParcela();
             tjuros = tjuros + listaContasReceber.get(i).getJuros();
             tdesconto = tdesconto + listaContasReceber.get(i).getDesagio();
@@ -422,79 +430,89 @@ public class ContasReceberMB implements Serializable{
         totalrecebido = Formatacao.foramtarFloatString(trecebido);
         quantidade = String.valueOf(listaContasReceber.size());
     }
-    
+
     public String selecionarUnidade() {
         clienteMB.setPagina("consConReceber");
         return "selecionarUnidade";
     }
-    
+
     public String selecionarUnidadeCadastro() {
         clienteMB.setPagina("cadConReceber");
         return "selecionarUnidade";
     }
-    
+
     public String selecionarUnidadePesquisa() {
         clienteMB.setPagina("pesquisarConReceber");
         return "selecionarUnidade";
     }
-    
-    public String salvar(){
-        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIcontasreceber()){
-            if (contasReceber.getIdcontasReceber()==null){
-            contasReceber.setMovimentoBanco(0);
-            contasReceber.setVenda(0);
-            contasReceber.setVendaComissao(0);
+
+    public String salvar() {
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIcontasreceber()) {
+            if (contasReceber.getIdcontasReceber() == null) {
+                contasReceber.setMovimentoBanco(0);
+                contasReceber.setVenda(0);
+                contasReceber.setVendaComissao(0);
             }
-            if (!idBanco.equalsIgnoreCase("0")) {
-                BancoController bancoController = new BancoController();
-                Banco banco = bancoController.consultar(Integer.parseInt(idBanco));
-                contasReceber.setBanco(banco);
+            try {
+                if (!idBanco.equalsIgnoreCase("0")) {
+                    BancoFacade bancoFacade = new BancoFacade();
+                    Banco banco;
+
+                    banco = bancoFacade.consultar(Integer.parseInt(idBanco));
+
+                    contasReceber.setBanco(banco);
+                }
+                if (!idPlanoConta.equalsIgnoreCase("0")) {
+                    PlanoContasFacade planoContasFacade = new PlanoContasFacade();
+                    Planocontas plano = planoContasFacade.consultar(Integer.parseInt(idPlanoConta));
+                    contasReceber.setPlanocontas(plano);
+                }
+                contasReceber.setCliente(clienteMB.getCliente());
+                contasReceber.setUsuario(usuarioLogadoBean.getUsuario());
+                contasReceber.setValorParcela(Formatacao.formatarStringfloat(valorParcela));
+                contasReceber.setNumeroParcela(Integer.parseInt(numeroParcelas));
+                contasReceber.setValorPago(Formatacao.formatarStringfloat(valorRecebido));
+                contasReceber.setDesagio(Formatacao.formatarStringfloat(desagio));
+                contasReceber.setJuros(Formatacao.formatarStringfloat(juros));
+                ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+                contasReceberFacade.salvar(contasReceber);
+                clienteMB.setCliente(new Cliente());
+                carregarLista();
+                contasReceber = new Contasreceber();
+                idBanco = "0";
+                idPlanoConta = "0";
+                valorParcela = "";
+                numeroParcelas = "1";
+                return "consConReceber";
+            } catch (SQLException ex) {
+                Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
             }
-            if (!idPlanoConta.equalsIgnoreCase("0")) {
-                PlanoContasController planoContasController = new PlanoContasController();
-                Planocontas plano = planoContasController.consultar(Integer.parseInt(idPlanoConta));
-                contasReceber.setPlanocontas(plano);
-            }
-            contasReceber.setCliente(clienteMB.getCliente());
-            contasReceber.setUsuario(usuarioLogadoBean.getUsuario());
-            contasReceber.setValorParcela(Formatacao.formatarStringfloat(valorParcela));
-            contasReceber.setNumeroParcela(Integer.parseInt(numeroParcelas));
-            contasReceber.setValorPago(Formatacao.formatarStringfloat(valorRecebido));
-            contasReceber.setDesagio(Formatacao.formatarStringfloat(desagio));
-            contasReceber.setJuros(Formatacao.formatarStringfloat(juros));
-            ContasReceberController contasReceberController = new ContasReceberController();
-            contasReceberController.salvar(contasReceber);
-            clienteMB.setCliente(new Cliente());
-            carregarLista();
-            contasReceber = new Contasreceber();
-            idBanco="0";
-            idPlanoConta="0";
-            valorParcela="";
-            numeroParcelas="1";
-            return "consConReceber";
-        }else {
+        } else {
             FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
             return "";
         }
-        
+        return null;
     }
-    
-    public String salvarRecebida(){
-        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIcontasreceber()){
-             if (!idBanco.equalsIgnoreCase("0")) {
-                BancoController bancoController = new BancoController();
-                Banco banco = bancoController.consultar(Integer.parseInt(idBanco));
-                contasReceber.setBanco(banco);
+
+    public String salvarRecebida() {
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIcontasreceber()) {
+            try {
+                if (!idBanco.equalsIgnoreCase("0")) {
+                    BancoFacade bancoFacade = new BancoFacade();
+                    Banco banco;
+
+                    banco = bancoFacade.consultar(Integer.parseInt(idBanco));
+
+                    contasReceber.setBanco(banco);
                 }
                 contasReceber.setUsuario(usuarioLogadoBean.getUsuario());
                 contasReceber.setValorPago(Formatacao.formatarStringfloat(valorRecebido));
                 contasReceber.setDesagio(Formatacao.formatarStringfloat(desagio));
                 contasReceber.setJuros(Formatacao.formatarStringfloat(juros));
-                ContasReceberController contasReceberController = new ContasReceberController();
+                ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
 
                 // Salvar Banco
-
                 Movimentobanco mb = new Movimentobanco();
                 mb.setBanco(contasReceber.getBanco());
                 mb.setCliente(contasReceber.getCliente());
@@ -512,33 +530,36 @@ public class ContasReceberMB implements Serializable{
                 int anoInicio = Integer.parseInt(anoString);
                 mb.setCompentencia(mesString + "/" + anoString);
                 String nome = contasReceber.getNomeCliente();
-                if (contasReceber.getNomeCliente().length()>80){
-                    nome = nome.substring(0,79);
+                if (contasReceber.getNomeCliente().length() > 80) {
+                    nome = nome.substring(0, 79);
                 }
                 mb.setDescricao("Recebimento " + nome);
                 mb.setTipoDocumento(contasReceber.getTipodocumento());
-                MovimentoBancoController movimentoBancoController = new MovimentoBancoController();
-                mb = movimentoBancoController.salvar(mb);
+                MovimentoBancoFacade movimentoBancoFacade = new MovimentoBancoFacade();
+                mb = movimentoBancoFacade.salvar(mb);
                 contasReceber.setMovimentoBanco(mb.getIdmovimentoBanco());
-                contasReceberController.salvar(contasReceber);
+                contasReceberFacade.salvar(contasReceber);
                 clienteMB.setCliente(new Cliente());
                 carregarLista();
                 contasReceber = new Contasreceber();
-                idBanco="0";
-                idPlanoConta="0";
-                valorParcela="";
-                numeroParcelas="1";
+                idBanco = "0";
+                idPlanoConta = "0";
+                valorParcela = "";
+                numeroParcelas = "1";
                 return "consConReceber";
-        }else {
+            } catch (SQLException ex) {
+                Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
             FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
             return "";
         }
-       
+        return null;
     }
-    
+
     public String editar() {
-        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getAcontasreceber()){
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getAcontasreceber()) {
             for (int i = 0; i < listaContasReceber.size(); i++) {
                 if (listaContasReceber.get(i).isSelecionado()) {
                     if (listaContasReceber.get(i).getValorPago() == 0) {
@@ -559,15 +580,15 @@ public class ContasReceberMB implements Serializable{
                 }
             }
             return null;
-        }else {
+        } else {
             FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
             return "";
         }
     }
-    
+
     public String receber() {
-        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getContasreceber()){
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getContasreceber()) {
             for (int i = 0; i < listaContasReceber.size(); i++) {
                 if (listaContasReceber.get(i).isSelecionado()) {
                     if (listaContasReceber.get(i).getValorPago() == 0) {
@@ -590,7 +611,7 @@ public class ContasReceberMB implements Serializable{
                 }
             }
             return null;
-        }else {
+        } else {
             FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
             return "";
@@ -598,39 +619,45 @@ public class ContasReceberMB implements Serializable{
     }
 
     public String excluir() {
-        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getEcontasreceber()){
-            ContasReceberController contasReceberController = new ContasReceberController();
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getEcontasreceber()) {
+            ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
             for (int i = 0; i < listaContasReceber.size(); i++) {
                 if (listaContasReceber.get(i).isSelecionado()) {
-                    contasReceberController.excluir(listaContasReceber.get(i).getIdcontasReceber());
+                    try {
+                        contasReceberFacade.excluir(listaContasReceber.get(i).getIdcontasReceber());
+                        carregarLista();
+                        return "consConReceber";
+                    } catch (SQLException ex) {
+                        Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
-            carregarLista();
-            return "consConReceber";
-        }else {
+
+        } else {
             FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
             return "";
         }
+        return null;
     }
-    
-    public String limparCosulta(){
+
+    public String limparCosulta() {
         gerarDataInicial();
         criarConsultaContasReceberInicial();
         return "consConReceber";
     }
-    
-    public String iniciarPesquisa(){
+
+    public String iniciarPesquisa() {
         return "pesquisarConReceber";
     }
-    
-    public String gerarPesquisa(){
+
+    public String gerarPesquisa() {
         gerarSql();
         carregarLista();
         return "consConReceber";
     }
-    
-    private void gerarSql(){
+
+    private void gerarSql() {
         boolean linha = false;
         sql = "Select v from Contasreceber v where ";
         if (tipoContaPesquisa.equalsIgnoreCase("Todas")) {
@@ -655,7 +682,7 @@ public class ContasReceberMB implements Serializable{
             } else if (tipoContaPesquisa.equalsIgnoreCase("Recebidas")) {
                 if (!linha) {
                     sql = sql + "  v.dataPagamento>='" + Formatacao.ConvercaoDataSql(dataInicial)
-                            + "' and v.dataPagamento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' and valorPago>0"  ;
+                            + "' and v.dataPagamento<='" + Formatacao.ConvercaoDataSql(dataFinal) + "' and valorPago>0";
                     linha = true;
                 }
             }
@@ -668,62 +695,68 @@ public class ContasReceberMB implements Serializable{
                 sql = sql + " and v.cliente.idcliente=" + clienteMB.getCliente().getIdcliente();
             }
         }
-        if (numeroVenda.length()>0){
+        if (numeroVenda.length() > 0) {
             int numero = Integer.parseInt(numeroVenda);
-            if (!linha){
+            if (!linha) {
                 sql = sql + " v.venda=" + numero;
                 linha = true;
-            }else {
+            } else {
                 sql = sql + " and v.venda=" + numero;
             }
         }
-        if (nomeClientePesquisa.length()>0){
-            if (!linha){
+        if (nomeClientePesquisa.length() > 0) {
+            if (!linha) {
                 sql = sql + " v.nomeCliente like '%" + nomeClientePesquisa + "%'";
-            }else{
+            } else {
                 sql = sql + " and v.nomeCliente like '%" + nomeClientePesquisa + "%'";
             }
         }
         sql = sql + " order by v.dataVencimento";
     }
-    
-    public void calcularJuroDesagio(){
+
+    public void calcularJuroDesagio() {
         Float vDesagio = Formatacao.formatarStringfloat(desagio);
         Float vJuro = Formatacao.formatarStringfloat(juros);
         Float vValorParcela = Formatacao.formatarStringfloat(valorParcela);
-        Float vValorRecebido  = vValorParcela + vJuro -(vDesagio);
+        Float vValorRecebido = vValorParcela + vJuro - (vDesagio);
         valorRecebido = Formatacao.foramtarFloatString(vJuro);
     }
-    
+
     public String operacaoUsuario() {
-        usuarioBaixou="";
-        usuarioCadastrou="";
-        UsuarioController usuarioController = new UsuarioController();
+        usuarioBaixou = "";
+        usuarioCadastrou = "";
+        UsuarioFacade usuarioFacade = new UsuarioFacade();
         Usuario usuario;
         boolean achouUser = false;
         for (int i = 0; i < listaContasReceber.size(); i++) {
-            if (listaContasReceber.get(i).isSelecionado()) {
-                listaContasReceber.get(i).setSelecionado(false);
-                contasReceber = listaContasReceber.get(i);
-                if ((listaContasReceber.get(i).getUsuariocadastrou()> 0) && (listaContasReceber.get(i).getUsuariocadastrou()!= null)) {
-                    usuario = usuarioController.consultar(listaContasReceber.get(i).getUsuariocadastrou());
-                    if (usuario != null) {
-                        usuarioCadastrou = usuario.getNome();
-                        achouUser = true;
+            try {
+                if (listaContasReceber.get(i).isSelecionado()) {
+                    listaContasReceber.get(i).setSelecionado(false);
+                    contasReceber = listaContasReceber.get(i);
+                    if ((listaContasReceber.get(i).getUsuariocadastrou() > 0) && (listaContasReceber.get(i).getUsuariocadastrou() != null)) {
+
+                        usuario = usuarioFacade.consultar(listaContasReceber.get(i).getUsuariocadastrou());
+
+                        if (usuario != null) {
+                            usuarioCadastrou = usuario.getNome();
+                            achouUser = true;
+                        }
+                    }
+                    if ((listaContasReceber.get(i).getUsuariobaixou() > 0) && (listaContasReceber.get(i).getUsuariobaixou() != null)) {
+                        usuario = usuarioFacade.consultar(listaContasReceber.get(i).getUsuariobaixou());
+                        if (usuario != null) {
+                            usuarioBaixou = usuario.getNome();
+                            achouUser = true;
+                        }
+                    }
+                    if (achouUser) {
+                        return "operUsuContasReceber";
+                    } else {
+                        return "operUsuContasReceber";
                     }
                 }
-                if ((listaContasReceber.get(i).getUsuariobaixou()> 0) && (listaContasReceber.get(i).getUsuariobaixou()!= null)) {
-                    usuario = usuarioController.consultar(listaContasReceber.get(i).getUsuariobaixou());
-                    if (usuario != null) {
-                        usuarioBaixou = usuario.getNome();
-                        achouUser = true;
-                    }
-                }
-                if (achouUser) {
-                    return "operUsuContasReceber";
-                } else {
-                    return "operUsuContasReceber";
-                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return null;

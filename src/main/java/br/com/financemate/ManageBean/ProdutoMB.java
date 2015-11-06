@@ -1,10 +1,14 @@
 package br.com.financemate.ManageBean;
 
-import br.com.financemate.Controller.ProdutoController;
+
+import br.com.financemate.facade.ProdutoFacade;
 import br.com.financemate.model.Produto;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -78,29 +82,38 @@ public class ProdutoMB implements Serializable {
         }
         
     }
-    public String salvar(){
-        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIproduto()){
-            ProdutoController produtoController = new ProdutoController();
+    public String salvar() {
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIproduto()) {
+            ProdutoFacade produtoFacade = new ProdutoFacade();
             produto.setCliente(clienteMB.getCliente());
-            produtoController.salvar(produto);
-            produto = new Produto();
-            gerarListaProduto();
-            return "consProduto";
-        }else {
+            try {
+                produtoFacade.salvar(produto);
+                produto = new Produto();
+                gerarListaProduto();
+                return "consProduto";
+            } catch (SQLException ex) {
+                Logger.getLogger(ProdutoMB.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
             FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
             return "";
         }
-        
+        return null;
     }
     
     public void gerarListaProduto() {
         if ((clienteMB.getCliente() != null) && (clienteMB.getCliente().getIdcliente() != null)) {
-            ProdutoController produtoController = new ProdutoController();
-            listaProduto = produtoController.listar(clienteMB.getCliente().getIdcliente());
-            if (listaProduto == null) {
-                listaProduto = new ArrayList<Produto>();
+            ProdutoFacade produtoFacade = new ProdutoFacade();
+            try {
+                listaProduto = produtoFacade.listar(clienteMB.getCliente().getIdcliente());
+                if (listaProduto == null) {
+                    listaProduto = new ArrayList<Produto>();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProdutoMB.class.getName()).log(Level.SEVERE, null, ex);
             }
+
         }
     }
     public String editar(){

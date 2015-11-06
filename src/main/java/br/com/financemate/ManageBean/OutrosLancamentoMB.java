@@ -5,10 +5,10 @@
  */
 package br.com.financemate.ManageBean;
 
-import br.com.financemate.Controller.BancoController;
-import br.com.financemate.Controller.MovimentoBancoController;
-import br.com.financemate.Controller.PlanoContasController;
 import br.com.financemate.Util.Formatacao;
+import br.com.financemate.facade.BancoFacade;
+import br.com.financemate.facade.MovimentoBancoFacade;
+import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Movimentobanco;
 import br.com.financemate.model.Planocontas;
@@ -17,6 +17,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -159,7 +161,7 @@ public class OutrosLancamentoMB implements Serializable {
         this.usuarioLogadoBean = usuarioLogadoBean;
     }
 
-    public String novo() throws SQLException {
+    public String novo()  {
         if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIoutroslancamentos()){
             if ((clienteMB.getCliente() != null) && (clienteMB.getCliente().getIdcliente() != null)) {
                 movimentobanco = new Movimentobanco();
@@ -188,41 +190,58 @@ public class OutrosLancamentoMB implements Serializable {
     }
 
     public void carregarListaPlanoContas() {
-        PlanoContasController planoContasController = new PlanoContasController();
-        listarPlanoContas = planoContasController.listar(clienteMB.getCliente().getTipoplanocontas().getIdtipoplanocontas());
-        if (listarPlanoContas == null) {
-            listarPlanoContas = new ArrayList<Planocontas>();
+        PlanoContasFacade planocontasFacade = new PlanoContasFacade();
+        try {
+            listarPlanoContas = planocontasFacade.listar(clienteMB.getCliente().getTipoplanocontas().getIdtipoplanocontas());
+            if (listarPlanoContas == null) {
+                listarPlanoContas = new ArrayList<Planocontas>();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OutrosLancamentoMB.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     public void carregarListaBanco() {
         gerarDataInicial();
-        BancoController bancoController = new BancoController();
-        listaBanco = bancoController.listar(clienteMB.getCliente().getIdcliente());
-        if (listaBanco == null) {
-            listaBanco = new ArrayList<Banco>();
+        BancoFacade bancoFacade = new BancoFacade();
+        try {
+            listaBanco = bancoFacade.listar(clienteMB.getCliente().getIdcliente());
+            if (listaBanco == null) {
+                listaBanco = new ArrayList<Banco>();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OutrosLancamentoMB.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     public String salvar() {
-        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIoutroslancamentos()){
-            MovimentoBancoController movimentoBancoController = new MovimentoBancoController();
-            movimentobanco.setCliente(clienteMB.getCliente());
-            BancoController bancoController = new BancoController();
-            Banco banco = bancoController.consultar(Integer.parseInt(idBanco));
-            movimentobanco.setBanco(banco);
-            PlanoContasController planoContasController = new PlanoContasController();
-            Planocontas planocontas = planoContasController.consultar(Integer.parseInt(idPlanoConta));
-            movimentobanco.setPlanocontas(planocontas);
-            movimentobanco.setUsuario(usuarioLogadoBean.getUsuario());
-            movimentoBancoController.salvar(movimentobanco);
-            movimentobanco = new Movimentobanco();
-            return "consOutrosLancamentos";
-        }else {
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIoutroslancamentos()) {
+            try {
+                MovimentoBancoFacade movimentoBancoFacade = new MovimentoBancoFacade();
+                movimentobanco.setCliente(clienteMB.getCliente());
+                BancoFacade bancoFacade = new BancoFacade();
+                Banco banco = null;
+                banco = bancoFacade.consultar(Integer.parseInt(idBanco));
+                movimentobanco.setBanco(banco);
+                PlanoContasFacade planoContasFacade = new PlanoContasFacade();
+                Planocontas planocontas = null;
+                planocontas = planoContasFacade.consultar(Integer.parseInt(idPlanoConta));
+                movimentobanco.setPlanocontas(planocontas);
+                movimentobanco.setUsuario(usuarioLogadoBean.getUsuario());
+                movimentoBancoFacade.salvar(movimentobanco);
+                movimentobanco = new Movimentobanco();
+                return "consOutrosLancamentos";
+            } catch (SQLException ex) {
+                Logger.getLogger(OutrosLancamentoMB.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
             FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
             return "";
         }
+        return null;
     }
 
     public String selecionarUnidade() {
@@ -231,7 +250,7 @@ public class OutrosLancamentoMB implements Serializable {
         return "selecionarUnidade";
     }
 
-    public String editar() throws SQLException {
+    public String editar() {
         if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getAoutroslancamentos()){
             if (listarMovimentobancos != null) {
                 for (int i = 0; i < listarMovimentobancos.size(); i++) {
@@ -290,29 +309,39 @@ public class OutrosLancamentoMB implements Serializable {
                     + "'  and m.dataCompensacao<='" + Formatacao.ConvercaoDataSql(dataFinal)
                     + "' and m.cliente.idcliente=" + clienteMB.getCliente().getIdcliente();
 
-            MovimentoBancoController movimentoBancoController = new MovimentoBancoController();
-            listarMovimentobancos = movimentoBancoController.listaMovimento(sql);
-            if (listarMovimentobancos == null) {
-                listarMovimentobancos = new ArrayList<Movimentobanco>();
+            MovimentoBancoFacade movimentoBancoFacade = new MovimentoBancoFacade();
+            try {
+                listarMovimentobancos = movimentoBancoFacade.listaMovimento(sql);
+                if (listarMovimentobancos == null) {
+                    listarMovimentobancos = new ArrayList<Movimentobanco>();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(OutrosLancamentoMB.class.getName()).log(Level.SEVERE, null, ex);
             }
+
         }
     }
 
-    public String excluir() throws SQLException {
+    public String excluir() {
         if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getContaspagar()){
-            MovimentoBancoController movimentoBancoController = new MovimentoBancoController();
+            MovimentoBancoFacade movimentoBancoFacade = new MovimentoBancoFacade();
             for (int i = 0; i < listarMovimentobancos.size(); i++) {
                 if (listarMovimentobancos.get(i).isSelecionado()) {
-                    movimentoBancoController.excluir(listarMovimentobancos.get(i).getIdmovimentoBanco());
-                    gerarPesquisa();
-                    return "consOutrosLancamentos";
+                    try {
+                        movimentoBancoFacade.excluir(listarMovimentobancos.get(i).getIdmovimentoBanco());
+                        gerarPesquisa();
+                        return "consOutrosLancamentos";
+                    } catch (SQLException ex) {
+                        Logger.getLogger(OutrosLancamentoMB.class.getName()).log(Level.SEVERE, null, ex);
+                        return "";
+                    }
                 }
-            }
-            return "";
+            } 
         }else {
             FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
             return "";
         }
+        return null;
     }
 }
