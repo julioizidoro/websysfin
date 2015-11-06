@@ -7,16 +7,17 @@ package br.com.financemate.ManageBean;
 
 
 import br.com.financemate.Util.Formatacao;
+import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ContasPagarFacade;
+import br.com.financemate.facade.MovimentoBancoFacade;
 import br.com.financemate.facade.NomeArquivoFacade;
-import br.com.financemate.facade.UsuarioFacade;
+import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Movimentobanco;
 import br.com.financemate.model.Nomearquivo;
 import br.com.financemate.model.Planocontas;
-import br.com.financemate.model.Usuario;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -481,9 +482,9 @@ public class ContasPagarMB implements Serializable {
             Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
             FacesMessage mensagem = new FacesMessage("Erro! " + ex);
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
-            
+           
         }
-        return;
+       return;
     }
 
 
@@ -606,76 +607,97 @@ public class ContasPagarMB implements Serializable {
     }
 
     public void carregarListaBanco() {
-        if ((clienteMB.getCliente() != null) && (clienteMB.getCliente().getIdcliente() != null)) {
-            BancoController bancoController = new BancoController();
-            listaBanco = bancoController.listar(clienteMB.getCliente().getIdcliente());
-            if (listaBanco == null) {
+            BancoFacade bancoFacade = new BancoFacade();
+            try {
+                if ((clienteMB.getCliente() != null) && (clienteMB.getCliente().getIdcliente() != null)) {
+                listaBanco = bancoFacade.listar(clienteMB.getCliente().getIdcliente());
+                }
+                if (listaBanco == null) {
                 listaBanco = new ArrayList<Banco>();
+                } 
+            }catch (SQLException ex) {
+                Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+                 FacesMessage mensagem = new FacesMessage("Erro! " + ex);
+                 FacesContext.getCurrentInstance().addMessage(null, mensagem);
+                
             }
+           
         }
-    }
 
     public void carregarListaPlanoContas() {
-        PlanoContasController planoContasController = new PlanoContasController();
-        listaPlanoContas = planoContasController.listar(clienteMB.getCliente().getTipoplanocontas().getIdtipoplanocontas());
-        if (listaPlanoContas == null) {
-            listaPlanoContas = new ArrayList<Planocontas>();
+
+        try {
+            PlanoContasFacade planoContasFacade = new PlanoContasFacade();
+            listaPlanoContas = planoContasFacade.listar(clienteMB.getCliente().getTipoplanocontas().getIdtipoplanocontas());
+
+            if (listaPlanoContas == null) {
+                listaPlanoContas = new ArrayList<Planocontas>();
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+            FacesMessage mensagem = new FacesMessage("Erro! " + ex);
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
         }
+
     }
 
     public String salvar() {
-        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIcontaspagar()) {
-            if (contasPagar.getIdcontasPagar() == null) {
-                contasPagar.setAutorizarPagamento("N");
-            }
-            String msg = validarSalvar();
-            if (msg.length() <= 5) {
-                if (!idPlanoConta.equalsIgnoreCase("0")) {
-                    PlanoContasController planoContasController = new PlanoContasController();
-                    Planocontas plano = planoContasController.consultar(Integer.parseInt(idPlanoConta));
-                    contasPagar.setPlanocontas(plano);
+
+        try {
+            if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIcontaspagar()) {
+                if (contasPagar.getIdcontasPagar() == null) {
+                    contasPagar.setAutorizarPagamento("N");
                 }
-                if (!idBanco.equalsIgnoreCase("0")) {
-                    BancoController bancoController = new BancoController();
-                    Banco banco = bancoController.consultar(Integer.parseInt(idBanco));
-                    contasPagar.setBanco(banco);
-                }
-                contasPagar.setCliente(clienteMB.getCliente());
-                contasPagar.setContaPaga("N");
-                contasPagar.setMovimentoBanco(0);
-                contasPagar.setUsuarioAgendou(0);
-                contasPagar.setUsuarioAutorizou(0);
-                contasPagar.setUsuarioBaixou(0);
-                contasPagar.setUsuarioCadastrou(usuarioLogadoBean.getUsuario().getIdusuario());
-                String data = Formatacao.ConvercaoDataPadrao(new Date()) + "_" + Formatacao.foramtarHoraString();
-                contasPagar.setDataHoraCadastrou(data);
-                if (valorConta.length() > 0) {
-                    contasPagar.setValor(Formatacao.ConvercaoMonetariaFloat(valorConta));
+                String msg = validarSalvar();
+                if (msg.length() <= 5) {
+                    if (!idPlanoConta.equalsIgnoreCase("0")) {
+                        PlanoContasFacade planoContasFacade = new PlanoContasFacade();
+                        Planocontas plano = planoContasFacade.consultar(Integer.parseInt(idPlanoConta));
+                        contasPagar.setPlanocontas(plano);
+                    }
+                    if (!idBanco.equalsIgnoreCase("0")) {
+                        BancoFacade bancoFacade = new BancoFacade();
+                        Banco banco = bancoFacade.consultar(Integer.parseInt(idBanco));
+                        contasPagar.setBanco(banco);
+                    }
+                    contasPagar.setCliente(clienteMB.getCliente());
+                    contasPagar.setContaPaga("N");
+                    contasPagar.setMovimentoBanco(0);
+                    if (valorConta.length() > 0) {
+                        contasPagar.setValor(Formatacao.ConvercaoMonetariaFloat(valorConta));
+                    } else {
+                        contasPagar.setValor(0.0f);
+                    }
+                    contasPagar.setVendaComissao(0);
+
+                    ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+                    contasPagar = contasPagarFacade.salvar(contasPagar);
+
+                    salvarNomeArquivo();
+                    contasPagar = new Contaspagar();
+
+                    clienteMB.setCliente(new Cliente());
+                    gerarListaContasPagar();
+
+                    return "consConPagar";
                 } else {
-                    contasPagar.setValor(0.0f);
+                    FacesMessage mensagem = new FacesMessage("Erro! ", msg);
+                    FacesContext.getCurrentInstance().addMessage(null, mensagem);
+                    return "";
                 }
-                contasPagar.setVendaComissao(0);
-
-                ContasPagarController contasPagarController = new ContasPagarController();
-                contasPagar = contasPagarController.salvar(contasPagar);
-                salvarNomeArquivo();
-                contasPagar = new Contaspagar();
-
-                clienteMB.setCliente(new Cliente());
-                gerarListaContasPagar();
-
-                return "consConPagar";
-            } else {
-                FacesMessage mensagem = new FacesMessage("Erro! ", msg);
-                FacesContext.getCurrentInstance().addMessage(null, mensagem);
-                return "";
             }
-        } else {
+        } catch (SQLException ex) {
+            Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
             FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
-            return "";
-        }
+        
     }
+        return  null;
+ }
+     
+
+
 
     public void upload01(FileUploadEvent event) {
         FacesMessage msg = new FacesMessage("Sucesso! ", event.getFile().getFileName() + " upload.");
@@ -765,7 +787,7 @@ public class ContasPagarMB implements Serializable {
 
     public String salvarContasLiberadas() {
         if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIcontaspagar()){
-            ContasPagarController contasPagarController = new ContasPagarController();
+            ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
             for (int i = 0; i < listaLiberadas.size(); i++) {
                 salvarContaLiberadasMovimentoBanco(listaLiberadas.get(i));
             }
@@ -782,11 +804,10 @@ public class ContasPagarMB implements Serializable {
     }
 
     public void salvarContaLiberadasMovimentoBanco(Contaspagar conta) {
-        conta.setDataLiberacao(dataLiberacao);
+        try {
+            conta.setDataLiberacao(dataLiberacao);
         conta.setContaPaga("S");
-        conta.setUsuarioBaixou(usuarioLogadoBean.getUsuario().getIdusuario());
         String data = Formatacao.ConvercaoDataPadrao(new Date()) + "_" + Formatacao.foramtarHoraString();
-        conta.setDataHoraLiberou(data);
         Movimentobanco movimentoBanco = new Movimentobanco();
         movimentoBanco.setBanco(conta.getBanco());
         movimentoBanco.setCliente(conta.getCliente());
@@ -801,42 +822,55 @@ public class ContasPagarMB implements Serializable {
         movimentoBanco.setTipoDocumento(conta.getTipoDocumento());
         movimentoBanco.setDescricao(conta.getDescricao());
         movimentoBanco.setCompentencia(conta.getCompetencia());
-        MovimentoBancoController movimentoBancoController = new MovimentoBancoController();
-        movimentoBanco = movimentoBancoController.salvar(movimentoBanco);
+        MovimentoBancoFacade movimentoBancoFacade = new MovimentoBancoFacade();
         conta.setMovimentoBanco(movimentoBanco.getIdmovimentoBanco());
-        ContasPagarController contasPagarController = new ContasPagarController();
-        contasPagarController.salvar(conta);
+        ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+        contasPagarFacade.salvar(conta);
+            movimentoBanco = movimentoBancoFacade.salvar(movimentoBanco);
+        } catch (SQLException ex) {
+            Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+            FacesMessage mensagem = new FacesMessage("Erro! " + ex);
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            
+        }
+        
     }
 
     public String autorizarPagamentoContasPagar() {
-        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getContaspagar()){
-           ContasPagarController contasPagarController = new ContasPagarController();
-            for (int i = 0; i < listaContaPagar.size(); i++) {
-                if (listaContaPagar.get(i).isSelecionado()) {
-                    if (listaContaPagar.get(i).getAutorizarPagamento().equalsIgnoreCase("N")) {
-                        String data = Formatacao.ConvercaoDataPadrao(new Date()) + "_" + Formatacao.foramtarHoraString();
-                        if (listaContaPagar.get(i).getAutorizarPagamento().equalsIgnoreCase("S")) {
-                            listaContaPagar.get(i).setAutorizarPagamento("N");
-                            listaContaPagar.get(i).setUsuarioAutorizou(0);
-                            listaContaPagar.get(i).setDataHoraAutorizou("");
-                        } else {
-                            listaContaPagar.get(i).setAutorizarPagamento("S");
-                            listaContaPagar.get(i).setUsuarioAutorizou(usuarioLogadoBean.getUsuario().getIdusuario());
-                            listaContaPagar.get(i).setDataHoraAutorizou(data);
-                        }
+        try {
+            if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getContaspagar()) {
+                ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+                for (int i = 0; i < listaContaPagar.size(); i++) {
+                    if (listaContaPagar.get(i).isSelecionado()) {
+                        if (listaContaPagar.get(i).getAutorizarPagamento().equalsIgnoreCase("N")) {
+                            String data = Formatacao.ConvercaoDataPadrao(new Date()) + "_" + Formatacao.foramtarHoraString();
+                            if (listaContaPagar.get(i).getAutorizarPagamento().equalsIgnoreCase("S")) {
+                                listaContaPagar.get(i).setAutorizarPagamento("N");
 
-                        contasPagarController.salvar(listaContaPagar.get(i));
+                            } else {
+                                listaContaPagar.get(i).setAutorizarPagamento("S");
+                                contasPagarFacade.salvar(listaContaPagar.get(i));
+
+                            }
+                            gerarListaContasPagar();
+                            return "consConPagar";
+                        } else {
+                            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+                            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+                            return "";
+                        }
+                        
                     }
                 }
             }
-            gerarListaContasPagar();
-            return "consConPagar";
-        }else {
-            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+        }catch (SQLException ex) {
+            Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+            FacesMessage mensagem = new FacesMessage("Erro! " + ex);
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
             return "";
         }
-        
+               
+        return null;
     }
     
     
