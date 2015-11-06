@@ -93,7 +93,6 @@ public class Contaspagar implements Serializable {
     @Size(max = 1)
     @Column(name = "autorizarPagamento")
     private String autorizarPagamento;
-    
     @JoinColumn(name = "planoContas_idplanoContas", referencedColumnName = "idplanoContas")
     @ManyToOne(optional = false)
     private Planocontas planocontas;

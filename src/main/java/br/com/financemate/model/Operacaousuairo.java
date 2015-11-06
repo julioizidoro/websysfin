@@ -7,9 +7,12 @@ package br.com.financemate.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -29,8 +32,11 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Operacaousuairo.findAll", query = "SELECT o FROM Operacaousuairo o")})
 public class Operacaousuairo implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected OperacaousuairoPK operacaousuairoPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idoperacaousuairo")
+    private Integer idoperacaousuairo;
     @Size(max = 50)
     @Column(name = "tipooperacao")
     private String tipooperacao;
@@ -43,27 +49,23 @@ public class Operacaousuairo implements Serializable {
     @JoinColumn(name = "usuario_idusuario", referencedColumnName = "idusuario")
     @ManyToOne(optional = false)
     private Usuario usuario;
-    @JoinColumn(name = "contasPagar_idcontasPagar", referencedColumnName = "idcontasPagar", insertable = false, updatable = false)
+    @JoinColumn(name = "contasPagar_idcontasPagar", referencedColumnName = "idcontasPagar")
     @ManyToOne(optional = false)
     private Contaspagar contaspagar;
 
     public Operacaousuairo() {
     }
 
-    public Operacaousuairo(OperacaousuairoPK operacaousuairoPK) {
-        this.operacaousuairoPK = operacaousuairoPK;
+    public Operacaousuairo(Integer idoperacaousuairo) {
+        this.idoperacaousuairo = idoperacaousuairo;
     }
 
-    public Operacaousuairo(int idoperacaousuairo, int contasPagaridcontasPagar) {
-        this.operacaousuairoPK = new OperacaousuairoPK(idoperacaousuairo, contasPagaridcontasPagar);
+    public Integer getIdoperacaousuairo() {
+        return idoperacaousuairo;
     }
 
-    public OperacaousuairoPK getOperacaousuairoPK() {
-        return operacaousuairoPK;
-    }
-
-    public void setOperacaousuairoPK(OperacaousuairoPK operacaousuairoPK) {
-        this.operacaousuairoPK = operacaousuairoPK;
+    public void setIdoperacaousuairo(Integer idoperacaousuairo) {
+        this.idoperacaousuairo = idoperacaousuairo;
     }
 
     public String getTipooperacao() {
@@ -109,7 +111,7 @@ public class Operacaousuairo implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (operacaousuairoPK != null ? operacaousuairoPK.hashCode() : 0);
+        hash += (idoperacaousuairo != null ? idoperacaousuairo.hashCode() : 0);
         return hash;
     }
 
@@ -120,7 +122,7 @@ public class Operacaousuairo implements Serializable {
             return false;
         }
         Operacaousuairo other = (Operacaousuairo) object;
-        if ((this.operacaousuairoPK == null && other.operacaousuairoPK != null) || (this.operacaousuairoPK != null && !this.operacaousuairoPK.equals(other.operacaousuairoPK))) {
+        if ((this.idoperacaousuairo == null && other.idoperacaousuairo != null) || (this.idoperacaousuairo != null && !this.idoperacaousuairo.equals(other.idoperacaousuairo))) {
             return false;
         }
         return true;
@@ -128,7 +130,7 @@ public class Operacaousuairo implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.financemate.model.Operacaousuairo[ operacaousuairoPK=" + operacaousuairoPK + " ]";
+        return "br.com.financemate.model.Operacaousuairo[ idoperacaousuairo=" + idoperacaousuairo + " ]";
     }
     
 }
