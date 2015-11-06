@@ -10,8 +10,6 @@ package br.com.financemate.facade;
 import br.com.financemate.dao.ContasPagarDao;
 import br.com.financemate.model.Arquivocontaspagar;
 import br.com.financemate.model.Contaspagar;
-import br.com.financemate.modelView.Viewcontaspagar;
-import br.com.financemate.modelView.Viewcontaspagarfluxo;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -66,10 +64,5 @@ public class ContasPagarFacade {
     public void excluirArquivo(int idArquivo) throws SQLException{
         contasPagarDao = new ContasPagarDao();
         contasPagarDao.excluirArquivo(idArquivo);
-    }
-    
-    public List<Viewcontaspagarfluxo> listaFluxo(String sql) throws SQLException{
-        contasPagarDao = new ContasPagarDao();
-        return contasPagarDao.listaFluxo(sql);
     }
 }

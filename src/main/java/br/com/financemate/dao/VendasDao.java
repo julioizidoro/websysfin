@@ -9,7 +9,6 @@ package br.com.financemate.dao;
 import br.com.financemate.Connection.ConectionFactory;
 import br.com.financemate.model.Emissaonota;
 import br.com.financemate.model.Vendas;
-import br.com.financemate.modelView.Viewvendas;
 import java.sql.SQLException;
 import java.util.List;
 import javax.persistence.EntityManager;

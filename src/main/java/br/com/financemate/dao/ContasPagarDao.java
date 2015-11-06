@@ -9,8 +9,6 @@ package br.com.financemate.dao;
 import br.com.financemate.Connection.ConectionFactory;
 import br.com.financemate.model.Arquivocontaspagar;
 import br.com.financemate.model.Contaspagar;
-import br.com.financemate.modelView.Viewcontaspagar;
-import br.com.financemate.modelView.Viewcontaspagarfluxo;
 import java.sql.SQLException;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -120,13 +118,5 @@ public class ContasPagarDao {
         manager.getTransaction().commit();
     }
     
-    public List<Viewcontaspagarfluxo> listaFluxo(String sql) throws SQLException{
-        EntityManager manager = ConectionFactory.getConnection();
-        manager.getTransaction().begin();
-        Query q = manager.createQuery(sql);
-        List<Viewcontaspagarfluxo> listaFluxo= q.getResultList();
-        manager.getTransaction().commit();
-        return listaFluxo;
-    }
-    
+   
 }

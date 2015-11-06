@@ -10,7 +10,6 @@ package br.com.financemate.facade;
 import br.com.financemate.dao.VendasDao;
 import br.com.financemate.model.Emissaonota;
 import br.com.financemate.model.Vendas;
-import br.com.financemate.modelView.Viewvendas;
 import java.sql.SQLException;
 import java.util.List;
 

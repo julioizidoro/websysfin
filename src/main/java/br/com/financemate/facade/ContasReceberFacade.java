@@ -9,8 +9,6 @@ package br.com.financemate.facade;
 
 import br.com.financemate.dao.ContasReceberDao;
 import br.com.financemate.model.Contasreceber;
-import br.com.financemate.modelView.Viewcontasreceber;
-import br.com.financemate.modelView.Viewcontasreceberfluxo;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -46,11 +44,6 @@ public class ContasReceberFacade {
     public Contasreceber consultarVendaFornecedor(int idVenda) throws SQLException{
         contasReceberDao = new ContasReceberDao();
         return contasReceberDao.consultarVendaFornecedor(idVenda);
-    }
-    
-    public List<Viewcontasreceberfluxo> listaFluxo(String sql) throws SQLException{
-        contasReceberDao = new ContasReceberDao();
-        return contasReceberDao.listaFluxo(sql);
     }
     
 }
