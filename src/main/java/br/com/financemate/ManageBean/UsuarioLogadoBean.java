@@ -5,11 +5,16 @@
  */
 package br.com.financemate.ManageBean;
 
-import br.com.financemate.Controller.ClienteController;
-import br.com.financemate.Controller.UsuarioController;
+import br.com.financemate.Util.Criptografia;
+import br.com.financemate.facade.ClienteFacade;
+import br.com.financemate.facade.UsuarioFacade;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Usuario;
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -78,55 +83,87 @@ public class UsuarioLogadoBean implements Serializable{
     
     
 
-    public String validarUsuario(){
-        if ((usuario.getLogin()!=null) && (usuario.getSenha()==null)){
-             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Login Invalido."));
-        }else{
-                UsuarioController  usuarioController = new UsuarioController();
-            usuario = usuarioController.consultar(usuario.getLogin(), usuario.getSenha());
-            if (usuario==null){
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Acesso Negado."));
-            }else {
-                if (usuario.getCliente()>0){
-                    ClienteController clienteController = new ClienteController();
-                    cliente = clienteController.consultar(usuario.getCliente());
-                    nomeCliente = cliente.getNomeFantasia();
-                }else {
-                    cliente = null;
-                    nomeCliente = "FINANCEMATE - Assessoria Contábil & Financeira";
-                }
-                return "principal";
+    public String validarUsuario() {
+        if ((usuario.getLogin() != null) && (usuario.getSenha() == null)) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Login Invalido."));
+        } else {
+            String senha = "";
+            try {
+                senha = Criptografia.encript(usuario.getSenha());
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(UsuarioLogadoBean.class.getName()).log(Level.SEVERE, null, ex);
+                FacesMessage mensagem = new FacesMessage("Erro: " + ex);
+                FacesContext.getCurrentInstance().addMessage(null, mensagem);
             }
+            usuario.setSenha(senha);
+            UsuarioFacade usuarioFacade = new UsuarioFacade();
+            try {
+                usuario = usuarioFacade.consultar(usuario.getLogin(), usuario.getSenha());
+                if (usuario == null) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Acesso Negado."));
+                } else {
+                    if (usuario.getCliente() > 0) {
+                        ClienteFacade clienteFacade = new ClienteFacade();
+                        cliente = clienteFacade.consultar(usuario.getCliente());
+                        nomeCliente = cliente.getNomeFantasia();
+                    } else {
+                        cliente = null;
+                        nomeCliente = "FINANCEMATE - Assessoria Contábil & Financeira";
+                    }
+                    return "principal";
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(UsuarioLogadoBean.class.getName()).log(Level.SEVERE, null, ex);
+                FacesMessage mensagem = new FacesMessage("Erro: " + ex);
+                FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            }
+
         }
         usuario = new Usuario();
         return "";
     }
+    
+    
     
     public void erroLogin(String mensagem) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(mensagem, ""));
     }
     
-    public void validarTrocarSenha(){
-        if ((usuario.getLogin()!=null) && (usuario.getSenha()==null)){
+    public void validarTrocarSenha() {
+        if ((usuario.getLogin() != null) && (usuario.getSenha() == null)) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Login Invalido."));
-        }else{
-            UsuarioController  usuarioController = new UsuarioController();
-            usuario = usuarioController.consultar(usuario.getLogin(), usuario.getSenha());
-            if (usuario==null){
-               FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Acesso Negado."));
+        } else {
+            UsuarioFacade usuarioFacade = new UsuarioFacade();
+            try {
+                usuario = usuarioFacade.consultar(usuario.getLogin(), usuario.getSenha());
+                if (usuario == null) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Acesso Negado."));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(UsuarioLogadoBean.class.getName()).log(Level.SEVERE, null, ex);
+                FacesMessage mensagem = new FacesMessage("Erro: " + ex);
+                FacesContext.getCurrentInstance().addMessage(null, mensagem);
             }
+
         }
     }
      public String confirmaNovaSenha() {
         if ((novaSenha.length() > 0) && (confirmaNovaSenha.length() > 0)) {
             if (novaSenha.equalsIgnoreCase(confirmaNovaSenha)) {
-                UsuarioController usuarioController = new UsuarioController();
+                UsuarioFacade usuarioFacade = new UsuarioFacade();
                 usuario.setSenha(novaSenha);
-                usuario = usuarioController.salvar(usuario);
-                novaSenha = "";
+                try {
+                    usuario = usuarioFacade.salvar(usuario);
+                    novaSenha = "";
                 confirmaNovaSenha = "";
                 return "principal";
+                } catch (SQLException ex) {
+                    Logger.getLogger(UsuarioLogadoBean.class.getName()).log(Level.SEVERE, null, ex);
+                    FacesMessage mensagem = new FacesMessage("Erro: " + ex);
+                    FacesContext.getCurrentInstance().addMessage(null, mensagem);
+                }
+                
             } else {
                 novaSenha = "";
                 confirmaNovaSenha = "";
