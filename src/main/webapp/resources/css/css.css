@@ -604,6 +604,14 @@ button.cadastrarrelatorio {
     background: #FFFF00;
     text-align: right;
 }
+
+.azul{
+   margin-left:50px;
+    font-size:12px;
+    background: #2AD6D0;
+    text-align: right; 
+    color: #F0FFFF;
+}
 .imagens{
     margin-left:410px;
     font-size:12px;

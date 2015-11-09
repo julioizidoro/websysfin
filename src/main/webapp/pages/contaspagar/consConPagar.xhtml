@@ -5,44 +5,51 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-      <ui:composition template="/WEB-INF/templates/default.xhtml">
+    <ui:composition template="/WEB-INF/templates/default.xhtml">
         <ui:define name="corpo">
             <h:form>
                 <div id="centro">
                     <p:growl id="growl" showDetail="true" sticky="true"/>
                         <br></br>
-                        
-                        <h:panelGrid columns="7" cellpadding="3">
-                            <p:outputLabel value="Unidade" for="unidade" class="unidade"/> 
-                            <p:outputLabel value="Data Inicial" for="dataIni" class="pesqcon"/> 
-                            <p:outputLabel value="Data Final" for="dataFinal" class="left4"/>
-                            <p:selectBooleanCheckbox  class="left" value="#{ContasPagarMB.liberadas}"/>
-                            <h:outputText value="Liberadas"  class="checbox"/>
-                            <p:selectBooleanCheckbox  class="tabelaRecebimento" value="#{ContasPagarMB.autorizadas}" />
-                            <h:outputText value="Autorizadas"  class="checbox"/>    
+                        <p:accordionPanel style="font-size:12px;">
+                            <p:tab title="Consultar">
+                                <h:panelGrid columns="7" cellpadding="2">
+                                    <p:outputLabel value="Unidade" for="unidade" /> 
+                                        <p:outputLabel value="Data Inicial" for="dataIni" /> 
+                                        <p:outputLabel value="Data Final" for="dataFinal"  />
+                                        <p:selectBooleanCheckbox  class="left" value="#{ContasPagarMB.liberadas}"/>
+                                        <h:outputText value="Liberadas"  />
+                                        <p:selectBooleanCheckbox   value="#{ContasPagarMB.autorizadas}" />
+                                        <h:outputText value="Autorizadas"  />    
 
-                        </h:panelGrid>
-                        <h:panelGrid columns="6" cellpadding="1">
+                                    </h:panelGrid>
 
-                            <p:inputText id="unidade" size="31" maxlength="100" class="unidade" value="#{ClienteMB.cliente.nomeFantasia}"  readonly="true"/>
-                            <p:commandButton value="Selecionar" class="css3button" icon=" ui-icon-arrowthickstop-1-s" action="#{ContasPagarMB.selecionarUnidade}"/>
-                            <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" value="#{ContasPagarMB.dataInicial}" class="tabelaRecebimento">
-                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                            </p:calendar>
-                            <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left6" value="#{ContasPagarMB.dataFinal}">
-                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
-                            </p:calendar>
-                            <p:commandButton value="Pesquisar" class="pesquisar" icon=" ui-icon-search " update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{ContasPagarMB.pesquisar()}"/>
-                            <p:commandButton value="Limpar" class="limpar"  update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{ContasPagarMB.limparCosulta()}"/>
-                        </h:panelGrid>  
+                                        <p:inputText id="unidade" size="22" maxlength="100" class="unidade" value="#{ClienteMB.cliente.nomeFantasia}"  readonly="true" />
+                                        <p:commandLink   action="#{ContasPagarMB.selecionarUnidade}" > 
+                                           <img src="../../resources/img/iconeselecionar.png"/>
+                                        </p:commandLink>
+                                        <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="10" maxlength="15" value="#{ContasPagarMB.dataInicial}" class="tabelaRecebimento" >
+                                            <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                                        </p:calendar>
+                                        <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="10" maxlength="15" class="left6" value="#{ContasPagarMB.dataFinal}" >
+                                            <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                                        </p:calendar>
+                                        <p:commandLink  style="margin-left: 190px; text-decoration: none"  update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{ContasPagarMB.pesquisar()}">
+                                            <img src="../../resources/img/iconepesquisar.png" />
+                                        </p:commandLink>
+                                        <p:commandLink   style="margin-left: 10%"  update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{ContasPagarMB.limparCosulta()}">
+                                            <img src="../../resources/img/iconelimpar.png" />
+                                        </p:commandLink>
+                            </p:tab>
+                        </p:accordionPanel>
+                       
                         <br></br>
                         <legend id="iUsu2" ><b>Consulta de Contas a Pagar </b></legend>
                         <p:dataTable id="contaPagar" var="contasPagar"  value="#{ContasPagarMB.listaContaPagar}" class="tabelacontas" 
-                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-                                     paginator="true" rows="10" style="margin-bottom:20px" >
+                                      scrollRows="10"  scrollable="true" scrollHeight="380"  >
                             <f:facet name="{Exporters}">
                                 <h:commandLink>
-                                    <img src="resources/img/excel.png" width="20" class="imagens"/>
+                                    <img src="../../resources/img/excel.png" width="20" class="imagens"/>
                                     <p:dataExporter type="xls" target="contaPagar" fileName="contas" />
                                 </h:commandLink>
                             </f:facet>
@@ -75,6 +82,7 @@
                                 <p:selectBooleanCheckbox value="#{contasPagar.selecionado}"/>
                             </p:column>
                         </p:dataTable>
+                        
                         <h:panelGrid columns="4" cellpadding="3">
                             <p:outputLabel value="Total Contas Vencidas" for="contasVenc" class="left4" /> 
                             <p:outputLabel value="Total Contas Vencendo" for="contasVencendo" class="left1"/> 
@@ -85,7 +93,7 @@
 
                             <p:inputText id="contasVenc" size="19" maxlength="100" class="vermelho" value="#{ContasPagarMB.stotalvencida}"  readonly="true"/>
                             <p:inputText id="contasVencendo" size="19" maxlength="100" class="amarelo" value="#{ContasPagarMB.stotalvencendo}"  readonly="true"/>
-                            <p:inputText id="contasVencer" size="17" maxlength="100" class="total" value="#{ContasPagarMB.stotalvencer}"  readonly="true"/>
+                            <p:inputText id="contasVencer" size="17" maxlength="100" class="azul" value="#{ContasPagarMB.stotalvencer}"  readonly="true"/>
                             <p:inputText id="contasPagar" size="17" maxlength="100" class="total" value="#{ContasPagarMB.stotal}"  readonly="true"/>
                         </h:panelGrid>  
                         <br></br>
