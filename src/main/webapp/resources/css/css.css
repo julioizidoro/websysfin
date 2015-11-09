@@ -63,7 +63,8 @@ h1 {
 
     position:relative;
     top:-1px;
-    width:750px;
+    width:95%;
+    
 }
 .tabelatipo{
     font-size:11px;
@@ -690,18 +691,20 @@ button.cadastrarrelatorio {
 }
 #centro legend#iUsu {
     background: #3E7D62;
-    width: 750px;
+    width: 100%;
+    margin-left: 1.5%;
 }
 #centro legend#iUsu2 b{
     margin-top:28px;
     font-size: 14px;
     font-family: tahoma;
-    margin-left:300px;
+    margin-left:50%;
     color:aliceblue;
 }
 #centro legend#iUsu2 {
     background: #3E7D62;
-    width: 750px;
+    width: 95%;
+    margin-left: 2.5%;
 }
 .left3{
     margin-left:11px;
