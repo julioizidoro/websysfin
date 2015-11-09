@@ -13,17 +13,17 @@ h1 {
     position: relative;
     background: #3E7D62;
     margin: 0px 0 20px -390px;
-    width: 750px;
+    width: 75%;
     left:22%;
     margin-top:-10px;
     border: 0px solid #aaa;
-    margin-left:-10px;
+    margin-left:-10%;
 }
 .menu{
     font-family: tahoma;
     list-style:none; 
     border:1px solid aliceblue; 
-    width:742px;
+    width:99.1%;
     float:left;
     margin-top:-10px;
     background: #EEE5DE;
@@ -36,8 +36,8 @@ h1 {
     position: relative;
     background:#99CC33;
     margin: 0px 0 20px -390px;
-    width: 750px;
-    left:22%;
+    width: 75.2%;
+    left:12.77%;
 
     border: 0px solid #aaa;
     margin-left:-10px;
@@ -1139,7 +1139,7 @@ button.pesquisar5 {
 }
 .usuariologado{
     margin-top:-85px;
-    margin-left:380px;
+    margin-left:65%;
     color:#F0FFFF;
     font-size:11px;
 }
