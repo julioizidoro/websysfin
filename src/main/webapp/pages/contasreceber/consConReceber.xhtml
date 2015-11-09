@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      <ui:composition template="/WEB-INF/templates/default.xhtml">
+        <ui:define name="corpo">
+            <h:form>
+                <div id="centro">
+                    <p:growl id="growl" showDetail="true" sticky="true" />
+                    <br></br>
+                    <h:panelGrid columns="7" cellpadding="3">
+                        <p:outputLabel value="Unidade" for="unidade" class="unidade"/> 
+                        <p:outputLabel value="Data Inicial" for="dataIni" class="pesqcon"/> 
+                        <p:outputLabel value="Data Final" for="dataFinal" class="left4"/>
+                        <p:selectBooleanCheckbox  class="left5" value="#{ContasReceberMB.recebida}"/>
+                        <h:outputText value="Recebidas"  class="checbox"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="5" cellpadding="1">
+                        <p:inputText id="unidade" size="32" maxlength="100" class="unidade"  readonly="true" value="#{ClienteMB.cliente.nomeFantasia}"/>
+                        <p:commandButton value="Selecionar" class="css3button" icon=" ui-icon-arrowthickstop-1-s" action="#{ContasReceberMB.selecionarUnidade()}" />
+                        <p:calendar id="dataIni" value="#{ContasReceberMB.dataInicial}"  pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="tabelaRecebimento" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                        </p:calendar>
+                        <p:calendar id="dataFinal" value="#{ContasReceberMB.dataFinal}" pattern="dd/MM/yyyy" mask="true" size="7" maxlength="15" class="left6">
+                            <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                        </p:calendar>
+                        <p:commandButton value="Pesquisar" class="pesquisarreceber"  icon=" ui-icon-search" update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}"  action="#{ContasReceberMB.pesquisarContasReceber()}"/>
+                    </h:panelGrid>  
+                    <br></br>
+                    <legend id="iUsu2" ><b>Consulta de Contas a Receber </b></legend>
+
+                    <p:dataTable id="contarReceber" var="contasReceber"  rowStyleClass="tabela" class="tabelacontas" 
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                 paginator="true" rows="10" style="margin-bottom:20px"> 
+
+                        <f:facet name="{Exporters}">
+                            <h:commandLink>
+                                <img src="resources/img/excel.png" width="24" class="imagem"/>
+                                <p:dataExporter type="xls" target="contarReceber" fileName="cars" />
+                            </h:commandLink>
+
+                        </f:facet>
+                        <p:column headerText="Data Vencimento" style="width:52px;" >
+                            <h:outputText value="#{contasReceber.dataVencimento}"  >
+                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Cliente"  >
+                            <h:outputText value="#{contasReceber.nomeCliente}"/>
+                        </p:column>
+                        <p:column headerText="Valor da Conta" style="width:35px;" styleClass="alinharCenter">
+                            <h:outputText value="#{contasReceber.valorParcela}" >
+                                <f:convertNumber currencySymbol="" type="currency"/>
+                             </h:outputText>
+                        </p:column>
+                        <p:column headerText="Juros" style="width:28px;" styleClass="alinharCenter">
+                            <h:outputText  value="#{contasReceber.juros}" >
+                                <f:convertNumber currencySymbol="" type="currency"/>
+                             </h:outputText>
+                        </p:column>
+                        <p:column headerText="Desconto" style="width:38px;" styleClass="alinharCenter">
+                            <h:outputText  value="#{contasReceber.desagio}" >
+                                <f:convertNumber currencySymbol="" type="currency"/>
+                             </h:outputText>
+                        </p:column>
+                        <p:column headerText="Valor Recebido" style="width:50px;" styleClass="alinharCenter">
+                            <h:outputText  value="#{contasReceber.valorPago}" >
+                                <f:convertNumber currencySymbol="" type="currency"/>
+                             </h:outputText>
+                        </p:column>
+                        <p:column headerText="Data Recebimento" style="width:58px;">
+                            <h:outputText value="#{contasReceber.dataPagamento}"  >
+                                <f:convertDateTime parent="dd/MM/yyy"/>
+                            </h:outputText>
+                        </p:column> 
+                        <p:column headerText="Forma Recebimento" style="width:58px;">
+                            <h:outputText value="#{contasReceber.tipodocumento}" /> 
+                        </p:column> 
+                        
+                        <p:column headerText="Unidade"  style="width:75px;">
+                            <h:outputText  value="#{contasReceber.cliente.nomeFantasia}"/>
+                        </p:column>
+                        <p:column headerText="Nº da Venda" style="width:30px;">
+                            <h:outputText  value="#{contasReceber.venda}"/>
+                        </p:column>
+                        <p:column style="width:17px">
+                            <p:selectBooleanCheckbox value="#{contasReceber.selecionado}"/>
+                        </p:column>
+                    </p:dataTable>
+                     
+                     <h:panelGrid columns="5" cellpadding="3">
+                        <p:outputLabel value="Quantidade de Titulos" for="quantidade" class="left3" /> 
+                        <p:outputLabel value="Total Valor Conta" for="totalconta" class="left4"/> 
+                        <p:outputLabel value="Total de Juros" for="totaljuros" class="left"/>
+                        <p:outputLabel value="Total de Desconto" for="totaldesconto" class="left4"/>
+                        <p:outputLabel value="Total Valor Recebido" for="totalrecebido" class="left"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="5" cellpadding="1">
+
+                        <p:inputText id="quantidade" size="18" maxlength="100" class="total3" value="#{ContasReceberMB.quantidade}"  readonly="true"/>
+                        <p:inputText id="totalconta" size="15" maxlength="100" class="total4" value="#{ContasReceberMB.totalconta}"  readonly="true"/>
+                        <p:inputText id="totaljuros" size="9" maxlength="100" class="total" value="#{ContasReceberMB.totaljuros}"  readonly="true"/>
+                        <p:inputText id="totaldesconto" size="14" maxlength="100" class="total4" value="#{ContasReceberMB.totaldesconto}"  readonly="true"/>
+                        <p:inputText id="totalrecebido" size="18" maxlength="100" class="total" value="#{ContasReceberMB.totalrecebido}"  readonly="true"/>
+                    </h:panelGrid>       
+                    <br></br>
+                    <h:panelGrid columns="10" cellpadding="1" class="cadPagar">
+                        <p:commandButton value="Adicionar" icon=" ui-icon-plus " class="pesquisar2" action="#{ContasReceberMB.novo()}"/>
+                        <p:commandButton value="Editar" class="pesquisar2" icon=" ui-icon-pencil" action="#{ContasReceberMB.editar()}"/>
+                        <p:commandButton value="Excluir" class="pesquisar2" icon=" ui-icon-trash " update="@all"  oncomplete="popAprovar.hide();" actionListener="#{mensagem.excluiMessagem()}" action="#{ContasReceberMB.excluir()}"/>
+                        <p:commandButton value="Pesquisar" class="pesquisar2" action="#{ContasReceberMB.iniciarPesquisa()}" />
+                        <p:commandButton value="Receber" class="pesquisar2" icon="ui-icon-folder-open " oncomplete="PF('dlg').show()" action="#{ContasReceberMB.receber()}"/>
+                        <p:commandButton value="Usuarios" class="pesquisar2"  action="#"/>
+                    </h:panelGrid>
+                </div>
+            </h:form>     
+
+        </ui:define>
+    </ui:composition>
+</html>
+
