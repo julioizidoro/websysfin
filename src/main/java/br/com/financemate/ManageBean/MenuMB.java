@@ -130,7 +130,7 @@ public class MenuMB implements Serializable{
     public String banco(){
         if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getBanco()){
             clienteMB.setCliente(new Cliente());
-            return "consbanco";   
+            return "consBanco";   
         }else {
             FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
