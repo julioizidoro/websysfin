@@ -5,6 +5,7 @@
  */
 package br.com.financemate.ManageBean;
 
+import br.com.financemate.ManageBean.cadastro.ClienteMB;
 import br.com.financemate.model.Cliente;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;

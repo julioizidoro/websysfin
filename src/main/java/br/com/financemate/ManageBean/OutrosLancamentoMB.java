@@ -5,6 +5,7 @@
  */
 package br.com.financemate.ManageBean;
 
+import br.com.financemate.ManageBean.cadastro.ClienteMB;
 import br.com.financemate.Util.Formatacao;
 import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.MovimentoBancoFacade;

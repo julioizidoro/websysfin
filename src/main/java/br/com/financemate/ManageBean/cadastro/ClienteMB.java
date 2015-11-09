@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.financemate.ManageBean;
+package br.com.financemate.ManageBean.cadastro;
 
 
+import br.com.financemate.ManageBean.UsuarioLogadoBean;
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.TipoPlanoContasFacede;
 import br.com.financemate.model.Cliente;

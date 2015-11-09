@@ -1,6 +1,7 @@
-package br.com.financemate.ManageBean;
+package br.com.financemate.ManageBean.cadastro;
 
 
+import br.com.financemate.ManageBean.UsuarioLogadoBean;
 import br.com.financemate.facade.ProdutoFacade;
 import br.com.financemate.model.Produto;
 import java.io.Serializable;

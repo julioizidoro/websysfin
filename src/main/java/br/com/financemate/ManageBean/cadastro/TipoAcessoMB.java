@@ -1,7 +1,8 @@
-package br.com.financemate.ManageBean;
+package br.com.financemate.ManageBean.cadastro;
 
 
 
+import br.com.financemate.ManageBean.UsuarioLogadoBean;
 import br.com.financemate.facade.TipoAcessoFacade;
 import br.com.financemate.model.Acesso;
 import br.com.financemate.model.Tipoacesso;

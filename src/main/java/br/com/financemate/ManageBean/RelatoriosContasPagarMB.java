@@ -6,6 +6,7 @@
 package br.com.financemate.ManageBean;
 
 
+import br.com.financemate.ManageBean.cadastro.ClienteMB;
 import br.com.financemate.Util.Formatacao;
 import br.com.financemate.Util.GerarRelatorio;
 import br.com.financemate.facade.ContasPagarFacade;
