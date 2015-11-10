@@ -8,35 +8,43 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition template="/WEB-INF/templates/default.xhtml">
         <ui:define name="corpo">
-            <h:form>
+            <h:form id="idrfmconscontasreceber">
                 <div id="centro">
                     <p:growl id="growl" showDetail="true" sticky="true" />
                     <br></br>
                     <p:accordionPanel style="font-size:12px;">
                         <p:tab title="Pesquisar" titleStyle="background: #3E7D62;color: white">
                             <h:panelGrid columns="7">
-                                <p:inputText placeholder="Unidade" id="unidade"  maxlength="100" style="width: 200%" class="unidade"  readonly="true" value="#{ClienteMB.cliente.nomeFantasia}"/>
-                                <p:commandLink title="Selecionar" class="css3button" action="#{ContasReceberMB.selecionarUnidade()}" style="text-decoration: none;margin-left: 500%" >
-                                    <img src="../../resources/img/iconeselecionar.png"/>
-                                </p:commandLink>
-                                <p:calendar id="dataIni" value="#{ContasReceberMB.dataInicial}"  pattern="dd/MM/yyyy" mask="true"  maxlength="15" class="tabelaRecebimento" style="margin-left: 140%;width: 20%" placeholder="Data Inicial">
+                                <p:selectOneMenu id="idcbbunidade" value="#{contasReceberMB.cliente}" style="width: 300px;margin-left: 12%"
+                                    converter="ClienteConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                                    <f:selectItem itemLabel="Unidade" itemValue="0" noSelectionOption="true"/>
+                                    <f:selectItems value="#{contasReceberMB.listaCliente}" var="clienteselecionado"  itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}" />
+                                    <f:attribute name="listaCliente" value="#{contasReceberMB.listaCliente}"/>
+                                </p:selectOneMenu>
+                                
+                                <p:calendar id="dataIni" value="#{contasReceberMB.dataInicial}"  pattern="dd/MM/yyyy" mask="true" size="10"  maxlength="10" class="tabelaRecebimento" style="margin-left: 40%" placeholder="Data Inicial">
                                     <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
-                                <p:calendar id="dataFinal" value="#{ContasReceberMB.dataFinal}" pattern="dd/MM/yyyy" mask="true"  maxlength="15" class="left6" style="margin-left: 150%;width: 20%" placeholder="Data Final">
+                                <p:calendar id="dataFinal" value="#{contasReceberMB.dataFinal}" pattern="dd/MM/yyyy" mask="true" size="10"  maxlength="10" class="left6" style="margin-left: 60%" placeholder="Data Final">
                                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
-                                <p:commandLink title="Pesquisar" class="pesquisarreceber"  update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}"  action="#{ContasReceberMB.pesquisarContasReceber()}" style="text-decoration: none;margin-left: 800%">
+                                <p:commandLink title="Pesquisar" class="pesquisarreceber"  update=":idrfmconscontasreceber:idTabelaContasReceber"   action="#{contasReceberMB.pesquisarContas()}" style="text-decoration: none;margin-left: 250%">
                                     <img src="../../resources/img/iconepesquisar.png"/>
                                 </p:commandLink>
-                                <p:selectBooleanCheckbox  value="#{ContasReceberMB.recebida}" style="margin-left: 95%"/>
+                                <p:selectBooleanCheckbox  value="#{contasReceberMB.recebidas}" style="margin-left: 90%">
+                                    <p:ajax event="change" listener="#{contasReceberMB.pesquisarContas()}" update=":idrfmconscontasreceber:idTabelaContasReceber"/>
+                                </p:selectBooleanCheckbox>
                                 <h:outputText value="Recebidas"  class="checbox" style="margin-left: 10%"/>
+                                <p:commandLink title="limpar" >
+                                    <img src="../../resources/img/iconelimpar.png"/>
+                                </p:commandLink>
                             </h:panelGrid>
                         </p:tab>
                     </p:accordionPanel>
                     <br></br>
                     <legend id="iUsu2" style=" -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;" ><b>Consulta de Contas a Receber </b></legend>
 
-                    <p:dataTable id="contarReceber" var="contasReceber"  rowStyleClass="tabela" class="tabelacontas" 
+                    <p:dataTable id="idTabelaContasReceber" value="#{contasReceberMB.listaContasReceber}" var="contasReceber"  rowStyleClass="tabela" class="tabelacontas" 
                                  scrollable="true" scrollHeight="300" style="-webkit-border-radius: 5px;
                                 -moz-border-radius: 5px;
                                 border-radius: 5px;">
