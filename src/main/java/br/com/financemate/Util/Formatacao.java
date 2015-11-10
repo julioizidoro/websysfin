@@ -8,6 +8,10 @@ package br.com.financemate.Util;
 
 
 
+import br.com.financemate.ManageBean.UsuarioLogadoBean;
+import br.com.financemate.facade.ClienteFacade;
+import br.com.financemate.model.Cliente;
+import java.sql.SQLException;
 import java.text.*;
 import java.util.Calendar;
 import java.util.Date;
@@ -725,17 +729,22 @@ public class Formatacao {
       return formattedDate;
   }
   
-//  public static Cliente consultarCliente(UsuarioLogadoBean usuarioLogadoBean){
-//      Cliente cliente = null;
-//      if (usuarioLogadoBean.getUsuario().getCliente()>0){
-//          ClienteController  clienteController = new ClienteController();
-//          cliente = clienteController.consultar(usuarioLogadoBean.getUsuario().getCliente());
-//          if (cliente!=null){
-//              return cliente;
-//          }
-//      }
-//      return null;
-//  }
+    public static Cliente consultarCliente(UsuarioLogadoBean usuarioLogadoBean) {
+        Cliente cliente = null;
+        if (usuarioLogadoBean.getUsuario().getCliente() > 0) {
+            ClienteFacade clienteFacade = new ClienteFacade();
+            try {
+                cliente = clienteFacade.consultar(usuarioLogadoBean.getUsuario().getCliente());
+                if (cliente != null) {
+                    return cliente;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Formatacao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        return null;
+    }
   
   public static String retirarNegativo(String valor){
       String novoValor ="";
