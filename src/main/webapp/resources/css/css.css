@@ -60,10 +60,10 @@ h1 {
 }
 .tabelacontas{
     font-size:10px;
-
+   
     position:relative;
     top:-1px;
-    width:95%;
+    width:100%;
     
 }
 .tabelatipo{
@@ -574,12 +574,12 @@ button.cadastrarrelatorio {
     font-size:12px;
 }
 .total{
-    margin-left:55px;
+    margin-left:15%;
     font-size:12px;
     text-align:right;
 }
 .total4{
-    margin-left:40px;
+    margin-left:12%;
     font-size:12px;
     text-align:right;
 }
@@ -700,14 +700,15 @@ button.cadastrarrelatorio {
     font-family: tahoma;
     margin-left:50%;
     color:aliceblue;
+   
 }
 #centro legend#iUsu2 {
     background: #3E7D62;
-    width: 95%;
-    margin-left: 2.5%;
+    width: 100%;
+    
 }
 .left3{
-    margin-left:11px;
+    margin-left:5%;
    font-size:12px;
 }
 .valoentrada{
@@ -716,7 +717,7 @@ button.cadastrarrelatorio {
     text-align: right;
 }
 .total3{
-    margin-left:11px;
+    margin-left:20%;
     font-size:12px;
     text-align: right;
 }
@@ -965,7 +966,7 @@ button.principal{
 }
 .cadPagar{
     height: 85px;
-    width: 750px;
+    width: 100%;
     background: -moz-linear-gradient(
         top,
         #ffffff 0%,
