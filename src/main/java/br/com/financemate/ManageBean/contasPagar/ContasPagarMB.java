@@ -14,7 +14,9 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -22,6 +24,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -40,7 +43,10 @@ public class ContasPagarMB implements Serializable{
     private List<Cliente> listaCliente;
     private Boolean liberadas;
     private Boolean autorizadas;
-    
+    private String totalVencidas;
+    private String totalVencer;
+    private String totalVencendo;
+    private String total;
     
     @PostConstruct
     public void init(){
@@ -51,6 +57,38 @@ public class ContasPagarMB implements Serializable{
         gerarListaCliente();
     }
 
+    public String getTotalVencidas() {
+        return totalVencidas;
+    }
+
+    public void setTotalVencidas(String totalVencidas) {
+        this.totalVencidas = totalVencidas;
+    }
+
+    public String getTotalVencer() {
+        return totalVencer;
+    }
+
+    public void setTotalVencer(String totalVencer) {
+        this.totalVencer = totalVencer;
+    }
+
+    public String getTotalVencendo() {
+        return totalVencendo;
+    }
+
+    public void setTotalVencendo(String totalVencendo) {
+        this.totalVencendo = totalVencendo;
+    }
+
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
+    }
+    
     public Boolean getLiberadas() {
         return liberadas;
     }
@@ -164,9 +202,9 @@ public class ContasPagarMB implements Serializable{
             }
         } catch (SQLException ex) {
             Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
-            mostrarMensagem(ex, "Erro a listar contas a pagar", sql);
+            mostrarMensagem(ex, "Erro a listar contas a pagar", "Erro");
         }
-
+        calcularTotal();
     }
     
     public void gerarListaCliente() {
@@ -178,7 +216,7 @@ public class ContasPagarMB implements Serializable{
             }
         } catch (SQLException ex) {
             Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
-            mostrarMensagem(ex, "Erro ao listar o cliente:", sql);
+            mostrarMensagem(ex, "Erro ao listar o cliente:", "Erro");
         }
 
     }
@@ -211,14 +249,47 @@ public class ContasPagarMB implements Serializable{
                 "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + 
                 "' order by v.dataVencimento";
         }
+        
         gerarListaContas();
     }
     
-    public void limparConsulta(){
-        setLiberadas(false);
-        setAutorizadas(false);
-        criarConsultaContasPagarInicial();
-        gerarListaContas();
-        gerarListaCliente();
+    public String limparConsulta(){
+        try {
+            ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+            listaContasPagar = contasPagarFacade.listar("Select c from Contaspagar c where c.contaPaga='N' order by c.dataVencimento ");
+        } catch (SQLException ex) {
+            Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+            mostrarMensagem(ex, "Erro Listar Contas", "Erro");
+        }
+        return "consConPagar";
+
+    }
+    public void calcularTotal(){
+        float vencida = 0.0f;
+        float vencendo = 0.0f;
+        float vencer = 0.0f;
+        Date data = new Date();
+        String diaData = Formatacao.ConvercaoDataPadrao(data);
+        for(int i=0;i<listaContasPagar.size();i++){
+            String vencData = Formatacao.ConvercaoDataPadrao(listaContasPagar.get(i).getDataVencimento());
+            if (diaData.equalsIgnoreCase(vencData)){
+                vencendo = vencendo + listaContasPagar.get(i).getValor();
+            }else if (listaContasPagar.get(i).getDataVencimento().before(data)){
+                vencida = vencida + listaContasPagar.get(i).getValor();
+            }else if (listaContasPagar.get(i).getDataVencimento().after(data)){
+                vencer = vencer + listaContasPagar.get(i).getValor();
+            }
+        }
+        setTotalVencidas(Formatacao.foramtarFloatString(vencida));
+        setTotalVencendo(Formatacao.foramtarFloatString(vencendo));
+        setTotalVencer(Formatacao.foramtarFloatString(vencer));
+        setTotal(Formatacao.foramtarFloatString(vencida+vencer+vencendo));
+    }
+    
+    public String novo() {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("contentWidth", 450);
+        RequestContext.getCurrentInstance().openDialog("cadConPagar");
+        return "";
     }
 }
