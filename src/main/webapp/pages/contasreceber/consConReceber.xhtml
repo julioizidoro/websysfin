@@ -28,14 +28,14 @@
                                 <p:calendar id="dataFinal" value="#{contasReceberMB.dataFinal}" pattern="dd/MM/yyyy" mask="true" size="10"  maxlength="10" class="left6" style="margin-left: 60%" placeholder="Data Final">
                                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
-                                <p:commandLink title="Pesquisar" class="pesquisarreceber"  update=":idrfmconscontasreceber:idTabelaContasReceber"   action="#{contasReceberMB.pesquisarContas()}" style="text-decoration: none;margin-left: 250%">
+                                <p:commandLink title="Pesquisar" class="pesquisarreceber"  update=":idrfmconscontasreceber:idTabelaContasReceber, :idrfmconscontasreceber:quantidade, :idrfmconscontasreceber:totalconta, :idrfmconscontasreceber:totaljuros, :idrfmconscontasreceber:totaldesconto, :idrfmconscontasreceber:totalrecebido"   action="#{contasReceberMB.pesquisarContas()}" style="text-decoration: none;margin-left: 250%">
                                     <img src="../../resources/img/iconepesquisar.png"/>
                                 </p:commandLink>
                                 <p:selectBooleanCheckbox  value="#{contasReceberMB.recebidas}" style="margin-left: 90%">
-                                    <p:ajax event="change" listener="#{contasReceberMB.pesquisarContas()}" update=":idrfmconscontasreceber:idTabelaContasReceber"/>
+                                    <p:ajax event="change" listener="#{contasReceberMB.pesquisarContas()}" update=":idrfmconscontasreceber:idTabelaContasReceber, :idrfmconscontasreceber:quantidade, :idrfmconscontasreceber:totalconta, :idrfmconscontasreceber:totaljuros, :idrfmconscontasreceber:totaldesconto, :idrfmconscontasreceber:totalrecebido" />
                                 </p:selectBooleanCheckbox>
                                 <h:outputText value="Recebidas"  class="checbox" style="margin-left: 10%"/>
-                                <p:commandLink title="limpar" >
+                                <p:commandLink title="limpar" action="#{contasReceberMB.limparDadosPesquisa()}"  style="margin-left: 160%" update="@all">
                                     <img src="../../resources/img/iconelimpar.png"/>
                                 </p:commandLink>
                             </h:panelGrid>
@@ -107,11 +107,20 @@
                     </h:panelGrid>
                     <h:panelGrid columns="5" cellpadding="1" style="height: 100%; width: 100%">
 
-                        <p:inputText id="quantidade" style="width: 55%;font-size: 12px;margin-left: 24%" maxlength="100"  value="#{ContasReceberMB.quantidade}"  readonly="true"/>
-                        <p:inputText id="totalconta" style="width: 45%;font-size: 12px;margin-left: 21%" maxlength="100" value="#{ContasReceberMB.totalconta}"  readonly="true"/>
-                        <p:inputText id="totaljuros" style="width: 45%;font-size: 12px;margin-left: 20%" maxlength="100" value="#{ContasReceberMB.totaljuros}"  readonly="true"/>
-                        <p:inputText id="totaldesconto" style="width: 55%;font-size: 12px;margin-left: 15%" maxlength="100"  value="#{ContasReceberMB.totaldesconto}"  readonly="true"/>
-                        <p:inputText id="totalrecebido" style="width: 62%;font-size: 12px;margin-left: 5%" maxlength="100"  value="#{ContasReceberMB.totalrecebido}"  readonly="true"/>
+                        <p:inputText id="quantidade" style="width: 55%;font-size: 12px;margin-left: 24%;text-align: right" maxlength="100"  value="#{contasReceberMB.quantidadeTitulos}"  readonly="true"/>
+                        
+                        <p:inputText id="totalconta" style="width: 45%;font-size: 12px;margin-left: 21%;text-align: right" maxlength="100" value="#{contasReceberMB.totalContasReceber}"  readonly="true">
+                            <f:convertNumber pattern="##,###,###,###.##" minFractionDigits="2" />
+                        </p:inputText>
+                        <p:inputText id="totaljuros" style="width: 45%;font-size: 12px;margin-left: 20%;text-align: right" maxlength="100" value="#{contasReceberMB.totalJurosReceber}"  readonly="true">
+                            <f:convertNumber pattern="##,###,###,###.##" minFractionDigits="2" />
+                        </p:inputText>
+                        <p:inputText id="totaldesconto" style="width: 55%;font-size: 12px;margin-left: 15%;text-align: right" maxlength="100"  value="#{contasReceberMB.totalDescontosReceber}"  readonly="true">
+                            <f:convertNumber pattern="##,###,###,###.##" minFractionDigits="2" />
+                        </p:inputText>
+                        <p:inputText id="totalrecebido" style="width: 62%;font-size: 12px;margin-left: 5%;text-align: right" maxlength="100"  value="#{contasReceberMB.valorTotalRecebido}"  readonly="true">
+                            <f:convertNumber pattern="##,###,###,###.##" minFractionDigits="2" />
+                        </p:inputText>
                     </h:panelGrid>       
                     <br></br>
                     <h:panelGrid columns="10" cellpadding="1" class="cadPagar">

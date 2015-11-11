@@ -44,12 +44,18 @@ public class ContasReceberMB implements Serializable{
     private List<Contasreceber> listaContasReceber;
     private Contasreceber Contasreceber;
     private boolean recebidas;
+    private int quantidadeTitulos;
+    private float totalContasReceber;
+    private float totalJurosReceber;
+    private float totalDescontosReceber;
+    private float valorTotalRecebido;
     
     @PostConstruct
     public void init(){
         gerarListaCliente();
         criarConsultaContaReceber();
         gerarListaContas();
+        quantidadeTitulos();
       
     }
 
@@ -125,6 +131,46 @@ public class ContasReceberMB implements Serializable{
         this.recebidas = recebidas;
     }
 
+    public int getQuantidadeTitulos() {
+        return quantidadeTitulos;
+    }
+
+    public void setQuantidadeTitulos(int quantidadeTitulos) {
+        this.quantidadeTitulos = quantidadeTitulos;
+    }
+
+    public float getTotalContasReceber() {
+        return totalContasReceber;
+    }
+
+    public void setTotalContasReceber(float totalContasReceber) {
+        this.totalContasReceber = totalContasReceber;
+    }
+
+    public float getTotalJurosReceber() {
+        return totalJurosReceber;
+    }
+
+    public void setTotalJurosReceber(float totalJurosReceber) {
+        this.totalJurosReceber = totalJurosReceber;
+    }
+
+    public float getTotalDescontosReceber() {
+        return totalDescontosReceber;
+    }
+
+    public void setTotalDescontosReceber(float totalDescontosReceber) {
+        this.totalDescontosReceber = totalDescontosReceber;
+    }
+
+    public float getValorTotalRecebido() {
+        return valorTotalRecebido;
+    }
+
+    public void setValorTotalRecebido(float valorTotalRecebido) {
+        this.valorTotalRecebido = valorTotalRecebido;
+    }
+
     
     
     public void gerarListaCliente(){
@@ -194,6 +240,7 @@ public class ContasReceberMB implements Serializable{
             Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
             mostrarMensagem(ex, "Erro Listar Contas", "Erro");
         }
+        quantidadeTitulos();
     }
 
     public void pesquisarContas() {
@@ -218,5 +265,52 @@ public class ContasReceberMB implements Serializable{
         gerarListaContas();
     }
 
+    public void quantidadeTitulos(){
+        quantidadeTitulos = listaContasReceber.size();
+        gerarTotalContas();
+        gerarTotalJuros();
+        gerarTotalDesconto();
+        gerarValorTotalRecebido();
+    }
+    
+    public void gerarTotalContas(){
+        if(totalContasReceber!=0.0){
+                totalContasReceber = 0;
+        }
+        for (int i = 0; i < listaContasReceber.size(); i++) {
+            totalContasReceber = totalContasReceber + listaContasReceber.get(i).getValorParcela();
+         }
+    }
+       
+    public void gerarTotalJuros(){
+        for (int i = 0; i <listaContasReceber.size(); i++) {
+            totalJurosReceber = totalJurosReceber + listaContasReceber.get(i).getJuros();
+        }
+    }
+    
+        
+    public void gerarTotalDesconto(){
+        for (int i = 0; i <listaContasReceber.size(); i++) {
+            totalDescontosReceber = totalDescontosReceber + listaContasReceber.get(i).getDesagio();
+        }
+    }
+    
+    public void gerarValorTotalRecebido(){
+        for (int i = 0; i <listaContasReceber.size(); i++) {
+            valorTotalRecebido = valorTotalRecebido + listaContasReceber.get(i).getValorPago();
+        }
+    }
+    
+    public String limparDadosPesquisa() {
+        try {
+            ContasReceberFacade contasReceberFacadece = new ContasReceberFacade();
+            listaContasReceber = contasReceberFacadece.listar(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
+            mostrarMensagem(ex, "Erro Listar Contas", "Erro");
+        }
+        return "consConReceber";
+
+    }
     
 }

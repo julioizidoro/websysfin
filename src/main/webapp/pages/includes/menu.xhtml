@@ -3,6 +3,11 @@
         xmlns:h="http://java.sun.com/jsf/html">
 
     <div id="tudo">
+        <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+        
+        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+            <img src="../../resources/img/ajax-loader.gif" />
+        </p:dialog>
         <p:growl id="growl" showDetail="true" sticky="true" />
         <tr>
             <td><table aling="center" width="00" border="0" cellpadding="0" cellspacing="0"> 
