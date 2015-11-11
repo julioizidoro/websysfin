@@ -16,8 +16,10 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -26,6 +28,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -311,6 +314,13 @@ public class ContasReceberMB implements Serializable{
         }
         return "consConReceber";
 
+    }
+    
+    public String novo(){
+            Map<String, Object> options = new HashMap<String, Object>();
+            options.put("contentWidth", 580);
+            RequestContext.getCurrentInstance().openDialog("cadConReceber");
+            return "";
     }
     
 }
