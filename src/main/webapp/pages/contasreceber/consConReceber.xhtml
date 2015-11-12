@@ -16,12 +16,12 @@
                         <p:tab title="Pesquisar" titleStyle="background: #3E7D62;color: white">
                             <h:panelGrid columns="7">
                                 <p:selectOneMenu id="idcbbunidade" value="#{contasReceberMB.cliente}" style="width: 300px;margin-left: 12%"
-                                    converter="ClienteConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                                                 converter="ClienteConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
                                     <f:selectItem itemLabel="Unidade" itemValue="0" noSelectionOption="true"/>
                                     <f:selectItems value="#{contasReceberMB.listaCliente}" var="clienteselecionado"  itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}" />
                                     <f:attribute name="listaCliente" value="#{contasReceberMB.listaCliente}"/>
                                 </p:selectOneMenu>
-                                
+
                                 <p:calendar id="dataIni" value="#{contasReceberMB.dataInicial}"  pattern="dd/MM/yyyy" mask="true" size="10"  maxlength="10" class="tabelaRecebimento" style="margin-left: 40%" placeholder="Data Inicial">
                                     <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
@@ -46,10 +46,10 @@
 
                     <p:dataTable id="idTabelaContasReceber" value="#{contasReceberMB.listaContasReceber}" var="contasReceber"  rowStyleClass="tabela" class="tabelacontas" 
                                  scrollable="true" scrollHeight="300" style="-webkit-border-radius: 5px;
-                                -moz-border-radius: 5px;
-                                border-radius: 5px;">
+                                 -moz-border-radius: 5px;
+                                 border-radius: 5px;">
 
-                        
+
                         <p:column headerText="Data Vencimento" style="width:20%;" >
                             <h:outputText value="#{contasReceber.dataVencimento}"  >
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
@@ -93,6 +93,11 @@
                         <p:column headerText="Nº da Venda" style="width:20%;">
                             <h:outputText  value="#{contasReceber.venda}"/>
                         </p:column>
+                        <p:column  style="width:8%;">
+                            <h:commandLink action="#{contasReceberMB.editar(contasReceber)}" >
+                                <img src="../../resources/img/editarS.png" width="30" height="30" />
+                            </h:commandLink>
+                        </p:column>
                         <p:column style="width:5%">
                             <p:selectBooleanCheckbox value="#{contasReceber.selecionado}"/>
                         </p:column>
@@ -108,7 +113,7 @@
                     <h:panelGrid columns="5" cellpadding="1" style="height: 100%; width: 100%">
 
                         <p:inputText id="quantidade" style="width: 55%;font-size: 12px;margin-left: 24%;text-align: right" maxlength="100"  value="#{contasReceberMB.quantidadeTitulos}"  readonly="true"/>
-                        
+
                         <p:inputText id="totalconta" style="width: 45%;font-size: 12px;margin-left: 21%;text-align: right" maxlength="100" value="#{contasReceberMB.totalContasReceber}"  readonly="true">
                             <f:convertNumber pattern="##,###,###,###.##" minFractionDigits="2" />
                         </p:inputText>
@@ -124,8 +129,9 @@
                     </h:panelGrid>       
                     <br></br>
                     <h:panelGrid columns="10" cellpadding="1" class="cadPagar">
-                        <p:commandButton value="Adicionar" icon=" ui-icon-plus " class="pesquisar2" action="#{contasReceberMB.novo()}"/>
-                        <p:commandButton value="Editar" class="pesquisar2" icon=" ui-icon-pencil" action="#{ContasReceberMB.editar()}"/>
+                        <p:commandButton value="Adicionar" icon=" ui-icon-plus " class="pesquisar2" action="#{contasReceberMB.novo()}">
+                            <p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogoNovo}" process="@this" update=":idrfmconscontasreceber:idTabelaContasReceber"/>
+                        </p:commandButton>
                         <p:commandButton value="Excluir" class="pesquisar2" icon=" ui-icon-trash " update="@all"  oncomplete="popAprovar.hide();" actionListener="#{mensagem.excluiMessagem()}" action="#{ContasReceberMB.excluir()}"/>
                         <p:commandButton value="Pesquisar" class="pesquisar2" action="#{ContasReceberMB.iniciarPesquisa()}" />
                         <p:commandButton value="Receber" class="pesquisar2" icon="ui-icon-folder-open " oncomplete="PF('dlg').show()" action="#{ContasReceberMB.receber()}"/>

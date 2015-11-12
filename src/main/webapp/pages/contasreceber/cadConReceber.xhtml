@@ -29,8 +29,8 @@
                 <p:selectOneMenu id="idcbbunidade" value="#{cadContasReceberMB.cliente}" style="width: 500px;margin-left: 10%"
                                  converter="ClienteConverter" filter="true" filterMatchMode="startsWith" panelStyle="width: 450px" >
                     <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/>
-                    <f:selectItems value="#{cadContasReceberMB.cliente}" var="clienteselecionado"  itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}" />
-                    <f:attribute name="listaCliente" value="#{cadContasReceberMB.cliente}"/>
+                    <f:selectItems value="#{cadContasReceberMB.listaCliente}" var="clienteselecionado"  itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}" />
+                    <f:attribute name="listaCliente" value="#{cadContasReceberMB.listaCliente}"/>
                 </p:selectOneMenu>
             </h:panelGrid>
             <br></br>
@@ -58,14 +58,14 @@
             <p:outputLabel value="Valor R$" for="valor" style="margin-left: 7%"/>
 
             <h:panelGrid columns="5" cellpadding="1">
-                <p:inputMask id="dataVenc" value="#{ContasReceberMB.contasReceber.dataVencimento}" mask="99/99/9999" size="10" maxlength="15" style="margin-left: 35%" >
+                <p:inputMask id="dataVenc" value="#{cadContasReceberMB.contasReceber.dataVencimento}" mask="99/99/9999" size="10" maxlength="15" style="margin-left: 35%" >
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                 </p:inputMask>
-                <p:inputText id="nDocumento" size="10"  style="margin-left: 20%" value="#{ContasReceberMB.contasReceber.numeroDocumento}"/>
-                <p:inputText id="nParcelas" size="10"  style="margin-left: 20%;text-align: right" value="#{ContasReceberMB.numeroParcelas}">
+                <p:inputText id="nDocumento" size="10"  style="margin-left: 20%" value="#{cadContasReceberMB.contasReceber.numeroDocumento}"/>
+                <p:inputText id="nParcelas" size="10"  style="margin-left: 20%;text-align: right" value="#{cadContasReceberMB.contasReceber.numeroParcela}">
                     <f:convertNumber pattern="##,###,###,###.##" minFractionDigits="2" />
                 </p:inputText>
-                <p:inputText id="valor" size="10"  style="margin-left: 20%;text-align: right" value="#{ContasReceberMB.valorParcela}">
+                <p:inputText id="valor" size="10"  style="margin-left: 20%;text-align: right" value="#{cadContasReceberMB.contasReceber.valorParcela}">
                    <f:convertNumber pattern="##,###,###,###.##" minFractionDigits="2" />
                 </p:inputText>
             </h:panelGrid> 
@@ -74,8 +74,8 @@
             <p:outputLabel value="Tipo de Documento" for="tipoDocumento"  style="margin-left: 34%"/>
 
             <h:panelGrid columns="2">
-                <p:inputText id="nome" size="37"  style="margin-left: 15%" value="#{ContasReceberMB.contasReceber.nomeCliente}"/>
-                <p:selectOneMenu id="tipoDocumento"  style="width:185px;margin-left: 10%" value="#{ContasReceberMB.contasReceber.tipodocumento}">
+                <p:inputText id="nome" size="37"  style="margin-left: 15%" value="#{cadContasReceberMB.contasReceber.nomeCliente}"/>
+                <p:selectOneMenu id="tipoDocumento"  style="width:185px;margin-left: 10%" value="#{cadContasReceberMB.contasReceber.tipodocumento}">
                     <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
                     <f:selectItem itemLabel="Boleto" itemValue="Boleto" />  
                     <f:selectItem itemLabel="Guia de Imposto" itemValue="Guia de Imposto" /> 
@@ -87,10 +87,10 @@
 
             </h:panelGrid>            
            
-            <p:commandLink title="Confirmar" style="margin-left: 72%;text-decoration: none" actionListener="#{mensagem.saveMessagem}" update="growl" action="#{cadContasReceberMB.salvar()}" >
+            <p:commandLink title="Confirmar" style="margin-left: 72%;text-decoration: none"  update="growl" action="#{cadContasReceberMB.salvar()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>
-            <p:commandLink title="Cancelar" style="margin-left: 2%;text-decoration: none" action="#{ContasReceberMB.cancelar()}" >
+            <p:commandLink title="Cancelar" style="margin-left: 2%;text-decoration: none" action="#{cadContasReceberMB.cancelar()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
             </p:commandLink>
             <br></br>

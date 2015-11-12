@@ -27,7 +27,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -44,7 +46,7 @@ public class ContasReceberMB implements Serializable{
     private Date dataFinal;
     private String sql;
     private List<Contasreceber> listaContasReceber;
-    private Contasreceber Contasreceber;
+    private Contasreceber contasReceber;
     private boolean recebidas;
     private int quantidadeTitulos;
     private float totalContasReceber;
@@ -118,14 +120,16 @@ public class ContasReceberMB implements Serializable{
         this.listaContasReceber = listaContasReceber;
     }
 
-    public Contasreceber getContasreceber() {
-        return Contasreceber;
+    public Contasreceber getContasReceber() {
+        return contasReceber;
     }
 
-    public void setContasreceber(Contasreceber Contasreceber) {
-        this.Contasreceber = Contasreceber;
+    public void setContasReceber(Contasreceber contasReceber) {
+        this.contasReceber = contasReceber;
     }
 
+    
+    
     public boolean isRecebidas() {
         return recebidas;
     }
@@ -323,5 +327,17 @@ public class ContasReceberMB implements Serializable{
             return "";
     }
     
-   
+     public void retornoDialogoNovo(SelectEvent event){
+        Contasreceber conta = (Contasreceber) event.getObject();
+        listaContasReceber.add(conta);
+    }
+   public String editar(Contasreceber contasreceber){
+         if (contasreceber!=null){
+            FacesContext fc = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+            session.setAttribute("contareceber", contasreceber);       
+            RequestContext.getCurrentInstance().openDialog("cadConReceber");
+        }
+        return "";
+   }
 }

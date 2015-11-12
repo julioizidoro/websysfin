@@ -27,6 +27,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -46,13 +47,24 @@ public class CadContasReceberMB implements Serializable{
     private Banco banco;
     private Contasreceber contasReceber;
     
+    
     @PostConstruct
     public void init(){
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        contasReceber = (Contasreceber) session.getAttribute("contareceber");
+        session.removeAttribute("contareceber");
         gerarListaCliente();
         gerarListaBanco();
         gerarListaPlanoContas();
-       
-      
+        if (contasReceber == null){
+            contasReceber = new Contasreceber();
+        }else{
+            cliente = contasReceber.getCliente();
+            planoContas = contasReceber.getPlanocontas();
+            banco = contasReceber.getBanco();
+        }
+            
     }
 
     public UsuarioLogadoBean getUsuarioLogadoBean() {
@@ -155,8 +167,15 @@ public class CadContasReceberMB implements Serializable{
         contasReceber.setBanco(banco);
         contasReceber.setPlanocontas(planoContas);
         contasReceber.setCliente(cliente);
+        contasReceber.setUsuario(usuarioLogadoBean.getUsuario());
         contasReceber = contasReceberFacade.salvar(contasReceber);
         RequestContext.getCurrentInstance().closeDialog(contasReceber);
     }
+    
+    public String cancelar(){
+        RequestContext.getCurrentInstance().closeDialog(null);
+        return "";
+    }
+
     
 }

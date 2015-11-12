@@ -21,9 +21,10 @@ import javax.persistence.Query;
  */
 public class ContasReceberDao {
     
+    private EntityManager manager;
     
     public Contasreceber salvar(Contasreceber conta) throws SQLException{
-        EntityManager manager = ConectionFactory.getConnection();
+        manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
         conta = manager.merge(conta);
         manager.getTransaction().commit();
@@ -31,14 +32,14 @@ public class ContasReceberDao {
     }
     
     public List<Contasreceber> listar(String sql) throws SQLException{
-        EntityManager manager = ConectionFactory.getConnection();
+        manager = ConectionFactory.getConnection();
         Query q = manager.createQuery(sql);
         List<Contasreceber> lista = q.getResultList();
         return lista;
     }
     
     public Contasreceber consultar(int idConta) throws SQLException{
-        EntityManager manager = ConectionFactory.getConnection();
+        manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
         Contasreceber conta = manager.find(Contasreceber.class, idConta);
         manager.getTransaction().commit();
@@ -46,7 +47,7 @@ public class ContasReceberDao {
     }
     
     public void excluir(int idConta) throws SQLException{
-        EntityManager manager = ConectionFactory.getConnection();
+         manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
         Contasreceber conta = manager.find(Contasreceber.class, idConta);
         manager.remove(conta);
@@ -54,7 +55,7 @@ public class ContasReceberDao {
     }
     
     public Contasreceber consultarVendaFornecedor(int idVenda) throws SQLException{
-        EntityManager manager = ConectionFactory.getConnection();
+        manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
         Query q = manager.createQuery("Select c from Contasreceber c where c.vendaComissao=" + idVenda);
         Contasreceber conta = null;
