@@ -34,17 +34,21 @@
                 </p:selectOneMenu>
             </h:panelGrid>
             <br></br>
-            <p:outputLabel value="Plano de Contas" for="planoConta" style="margin-left: 10%"/> 
-            <p:outputLabel value="conta" for="conta" class="left30"/>
+            <p:outputLabel value="Plano de Contas" for="idplanoConta" style="margin-left: 10%"/> 
+            <p:outputLabel value="Conta" for="idconta" style="margin-left: 39%"/>
 
             <h:panelGrid columns="2" cellpadding="3">
-                <p:selectOneMenu id="planoConta"  style="width:310px;margin-left: 15%"  value="#{ContasReceberMB.idPlanoConta}">
-                    <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
-                    <f:selectItems value="#{ContasReceberMB.listaPlanoContas}" var="planoConta" itemLabel="#{planoConta.descricao}" itemValue="#{planoConta.idplanoContas}"/>
+                <p:selectOneMenu id="idplanoConta"  style="width:310px;margin-left: 15%"  value="#{contasReceberMB.planoContas}"
+                    converter="PlanoContasConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                    <f:selectItems value="#{contasReceberMB.listaPlanoContas}" var="planoContasSelecionado" itemLabel="#{planoContasSelecionado.descricao}" itemValue="#{planoContasSelecionado}"/>
+                    <f:attribute name="listaPlanoConta" value="#{contasReceberMB.listaPlanoContas}"/>
                 </p:selectOneMenu> 
-                <p:selectOneMenu id="conta"  style="width:162px;margin-left: 10%"  value="#{ContasReceberMB.idBanco}">
-                    <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
-                    <f:selectItems value="#{ContasReceberMB.listaBanco}" var="banco" itemLabel="#{banco.nome}" itemValue="#{banco.idbanco}"/>
+                <p:selectOneMenu id="idconta"  style="width:162px;margin-left: 10%"  value="#{contasReceberMB.banco}"
+                    converter="BancoConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                    <f:selectItems value="#{ContasReceberMB.listaBanco}" var="bancoSelecionar" itemLabel="#{bancoSelecionar.nome}" itemValue="#{bancoSelecionar}"/>
+                    <f:attribute name="listaPlanoConta" value="#{contasReceberMB.listaPlanoContas}"/>
                 </p:selectOneMenu>    
             </h:panelGrid>
             <br></br>

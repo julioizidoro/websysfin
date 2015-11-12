@@ -38,6 +38,14 @@ public class PlanoContasDao {
         return lista;
     }
     
+     public List<Planocontas> listar() throws SQLException{
+        EntityManager manager = ConectionFactory.getConnection();
+        manager.getTransaction().begin();
+        Query q = manager.createQuery("select p from Planocontas p order by p.descricao" );
+        manager.getTransaction().commit();
+        return q.getResultList();
+    }
+    
     public List<Planocontas> listar(String descricao, int idTipo) throws SQLException{
         EntityManager manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();

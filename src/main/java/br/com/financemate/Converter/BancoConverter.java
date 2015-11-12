@@ -21,7 +21,7 @@ import javax.faces.convert.FacesConverter;
  *
  * @author Kamila
  */
-@FacesConverter(forClass=Banco.class)
+@FacesConverter(value="BancoConverter")
 public class BancoConverter implements Converter{
 
     @Override

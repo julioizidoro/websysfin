@@ -11,6 +11,8 @@ import br.com.financemate.dao.PlanoContasDao;
 import br.com.financemate.model.Planocontas;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -39,6 +41,15 @@ public class PlanoContasFacade {
     public List<Planocontas> listar(String descricao, int idTipo) throws SQLException{
         planoContasDao = new PlanoContasDao();
         return planoContasDao.listar(descricao, idTipo);
+    }
+    public List<Planocontas> listar() {
+        planoContasDao = new PlanoContasDao();
+        try {
+            return planoContasDao.listar();
+        } catch (SQLException ex) {
+            Logger.getLogger(PlanoContasFacade.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
     
 }

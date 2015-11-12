@@ -6,11 +6,8 @@
 package br.com.financemate.Converter;
 
 
-import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.model.Planocontas;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -20,26 +17,28 @@ import javax.faces.convert.FacesConverter;
  *
  * @author Kamila
  */
-@FacesConverter(forClass=Planocontas.class)
+@FacesConverter(value="PlanoContasConverter")
 public class PlanoContasConverter implements Converter{
 
-    @Override
+     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        PlanoContasFacade planoContasFacade = new PlanoContasFacade();
-        int idPlano = Integer.parseInt(value);
-        Planocontas plano;
-        try {
-            plano = planoContasFacade.consultar(idPlano);
-            return plano;
-        } catch (SQLException ex) {
-            Logger.getLogger(PlanoContasConverter.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
+        List<Planocontas> listaPlanoConta = (List<Planocontas>) component.getAttributes().get("listaPlanoConta");
+        for (Planocontas planoConta : listaPlanoConta) {
+                if (planoConta.getDescricao().equalsIgnoreCase(value)) {
+                    return planoConta;
+                }
+            }
+        return null;
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        return String.valueOf(value);
+        if (value.toString().equalsIgnoreCase("0")) {
+            return "Selecione";
+        } else {
+            Planocontas planoConta = (Planocontas) value;
+            return planoConta.getDescricao();
+        }
     }
     
 }
