@@ -73,16 +73,9 @@ public class BancoMB implements Serializable {
     public void gerarListaBanco() {
         if ((clienteMB.getCliente() != null) && (clienteMB.getCliente().getIdcliente() != null)) {
             BancoFacade bancoFacade = new BancoFacade();
-            try {
-                listaBancos = bancoFacade.listar(clienteMB.getCliente().getIdcliente());
-                if (listaBancos == null) {
-                    listaBancos = new ArrayList<Banco>();
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(BancoMB.class.getName()).log(Level.SEVERE, null, ex);
-                FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, new FacesMessage("Erro!" + ex));
-
+            listaBancos = bancoFacade.listar();
+            if (listaBancos == null) {
+                listaBancos = new ArrayList<Banco>();
             }
         }
 

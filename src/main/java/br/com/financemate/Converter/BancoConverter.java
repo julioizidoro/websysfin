@@ -9,6 +9,7 @@ package br.com.financemate.Converter;
 import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.model.Banco;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
@@ -21,28 +22,37 @@ import javax.faces.convert.FacesConverter;
  *
  * @author Kamila
  */
-@FacesConverter(value="BancoConverter")
-public class BancoConverter implements Converter{
+@FacesConverter(value = "BancoConverter")
+public class BancoConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        try {
-            BancoFacade bancoFacade = new BancoFacade();
-            int idBanco = Integer.parseInt(value);
-            Banco banco = bancoFacade.consultar(idBanco);
+        List<Banco> listaBanco = (List<Banco>) component.getAttributes().get("listaBanco");
+        if (listaBanco != null) {
+            for (Banco banco : listaBanco) {
+                if (banco.getNome().equalsIgnoreCase(value)) {
+                    return banco;
+                }
+            }
+        } else {
+            Banco banco = new Banco();
             return banco;
-        } catch (SQLException ex) {
-            Logger.getLogger(BancoConverter.class.getName()).log(Level.SEVERE, null, ex);
-            context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage("Erro!" + ex));
-            
         }
-        return "";
+        Banco banco = new Banco();
+        return banco;
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        return String.valueOf(value);
+        if (value.toString().equalsIgnoreCase("0")) {
+            return "Selecione";
+        } else {
+            Banco banco = (Banco) value;
+            if (banco.getIdbanco() != null) {
+                return banco.getNome();
+            } else {
+                return "";
+            }
+        }
     }
-    
 }

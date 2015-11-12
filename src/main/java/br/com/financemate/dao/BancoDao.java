@@ -29,13 +29,16 @@ public class BancoDao {
         return banco;
     }
     
-    public List<Banco> listar(int idCliente) throws SQLException{
+    public List<Banco> listar() throws SQLException{
         EntityManager manager = ConectionFactory.getConnection();
         manager.getTransaction().begin();
-        Query q = manager.createQuery("Select b from Banco b where b.cliente.idcliente=" + idCliente);
-        List<Banco> lista = q.getResultList();
+        Query q = manager.createQuery("select b from Banco b order by b.nome");
+        if (q.getResultList().size()>0){
+            manager.getTransaction().commit();
+            return q.getResultList();
+        }
         manager.getTransaction().commit();
-        return lista;
+        return null;
     }
     
     public Banco consultar(int idBanco) throws SQLException{

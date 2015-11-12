@@ -10,6 +10,8 @@ import br.com.financemate.dao.BancoDao;
 import br.com.financemate.model.Banco;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -25,9 +27,14 @@ public class BancoFacade {
         return bancoDao.salvar(banco);
     }
     
-    public List<Banco> listar(int idCliente) throws SQLException{
+    public List<Banco> listar() {
         bancoDao = new BancoDao();
-        return bancoDao.listar(idCliente);
+        try {
+            return bancoDao.listar();
+        } catch (SQLException ex) {
+            Logger.getLogger(BancoFacade.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
     
     public Banco consultar(int idBanco) throws SQLException{

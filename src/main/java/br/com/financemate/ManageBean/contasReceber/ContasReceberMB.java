@@ -9,11 +9,8 @@ import br.com.financemate.ManageBean.UsuarioLogadoBean;
 import br.com.financemate.Util.Formatacao;
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasReceberFacade;
-import br.com.financemate.facade.PlanoContasFacade;
-
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contasreceber;
-import br.com.financemate.model.Planocontas;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -54,16 +51,14 @@ public class ContasReceberMB implements Serializable{
     private float totalJurosReceber;
     private float totalDescontosReceber;
     private float valorTotalRecebido;
-    private List<Planocontas> listaPlanoContas;
-    private Planocontas planoContas;
-    
+
     @PostConstruct
     public void init(){
         gerarListaCliente();
         criarConsultaContaReceber();
         gerarListaContas();
         quantidadeTitulos();
-        gerarListaPlanoContas();
+       
       
     }
 
@@ -177,22 +172,6 @@ public class ContasReceberMB implements Serializable{
 
     public void setValorTotalRecebido(float valorTotalRecebido) {
         this.valorTotalRecebido = valorTotalRecebido;
-    }
-
-    public List<Planocontas> getListaPlanoContas() {
-        return listaPlanoContas;
-    }
-
-    public void setListaPlanoContas(List<Planocontas> listaPlanoContas) {
-        this.listaPlanoContas = listaPlanoContas;
-    }
-
-    public Planocontas getPlanoContas() {
-        return planoContas;
-    }
-
-    public void setPlanoContas(Planocontas planoContas) {
-        this.planoContas = planoContas;
     }
 
     
@@ -344,9 +323,5 @@ public class ContasReceberMB implements Serializable{
             return "";
     }
     
-    public void gerarListaPlanoContas() {
-        PlanoContasFacade planoContasFacade = new PlanoContasFacade();
-        listaPlanoContas = planoContasFacade.listar();
-    }
-      
+   
 }

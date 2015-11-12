@@ -206,13 +206,9 @@ public class OutrosLancamentoMB implements Serializable {
     public void carregarListaBanco() {
         gerarDataInicial();
         BancoFacade bancoFacade = new BancoFacade();
-        try {
-            listaBanco = bancoFacade.listar(clienteMB.getCliente().getIdcliente());
-            if (listaBanco == null) {
-                listaBanco = new ArrayList<Banco>();
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(OutrosLancamentoMB.class.getName()).log(Level.SEVERE, null, ex);
+        listaBanco = bancoFacade.listar();
+        if (listaBanco == null) {
+            listaBanco = new ArrayList<Banco>();
         }
 
     }

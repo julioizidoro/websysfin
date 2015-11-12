@@ -11,6 +11,8 @@ import br.com.financemate.dao.ContasReceberDao;
 import br.com.financemate.model.Contasreceber;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -21,9 +23,14 @@ public class ContasReceberFacade {
     
     ContasReceberDao contasReceberDao;
     
-    public Contasreceber salvar(Contasreceber conta) throws SQLException{
+   public Contasreceber salvar(Contasreceber conta) {
         contasReceberDao = new ContasReceberDao();
-        return contasReceberDao.salvar(conta);
+        try {
+            return contasReceberDao.salvar(conta);
+        } catch (SQLException ex) {
+            Logger.getLogger(ContasReceberFacade.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
     
     public List<Contasreceber> listar(String sql) throws SQLException{
