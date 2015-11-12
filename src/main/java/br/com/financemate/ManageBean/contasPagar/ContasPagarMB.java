@@ -25,6 +25,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -257,6 +258,8 @@ public class ContasPagarMB implements Serializable{
         try {
             ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
             listaContasPagar = contasPagarFacade.listar("Select c from Contaspagar c where c.contaPaga='N' order by c.dataVencimento ");
+            setLiberadas(false);
+            setAutorizadas(false);
         } catch (SQLException ex) {
             Logger.getLogger(ContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
             mostrarMensagem(ex, "Erro Listar Contas", "Erro");
@@ -288,8 +291,15 @@ public class ContasPagarMB implements Serializable{
     
     public String novo() {
         Map<String, Object> options = new HashMap<String, Object>();
-        options.put("contentWidth", 450);
+        options.put("contentWidth", 500);
         RequestContext.getCurrentInstance().openDialog("cadConPagar");
         return "";
     }
+    
+    public void retornoDialogNovo(SelectEvent event){
+       Contaspagar contaspagar = (Contaspagar) event.getObject();
+       listaContasPagar.add(contaspagar);
+   }
+    
+    
 }
