@@ -24,6 +24,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
@@ -48,6 +49,7 @@ public class ContasPagarMB implements Serializable{
     private String totalVencer;
     private String totalVencendo;
     private String total;
+    private Contaspagar contasPagar;
     
     @PostConstruct
     public void init(){
@@ -56,6 +58,14 @@ public class ContasPagarMB implements Serializable{
         criarConsultaContasPagarInicial();
         gerarListaContas();
         gerarListaCliente();
+    }
+
+    public Contaspagar getContasPagar() {
+        return contasPagar;
+    }
+
+    public void setContasPagar(Contaspagar contasPagar) {
+        this.contasPagar = contasPagar;
     }
 
     public String getTotalVencidas() {
@@ -183,14 +193,14 @@ public class ContasPagarMB implements Serializable{
         String dataTermino = anocFinal + "-" + Formatacao.retornaDataFinal(mescFinal);
         setDataInicio(Formatacao.ConvercaoStringData(dataInicial));
         setDataFinal(Formatacao.ConvercaoStringData(dataTermino));
-        sql = " Select c from Contaspagar c where c.dataVencimento>='" + dataInicial + 
-                "' and c.dataVencimento<='" + dataTermino + "' and c.contaPaga='N' ";
+        sql = " Select v from Contaspagar v where v.dataVencimento>='" + dataInicial + 
+                "' and v.dataVencimento<='" + dataTermino + "' and v.contaPaga='N' ";
          if (cliente!=null){
-            sql = sql + " and c.cliente.idcliente=" + cliente.getIdcliente();
+            sql = sql + " and v.cliente.idcliente=" + cliente.getIdcliente();
         }else {
-             sql = sql + "  and c.cliente.visualizacao='Operacional' ";
+             sql = sql + "  and v.cliente.visualizacao='Operacional' ";
          }
-        sql = sql + " order by c.dataVencimento";
+        sql = sql + " order by v.dataVencimento";
         
     }
     
@@ -257,7 +267,7 @@ public class ContasPagarMB implements Serializable{
     public String limparConsulta(){
         try {
             ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
-            listaContasPagar = contasPagarFacade.listar("Select c from Contaspagar c where c.contaPaga='N' order by c.dataVencimento ");
+            listaContasPagar = contasPagarFacade.listar(sql);
             setLiberadas(false);
             setAutorizadas(false);
         } catch (SQLException ex) {
@@ -301,5 +311,15 @@ public class ContasPagarMB implements Serializable{
        listaContasPagar.add(contaspagar);
    }
     
-    
+    public String editar(Contaspagar contaspagar){
+        if (contasPagar!=null){
+            FacesContext fc = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+            session.setAttribute("contapagar", contasPagar);       
+            Map<String,Object> options = new HashMap<String, Object>();
+            options.put("contentWidth",500);
+            RequestContext.getCurrentInstance().openDialog("cadConPagar", options, null);
+        }
+        return "";
+    }  
 }

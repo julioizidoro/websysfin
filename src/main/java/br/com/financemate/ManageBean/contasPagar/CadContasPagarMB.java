@@ -26,6 +26,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -48,10 +49,17 @@ public class CadContasPagarMB implements Serializable {
     
     @PostConstruct
     public void init(){
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        contaPagar = (Contaspagar) session.getAttribute("contapagar");
+        session.removeAttribute("contapagar");
         gerarListaPlanoContas();
         gerarListaCliente();
         gerarListaBanco();
-        contaPagar = new Contaspagar();
+        if (contaPagar == null) {
+             contaPagar = new Contaspagar();
+        }
+       
     }
 
     public Banco getBanco() {
