@@ -48,9 +48,13 @@ public class ContasPagarFacade {
         return contasPagarDao.consultar(idConta);
     }
     
-    public void excluir(int idConta) throws SQLException{
+    public void excluir(int idContapagar) {
         contasPagarDao = new ContasPagarDao();
-        contasPagarDao.excluir(idConta);
+        try {
+            contasPagarDao.excluir(idContapagar);
+        } catch (SQLException ex) {
+            Logger.getLogger(ContasReceberFacade.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public Contaspagar consultarVenda(String sql) throws SQLException{

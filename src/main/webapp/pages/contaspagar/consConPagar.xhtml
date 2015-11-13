@@ -48,8 +48,13 @@
 
                     <br></br>
                     <legend id="iUsu2" ><b>Consulta de Contas a Pagar </b></legend>
+                    
+                    <p:contextMenu for="idTabelaContaPagar">
+                        <p:menuitem value="Excluir"  icon=" ui-icon-pencil"  action="#{contasPagarMB.excluir()}" update=":frmConsultaPagar:idTabelaContaPagar"/>
+                        <p:menuitem value="Autorizar"  icon=" ui-icon-check"  action="#{contasPagarMB.autorizarPagamentoContasPagar(contaspagar)}" actionListener="#{mensagem.autorizar()}" update=":frmConsultaPagar:idTabelaContaPagar"/>
+                    </p:contextMenu>
                     <p:dataTable id="idTabelaContaPagar" var="contasPagar"  value="#{contasPagarMB.listaContasPagar}" class="tabelacontas" 
-                                 scrollRows="10"  scrollable="true" scrollHeight="300"  >
+                                 scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{contasPagarMB.contasPagar}" selectionMode="single" rowKey="#{contasPagar.idcontasPagar}">
                         <f:facet name="{Exporters}">
                             <h:commandLink>
                                 <img src="../../resources/img/excel.png" width="300" class="imagens"/>
@@ -81,13 +86,18 @@
                                 <f:convertNumber currencySymbol="" type="currency"/>
                             </h:outputText>                                    
                         </p:column>
-                        <p:column style="width:28px">
-                            <p:selectBooleanCheckbox value="#{contasPagar.selecionado}"/>
-                        </p:column>
                         <p:column headerText="" style="width:20px;text-align:center;">
                             <p:commandLink title="Editar" class="pesquisar2"  action="#{contasPagarMB.editar(contasPagar)}">
                                 <img src="../../resources/img/editarS.png" style="width: 100%; height: 100%;" />
                             </p:commandLink>
+                        </p:column>
+                        <p:column headerText="" style="width:20px;text-align:center;">
+                            <p:commandLink title="Liberar"  action="#{contasPagarMB.novaLiberacao()}">
+                                <img src="../../resources/img/liberarS.png" style="width: 100%; height: 100%;" />
+                            </p:commandLink>
+                        </p:column>
+                        <p:column style="width:28px">
+                            <p:selectBooleanCheckbox value="#{contasPagar.selecionado}"/>
                         </p:column>
                     </p:dataTable>
 
@@ -106,11 +116,7 @@
                     </h:panelGrid>  
                     <br></br>
                     <h:panelGrid columns="10" cellpadding="1" class="cadPagar">
-                        <p:commandButton value="Adicionar" icon=" ui-icon-plus " class="pesquisar2" action="#{contasPagarMB.novo()}"/>
-                        <p:commandButton value="Editar" class="pesquisar2" icon=" ui-icon-pencil" action="#{ContasPagarMB.editar()}"/>
-                        <p:commandButton value="Excluir" class="pesquisar2" icon=" ui-icon-trash " update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" actionListener="#{mensagem.excluiMessagem()}"  action="#{ContasPagarMB.excluir()}"/>
-                        <p:commandButton value="Liberar" class="pesquisar2" icon=" ui-icon-check " update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{ContasPagarMB.liberarContasPagar()}"  />
-                        <p:commandButton value="Autorizar" class="pesquisar2" icon=" ui-icon-check " update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{ContasPagarMB.autorizarPagamentoContasPagar()}" actionListener="#{mensagem.autorizar()}"  />
+                        <p:commandButton value="Adicionar" icon=" ui-icon-plus " class="pesquisar2" action="#{contasPagarMB.novaConta()}"/>
                         <p:commandButton value="Arquivo" class="pesquisar2" icon="ui-icon-folder-open "  action="#{ContasPagarMB.gerarListaArquivo()}" />
                         <p:commandButton value="Usuarios" class="pesquisar2" action="#{ContasPagarMB.operacaoUsuario}"/>
                     </h:panelGrid>

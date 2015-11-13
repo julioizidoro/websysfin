@@ -5,6 +5,7 @@
  */
 package br.com.financemate.ManageBean.contasPagar;
 
+import br.com.financemate.ManageBean.UsuarioLogadoBean;
 import br.com.financemate.Util.Formatacao;
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasPagarFacade;
@@ -50,6 +51,7 @@ public class ContasPagarMB implements Serializable{
     private String totalVencendo;
     private String total;
     private Contaspagar contasPagar;
+    private UsuarioLogadoBean usuarioLogadoBean;
     
     @PostConstruct
     public void init(){
@@ -252,12 +254,12 @@ public class ContasPagarMB implements Serializable{
             sql = sql + " v.cliente.visualizacao='Operacional' and ";
         }
         if (liberadas){
-            sql = sql + "v.dataLiberacao>='" + Formatacao.ConvercaoDataSql(dataInicio) + 
-                "' and v.dataLiberacao<='" + Formatacao.ConvercaoDataSql(dataFinal) + 
+            sql = sql + "v.dataLiberacao>='" + Formatacao.ConvercaoDataSql(getDataInicio()) + 
+                "' and v.dataLiberacao<='" + Formatacao.ConvercaoDataSql(getDataFinal()) + 
                 "' order by v.dataLiberacao";
         }else {
-            sql = sql + "v.dataVencimento>='" + Formatacao.ConvercaoDataSql(dataInicio) + 
-                "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(dataFinal) + 
+            sql = sql + "v.dataVencimento>='" + Formatacao.ConvercaoDataSql(getDataInicio()) + 
+                "' and v.dataVencimento<='" + Formatacao.ConvercaoDataSql(getDataFinal()) + 
                 "' order by v.dataVencimento";
         }
         
@@ -299,7 +301,7 @@ public class ContasPagarMB implements Serializable{
         setTotal(Formatacao.foramtarFloatString(vencida+vencer+vencendo));
     }
     
-    public String novo() {
+    public String novaConta() {
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("contentWidth", 500);
         RequestContext.getCurrentInstance().openDialog("cadConPagar");
@@ -312,14 +314,34 @@ public class ContasPagarMB implements Serializable{
    }
     
     public String editar(Contaspagar contaspagar){
-        if (contasPagar!=null){
+        if (contaspagar!=null){
             FacesContext fc = FacesContext.getCurrentInstance();
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
-            session.setAttribute("contapagar", contasPagar);       
-            Map<String,Object> options = new HashMap<String, Object>();
-            options.put("contentWidth",500);
-            RequestContext.getCurrentInstance().openDialog("cadConPagar", options, null);
+            session.setAttribute("contapagar", contaspagar);     
+            RequestContext.getCurrentInstance().openDialog("cadConPagar");
         }
         return "";
     }  
+    
+    public String excluir(){
+        ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+        contasPagarFacade.excluir(contasPagar.getIdcontasPagar());
+        gerarListaContas();
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Excluido com Sucesso", ""));
+        return "";
+     }
+    
+    
+    
+    public void autorizarPagamentoContasPagar(Contaspagar contaspagar){
+        contaspagar.setAutorizarPagamento("S");
+    }
+    
+    public String novaLiberacao() {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("contentWidth", 500);
+        RequestContext.getCurrentInstance().openDialog("liberacaoConPagar");
+        return "";
+    }
 }
