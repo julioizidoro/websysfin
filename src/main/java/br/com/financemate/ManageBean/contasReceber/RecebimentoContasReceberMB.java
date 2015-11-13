@@ -1,20 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.financemate.ManageBean.contasReceber;
+
 
 import br.com.financemate.ManageBean.UsuarioLogadoBean;
 import br.com.financemate.facade.BancoFacade;
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasReceberFacade;
-import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.model.Banco;
-import static br.com.financemate.model.Banco_.conta;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contasreceber;
-import br.com.financemate.model.Planocontas;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -30,19 +23,24 @@ import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 /**
  *
  * @author Greici
  */
 @Named
 @ViewScoped
-public class CadContasReceberMB implements Serializable{
-    @Inject
+public class RecebimentoContasReceberMB implements  Serializable{
+    
+     @Inject
     private UsuarioLogadoBean usuarioLogadoBean;
     private List<Cliente> listaCliente;
     private Cliente cliente;
-    private List<Planocontas> listaPlanoContas;
-    private Planocontas planoContas;
     private List<Banco> listaBanco;
     private Banco banco;
     private Contasreceber contasReceber;
@@ -56,15 +54,11 @@ public class CadContasReceberMB implements Serializable{
         session.removeAttribute("contareceber");
         gerarListaCliente();
         gerarListaBanco();
-        gerarListaPlanoContas();
         if (contasReceber == null){
             contasReceber = new Contasreceber();
-        }else{
-            cliente = contasReceber.getCliente();
-            planoContas = contasReceber.getPlanocontas();
-            banco = contasReceber.getBanco();
         }
-            
+         cliente = contasReceber.getCliente();
+         banco = contasReceber.getBanco();
     }
 
     public UsuarioLogadoBean getUsuarioLogadoBean() {
@@ -73,38 +67,6 @@ public class CadContasReceberMB implements Serializable{
 
     public void setUsuarioLogadoBean(UsuarioLogadoBean usuarioLogadoBean) {
         this.usuarioLogadoBean = usuarioLogadoBean;
-    }
-
-    public List<Planocontas> getListaPlanoContas() {
-        return listaPlanoContas;
-    }
-
-    public void setListaPlanoContas(List<Planocontas> listaPlanoContas) {
-        this.listaPlanoContas = listaPlanoContas;
-    }
-
-    public Planocontas getPlanoContas() {
-        return planoContas;
-    }
-
-    public void setPlanoContas(Planocontas planoContas) {
-        this.planoContas = planoContas;
-    }
-
-    public List<Banco> getListaBanco() {
-        return listaBanco;
-    }
-
-    public void setListaBanco(List<Banco> listaBanco) {
-        this.listaBanco = listaBanco;
-    }
-
-    public Banco getBanco() {
-        return banco;
-    }
-
-    public void setBanco(Banco banco) {
-        this.banco = banco;
     }
 
     public List<Cliente> getListaCliente() {
@@ -123,6 +85,22 @@ public class CadContasReceberMB implements Serializable{
         this.cliente = cliente;
     }
 
+    public List<Banco> getListaBanco() {
+        return listaBanco;
+    }
+
+    public void setListaBanco(List<Banco> listaBanco) {
+        this.listaBanco = listaBanco;
+    }
+
+    public Banco getBanco() {
+        return banco;
+    }
+
+    public void setBanco(Banco banco) {
+        this.banco = banco;
+    }
+
     public Contasreceber getContasReceber() {
         return contasReceber;
     }
@@ -131,12 +109,7 @@ public class CadContasReceberMB implements Serializable{
         this.contasReceber = contasReceber;
     }
 
-    
-    
-     public void gerarListaPlanoContas() {
-        PlanoContasFacade planoContasFacade = new PlanoContasFacade();
-        listaPlanoContas = planoContasFacade.listar();
-    }
+   
       
     public void gerarListaBanco(){
         BancoFacade bancoFacade = new BancoFacade();
@@ -165,8 +138,8 @@ public class CadContasReceberMB implements Serializable{
     public void salvar(){
         ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
         contasReceber.setBanco(banco);
-        contasReceber.setPlanocontas(planoContas);
         contasReceber.setCliente(cliente);
+        contasReceber.getNomeCliente();
         contasReceber.setValorPago(0.0f);
         contasReceber.setDesagio(0.0f);
         contasReceber.setJuros(0.0f);

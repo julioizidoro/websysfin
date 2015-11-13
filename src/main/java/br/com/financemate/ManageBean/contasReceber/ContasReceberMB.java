@@ -340,4 +340,22 @@ public class ContasReceberMB implements Serializable{
         }
         return "";
    }
+   
+   public void excluir(){
+        ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+        contasReceberFacade.excluir(contasReceber.getIdcontasReceber());
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Excluido com Sucesso", ""));
+        gerarListaContas();
+     }
+    
+   public String recebimentoConta(Contasreceber contasreceber){
+            if (contasreceber!=null){
+            FacesContext fc = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+            session.setAttribute("contareceber", contasreceber);       
+            RequestContext.getCurrentInstance().openDialog("recebimentoConta");
+        }
+        return "";
+    }
 }

@@ -43,9 +43,13 @@ public class ContasReceberFacade {
         return contasReceberDao.consultar(idConta);
     }
     
-    public void excluir(int idConta) throws SQLException{
+    public void excluir(int idConta){
         contasReceberDao = new ContasReceberDao();
-        contasReceberDao.excluir(idConta);
+        try {
+            contasReceberDao.excluir(idConta);
+        } catch (SQLException ex) {
+            Logger.getLogger(ContasReceberFacade.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public Contasreceber consultarVendaFornecedor(int idVenda) throws SQLException{
