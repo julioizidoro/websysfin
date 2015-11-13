@@ -51,7 +51,7 @@ public class ContasPagarMB implements Serializable{
     private String totalVencendo;
     private String total;
     private Contaspagar contasPagar;
-    private UsuarioLogadoBean usuarioLogadoBean;
+    private String linha;
     
     @PostConstruct
     public void init(){
@@ -62,6 +62,16 @@ public class ContasPagarMB implements Serializable{
         gerarListaCliente();
     }
 
+    public String getLinha() {
+        return linha;
+    }
+
+    public void setLinha(String linha) {
+        this.linha = linha;
+    }
+
+    
+    
     public Contaspagar getContasPagar() {
         return contasPagar;
     }
@@ -336,6 +346,8 @@ public class ContasPagarMB implements Serializable{
     
     public void autorizarPagamentoContasPagar(Contaspagar contaspagar){
         contaspagar.setAutorizarPagamento("S");
+        ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+        contaspagar = contasPagarFacade.salvar(contaspagar);
     }
     
     public String novaLiberacao() {
@@ -343,5 +355,37 @@ public class ContasPagarMB implements Serializable{
         options.put("contentWidth", 500);
         RequestContext.getCurrentInstance().openDialog("liberacaoConPagar");
         return "";
+    }
+    
+    public String imagemAutorizadas(Contaspagar contaspagar){
+        if (contaspagar.getAutorizarPagamento() == null) {
+            return "resources/img/cancel.png";
+        } else if (contaspagar.getAutorizarPagamento().equalsIgnoreCase("s")) {
+            return "resources/img/confirmar.png";
+        } else {
+            return "resources/img/cancel.png";
+        }
+    }
+    
+    public String verStatus(Contaspagar contaspagar) {
+        Date data = new Date();
+        String diaData = Formatacao.ConvercaoDataPadrao(data);
+        String vencData = Formatacao.ConvercaoDataPadrao(contaspagar.getDataVencimento());
+        if (contaspagar.getDataVencimento().after(data)) {
+            return "resources/img/bolaVerde.png";
+        } else {
+            if (!contaspagar.getDataVencimento().after(data)) {
+                return "resources/img/bolaVermelha.png";
+            } else {
+                if (diaData.equalsIgnoreCase(vencData)) {
+                    return "resources/img/bolaAmarela.png";
+                }
+            }
+        }
+        return "resources/img/bolaVerde.png";
+    }
+    
+    public void pegarLinhaTabela(String linha){
+        this.linha = linha;
     }
 }

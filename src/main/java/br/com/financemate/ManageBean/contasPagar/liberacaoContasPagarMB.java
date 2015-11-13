@@ -23,26 +23,37 @@ import org.primefaces.context.RequestContext;
 @ViewScoped
 public class liberacaoContasPagarMB implements Serializable{
     
-    private List<Contaspagar> listaContasPagar;
+    private List<Contaspagar> listaLiberadas;
+    private Contaspagar Contaspagar;
     
     @PostConstruct
     public void init(){
         liberarContasPagar();
     }
 
-    public List<Contaspagar> getListaContasPagar() {
-        return listaContasPagar;
+    public Contaspagar getContaspagar() {
+        return Contaspagar;
     }
 
-    public void setListaContasPagar(List<Contaspagar> listaContasPagar) {
-        this.listaContasPagar = listaContasPagar;
+    public void setContaspagar(Contaspagar Contaspagar) {
+        this.Contaspagar = Contaspagar;
+    }
+
+    
+    
+    public List<Contaspagar> getListaLiberadas() {
+        return listaLiberadas;
+    }
+
+    public void setListaLiberadas(List<Contaspagar> listaLiberadas) {
+        this.listaLiberadas = listaLiberadas;
     }
     
     
     
     public void liberarContasPagar() {
         List<Contaspagar> listaContasSelecionadas = new ArrayList<Contaspagar>();
-        for (int i = 0; i < listaContasPagar.size(); i++) {
+        for (int i = 0; i < listaContasSelecionadas.size(); i++) {
             Contaspagar contaspagar = new Contaspagar();
             if (contaspagar.isSelecionado()) {
                 listaContasSelecionadas.add(contaspagar);

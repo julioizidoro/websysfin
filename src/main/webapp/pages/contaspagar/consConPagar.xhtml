@@ -27,7 +27,7 @@
                                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
                                 <p:commandLink  title="Pesquisar" style="text-decoration: none;margin-left: 250%"  update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{contasPagarMB.pesquisar()}">
-                                   
+
                                     <img src="../../resources/img/iconepesquisar.png" />
                                 </p:commandLink>
                                 <p:selectBooleanCheckbox  class="left" value="#{contasPagarMB.liberadas}" style="margin-left: 85%">
@@ -42,16 +42,16 @@
                                     <img src="../../resources/img/limparS.png" width="40" height="40" />
                                 </p:commandLink>
                             </h:panelGrid>
-                            
+
                         </p:tab>     
                     </p:accordionPanel>
 
                     <br></br>
                     <legend id="iUsu2" ><b>Consulta de Contas a Pagar </b></legend>
-                    
+
                     <p:contextMenu for="idTabelaContaPagar">
                         <p:menuitem value="Excluir"  icon=" ui-icon-pencil"  action="#{contasPagarMB.excluir()}" update=":frmConsultaPagar:idTabelaContaPagar"/>
-                        <p:menuitem value="Autorizar"  icon=" ui-icon-check"  action="#{contasPagarMB.autorizarPagamentoContasPagar(contaspagar)}" actionListener="#{mensagem.autorizar()}" update=":frmConsultaPagar:idTabelaContaPagar"/>
+                        <p:menuitem value="Autorizar"  icon=" ui-icon-check"  action="#{contasPagarMB.autorizarPagamentoContasPagar(contasPagarMB.contasPagar)}" actionListener="#{mensagem.autorizar()}" update=":frmConsultaPagar:idTabelaContaPagar"/>
                     </p:contextMenu>
                     <p:dataTable id="idTabelaContaPagar" var="contasPagar"  value="#{contasPagarMB.listaContasPagar}" class="tabelacontas" 
                                  scrollRows="10"  scrollable="true" scrollHeight="300" selection="#{contasPagarMB.contasPagar}" selectionMode="single" rowKey="#{contasPagar.idcontasPagar}">
@@ -62,7 +62,9 @@
                             </h:commandLink>
                         </f:facet>
                         <p:column headerText="Status"  style="width:30px" styleClass="alinharCenter">
-                            <p:graphicImage  value="#{ContasPagarMB.verStatus(contasPagar)}"/>
+                            <p:commandLink>
+                                <img src="#" />
+                            </p:commandLink>
                         </p:column>
                         <p:column headerText="Data Vencimento" style="width:61px">
                             <h:outputText  value="#{contasPagar.dataVencimento}" >
@@ -76,7 +78,7 @@
                             <h:outputText value="#{contasPagar.descricao}"/>
                         </p:column>
                         <p:column headerText="Autorizadas"  style="width:58px" styleClass="alinharCenter" >
-                            <p:graphicImage value="#{ContasPagarMB.imagem(contasPagar)}"/>
+
                         </p:column>
                         <p:column headerText="Fornecedor" style="width:120px" >
                             <h:outputText value="#{contasPagar.fornecedor}"/>
