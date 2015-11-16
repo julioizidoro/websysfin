@@ -248,6 +248,7 @@ public class ContasReceberMB implements Serializable{
             mostrarMensagem(ex, "Erro Listar Contas", "Erro");
         }
         quantidadeTitulos();
+        
     }
 
     public void pesquisarContas() {
@@ -376,4 +377,14 @@ public class ContasReceberMB implements Serializable{
         }
         return "../../resources/img/bolaVerde.png";
    }
+   
+   public  String receberConta(Contasreceber contasreceber){
+       if (contasreceber.getValorPago()>0) {
+            return "../../resources/img/jaRecebidas.png";
+       }else{
+          return "../../resources/img/receber.png";
+           
+       }
+    }
+   
 }

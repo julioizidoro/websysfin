@@ -29,32 +29,37 @@
                                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
                                 <p:commandLink title="Pesquisar" class="pesquisarreceber"  update=":idrfmconscontasreceber:idTabelaContasReceber, :idrfmconscontasreceber:quantidade, :idrfmconscontasreceber:totalconta, :idrfmconscontasreceber:totaljuros, :idrfmconscontasreceber:totaldesconto, :idrfmconscontasreceber:totalrecebido"   action="#{contasReceberMB.pesquisarContas()}" style="text-decoration: none;margin-left: 250%">
-                                    <img src="../../resources/img/iconepesquisar.png"/>
+                                    <img src="../../resources/img/pesquisarS.png" width="30" height="30" />
                                 </p:commandLink>
                                 <p:selectBooleanCheckbox  value="#{contasReceberMB.recebidas}" style="margin-left: 90%">
                                     <p:ajax event="change" listener="#{contasReceberMB.pesquisarContas()}" update=":idrfmconscontasreceber:idTabelaContasReceber, :idrfmconscontasreceber:quantidade, :idrfmconscontasreceber:totalconta, :idrfmconscontasreceber:totaljuros, :idrfmconscontasreceber:totaldesconto, :idrfmconscontasreceber:totalrecebido" />
                                 </p:selectBooleanCheckbox>
                                 <h:outputText value="Recebidas"  class="checbox" style="margin-left: 10%"/>
                                 <p:commandLink title="limpar" action="#{contasReceberMB.limparDadosPesquisa()}"  style="margin-left: 160%" update="@all">
-                                    <img src="../../resources/img/limparS.png" width="40" height="40"/>
+                                    <img src="../../resources/img/limparS.png" width="30" height="30"/>
                                 </p:commandLink>
                             </h:panelGrid>
                         </p:tab>
                     </p:accordionPanel>
                     <br></br>
 
-                    <legend id="iUsu2" style=" -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;" ><b>Consulta de Contas a Receber </b></legend>
+                    <legend id="iUsu2" style=" -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;" ><b>Consulta de Contas a Receber </b>
+                        <p:commandLink title="Adicionar" style="margin-left: 30%" action="#{contasReceberMB.novo()}">
+                            <img src="../../resources/img/adicionarS.png" width="30" height="30"/>
+                            <p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogoNovo}" process="@this" update=":idrfmconscontasreceber:idTabelaContasReceber"/>
+                        </p:commandLink>    
+                    </legend>
                     <p:contextMenu for="idTabelaContasReceber">
                         <p:menuitem value="Excluir"  icon="ui-icon-plus"  action="#{contasReceberMB.excluir()}" update=":idrfmconscontasreceber:idTabelaContasReceber"  />
                     </p:contextMenu>
                     <p:dataTable id="idTabelaContasReceber" value="#{contasReceberMB.listaContasReceber}" var="contasReceber"  rowStyleClass="tabela" class="tabelacontas" 
                                  scrollable="true" scrollHeight="300" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;" selection="#{contasReceberMB.contasReceber}" selectionMode="single" rowKey="#{contasReceber.idcontasReceber}">
-                        <p:column   style="width: 8%;text-align: center" styleClass="alinharCenter" >
+                        <p:column   style="width: 6%;text-align: center" styleClass="alinharCenter" >
                             <p:commandLink>
                                 <img src="#{contasReceberMB.verStatus(contasReceber)}" />
                             </p:commandLink>
                         </p:column>
-                        <p:column headerText="Data Vencimento" style="width:20%;" >
+                        <p:column headerText="Data Vencimento" style="width:21%;" >
                             <h:outputText value="#{contasReceber.dataVencimento}"  >
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </h:outputText>
@@ -94,18 +99,17 @@
                         <p:column headerText="Unidade"  style="width:50%;">
                             <h:outputText  value="#{contasReceber.cliente.nomeFantasia}"/>
                         </p:column>
-                        <p:column headerText="Nº da Venda" style="width:20%;">
+                        <p:column headerText="Nº da Venda" style="width:19%;">
                             <h:outputText  value="#{contasReceber.venda}"/>
                         </p:column>
-                        <p:column  style="width:8%;text-align: center">
-                            <h:commandLink action="#{contasReceberMB.editar(contasReceber)}" >
+                        <p:column   style="width:8%;text-align: center">
+                            <h:commandLink title="Editar" action="#{contasReceberMB.editar(contasReceber)}" >
                                 <img src="../../resources/img/editarS.png" width="30" height="30" />
                             </h:commandLink>
                         </p:column>
                         <p:column  style="width:8%;text-align: center">
-                            <h:commandLink action="#{contasReceberMB.recebimentoConta(contasReceber)}" >
-                                <img src="../../resources/img/receber.png" width="30" height="30" />
-                                  
+                            <h:commandLink title="Receber Conta" action="#{contasReceberMB.recebimentoConta(contasReceber)}" >
+                                <img src="#{contasReceberMB.receberConta(contasReceber)}" width="30" height="30" />
                             </h:commandLink>
                         </p:column>
                     </p:dataTable>
@@ -135,12 +139,7 @@
                         </p:inputText>
                     </h:panelGrid>       
                     <br></br>
-                    <h:panelGrid columns="10" cellpadding="1" class="cadPagar">
-                        <p:commandButton value="Adicionar" icon=" ui-icon-plus " class="pesquisar2" action="#{contasReceberMB.novo()}">
-                            <p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogoNovo}" process="@this" update=":idrfmconscontasreceber:idTabelaContasReceber"/>
-                        </p:commandButton>
 
-                    </h:panelGrid>
                 </div>
             </h:form>     
 
