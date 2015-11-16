@@ -358,4 +358,22 @@ public class ContasReceberMB implements Serializable{
         }
         return "";
     }
+   
+   public String verStatus(Contasreceber contasreceber) {
+        Date data = new Date();
+        String diaData = Formatacao.ConvercaoDataPadrao(data);
+        data = Formatacao.ConvercaoStringDataBrasil(diaData);
+        if (contasreceber.getDataVencimento().after(data)) {
+            return "../../resources/img/bolaVerde.png";
+        } else {
+            if (!contasreceber.getDataVencimento().before(data)) {
+                return "../../resources/img/bolaVermelha.png";
+            } else {
+                if (contasreceber.getDataVencimento().equals(data)) {
+                    return "../../resources/img/bolaAmarela.png";
+                }
+            }
+        }
+        return "../../resources/img/bolaVerde.png";
+   }
 }

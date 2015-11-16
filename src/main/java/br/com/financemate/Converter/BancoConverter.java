@@ -48,11 +48,7 @@ public class BancoConverter implements Converter {
             return "Selecione";
         } else {
             Banco banco = (Banco) value;
-            if (banco.getIdbanco() != null) {
-                return banco.getNome();
-            } else {
-                return "";
-            }
+            return banco.getNome();
         }
     }
 }

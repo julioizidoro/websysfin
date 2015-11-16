@@ -49,9 +49,11 @@
                     </p:contextMenu>
                     <p:dataTable id="idTabelaContasReceber" value="#{contasReceberMB.listaContasReceber}" var="contasReceber"  rowStyleClass="tabela" class="tabelacontas" 
                                  scrollable="true" scrollHeight="300" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;" selection="#{contasReceberMB.contasReceber}" selectionMode="single" rowKey="#{contasReceber.idcontasReceber}">
-
-
-
+                        <p:column   style="width: 8%;text-align: center" styleClass="alinharCenter" >
+                            <p:commandLink>
+                                <img src="#{contasReceberMB.verStatus(contasReceber)}" />
+                            </p:commandLink>
+                        </p:column>
                         <p:column headerText="Data Vencimento" style="width:20%;" >
                             <h:outputText value="#{contasReceber.dataVencimento}"  >
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
@@ -95,14 +97,15 @@
                         <p:column headerText="Nº da Venda" style="width:20%;">
                             <h:outputText  value="#{contasReceber.venda}"/>
                         </p:column>
-                        <p:column  style="width:8%;">
+                        <p:column  style="width:8%;text-align: center">
                             <h:commandLink action="#{contasReceberMB.editar(contasReceber)}" >
                                 <img src="../../resources/img/editarS.png" width="30" height="30" />
                             </h:commandLink>
                         </p:column>
-                        <p:column  style="width:8%;">
+                        <p:column  style="width:8%;text-align: center">
                             <h:commandLink action="#{contasReceberMB.recebimentoConta(contasReceber)}" >
-                                <img src="../../resources/img/recebimentoS.png" width="30" height="30" />
+                                <img src="../../resources/img/receber.png" width="30" height="30" />
+                                  
                             </h:commandLink>
                         </p:column>
                     </p:dataTable>

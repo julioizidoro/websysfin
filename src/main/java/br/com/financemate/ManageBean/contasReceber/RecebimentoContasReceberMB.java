@@ -54,9 +54,7 @@ public class RecebimentoContasReceberMB implements  Serializable{
         session.removeAttribute("contareceber");
         gerarListaCliente();
         gerarListaBanco();
-        if (contasReceber == null){
-            contasReceber = new Contasreceber();
-        }
+        contasReceber.setValorPago(contasReceber.getValorParcela());
          cliente = contasReceber.getCliente();
          banco = contasReceber.getBanco();
     }
@@ -139,10 +137,6 @@ public class RecebimentoContasReceberMB implements  Serializable{
         ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
         contasReceber.setBanco(banco);
         contasReceber.setCliente(cliente);
-        contasReceber.getNomeCliente();
-        contasReceber.setValorPago(0.0f);
-        contasReceber.setDesagio(0.0f);
-        contasReceber.setJuros(0.0f);
         contasReceber.setUsuario(usuarioLogadoBean.getUsuario());
         contasReceber = contasReceberFacade.salvar(contasReceber);
         RequestContext.getCurrentInstance().closeDialog(contasReceber);
@@ -151,6 +145,11 @@ public class RecebimentoContasReceberMB implements  Serializable{
     public String cancelar(){
         RequestContext.getCurrentInstance().closeDialog(null);
         return "";
+    }
+    
+    public void calcularValoresRecebimento(){
+        Float valorReceber = contasReceber.getValorParcela() - contasReceber.getDesagio() + contasReceber.getJuros();
+        contasReceber.setValorPago(valorReceber);
     }
 
     
