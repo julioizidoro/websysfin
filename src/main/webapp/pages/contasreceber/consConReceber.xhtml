@@ -50,7 +50,7 @@
                         </p:commandLink>    
                     </legend>
                     <p:contextMenu for="idTabelaContasReceber">
-                        <p:menuitem value="Excluir"  icon="ui-icon-plus"  action="#{contasReceberMB.excluir()}" update=":idrfmconscontasreceber:idTabelaContasReceber"  />
+                        <p:menuitem value="Excluir"  icon="ui-icon-pencil"  action="#{contasReceberMB.excluir()}" update=":idrfmconscontasreceber:idTabelaContasReceber"  />
                     </p:contextMenu>
                     <p:dataTable id="idTabelaContasReceber" value="#{contasReceberMB.listaContasReceber}" var="contasReceber"  rowStyleClass="tabela" class="tabelacontas" 
                                  scrollable="true" scrollHeight="300" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;" selection="#{contasReceberMB.contasReceber}" selectionMode="single" rowKey="#{contasReceber.idcontasReceber}">
