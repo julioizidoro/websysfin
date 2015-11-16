@@ -9,8 +9,10 @@ import br.com.financemate.ManageBean.UsuarioLogadoBean;
 import br.com.financemate.Util.Formatacao;
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasPagarFacade;
+import br.com.financemate.facade.MovimentoBancoFacade;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contaspagar;
+import br.com.financemate.model.Movimentobanco;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -33,7 +35,7 @@ import org.primefaces.event.SelectEvent;
  *
  * @author Julio
  */
-
+ 
 @Named()
 @SessionScoped
 public class ContasPagarMB implements Serializable{
@@ -52,6 +54,10 @@ public class ContasPagarMB implements Serializable{
     private String total;
     private Contaspagar contasPagar;
     private String linha;
+    private String totalLiberadas;
+    private List<Contaspagar> listaContasSelecionadas;
+    private Date dataLiberacao;
+    private UsuarioLogadoBean usuarioLogadoBean;
     
     @PostConstruct
     public void init(){
@@ -62,6 +68,46 @@ public class ContasPagarMB implements Serializable{
         gerarListaCliente();
     }
 
+    public UsuarioLogadoBean getUsuarioLogadoBean() {
+        return usuarioLogadoBean;
+    }
+
+    public void setUsuarioLogadoBean(UsuarioLogadoBean usuarioLogadoBean) {
+        this.usuarioLogadoBean = usuarioLogadoBean;
+    }
+
+    
+    
+    public Date getDataLiberacao() {
+        return dataLiberacao;
+    }
+
+    public void setDataLiberacao(Date dataLiberacao) {
+        this.dataLiberacao = dataLiberacao;
+    }
+
+    
+    
+    public List<Contaspagar> getListaContasSelecionadas() {
+        return listaContasSelecionadas;
+    }
+
+    public void setListaContasSelecionadas(List<Contaspagar> listaContasSelecionadas) {
+        this.listaContasSelecionadas = listaContasSelecionadas;
+    }
+
+    
+    
+    public String getTotalLiberadas() {
+        return totalLiberadas;
+    }
+
+    public void setTotalLiberadas(String totalLiberadas) {
+        this.totalLiberadas = totalLiberadas;
+    }
+
+    
+    
     public String getLinha() {
         return linha;
     }
@@ -351,6 +397,18 @@ public class ContasPagarMB implements Serializable{
     }
     
     public String novaLiberacao() {
+        totalLiberadas = "0.00";
+        dataLiberacao = new Date();
+        float valorTotal = 0.0f;
+        listaContasSelecionadas = new ArrayList<Contaspagar>();
+        for (int i = 0; i < listaContasPagar.size(); i++) {
+            if (listaContasPagar.get(i).isSelecionado()) {
+                listaContasSelecionadas.add(listaContasPagar.get(i));
+                valorTotal = valorTotal + listaContasPagar.get(i).getValor();
+            }
+            
+        }
+        totalLiberadas = Formatacao.foramtarFloatString(valorTotal);
         Map<String, Object> options = new HashMap<String, Object>();
         options.put("contentWidth", 500);
         RequestContext.getCurrentInstance().openDialog("liberacaoConPagar");
@@ -359,33 +417,33 @@ public class ContasPagarMB implements Serializable{
     
     public String imagemAutorizadas(Contaspagar contaspagar){
         if (contaspagar.getAutorizarPagamento() == null) {
-            return "resources/img/cancel.png";
+            return "../../resources/img/cancel.png";
         } else if (contaspagar.getAutorizarPagamento().equalsIgnoreCase("s")) {
-            return "resources/img/confirmar.png";
+            return "../../resources/img/confirmar.png";
         } else {
-            return "resources/img/cancel.png";
+            return "../../resources/img/cancel.png";
         }
     }
     
     public String verStatus(Contaspagar contaspagar) {
         Date data = new Date();
         String diaData = Formatacao.ConvercaoDataPadrao(data);
-        String vencData = Formatacao.ConvercaoDataPadrao(contaspagar.getDataVencimento());
+        data = Formatacao.ConvercaoStringDataBrasil(diaData);
         if (contaspagar.getDataVencimento().after(data)) {
-            return "resources/img/bolaVerde.png";
+            return "../../resources/img/bolaVerde.png";
         } else {
-            if (!contaspagar.getDataVencimento().after(data)) {
-                return "resources/img/bolaVermelha.png";
+            if (!contaspagar.getDataVencimento().before(data)) {
+                return "../../resources/img/bolaVermelha.png";
             } else {
-                if (diaData.equalsIgnoreCase(vencData)) {
-                    return "resources/img/bolaAmarela.png";
+                if (contaspagar.equals(data)) {
+                    return "../../resources/img/bolaAmarela.png";
                 }
             }
         }
-        return "resources/img/bolaVerde.png";
+        return "../../resources/img/bolaVerde.png";
     }
     
     public void pegarLinhaTabela(String linha){
         this.linha = linha;
     }
-}
+}   

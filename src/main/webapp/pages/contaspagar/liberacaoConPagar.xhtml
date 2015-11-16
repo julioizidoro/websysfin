@@ -21,7 +21,7 @@
             </p:dialog>
             <title id="iUsu" >Liberação contas a pagar</title>
              <br></br> 
-             <p:dataTable id="liberacaoConta" var="contasPagar"  rowStyleClass="tabela" class="tabelaselecionar" value="#{liberacaoContasPagarMB.listaLiberadas}" 
+             <p:dataTable id="idLiberacaoConta" var="contasPagar"  rowStyleClass="tabela" class="tabelaselecionar" value="#{contasPagarMB.listaContasSelecionadas}" 
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                          paginator="true" rows="10" style="margin-bottom:20px"> 
                 <p:column headerText="Data Vencimento" >
@@ -43,14 +43,14 @@
                 <p:outputLabel value="Valor total a liberar" for="valorTotal" class="left" style="margin-left: 13.5%;"/> 
            
             <br/>
-            <p:inputMask id="dataLiberação"   mask="99/99/9999" size="13" maxlength="15" class="left5" value="#{liberacaoContasPagarMB.contaspagar.dataLiberacao}" style="margin-left: 47%;">
+            <p:inputMask id="dataLiberação"   mask="99/99/9999" size="13" maxlength="15" class="left5" value="#{liberacaoContasPagarMB.contasPagar.dataLiberacao}" style="margin-left: 47%;">
                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
             </p:inputMask>
-            <p:inputText id="valorTotal" size="16" maxlength="100" class="valorliberar" value="#{ContasPagarMB.totalLiberadas}"  readonly="true" style="margin-left: 10%;"/>
+            <p:inputText id="valorTotal" size="16" maxlength="100" class="valorliberar" value="#{contasPagarMB.totalLiberadas}"  readonly="true" style="margin-left: 10%;"/>
 
             <br/><br/>
            
-            <p:commandLink title="Confirmar" style="margin-left: 80%;text-decoration: none" actionListener="#{mensagem.saveMessagem}"  action="#{cadContasPagarMB.salvar()}" >
+            <p:commandLink title="Confirmar" style="margin-left: 80%;text-decoration: none" actionListener="#{mensagem.saveMessagem}"  action="#{liberacaoContasPagarMB.salvarContasLiberadas(conta)}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>
             <p:commandLink title="Cancelar" style="margin-left: 2%;text-decoration: none" action="#{liberacaoContasPagarMB.cancelar()}" >
