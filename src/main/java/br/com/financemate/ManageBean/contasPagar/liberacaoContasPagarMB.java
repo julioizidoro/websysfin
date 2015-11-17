@@ -130,14 +130,14 @@ public class liberacaoContasPagarMB implements Serializable {
         movimentoBanco.setDescricao(conta.getDescricao());
         movimentoBanco.setCompentencia(conta.getCompetencia());
         MovimentoBancoFacade movimentoBancoFacade = new MovimentoBancoFacade();
+        ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+        conta = contasPagarFacade.salvar(conta);
         try {
+            movimentoBanco.setIdcontaspagar(conta.getIdcontasPagar());
             movimentoBanco = movimentoBancoFacade.salvar(movimentoBanco);
-            conta.setMovimentoBanco(movimentoBanco.getIdmovimentoBanco());
-            ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
-            contasPagarFacade.salvar(conta);
         } catch (SQLException ex) {
             Logger.getLogger(liberacaoContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
-            mostrarMensagem(ex, "Erro ao salvar uma liberação", "Erro");
+            mostrarMensagem(ex, "Erro ao salvar liberação", "Erro");
         }
         
     }

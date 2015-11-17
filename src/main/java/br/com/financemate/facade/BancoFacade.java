@@ -27,10 +27,10 @@ public class BancoFacade {
         return bancoDao.salvar(banco);
     }
     
-    public List<Banco> listar() {
+    public List<Banco> listar(String sql) {
         bancoDao = new BancoDao();
         try {
-            return bancoDao.listar();
+            return bancoDao.listar(sql);
         } catch (SQLException ex) {
             Logger.getLogger(BancoFacade.class.getName()).log(Level.SEVERE, null, ex);
             return null;

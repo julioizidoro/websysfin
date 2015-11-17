@@ -73,8 +73,13 @@ public class Movimentobanco implements Serializable {
     @JoinColumn(name = "banco_idbanco", referencedColumnName = "idbanco")
     @ManyToOne(optional = false)
     private Banco banco;
+    @Column(name = "idcontapagar")
+    private int idcontaspagar;
+    @Column(name = "idcontasreceber")
+    private int idcontasreceber;
     @Transient
     private boolean selecionado;
+    
 
     public Movimentobanco() {
     }
@@ -193,6 +198,22 @@ public class Movimentobanco implements Serializable {
 
     public void setBanco(Banco banco) {
         this.banco = banco;
+    }
+
+    public int getIdcontaspagar() {
+        return idcontaspagar;
+    }
+
+    public void setIdcontaspagar(int idcontaspagar) {
+        this.idcontaspagar = idcontaspagar;
+    }
+
+    public int getIdcontasreceber() {
+        return idcontasreceber;
+    }
+
+    public void setIdcontasreceber(int idcontasreceber) {
+        this.idcontasreceber = idcontasreceber;
     }
 
     @Override
