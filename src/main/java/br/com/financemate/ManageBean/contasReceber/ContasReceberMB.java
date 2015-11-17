@@ -29,6 +29,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -61,7 +62,6 @@ public class ContasReceberMB implements Serializable{
         verificarCliente();
         criarConsultaContaReceber();
         gerarListaContas();
-        quantidadeTitulos();
     }
 
     public UsuarioLogadoBean getUsuarioLogadoBean() {
@@ -255,7 +255,7 @@ public class ContasReceberMB implements Serializable{
             Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
             mostrarMensagem(ex, "Erro Listar Contas", "Erro");
         }
-        quantidadeTitulos();
+        gerarTotalContas();
         
     }
 
@@ -281,15 +281,16 @@ public class ContasReceberMB implements Serializable{
         gerarListaContas();
     }
 
-    public void quantidadeTitulos(){
-        quantidadeTitulos = listaContasReceber.size();
-        gerarTotalContas();
-    }
+    
+        
+        
     
     public void gerarTotalContas(){
-        if(totalContasReceber!=0.0){
-                totalContasReceber = 0;
-        }
+        quantidadeTitulos = listaContasReceber.size();
+        totalContasReceber = 0;
+        totalJurosReceber = 0;
+        totalDescontosReceber = 0;
+        valorTotalRecebido = 0;
         for (int i = 0; i < listaContasReceber.size(); i++) {
             totalContasReceber = totalContasReceber + listaContasReceber.get(i).getValorParcela();
             totalJurosReceber = totalJurosReceber + listaContasReceber.get(i).getJuros();
@@ -317,6 +318,7 @@ public class ContasReceberMB implements Serializable{
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
             session.setAttribute("contareceber", contasreceber);       
             RequestContext.getCurrentInstance().openDialog("cadConReceber");
+            
         }
         return "";
    }
@@ -403,5 +405,9 @@ public class ContasReceberMB implements Serializable{
             }
         }
     }
+    
+     public void retornoDialogNovo(SelectEvent event) {
+         gerarListaContas();
+     }
    
 }

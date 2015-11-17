@@ -11,7 +11,6 @@ import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasReceberFacade;
 import br.com.financemate.facade.PlanoContasFacade;
 import br.com.financemate.model.Banco;
-import static br.com.financemate.model.Banco_.conta;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contasreceber;
 import br.com.financemate.model.Planocontas;
@@ -29,6 +28,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -162,7 +162,7 @@ public class CadContasReceberMB implements Serializable{
         context.addMessage(null, new FacesMessage(titulo, erro));
     }
     
-    public void salvar(){
+    public String salvar(){
         ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
         contasReceber.setBanco(banco);
         contasReceber.setPlanocontas(planoContas);
@@ -173,12 +173,15 @@ public class CadContasReceberMB implements Serializable{
         contasReceber.setUsuario(usuarioLogadoBean.getUsuario());
         contasReceber = contasReceberFacade.salvar(contasReceber);
         RequestContext.getCurrentInstance().closeDialog(contasReceber);
+        return "consConReceber";
     }
     
     public String cancelar(){
         RequestContext.getCurrentInstance().closeDialog(null);
         return "";
     }
+    
+   
 
     
 }

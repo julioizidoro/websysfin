@@ -21,7 +21,7 @@
                 <img src="resources/img/ajax-loader.gif" />
             </p:dialog>
 
-            <title  >Adicionar Contas Receber</title>
+            <title  >Editar Contas Receber</title>
             <p:growl id="growl" showDetail="true" sticky="true" />
             <br></br>
             <p:outputLabel value="Unidade" style="margin-left: 10%"/>
@@ -87,7 +87,7 @@
 
             </h:panelGrid>            
            
-            <p:commandLink title="Confirmar" style="margin-left: 72%;text-decoration: none"  update="growl" action="#{cadContasReceberMB.salvar()}" >
+            <p:commandLink title="Confirmar" style="margin-left: 72%;text-decoration: none" actionListener="#{mensagem.saveMessagem}"  action="#{cadContasReceberMB.salvar()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>
             <p:commandLink title="Cancelar" style="margin-left: 2%;text-decoration: none" action="#{cadContasReceberMB.cancelar()}" >

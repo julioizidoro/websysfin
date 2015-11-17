@@ -103,14 +103,16 @@
                             <h:outputText  value="#{contasReceber.vendas.idvendas}"/>
                         </p:column>
                         <p:column   style="width:8%;text-align: center">
-                            <h:commandLink title="Editar" action="#{contasReceberMB.editar(contasReceber)}" >
+                            <p:commandLink id="editar" title="Editar" style="text-align: center" action="#{contasReceberMB.editar(contasReceber)}" update="idTabelaContasReceber" >
                                 <img src="../../resources/img/editarS.png" width="30" height="30" />
-                            </h:commandLink>
+                                <p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogNovo}" update="idTabelaContasReceber"/>
+                           </p:commandLink>
                         </p:column>
                         <p:column  style="width:8%;text-align: center">
-                            <h:commandLink title="Receber Conta" action="#{contasReceberMB.recebimentoConta(contasReceber)}" >
-                                <img src="#{contasReceberMB.receberConta(contasReceber)}" width="30" height="30" />
-                            </h:commandLink>
+                            <p:commandLink title="Receber Conta" style="text-align: center" action="#{contasReceberMB.recebimentoConta(contasReceber)}" >
+                               <img src="#{contasReceberMB.receberConta(contasReceber)}" width="30" height="30" />
+                                 <p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogNovo}" update="idTabelaContasReceber"/>
+                            </p:commandLink>
                         </p:column>
                     </p:dataTable>
 

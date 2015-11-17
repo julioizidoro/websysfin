@@ -133,17 +133,19 @@ public class RecebimentoContasReceberMB implements  Serializable{
         context.addMessage(null, new FacesMessage(titulo, erro));
     }
     
-    public void salvar(){
+    public String salvar(){
         ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
         contasReceber.setBanco(banco);
         contasReceber.setCliente(cliente);
         contasReceber.setUsuario(usuarioLogadoBean.getUsuario());
         contasReceber = contasReceberFacade.salvar(contasReceber);
         RequestContext.getCurrentInstance().closeDialog(contasReceber);
+        return "consConReceber";
     }
     
     public String cancelar(){
         RequestContext.getCurrentInstance().closeDialog(null);
+        contasReceber.setValorPago(0.0f);
         return "";
     }
     
