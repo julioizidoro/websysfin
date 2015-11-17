@@ -71,18 +71,6 @@ public class Contasreceber implements Serializable {
     @Column(name = "vendaComissao")
     private Integer vendaComissao;
     @Size(max = 10)
-    @Column(name = "status")
-    private String status;
-    @Column(name = "usuariocadastrou")
-    private Integer usuariocadastrou;
-    @Column(name = "datacadastro")
-    @Temporal(TemporalType.DATE)
-    private Date datacadastro;
-    @Column(name = "usuariobaixou")
-    private Integer usuariobaixou;
-    @Size(max = 45)
-    @Column(name = "databaixa")
-    private String databaixa;
     @JoinColumn(name = "usuario_idusuario", referencedColumnName = "idusuario")
     @ManyToOne(optional = false)
     private Usuario usuario;
@@ -95,6 +83,9 @@ public class Contasreceber implements Serializable {
     @JoinColumn(name = "banco_idbanco", referencedColumnName = "idbanco")
     @ManyToOne(optional = false)
     private Banco banco;
+     @JoinColumn(name = "vendas_idvendas", referencedColumnName = "idvendas")
+    @ManyToOne(optional = false)
+    private Vendas vendas;
     @Transient
     private boolean selecionado;
 
@@ -217,46 +208,6 @@ public class Contasreceber implements Serializable {
         this.vendaComissao = vendaComissao;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Integer getUsuariocadastrou() {
-        return usuariocadastrou;
-    }
-
-    public void setUsuariocadastrou(Integer usuariocadastrou) {
-        this.usuariocadastrou = usuariocadastrou;
-    }
-
-    public Date getDatacadastro() {
-        return datacadastro;
-    }
-
-    public void setDatacadastro(Date datacadastro) {
-        this.datacadastro = datacadastro;
-    }
-
-    public Integer getUsuariobaixou() {
-        return usuariobaixou;
-    }
-
-    public void setUsuariobaixou(Integer usuariobaixou) {
-        this.usuariobaixou = usuariobaixou;
-    }
-
-    public String getDatabaixa() {
-        return databaixa;
-    }
-
-    public void setDatabaixa(String databaixa) {
-        this.databaixa = databaixa;
-    }
-
     public Usuario getUsuario() {
         return usuario;
     }
@@ -295,6 +246,14 @@ public class Contasreceber implements Serializable {
 
     public void setSelecionado(boolean selecionado) {
         this.selecionado = selecionado;
+    }
+
+    public Vendas getVendas() {
+        return vendas;
+    }
+
+    public void setVendas(Vendas vendas) {
+        this.vendas = vendas;
     }
 
     @Override

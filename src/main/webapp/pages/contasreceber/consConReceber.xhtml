@@ -16,7 +16,8 @@
                         <p:tab title="Pesquisar" titleStyle="background: #3E7D62;color: white">
                             <h:panelGrid columns="7">
                                 <p:selectOneMenu id="idcbbunidade" value="#{contasReceberMB.cliente}" style="width: 300px;margin-left: 12%"
-                                                 converter="ClienteConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                                                 converter="ClienteConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" 
+                                                 disabled="#{contasReceberMB.verCliente}">
                                     <f:selectItem itemLabel="Unidade" itemValue="0" noSelectionOption="true"/>
                                     <f:selectItems value="#{contasReceberMB.listaCliente}" var="clienteselecionado"  itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}" />
                                     <f:attribute name="listaCliente" value="#{contasReceberMB.listaCliente}"/>
@@ -35,7 +36,7 @@
                                     <p:ajax event="change" listener="#{contasReceberMB.pesquisarContas()}" update=":idrfmconscontasreceber:idTabelaContasReceber, :idrfmconscontasreceber:quantidade, :idrfmconscontasreceber:totalconta, :idrfmconscontasreceber:totaljuros, :idrfmconscontasreceber:totaldesconto, :idrfmconscontasreceber:totalrecebido" />
                                 </p:selectBooleanCheckbox>
                                 <h:outputText value="Recebidas"  class="checbox" style="margin-left: 10%"/>
-                                <p:commandLink title="limpar" action="#{contasReceberMB.limparDadosPesquisa()}"  style="margin-left: 160%" update="@all">
+                                <p:commandLink title="limpar" action="#{contasReceberMB.limparDadosPesquisa()}"  style="margin-left: 160%" update=":idrfmconscontasreceber:idTabelaContasReceber, :idrfmconscontasreceber:quantidade, :idrfmconscontasreceber:totalconta, :idrfmconscontasreceber:totaljuros, :idrfmconscontasreceber:totaldesconto, :idrfmconscontasreceber:totalrecebido">
                                     <img src="../../resources/img/limparS.png" width="30" height="30"/>
                                 </p:commandLink>
                             </h:panelGrid>
@@ -44,10 +45,6 @@
                     <br></br>
 
                     <legend id="iUsu2" style=" -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;" ><b>Consulta de Contas a Receber </b>
-                        <p:commandLink title="Adicionar" style="margin-left: 30%" action="#{contasReceberMB.novo()}">
-                            <img src="../../resources/img/adicionarS.png" width="30" height="30"/>
-                            <p:ajax event="dialogReturn" listener="#{contasReceberMB.retornoDialogoNovo}" process="@this" update=":idrfmconscontasreceber:idTabelaContasReceber"/>
-                        </p:commandLink>    
                     </legend>
                     <p:contextMenu for="idTabelaContasReceber">
                         <p:menuitem value="Excluir"  icon="ui-icon-pencil"  action="#{contasReceberMB.excluir()}" update=":idrfmconscontasreceber:idTabelaContasReceber"  />
@@ -66,6 +63,9 @@
                         </p:column>
                         <p:column headerText="Cliente" style="width: 80%"  >
                             <h:outputText value="#{contasReceber.nomeCliente}"/>
+                        </p:column>
+                        <p:column headerText="Produto" style="width: 80%"  >
+                            <h:outputText value="#{contasReceber.vendas.produto.descricao}"/>
                         </p:column>
                         <p:column headerText="Valor da Conta" style="width:20%;" styleClass="alinharCenter">
                             <h:outputText value="#{contasReceber.valorParcela}" >
@@ -100,7 +100,7 @@
                             <h:outputText  value="#{contasReceber.cliente.nomeFantasia}"/>
                         </p:column>
                         <p:column headerText="Nº da Venda" style="width:19%;">
-                            <h:outputText  value="#{contasReceber.venda}"/>
+                            <h:outputText  value="#{contasReceber.vendas.idvendas}"/>
                         </p:column>
                         <p:column   style="width:8%;text-align: center">
                             <h:commandLink title="Editar" action="#{contasReceberMB.editar(contasReceber)}" >

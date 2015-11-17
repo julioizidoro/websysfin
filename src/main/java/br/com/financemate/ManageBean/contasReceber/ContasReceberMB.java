@@ -9,8 +9,10 @@ import br.com.financemate.ManageBean.UsuarioLogadoBean;
 import br.com.financemate.Util.Formatacao;
 import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.facade.ContasReceberFacade;
+import br.com.financemate.facade.VendasFacade;
 import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Contasreceber;
+import br.com.financemate.model.Vendas;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -48,6 +50,7 @@ public class ContasReceberMB implements Serializable{
     private List<Contasreceber> listaContasReceber;
     private Contasreceber contasReceber;
     private boolean recebidas;
+    private boolean verCliente=false;
     private int quantidadeTitulos;
     private float totalContasReceber;
     private float totalJurosReceber;
@@ -57,11 +60,11 @@ public class ContasReceberMB implements Serializable{
     @PostConstruct
     public void init(){
         gerarListaCliente();
+        getUsuarioLogadoBean();
+        verificarCliente();
         criarConsultaContaReceber();
         gerarListaContas();
         quantidadeTitulos();
-       
-      
     }
 
     public UsuarioLogadoBean getUsuarioLogadoBean() {
@@ -178,6 +181,14 @@ public class ContasReceberMB implements Serializable{
         this.valorTotalRecebido = valorTotalRecebido;
     }
 
+    public boolean isVerCliente() {
+        return verCliente;
+    }
+
+    public void setVerCliente(boolean verCliente) {
+        this.verCliente = verCliente;
+    }
+
     
     
     public void gerarListaCliente(){
@@ -276,9 +287,6 @@ public class ContasReceberMB implements Serializable{
     public void quantidadeTitulos(){
         quantidadeTitulos = listaContasReceber.size();
         gerarTotalContas();
-        gerarTotalJuros();
-        gerarTotalDesconto();
-        gerarValorTotalRecebido();
     }
     
     public void gerarTotalContas(){
@@ -287,51 +295,25 @@ public class ContasReceberMB implements Serializable{
         }
         for (int i = 0; i < listaContasReceber.size(); i++) {
             totalContasReceber = totalContasReceber + listaContasReceber.get(i).getValorParcela();
-         }
-    }
-       
-    public void gerarTotalJuros(){
-        for (int i = 0; i <listaContasReceber.size(); i++) {
             totalJurosReceber = totalJurosReceber + listaContasReceber.get(i).getJuros();
-        }
-    }
-    
-        
-    public void gerarTotalDesconto(){
-        for (int i = 0; i <listaContasReceber.size(); i++) {
             totalDescontosReceber = totalDescontosReceber + listaContasReceber.get(i).getDesagio();
-        }
-    }
-    
-    public void gerarValorTotalRecebido(){
-        for (int i = 0; i <listaContasReceber.size(); i++) {
             valorTotalRecebido = valorTotalRecebido + listaContasReceber.get(i).getValorPago();
-        }
+         }
     }
     
     public String limparDadosPesquisa() {
         try {
             ContasReceberFacade contasReceberFacadece = new ContasReceberFacade();
+            criarConsultaContaReceber();
             listaContasReceber = contasReceberFacadece.listar(sql);
         } catch (SQLException ex) {
             Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
             mostrarMensagem(ex, "Erro Listar Contas", "Erro");
         }
-        return "consConReceber";
+        return "";
 
     }
     
-    public String novo(){
-            Map<String, Object> options = new HashMap<String, Object>();
-            options.put("contentWidth", 580);
-            RequestContext.getCurrentInstance().openDialog("cadConReceber");
-            return "";
-    }
-    
-     public void retornoDialogoNovo(SelectEvent event){
-        Contasreceber conta = (Contasreceber) event.getObject();
-        listaContasReceber.add(conta);
-    }
    public String editar(Contasreceber contasreceber){
          if (contasreceber!=null){
             FacesContext fc = FacesContext.getCurrentInstance();
@@ -365,10 +347,10 @@ public class ContasReceberMB implements Serializable{
         String diaData = Formatacao.ConvercaoDataPadrao(data);
         data = Formatacao.ConvercaoStringDataBrasil(diaData);
         if (contasreceber.getDataVencimento().before(data)) {
-            return "../../resources/img/bolaVerde.png";
+            return "../../resources/img/bolaVermelha.png";
         } else {
             if (!contasreceber.getDataVencimento().after(data)) {
-                return "../../resources/img/bolaVermelha.png";
+                return "../../resources/img/bolaVerde.png";
             } else {
                 if (contasreceber.getDataVencimento().equals(data)) {
                     return "../../resources/img/bolaAmarela.png";
@@ -385,6 +367,44 @@ public class ContasReceberMB implements Serializable{
           return "../../resources/img/receber.png";
            
        }
+    }
+   
+   
+    public void verificarCliente(){
+        if (usuarioLogadoBean.getUsuario().getCliente()>0){
+            ClienteFacade clienteFacade = new ClienteFacade();
+            try {
+                cliente = clienteFacade.consultar(usuarioLogadoBean.getUsuario().getCliente());
+                verCliente = true;
+                if(cliente==null){
+                    verCliente=false;
+                    cliente = new Cliente();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+   
+    public void gerarVendas() throws SQLException{
+        ContasReceberFacade contasReceberFacade = new ContasReceberFacade();
+        String sql = "Select c from Contasreceber c";
+        List<Contasreceber> lista = null;
+        try {
+            lista = contasReceberFacade.listar(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (lista!=null){
+            VendasFacade vendasFacade = new VendasFacade();
+            for(int i=0;i<lista.size();i++){
+               Vendas venda = vendasFacade.consultar(lista.get(i).getVenda());
+               if (venda!=null){
+                   lista.get(i).setVendas(venda);
+                   contasReceberFacade.salvar(lista.get(i));
+               }
+            }
+        }
     }
    
 }
