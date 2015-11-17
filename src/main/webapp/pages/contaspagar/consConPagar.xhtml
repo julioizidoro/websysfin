@@ -91,6 +91,7 @@
                         <p:column headerText="" style="width:20px;text-align:center;">
                             <p:commandLink title="Editar" class="pesquisar2"  action="#{contasPagarMB.editar(contasPagar)}">
                                 <img src="../../resources/img/editarS.png" style="width: 100%; height: 100%;" />
+                                <p:ajax event="dialogReturn" listener="#{contasPagarMB.retornoDialogNovo}" update="idTabelaContaPagar"/>
                             </p:commandLink>
                         </p:column>
                         <p:column headerText="" style="width:20px;text-align:center;">

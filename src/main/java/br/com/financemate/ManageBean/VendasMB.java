@@ -6,7 +6,7 @@
 package br.com.financemate.ManageBean;
 
 
-import br.com.financemate.ManageBean.cadastro.ClienteMB;
+import br.com.financemate.ManageBean.cadastro.cliente.ClienteMB;
 import br.com.financemate.Util.Formatacao;
 import br.com.financemate.facade.VendasFacade;
 import br.com.financemate.model.Vendas;

@@ -32,6 +32,12 @@
                         <p:column headerText="Email" style="width:140px" >
                             <h:outputText  value="#{cliente.email}"/>
                         </p:column>
+                        <p:column headerText="" style="width:20px;text-align:center;">
+                            <p:commandLink title="Editar" class="pesquisar2"  action="#">
+                                <img src="../../resources/img/editarS.png" style="width: 100%; height: 100%;" />
+                                <p:ajax event="dialogReturn" listener="#{ClienteMB.retornoDialogNovo}" update="idCliente"/>
+                            </p:commandLink>
+                        </p:column>
                         <p:column style="width:28px">
                             <p:selectBooleanCheckbox value="#{cliente.selecionado}"/>
                         </p:column>

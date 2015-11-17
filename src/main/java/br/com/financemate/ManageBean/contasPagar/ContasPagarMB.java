@@ -370,10 +370,10 @@ public class ContasPagarMB implements Serializable{
         return "";
     }
     
-    public void retornoDialogNovo(SelectEvent event){
-       Contaspagar contaspagar = (Contaspagar) event.getObject();
-       listaContasPagar.add(contaspagar);
-   }
+    public void retornoDialogNovo(SelectEvent event) {
+        Contaspagar contaspagar = (Contaspagar) event.getObject();
+        listaContasPagar.add(contaspagar);
+    }
     
     public String editar(Contaspagar contaspagar){
         if (contaspagar!=null){

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.financemate.ManageBean.cadastro;
+package br.com.financemate.ManageBean.cadastro.cliente;
 
 
 import br.com.financemate.ManageBean.UsuarioLogadoBean;
@@ -26,6 +26,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -48,6 +49,7 @@ public class ClienteMB implements Serializable{
     @PostConstruct
     public void init() {
         cliente = new Cliente();
+        getListaClientes();
     }
     public String getNomeCliente() {
         return nomeCliente;
@@ -213,21 +215,28 @@ public class ClienteMB implements Serializable{
         if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIcliente()) {
             try {
                 listarTipoPlanoContas();
+                cliente = new Cliente();
+                Map<String, Object> options = new HashMap<String, Object>();
+                options.put("contentWidth", 500);
+                RequestContext.getCurrentInstance().openDialog("cadCliente");
+                return "";
             } catch (SQLException ex) {
                 Logger.getLogger(ClienteMB.class.getName()).log(Level.SEVERE, null, ex);
             }
-            cliente = new Cliente();
-            Map<String, Object> options = new HashMap<String, Object>();
-            options.put("contentWidth", 500);
-            RequestContext.getCurrentInstance().openDialog("cadCLiente");
-            return "";
+            
         } else {
             FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
             return "";
         } 
+        return null;
 
     }
+    
+    public void retornoDialogNovo(SelectEvent event){
+       Cliente cliente = (Cliente) event.getObject();
+       listaClientes.add(cliente);
+   }
 }
     
 

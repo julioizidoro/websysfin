@@ -7,7 +7,7 @@ package br.com.financemate.ManageBean.contasReceber;
 
 
 import br.com.financemate.ManageBean.UsuarioLogadoBean;
-import br.com.financemate.ManageBean.cadastro.ClienteMB;
+import br.com.financemate.ManageBean.cadastro.cliente.ClienteMB;
 import br.com.financemate.Util.Formatacao;
 import br.com.financemate.Util.GerarRelatorio;
 import br.com.financemate.facade.ContasPagarFacade;
