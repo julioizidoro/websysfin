@@ -1,64 +1,73 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+<?xml version='1.0' encoding='UTF-8' ?> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-      <ui:composition template="/WEB-INF/templates/default.xhtml">
-        <ui:define name="corpo">
-            <h:form>
-                <div id="centro">
-                    <p:growl id="growl" showDetail="true" sticky="true" />
-                    <br></br>
-                    <br></br>
-                    <p:tabView class="cadastroContasPagar">
-                        <p:tab title="Cadastrar Banco" >
-                            <h:panelGrid columns="2" cellpadding="5" >
-                                <p:outputLabel value="Nome" for="nome"  class="left3" />
-                                <p:outputLabel value="Número" for="numero"  class="numero2" />
-                            </h:panelGrid>
-                            <h:panelGrid columns="3">
-                                <p:inputText id="nome" size="62"  class="left3" value="#{BancoMB.banco.nome}"/>
-                                <p:inputText id="numero" size="15"  class="left"  value="#{BancoMB.banco.numeroBanco}"/>
-                            </h:panelGrid>
 
-                            <h:panelGrid columns="4" cellpadding="5" >
-                                <p:outputLabel value="nº Agencia" for="nAgencia"  class="left3"/>
-                                <p:outputLabel value="nº Conta" for="nConta"  class="dataVenc"/>
-                                <p:outputLabel value="Chave" for="chave"  class="left9"/>
-                                <p:outputLabel value="Senha" for="senha"  class="left9"/>
-                            </h:panelGrid>
-                            <h:panelGrid columns="4">
-                                <p:inputText id="nAgencia" size="10"  class="left3"  value="#{BancoMB.banco.agencia}"/>
-                                <p:inputText id="nConta" size="11"  class="left"  value="#{BancoMB.banco.conta}"/>
-                                <p:inputText id="chave" size="9"  class="left"  value="#{BancoMB.banco.cahve}"/>
-                                <p:inputText id="senha" size="10"  class="left"  value="#{BancoMB.banco.senha}"/>
-                            </h:panelGrid>
-                            <h:panelGrid columns="2" cellpadding="5" >
-                                <p:outputLabel value="Nome do Gerente" for="nomegerente"  class="left3" />
-                            </h:panelGrid>
-                            <h:panelGrid columns="3">
-                                <p:inputText id="nomegerente" size="97"  class="left3"  value="#{BancoMB.banco.gerente}"/>
-                            </h:panelGrid>
-                            <h:panelGrid columns="2" cellpadding="5" >
-                                <p:outputLabel value="E-mail do Gerente" for="emailgerente"  class="left3" />
-                            </h:panelGrid>
-                            <h:panelGrid columns="3">
-                                <p:inputText id="emailgerente" size="97"  class="left3"  value="#{BancoMB.banco.emailGerente}"/>
-                            </h:panelGrid>
-                        </p:tab>
-                    </p:tabView>  
-                    <p:commandButton value="Cadastrar" icon=" ui-icon-plusthick" class="cadastrar"  actionListener="#{mensagem.saveMessagem}" update="growl" action="#{BancoMB.salvar()}" />
-                    <p:commandButton value="Cancelar" icon=" ui-icon-cancel " class="pesquisar2" action="#{BancoMB.cancelar()}" />
-                    <br></br>
-                    <br></br>
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-                </div>
-            </h:form>
+        <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+    </h:head>
 
-        </ui:define>
-    </ui:composition>
+    <h:body >
+
+        <h:form id="frmidCadconReceber" class="body2" style="font-size: 12px;background: #F0FFFF">
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <img src="resources/img/ajax-loader.gif" />
+            </p:dialog>
+
+            <title  >Editar Contas Receber</title>
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <br></br>
+            <h:panelGrid columns="2" cellpadding="5" >
+                <p:outputLabel value="Nome" for="nome"  class="left3" />
+                <p:outputLabel value="Número" for="numero"  class="numero2" />
+            </h:panelGrid>
+            <h:panelGrid columns="3">
+                <p:inputText id="nome" size="62"  class="left3" value="#{bancoMB.banco.nome}"/>
+                <p:inputText id="numero" size="15"  class="left"  value="#{bancoMB.banco.numeroBanco}"/>
+            </h:panelGrid>
+
+            <h:panelGrid columns="4" cellpadding="5" >
+                <p:outputLabel value="nº Agencia" for="nAgencia"  class="left3"/>
+                <p:outputLabel value="nº Conta" for="nConta"  class="dataVenc"/>
+                <p:outputLabel value="Chave" for="chave"  class="left9"/>
+                <p:outputLabel value="Senha" for="senha"  class="left9"/>
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:inputText id="nAgencia" size="10"  class="left3"  value="#{bancoMB.banco.agencia}"/>
+                <p:inputText id="nConta" size="11"  class="left"  value="#{bancoMB.banco.conta}"/>
+                <p:inputText id="chave" size="9"  class="left"  value="#{bancoMB.banco.cahve}"/>
+                <p:inputText id="senha" size="10"  class="left"  value="#{bancoMB.banco.senha}"/>
+            </h:panelGrid>
+            <h:panelGrid columns="2" cellpadding="5" >
+                <p:outputLabel value="Nome do Gerente" for="nomegerente"  class="left3" />
+            </h:panelGrid>
+            <h:panelGrid columns="3">
+                <p:inputText id="nomegerente" size="97"  class="left3"  value="#{bancoMB.banco.gerente}"/>
+            </h:panelGrid>
+            <h:panelGrid columns="2" cellpadding="5" >
+                <p:outputLabel value="E-mail do Gerente" for="emailgerente"  class="left3" />
+            </h:panelGrid>
+            <h:panelGrid columns="3">
+                <p:inputText id="emailgerente" size="97"  class="left3"  value="#{bancoMB.banco.emailGerente}"/>
+            </h:panelGrid>
+
+            <p:commandLink title="Confirmar" style="margin-left: 72%;text-decoration: none" actionListener="#{mensagem.saveMessagem}"  action="#" >
+                <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
+            </p:commandLink>
+            <p:commandLink title="Cancelar" style="margin-left: 2%;text-decoration: none" action="#" >
+                <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
+            </p:commandLink>
+            <br></br>
+            <br></br>
+
+        </h:form>
+    </h:body>
+
 </html>
-
-
