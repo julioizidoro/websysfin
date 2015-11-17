@@ -5,46 +5,52 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-        <ui:composition template="/WEB-INF/templates/default.xhtml">
+    <ui:composition template="/WEB-INF/templates/default.xhtml">
 
         <ui:define name="corpo">
-            <h:form>
+            <h:form id="idfrmbanco">
                 <div id="centro">
                     <p:growl id="growl" showDetail="true" sticky="true" />
                     <br></br>
-                    <h:panelGrid columns="2" cellpadding="5" >
-                        <p:outputLabel value="Cliente" for="cliente"  class="left3" />
-                    </h:panelGrid>
-                    <h:panelGrid columns="2">
-                        <p:selectOneMenu id="idconta"  style="width:162px;margin-left: 10%"  value="#{bancoMB.banco}"
-                        converter="BancoConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:150px" >
-                        <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
-                        <f:selectItems value="#{bancoMB.listaBanco}" var="bancoSelecionado" itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
-                        <f:attribute name="listaBanco" value="#{bancoMB.listaBanco}"/>
-                    </p:selectOneMenu>  
-                    </h:panelGrid>
-                    <legend id="iUsu" ><b>Consulta de Banco </b> 
-                        <p:commandLink title="Novo"  class="fechar" action="#{BancoMB.novo()}">
-                            <img src="../../resources/img/adicionarS.png"/>
+                    <p:accordionPanel style="font-size:12px;">
+                        <p:tab title="Pesquisar" titleStyle="background: #3E7D62;color: white">
+                            <h:panelGrid columns="7">
+                                <p:selectOneMenu id="idcbbunidade" value="#{bancoMB.cliente}" style="width: 300px;margin-left: 12%"
+                                                 converter="ClienteConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                                    <f:selectItem itemLabel="Cliente" itemValue="0" noSelectionOption="true"/>
+                                    <f:selectItems value="#{bancoMB.listaCliente}" var="clienteselecionado"  itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}" />
+                                    <f:attribute name="listaCliente" value="#{bancoMB.listaCliente}"/>
+                                </p:selectOneMenu>
+
+                                <p:commandLink title="Pesquisar" class="pesquisarreceber"  update=":idfrmbanco:idconsultabanco"   action="#{bancoMB.pesquisar()}" style="text-decoration: none;margin-left: 250%">
+                                    <img src="../../resources/img/pesquisarS.png" width="30" height="30" />
+                                </p:commandLink>
+                               
+                            </h:panelGrid>
+                        </p:tab>
+                    </p:accordionPanel>
+                     <legend id="iUsu2" style=" -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;" ><b>Consulta de Banco </b>
+                         <p:commandLink title="Novo"  class="fechar" action="#{bancoMB.novoBanco()}" style="margin-left: 40%">
+                            <img src="../../resources/img/adicionarS.png" width="30"/>
                         </p:commandLink>
                     </legend>
-                    <p:dataTable id="consultabanco" var="consultabanco" value="#{bancoMB.listaBanco}" rowStyleClass="tabela" class="tabelaselecionar" 
-                                 scrollable="true" scrollHeight="300" style="margin-bottom:20px"> 
+                    <p:dataTable id="idconsultabanco" var="banco" value="#{bancoMB.listaBanco}" rowStyleClass="tabela" class="tabelaselecionar" 
+                                 scrollable="true" scrollHeight="300" style="margin-bottom:20px" selection="#{bancoMB.banco}" selectionMode="single" rowKey="#{banco.idbanco}"> 
 
                         <p:column headerText="Nome">
-                            <h:outputText value="#{bancoSelecionado.nome}" />
+                            <h:outputText value="#{banco.nome}" />
                         </p:column>
                         <p:column headerText="Agencia" style="width:160px">
-                            <h:outputText   value="#{bancoSelecionado.agencia}"/>
+                            <h:outputText   value="#{banco.agencia}"/>
                         </p:column>
                         <p:column headerText="Conta"  style="width:160px">
-                            <h:outputText value="#{bancoSelecionado.conta}"/>
+                            <h:outputText value="#{banco.conta}"/>
                         </p:column>
                         <p:column>
-                            <p:commandButton title="Editar" style="text-align: center" action="#{bancoMB.editar(banco)}" update="consultabanco" >
-                                <img src="../../resources/img/editarS.png"/>
-                                <p:ajax event="dialogReturn" listener="#{bancoMB.retornoDialog}" update="consultabanco"/>
-                            </p:commandButton>
+                            <p:commandLink title="Editar" style="text-align: center" action="#{bancoMB.editar(banco)}" update="idconsultabanco" >
+                                <img src="../../resources/img/editarS.png" width="20"/>
+                                <p:ajax event="dialogReturn" listener="#{bancoMB.retornoDialog}" update="idconsultabanco"/>
+                            </p:commandLink>
                         </p:column>
                     </p:dataTable>
                     <br></br>
