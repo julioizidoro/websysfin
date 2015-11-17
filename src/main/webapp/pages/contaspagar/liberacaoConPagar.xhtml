@@ -13,7 +13,7 @@
     </h:head>
 
     <h:body > 
-        <h:form id="idLiberacaoConPagar" class="body2" style="font-size: 12px; background-color: #F0FFFF;">
+        <h:form id="idFrmLiberacaoConPagar" class="body2" style="font-size: 12px; background-color: #F0FFFF;">
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false" >
@@ -50,7 +50,7 @@
 
             <br/><br/>
            
-            <p:commandLink title="Confirmar" style="margin-left: 80%;text-decoration: none" actionListener="#{mensagem.saveMessagem}"  action="#{liberacaoContasPagarMB.salvarContasLiberadas(conta)}" >
+            <p:commandLink title="Confirmar" style="margin-left: 80%;text-decoration: none" actionListener="#{mensagem.saveMessagem}"  action="#{contasPagarMB.salvarContasLiberadas(contasPagar)}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>
             <p:commandLink title="Cancelar" style="margin-left: 2%;text-decoration: none" action="#{liberacaoContasPagarMB.cancelar()}" >

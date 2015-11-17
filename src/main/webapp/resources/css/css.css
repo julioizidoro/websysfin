@@ -78,9 +78,8 @@ h1 {
     font-size:11px;
 
     position:relative;
-    margin-left:1%;
     top:-1px;
-    width:740px;
+    width:100%;
 }
 .tabela{
     color: #4F4F4F;

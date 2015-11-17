@@ -19,11 +19,10 @@
                         <p:commandButton value="Pesquisar" class="pesquisar2outros" icon=" ui-icon-search " update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{ClienteMB.pesquisarNome()}"/>
                     </h:panelGrid>
                     <br></br>
-                    <legend id="iUsu" ><b>Consulta de Clientes </b></legend>
+                    <legend id="iUsu2" ><b>Consulta de Clientes </b></legend>
 
-                    <p:dataTable id="cliente" var="cliente" value="#{ClienteMB.listaClientes}" rowStyleClass="tabela" class="tabelaselecionar" 
-                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-                                 paginator="true" rows="10" style="margin-bottom:20px"> 
+                    <p:dataTable id="idCliente" var="cliente" value="#{ClienteMB.listaClientes}" rowStyleClass="tabela" class="tabelaselecionar" 
+                                 scrollRows="10"  scrollable="true" scrollHeight="300" rows="10" style="margin-bottom:20px" selection="#{ClienteMB.cliente}" selectionMode="single" rowKey="#{cliente.idcliente}"> 
                         <p:column headerText="Nome" style="width:140px">
                             <h:outputText value="#{cliente.nomeFantasia}"/>
                         </p:column>

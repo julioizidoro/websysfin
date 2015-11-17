@@ -14,15 +14,18 @@ import br.com.financemate.model.Tipoplanocontas;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -41,8 +44,9 @@ public class ClienteMB implements Serializable{
     private String pagina;
     private String idTipoPlanoConta="0";
     private List<Tipoplanocontas> listarTipoPlanoContas;
-
-    public ClienteMB() {
+    
+    @PostConstruct
+    public void init() {
         cliente = new Cliente();
     }
     public String getNomeCliente() {
@@ -148,19 +152,7 @@ public class ClienteMB implements Serializable{
         cliente = listaClientes.get(idCliente);
         return pagina;
     }
-    
-    public String novo() throws SQLException{
-        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIcliente()){
-             listarTipoPlanoContas();
-            cliente = new Cliente();
-            return "cadCliente";
-        }else {
-            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
-            FacesContext.getCurrentInstance().addMessage(null, mensagem);
-            return "";
-        }
-       
-    }
+   
     public String cancelar(){
         return "consCliente";
     }
@@ -215,6 +207,26 @@ public class ClienteMB implements Serializable{
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
             return "";
         }
+    }
+    
+    public String novo() {
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIcliente()) {
+            try {
+                listarTipoPlanoContas();
+            } catch (SQLException ex) {
+                Logger.getLogger(ClienteMB.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            cliente = new Cliente();
+            Map<String, Object> options = new HashMap<String, Object>();
+            options.put("contentWidth", 500);
+            RequestContext.getCurrentInstance().openDialog("cadCLiente");
+            return "";
+        } else {
+            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
+            FacesContext.getCurrentInstance().addMessage(null, mensagem);
+            return "";
+        } 
+
     }
 }
     

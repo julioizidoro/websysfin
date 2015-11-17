@@ -5,15 +5,21 @@
  */
 package br.com.financemate.ManageBean.contasPagar;
 
+import br.com.financemate.ManageBean.UsuarioLogadoBean;
 import br.com.financemate.Util.Formatacao;
 import br.com.financemate.facade.ContasPagarFacade;
+import br.com.financemate.facade.MovimentoBancoFacade;
 import br.com.financemate.model.Contaspagar;
 import br.com.financemate.model.Movimentobanco;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -32,7 +38,8 @@ public class liberacaoContasPagarMB implements Serializable {
     private Contaspagar contasPagar;
     private String totalLiberadas;
     private List<Contaspagar> listaContasSelecionadas;
-    private Date dataLiberação;
+    private Date dataLiberacao;
+    private UsuarioLogadoBean usuarioLogadoBean;
 
     @PostConstruct
     public void init() {
@@ -46,12 +53,22 @@ public class liberacaoContasPagarMB implements Serializable {
         }
     }
 
-    public Date getDataLiberação() {
-        return dataLiberação;
+    public UsuarioLogadoBean getUsuarioLogadoBean() {
+        return usuarioLogadoBean;
     }
 
-    public void setDataLiberação(Date dataLiberação) {
-        this.dataLiberação = dataLiberação;
+    public void setUsuarioLogadoBean(UsuarioLogadoBean usuarioLogadoBean) {
+        this.usuarioLogadoBean = usuarioLogadoBean;
+    }
+
+    
+    
+    public Date getDataLiberacaoo() {
+        return dataLiberacao;
+    }
+
+    public void setDataLiberacao(Date dataLiberacao) {
+        this.dataLiberacao = dataLiberacao;
     }
 
     public Contaspagar getContasPagar() {
@@ -87,10 +104,42 @@ public class liberacaoContasPagarMB implements Serializable {
     }
 
     public String salvarContasLiberadas(Contaspagar conta) {
-        ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
-        contasPagarFacade.salvar(conta);
+        for (int i = 0; i < listaContasSelecionadas.size(); i++) {
+            salvarContaLiberadasMovimentoBanco(listaContasSelecionadas.get(i));
+        }
         RequestContext.getCurrentInstance().closeDialog(contasPagar);
         return "";
+    }
+    
+    
+    public void salvarContaLiberadasMovimentoBanco(Contaspagar conta) {
+        conta.setDataLiberacao(dataLiberacao);
+        conta.setContaPaga("S");
+        Movimentobanco movimentoBanco = new Movimentobanco();
+        movimentoBanco.setBanco(conta.getBanco());
+        movimentoBanco.setCliente(conta.getCliente());
+        movimentoBanco.setDataVencimento(conta.getDataVencimento());
+        movimentoBanco.setDataRegistro(new Date());
+        movimentoBanco.setPlanocontas(conta.getPlanocontas());
+        movimentoBanco.setUsuario(usuarioLogadoBean.getUsuario());
+        movimentoBanco.setValorEntrada(0.0f);
+        movimentoBanco.setValorSaida(conta.getValor());
+        movimentoBanco.setDataRegistro(new Date());
+        movimentoBanco.setDataCompensacao(conta.getDataCompensacao());
+        movimentoBanco.setTipoDocumento(conta.getTipoDocumento());
+        movimentoBanco.setDescricao(conta.getDescricao());
+        movimentoBanco.setCompentencia(conta.getCompetencia());
+        MovimentoBancoFacade movimentoBancoFacade = new MovimentoBancoFacade();
+        try {
+            movimentoBanco = movimentoBancoFacade.salvar(movimentoBanco);
+            conta.setMovimentoBanco(movimentoBanco.getIdmovimentoBanco());
+            ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+            contasPagarFacade.salvar(conta);
+        } catch (SQLException ex) {
+            Logger.getLogger(liberacaoContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+            mostrarMensagem(ex, "Erro ao salvar uma liberação", "Erro");
+        }
+        
     }
 
     public String cancelar() {
@@ -98,4 +147,10 @@ public class liberacaoContasPagarMB implements Serializable {
         return null;
     }
 
+    
+    public void mostrarMensagem(Exception ex, String erro, String titulo){
+        FacesContext context = FacesContext.getCurrentInstance();
+        erro = erro + " - " + ex;
+        context.addMessage(null, new FacesMessage(titulo, erro));
+    } 
 }

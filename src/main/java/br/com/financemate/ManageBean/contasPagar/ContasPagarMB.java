@@ -26,6 +26,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
@@ -57,6 +58,7 @@ public class ContasPagarMB implements Serializable{
     private String totalLiberadas;
     private List<Contaspagar> listaContasSelecionadas;
     private Date dataLiberacao;
+    @Inject
     private UsuarioLogadoBean usuarioLogadoBean;
     
     @PostConstruct
@@ -68,6 +70,10 @@ public class ContasPagarMB implements Serializable{
         gerarListaCliente();
     }
 
+    
+
+    
+    
     public UsuarioLogadoBean getUsuarioLogadoBean() {
         return usuarioLogadoBean;
     }
@@ -445,5 +451,52 @@ public class ContasPagarMB implements Serializable{
     
     public void pegarLinhaTabela(String linha){
         this.linha = linha;
+    }
+    
+    
+    public String salvarContasLiberadas(Contaspagar conta) {
+        for (int i = 0; i < listaContasSelecionadas.size(); i++) {
+            salvarContaLiberadasMovimentoBanco(listaContasSelecionadas.get(i));
+        }
+        RequestContext.getCurrentInstance().closeDialog(contasPagar);
+        return "";
+    }
+    
+    
+    public void salvarContaLiberadasMovimentoBanco(Contaspagar conta) {
+        conta.setDataLiberacao(dataLiberacao);
+        conta.setContaPaga("S");
+        Movimentobanco movimentoBanco = new Movimentobanco();
+        movimentoBanco.setBanco(conta.getBanco());
+        movimentoBanco.setCliente(conta.getCliente());
+        movimentoBanco.setDataVencimento(conta.getDataVencimento());
+        movimentoBanco.setDataRegistro(new Date());
+        movimentoBanco.setPlanocontas(conta.getPlanocontas());
+        movimentoBanco.setUsuario(usuarioLogadoBean.getUsuario());
+        movimentoBanco.setValorEntrada(0.0f);
+        movimentoBanco.setValorSaida(conta.getValor());
+        movimentoBanco.setDataRegistro(new Date());
+        movimentoBanco.setDataCompensacao(conta.getDataCompensacao());
+        movimentoBanco.setTipoDocumento(conta.getTipoDocumento());
+        movimentoBanco.setDescricao(conta.getDescricao());
+        movimentoBanco.setCompentencia(conta.getCompetencia());
+        MovimentoBancoFacade movimentoBancoFacade = new MovimentoBancoFacade();
+        try {
+            movimentoBanco = movimentoBancoFacade.salvar(movimentoBanco);
+            conta.setMovimentoBanco(movimentoBanco.getIdmovimentoBanco());
+            ContasPagarFacade contasPagarFacade = new ContasPagarFacade();
+            contasPagarFacade.salvar(conta);
+        } catch (SQLException ex) {
+            Logger.getLogger(liberacaoContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+            mostrarMensagem(ex, "Erro ao salvar uma liberação", "Erro");
+        }
+        
+    }
+    
+     public String novaOperacaoUsuario() {
+        Map<String, Object> options = new HashMap<String, Object>();
+        options.put("contentWidth", 500);
+        RequestContext.getCurrentInstance().openDialog("operacoesUsuario");
+        return "";
     }
 }   
