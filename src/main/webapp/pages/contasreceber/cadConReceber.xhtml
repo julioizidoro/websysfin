@@ -71,11 +71,11 @@
             </h:panelGrid> 
             <br></br>
             <p:outputLabel value="Nome do Cliente" for="nome"  style="margin-left: 10%"/>
-            <p:outputLabel value="Tipo de Documento" for="tipoDocumento"  style="margin-left: 34%"/>
+            <p:outputLabel value="Tipo de Documento" for="tipoDocumento"  style="margin-left: 38%"/>
 
             <h:panelGrid columns="2">
-                <p:inputText id="nome" size="37"  style="margin-left: 15%" value="#{cadContasReceberMB.contasReceber.nomeCliente}"/>
-                <p:selectOneMenu id="tipoDocumento"  style="width:185px;margin-left: 10%" value="#{cadContasReceberMB.contasReceber.tipodocumento}">
+                <p:inputText id="nome" size="40"  style="margin-left: 16%" value="#{cadContasReceberMB.contasReceber.nomeCliente}"/>
+                <p:selectOneMenu id="tipoDocumento"  style="width:165px;margin-left: 10%" value="#{cadContasReceberMB.contasReceber.tipodocumento}">
                     <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/> 
                     <f:selectItem itemLabel="Boleto" itemValue="Boleto" />  
                     <f:selectItem itemLabel="Guia de Imposto" itemValue="Guia de Imposto" /> 

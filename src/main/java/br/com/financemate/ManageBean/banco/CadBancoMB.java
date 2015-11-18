@@ -6,15 +6,11 @@
 package br.com.financemate.ManageBean.banco;
 
 import br.com.financemate.ManageBean.UsuarioLogadoBean;
-import br.com.financemate.ManageBean.contasReceber.ContasReceberMB;
 import br.com.financemate.facade.BancoFacade;
-import br.com.financemate.facade.ClienteFacade;
 import br.com.financemate.model.Banco;
 import br.com.financemate.model.Cliente;
 import java.io.Serializable;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -32,24 +28,24 @@ import org.primefaces.context.RequestContext;
  */
 @Named
 @ViewScoped
-public class CadBancoMB implements Serializable{
-    
+public class CadBancoMB implements Serializable {
+
     @Inject
     private UsuarioLogadoBean usuarioLogadoBean;
     private Banco banco;
-    private List<Banco> listaBanco;
-    private Cliente cliente;
-    private List<Cliente> listaCliente;
-    
+
     @PostConstruct
-    public void init(){
+    public void init() {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         banco = (Banco) session.getAttribute("banco");
         session.removeAttribute("banco");
-        gerarListaBanco();
-        getCliente();
-        
+        if (banco == null) {
+            banco = new Banco();
+            Cliente cliente = (Cliente) session.getAttribute("cliente");
+            banco.setCliente(cliente);
+            session.removeAttribute("cliente");
+        }
     }
 
     public UsuarioLogadoBean getUsuarioLogadoBean() {
@@ -68,80 +64,26 @@ public class CadBancoMB implements Serializable{
         this.banco = banco;
     }
 
-    public List<Banco> getListaBanco() {
-        return listaBanco;
-    }
-
-    public void setListaBanco(List<Banco> listaBanco) {
-        this.listaBanco = listaBanco;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public List<Cliente> getListaCliente() {
-        return listaCliente;
-    }
-
-    public void setListaCliente(List<Cliente> listaCliente) {
-        this.listaCliente = listaCliente;
-    }
-    
-    
-   
-    
-    public void gerarListaBanco(){
-        if (cliente!=null){
-            BancoFacade bancoFacade = new BancoFacade();
-            String sql = "Select b from banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
-            listaBanco = bancoFacade.listar(sql);
-            if (listaBanco!=null){
-                listaBanco = new ArrayList<Banco>();
-            }
-        }else {
-            listaBanco = new ArrayList<Banco>();
-        }
-    } 
-    
-    public void gerarListaCliente(){
-        ClienteFacade clienteFacade = new ClienteFacade();
-        try {
-            listaCliente = clienteFacade.listar("");
-        } catch (SQLException ex) {
-            Logger.getLogger(ContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
-            mostrarMensagem(ex, "Erro Listar Clientes", "Erro");
-        }
-    }
-    
-    public void mostrarMensagem(Exception ex, String erro, String titulo){
+    public void mostrarMensagem(Exception ex, String erro, String titulo) {
         FacesContext context = FacesContext.getCurrentInstance();
         erro = erro + " - " + ex;
         context.addMessage(null, new FacesMessage(titulo, erro));
     }
-    
-   /*/ private void salvar() { 
-        BancoFacade bancoFacade= new BancoFacade();
-        if (banco==null){
-            banco = new Banco();
+
+    public void salvar() {
+        BancoFacade bancoFacade = new BancoFacade();
+        try {
+            banco = bancoFacade.salvar(banco);
+            RequestContext.getCurrentInstance().closeDialog(banco);
+        } catch (SQLException ex) {
+            Logger.getLogger(CadBancoMB.class.getName()).log(Level.SEVERE, null, ex);
+            mostrarMensagem(ex, "Erro ao Cadastrar Banco", "Erro");
+
         }
-        banco.setNome("");
-        banco.setNumeroBanco("");
-        banco.setAgencia("");
-        banco.setConta("");
-        banco.setCahve("");
-        banco.setSenha("");
-        banco.setGerente("");
-        banco.setEmailGerente("");
-        banco.setCliente(cliente);
-        banco = bancoFacade.salvar(banco);
-        RequestContext.getCurrentInstance().closeDialog(banco);
-        
-    }/*/
-                               
-    
+    }
+
+    public String cancelar() {
+        RequestContext.getCurrentInstance().closeDialog(null);
+        return "";
+    }
 }

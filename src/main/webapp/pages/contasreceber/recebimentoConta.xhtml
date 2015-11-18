@@ -13,7 +13,7 @@
     </h:head>
 
     <h:body >
-        <br></br>
+        
 
         <h:form id="frmidRecebimentoConta" class="body2" style="font-size: 12px;background: #F0FFFF">
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
@@ -25,24 +25,25 @@
             <title  >Recebimento</title>
             <p:growl id="growl" showDetail="true" sticky="true" />
             <br></br>
-            <p:outputLabel value="Unidade" style="margin-left: 10%"/>
+            <p:fieldset   style="margin-bottom:20px; width: 80%; margin-left: 7%" >
+            <p:outputLabel value="Unidade" style="margin-left: 1%"/>
             <h:panelGrid columns="2">
-                <p:inputText id="unidade" style="width: 490px;margin-left: 10%" value="#{recebimentoContasReceberMB.contasReceber.cliente.nomeFantasia}" readonly="true"/>
+                <p:inputText id="unidade" style="width: 490px" value="#{recebimentoContasReceberMB.contasReceber.cliente.nomeFantasia}" readonly="true"/>
             </h:panelGrid>
 
-            <p:outputLabel value="Nome do cliente" for="nomeCliente"  style="margin-left: 10%"/>
+            <p:outputLabel value="Nome do cliente" for="nomeCliente"  style="margin-left: 1%"/>
 
             <h:panelGrid columns="2">
-                <p:inputText id="nomeCliente" style="width: 490px;margin-left: 10%" value="#{recebimentoContasReceberMB.contasReceber.nomeCliente}" readonly="true"/>
+                <p:inputText id="nomeCliente" style="width: 490px" value="#{recebimentoContasReceberMB.contasReceber.nomeCliente}" readonly="true"/>
             </h:panelGrid>
 
-            <p:outputLabel value="Data Vencimento" for="dataVenc" style="margin-left: 9.5%"/>
-            <p:outputLabel value="Nº Documento" for="nDocumento" style="margin-left: 5%"/>
-            <p:outputLabel value="Numero Parcela" for="nParcela" style="margin-left: 8%"/>
-            <p:outputLabel value="Valor R$" for="valor" style="margin-left: 6%"/>
+            <p:outputLabel value="Data Vencimento" for="dataVenc" style="margin-left: 1%"/>
+            <p:outputLabel value="Nº Documento" for="nDocumento" style="margin-left: 6%"/>
+            <p:outputLabel value="Numero Parcela" for="nParcela" style="margin-left: 9.5%"/>
+            <p:outputLabel value="Valor R$" for="valor" style="margin-left: 7.5%"/>
 
             <h:panelGrid columns="5" cellpadding="1">
-                <p:inputMask id="dataVenc"   mask="99/99/9999" size="10" maxlength="15" style="margin-left: 35%" value="#{recebimentoContasReceberMB.contasReceber.dataVencimento}" readonly="true">
+                <p:inputMask id="dataVenc"   mask="99/99/9999" size="10" maxlength="15"  value="#{recebimentoContasReceberMB.contasReceber.dataVencimento}" readonly="true">
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                 </p:inputMask>
                 <p:inputText id="nDocumento" size="10" style="margin-left: 20%" value="#{recebimentoContasReceberMB.contasReceber.numeroDocumento}" readonly="true"/>
@@ -51,35 +52,35 @@
                     <f:convertNumber pattern="##,###,###,###.##" minFractionDigits="2" />
                 </p:inputText>
             </h:panelGrid> 
-
-            <p:outputLabel value="Data Recebimento" for="dataRece" style="margin-left: 9.5%" />
-            <p:outputLabel value="Desagio" for="desagio" style="margin-left: 4%" />
+            </p:fieldset>
+            <p:outputLabel value="Data Recebimento" for="dataRece" style="margin-left: 7.5%" />
+            <p:outputLabel value="Desagio" for="desagio" style="margin-left: 8%" />
             <p:outputLabel value="Juros" for="juros" style="margin-left: 14%" />
-            <p:outputLabel value="Valor Recebido" for="valorRece" style="margin-left: 15.5%" />
+            <p:outputLabel value="Valor Recebido" for="valorRece" style="margin-left: 17%" />
 
             <h:panelGrid columns="5" cellpadding="1">
-                <p:inputMask id="dataRece"   mask="99/99/9999" size="11" maxlength="15" style="margin-left: 34.5%" value="#{recebimentoContasReceberMB.contasReceber.dataPagamento}">
+                <p:inputMask id="dataRece"   mask="99/99/9999" size="13" maxlength="15" style="margin-left: 25%" value="#{recebimentoContasReceberMB.contasReceber.dataPagamento}">
                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                 </p:inputMask>
-                <p:inputText id="desagio" size="10"  style="margin-left: 15%;text-align: right" value="#{recebimentoContasReceberMB.contasReceber.desagio}">
+                <p:inputText id="desagio" size="10"  style="margin-left: 23%;text-align: right" value="#{recebimentoContasReceberMB.contasReceber.desagio}">
                     <f:convertNumber pattern="##,###,###,###.##" minFractionDigits="2" />
                     <p:ajax event="blur" listener="#{recebimentoContasReceberMB.calcularValoresRecebimento()}" update="frmidRecebimentoConta:desagio,frmidRecebimentoConta:juros,frmidRecebimentoConta:valorRece" />
                 </p:inputText>
 
-                <p:inputText id="juros" size="10"  style="margin-left: 20%;text-align: right" value="#{recebimentoContasReceberMB.contasReceber.juros}" immediate="false">
+                <p:inputText id="juros" size="10"  style="margin-left: 23%;text-align: right" value="#{recebimentoContasReceberMB.contasReceber.juros}" immediate="false">
                     <f:convertNumber pattern="##,###,###,###.##" minFractionDigits="2" />
                     <p:ajax event="blur" listener="#{recebimentoContasReceberMB.calcularValoresRecebimento()}" update="frmidRecebimentoConta:desagio,frmidRecebimentoConta:juros,frmidRecebimentoConta:valorRece" />
                 </p:inputText>
 
-                <p:inputText id="valorRece" size="10"  style="margin-left: 19%;text-align: right" value="#{recebimentoContasReceberMB.contasReceber.valorPago}">
+                <p:inputText id="valorRece" size="10"  style="margin-left: 23%;text-align: right" value="#{recebimentoContasReceberMB.contasReceber.valorPago}">
                     <f:convertNumber pattern="##,###,###,###.##" minFractionDigits="2" />
                 </p:inputText>
             </h:panelGrid> 
 
-            <p:outputLabel value="Conta" for="idconta" style="margin-left: 10%"/> 
+            <p:outputLabel value="Conta" for="idconta" style="margin-left: 7.5%"/> 
 
             <h:panelGrid columns="5" cellpadding="1">    
-                <p:selectOneMenu id="idconta"  style="width:500px;margin-left: 10%"  value="#{recebimentoContasReceberMB.contasReceber.banco}"
+                <p:selectOneMenu id="idconta"  style="width:527px;margin-left: 7.5%"  value="#{recebimentoContasReceberMB.contasReceber.banco}"
                                  converter="BancoConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:450px" >
                     <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
                     <f:selectItems value="#{recebimentoContasReceberMB.listaBanco}" var="bancoSelecionado" itemLabel="#{bancoSelecionado.nome}" itemValue="#{bancoSelecionado}"/>
@@ -88,7 +89,7 @@
                 
             </h:panelGrid>            
 
-            <p:commandLink title="Confirmar" style="margin-left: 71%;text-decoration: none"  actionListener="#" update="growl" action="#{recebimentoContasReceberMB.salvar()}">
+            <p:commandLink title="Confirmar" style="margin-left: 74%;text-decoration: none"  actionListener="#" update="growl" action="#{recebimentoContasReceberMB.salvar()}">
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>
             <p:commandLink title="Cancelar"  style="margin-left: 2%;text-decoration: none"  action="#{recebimentoContasReceberMB.cancelar()}">

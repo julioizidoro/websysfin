@@ -29,8 +29,8 @@
                 <p:outputLabel value="Número" for="numero"  style="margin-left: 62%" />
            
             <h:panelGrid columns="3">
-                <p:inputText id="nome" style="width:  200%;margin-left: 15%"  value="#{bancoMB.banco.nome}"/>
-                <p:inputText id="numero" style="width:  30%;margin-left: 60%"    value="#{bancoMB.banco.numeroBanco}"/>
+                <p:inputText id="nome" style="width:  200%;margin-left: 15%"  value="#{cadBancoMB.banco.nome}"/>
+                <p:inputText id="numero" style="width:  30%;margin-left: 60%"    value="#{cadBancoMB.banco.numeroBanco}"/>
             </h:panelGrid>
 
         
@@ -40,28 +40,28 @@
                 <p:outputLabel value="Senha" for="senha"  style="margin-left: 19%"/>
             
             <h:panelGrid columns="4">
-                <p:inputText id="nAgencia"  style="margin-left: 19%;width: 60%"  value="#{bancoMB.banco.agencia}"/>
-                <p:inputText id="nConta" style="margin-left: 10%;width: 60%"  value="#{bancoMB.banco.conta}"/>
-                <p:inputText id="chave" style="margin-left: 10%;width: 60%" value="#{bancoMB.banco.cahve}"/>
-                <p:inputText id="senha" style="margin-left: 10%;width: 60%"  value="#{bancoMB.banco.senha}"/>
+                <p:inputText id="nAgencia"  style="margin-left: 19%;width: 60%"  value="#{cadBancoMB.banco.agencia}"/>
+                <p:inputText id="nConta" style="margin-left: 10%;width: 60%"  value="#{cadBancoMB.banco.conta}"/>
+                <p:inputText id="chave" style="margin-left: 10%;width: 60%" value="#{cadBancoMB.banco.cahve}"/>
+                <p:inputText id="senha" style="margin-left: 10%;width: 60%"  value="#{cadBancoMB.banco.senha}"/>
             </h:panelGrid>
             
                 <p:outputLabel value="Nome do Gerente" for="nomegerente"  style="margin-left: 5.5%" />
            
             <h:panelGrid columns="3">
-                <p:inputText id="nomegerente" size="97"  style="margin-left: 5%;width: 88%"  value="#{bancoMB.banco.gerente}"/>
+                <p:inputText id="nomegerente" size="97"  style="margin-left: 5%;width: 88%"  value="#{cadBancoMB.banco.gerente}"/>
             </h:panelGrid>
             
                 <p:outputLabel value="E-mail do Gerente" for="emailgerente"  style="margin-left: 5.5%"/>
             
             <h:panelGrid columns="3">
-                <p:inputText id="emailgerente" size="97"  style="margin-left: 5%;width: 88%" value="#{bancoMB.banco.emailGerente}"/>
+                <p:inputText id="emailgerente" size="97"  style="margin-left: 5%;width: 88%" value="#{cadBancoMB.banco.emailGerente}"/>
             </h:panelGrid>
 
-            <p:commandLink title="Confirmar" style="margin-left: 76%;text-decoration: none" actionListener="#{mensagem.saveMessagem}"  action="#" >
+                <p:commandLink title="Confirmar" style="margin-left: 76%;text-decoration: none" actionListener="#{mensagem.saveMessagem}"  action="#{cadBancoMB.salvar()}" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>
-            <p:commandLink title="Cancelar" style="margin-left: 2%;text-decoration: none" action="#" >
+                <p:commandLink title="Cancelar" style="margin-left: 2%;text-decoration: none" action="#{cadBancoMB.cancelar()}" >
                 <img src="../../resources/img/cancelarS.png" width="50" height="50"/>
             </p:commandLink>
             <br></br>

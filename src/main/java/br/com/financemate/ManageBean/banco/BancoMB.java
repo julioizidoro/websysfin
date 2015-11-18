@@ -14,9 +14,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
@@ -24,19 +24,17 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
 @Named
-@SessionScoped
+@ViewScoped
 public class BancoMB implements Serializable {
 
     @Inject
     private UsuarioLogadoBean usuarioLogadoBean;
-    private Banco banco;
     private List<Banco> listaBanco;
     private Cliente cliente;
     private List<Cliente> listaCliente;
 
     @PostConstruct
     public void init() {
-        gerarListaBanco();
         gerarListaCliente();
     }
 
@@ -48,13 +46,7 @@ public class BancoMB implements Serializable {
         this.usuarioLogadoBean = usuarioLogadoBean;
     }
 
-    public Banco getBanco() {
-        return banco;
-    }
-
-    public void setBanco(Banco banco) {
-        this.banco = banco;
-    }
+   
 
     public List<Banco> getListaBanco() {
         return listaBanco;
@@ -99,9 +91,9 @@ public class BancoMB implements Serializable {
     public void gerarListaBanco() {
         if (cliente!=null){
             BancoFacade bancoFacade = new BancoFacade();
-            String sql = "Select b from banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
+            String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
             listaBanco = bancoFacade.listar(sql);
-            if (listaBanco!=null){
+            if (listaBanco==null){
                 listaBanco = new ArrayList<Banco>();
             }
         }else {
@@ -110,14 +102,30 @@ public class BancoMB implements Serializable {
     }
 
     public String novoBanco() {
-        Map<String, Object> options = new HashMap<String, Object>();
-        options.put("contentWidth", 500);
-        RequestContext.getCurrentInstance().openDialog("cadBanco");
+        try {
+            if (cliente != null) {
+                FacesContext fc = FacesContext.getCurrentInstance();
+                HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+                session.setAttribute("cliente", cliente);
+                Map<String, Object> options = new HashMap<String, Object>();
+                options.put("contentWidth", 500);
+                RequestContext.getCurrentInstance().openDialog("cadBanco");
+            }else{
+                 mostrarMensagem(null, "Erro ao Cadastrar Banco", "Erro");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(BancoMB.class.getName()).log(Level.SEVERE, null);
+            mostrarMensagem(ex, "Erro ao Cadastrar Banco", "Erro");
+
+        }
         return "";
     }
+        
 
+ 
+    
     public String editar(Banco banco) {
-        if (banco != null) {
+        if (banco!= null) {
             FacesContext fc = FacesContext.getCurrentInstance();
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
             session.setAttribute("banco", banco);
@@ -131,10 +139,5 @@ public class BancoMB implements Serializable {
         gerarListaBanco();
     }
 
-    public String pesquisar() {
-        if (cliente != null) {
-            gerarListaBanco();
-        }
-        return "consBanco";
-    }
+   
 }

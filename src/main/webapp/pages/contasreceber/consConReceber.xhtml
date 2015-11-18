@@ -15,7 +15,7 @@
                     <p:accordionPanel style="font-size:12px;">
                         <p:tab title="Pesquisar" titleStyle="background: #3E7D62;color: white">
                             <h:panelGrid columns="7">
-                                <p:selectOneMenu id="idcbbunidade" value="#{contasReceberMB.cliente}" style="width: 300px;margin-left: 12%"
+                                <p:selectOneMenu id="idcbbunidade" value="#{contasReceberMB.cliente}" style="width: 300px;margin-left: 22%"
                                                  converter="ClienteConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" 
                                                  disabled="#{contasReceberMB.verCliente}">
                                     <f:selectItem itemLabel="Unidade" itemValue="0" noSelectionOption="true"/>
@@ -56,7 +56,7 @@
                                 <img src="#{contasReceberMB.verStatus(contasReceber)}" />
                             </p:commandLink>
                         </p:column>
-                        <p:column headerText="Data Vencimento" style="width:21%;" >
+                        <p:column headerText="Data Vencimento" style="width:30%;" >
                             <h:outputText value="#{contasReceber.dataVencimento}"  >
                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                             </h:outputText>
@@ -64,7 +64,7 @@
                         <p:column headerText="Cliente" style="width: 80%"  >
                             <h:outputText value="#{contasReceber.nomeCliente}"/>
                         </p:column>
-                        <p:column headerText="Produto" style="width: 80%"  >
+                        <p:column headerText="Produto" style="width: 70%"  >
                             <h:outputText value="#{contasReceber.vendas.produto.descricao}"/>
                         </p:column>
                         <p:column headerText="Valor da Conta" style="width:20%;" styleClass="alinharCenter">
@@ -77,29 +77,29 @@
                                 <f:convertNumber currencySymbol="" type="currency"/>
                             </h:outputText>
                         </p:column>
-                        <p:column headerText="Desconto" style="width:20%;" styleClass="alinharCenter">
+                        <p:column headerText="Desconto" style="width:23%;" styleClass="alinharCenter">
                             <h:outputText  value="#{contasReceber.desagio}" >
                                 <f:convertNumber currencySymbol="" type="currency"/>
                             </h:outputText>
                         </p:column>
-                        <p:column headerText="Valor Recebido" style="width:20%;" styleClass="alinharCenter">
+                        <p:column headerText="Valor Recebido" style="width:23%;" styleClass="alinharCenter">
                             <h:outputText  value="#{contasReceber.valorPago}" >
                                 <f:convertNumber currencySymbol="" type="currency"/>
                             </h:outputText>
                         </p:column>
-                        <p:column headerText="Data Recebimento" style="width:27%;">
+                        <p:column headerText="Data Recebimento" style="width:33%;">
                             <h:outputText value="#{contasReceber.dataPagamento}"  >
                                 <f:convertDateTime parent="dd/MM/yyy"/>
                             </h:outputText>
                         </p:column> 
-                        <p:column headerText="Forma Recebimento" style="width:25%;">
+                        <p:column headerText="Forma Recebimento" style="width:33%;">
                             <h:outputText value="#{contasReceber.tipodocumento}" /> 
                         </p:column> 
 
                         <p:column headerText="Unidade"  style="width:50%;">
                             <h:outputText  value="#{contasReceber.cliente.nomeFantasia}"/>
                         </p:column>
-                        <p:column headerText="Nº da Venda" style="width:19%;">
+                        <p:column headerText="Nº da Venda" style="width:18%;">
                             <h:outputText  value="#{contasReceber.vendas.idvendas}"/>
                         </p:column>
                         <p:column   style="width:8%;text-align: center">
