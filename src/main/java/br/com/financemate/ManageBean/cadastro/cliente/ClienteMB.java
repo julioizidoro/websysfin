@@ -25,6 +25,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
@@ -158,22 +159,7 @@ public class ClienteMB implements Serializable{
     public String cancelar(){
         return "consCliente";
     }
-    public String salvar() throws SQLException{
-         if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getIcliente()){
-            ClienteFacade clienteFacade = new ClienteFacade();
-            TipoPlanoContasFacede tipoPlanoContasFacede = new TipoPlanoContasFacede();
-            Tipoplanocontas tipo = tipoPlanoContasFacede.consultar(Integer.parseInt(idTipoPlanoConta));
-            cliente.setTipoplanocontas(tipo);
-            clienteFacade.salvar(cliente);
-            cliente = new Cliente();
-            gerarListaClientes();
-            return "consCliente";
-        }else {
-            FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
-            FacesContext.getCurrentInstance().addMessage(null, mensagem);
-            return "";
-        }
-    }
+    
     
     public String consultarTipoPlanoContas() throws SQLException {
         FacesContext fc = FacesContext.getCurrentInstance();
@@ -189,26 +175,20 @@ public class ClienteMB implements Serializable{
         return null;
     }
     
-    public String editar() throws SQLException{
-        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getAcliente()){
-            if (listaClientes!=null){
-            for(int i=0;i<listaClientes.size();i++){
-                if (listaClientes.get(i).isSelecionado()){
-                    cliente = listaClientes.get(i);
-                    listaClientes.get(i).setSelecionado(false);
-                    listarTipoPlanoContas();
-                    idTipoPlanoConta = String.valueOf(cliente.getTipoplanocontas().getIdtipoplanocontas());
-                    i=100000;
-                    return "cadCliente";
-                }
+    public String editar(Cliente cliente){
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getAcliente()) {
+            if (cliente != null) {
+                FacesContext fc = FacesContext.getCurrentInstance();
+                HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+                session.setAttribute("cliente", cliente);
+                RequestContext.getCurrentInstance().openDialog("cadCliente");
             }
-        }
-        return  "";
-        }else {
+        } else {
             FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
             return "";
         }
+        return "";
     }
     
     public String novo() {

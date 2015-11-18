@@ -11,14 +11,16 @@
                 <div id="centro">
                     <p:growl id="growl" showDetail="true" sticky="true" />
                     <br></br>
-                    <h:panelGrid columns="2" cellpadding="5" >
-                        <p:outputLabel value="Cliente" for="nome"  class="left3" />
-                    </h:panelGrid>
-                    <h:panelGrid columns="2">
-                        <p:inputText id="nome" size="45"  class="left3"  value="#{ClienteMB.nomeCliente}" />
-                        <p:commandButton value="Pesquisar" class="pesquisar2outros" icon=" ui-icon-search " update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{ClienteMB.pesquisarNome()}"/>
-                    </h:panelGrid>
-                    <br></br>
+                    <p:accordionPanel style="font-size:12px;">
+                        <p:tab title="Pesquisar" titleStyle="background:#3E7D62; color:white;" >
+                            <p:inputText id="nome" size="45"  class="left3"  value="#{ClienteMB.nomeCliente}" placeholder="Cliente"/>
+                            <p:commandLink  title="Pesquisar"   update="@all" style="text-decoration: none;margin-left: 2%"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{ClienteMB.pesquisarNome()}">
+
+                                <img src="../../resources/img/pesquisarS.png" width="30" height="30" />
+                            </p:commandLink>
+                        </p:tab>
+                    </p:accordionPanel>
+                    <br/>
                     <legend id="iUsu2" ><b>Consulta de Clientes </b></legend>
 
                     <p:dataTable id="idCliente" var="cliente" value="#{ClienteMB.listaClientes}" rowStyleClass="tabela" class="tabelaselecionar" 
@@ -33,7 +35,7 @@
                             <h:outputText  value="#{cliente.email}"/>
                         </p:column>
                         <p:column headerText="" style="width:20px;text-align:center;">
-                            <p:commandLink title="Editar" class="pesquisar2"  action="#">
+                            <p:commandLink title="Editar" class="pesquisar2"  action="#{ClienteMB.editar(cliente)}">
                                 <img src="../../resources/img/editarS.png" style="width: 100%; height: 100%;" />
                                 <p:ajax event="dialogReturn" listener="#{ClienteMB.retornoDialogNovo}" update="idCliente"/>
                             </p:commandLink>
@@ -46,7 +48,6 @@
                     <br></br>
                     <h:panelGrid columns="10" cellpadding="1" class="cadPagar">
                         <p:commandButton value="Novo" icon=" ui-icon-plus " class="pesquisar" action="#{ClienteMB.novo()}"/>
-                        <p:commandButton value="Editar" class="pesquisar2" icon=" ui-icon-pencil" action="#{ClienteMB.editar()}"/>
                         <p:commandButton value="Municipais" class="pesquisar2"  actionListener="#{mensagem.excluiMessagem()}" update="growl" />
                         <p:commandButton value="Voltar" class="pesquisar2" icon=" ui-icon-check "/>
                     </h:panelGrid>

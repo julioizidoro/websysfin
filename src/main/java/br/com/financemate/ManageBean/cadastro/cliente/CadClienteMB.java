@@ -96,8 +96,8 @@ public class CadClienteMB implements  Serializable{
             Tipoplanocontas tipo;
              try {
                  tipo = tipoPlanoContasFacede.consultar(Integer.parseInt(idTipoPlanoConta));
-                 clienteFacade.salvar(cliente);
                  cliente.setTipoplanocontas(tipo);
+                 clienteFacade.salvar(cliente);
                  RequestContext.getCurrentInstance().closeDialog(cliente);
              } catch (SQLException ex) {
                  Logger.getLogger(CadClienteMB.class.getName()).log(Level.SEVERE, null, ex);

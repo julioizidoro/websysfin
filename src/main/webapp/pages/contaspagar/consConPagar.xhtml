@@ -14,21 +14,21 @@
                     <p:accordionPanel style="font-size:12px;">
                         <p:tab title="Pesquisar" titleStyle="background:#3E7D62; color:white;" >
                             <h:panelGrid columns="10">
-                                <p:selectOneMenu id="cliente"  style="width: 300px;margin-left: 12%"  value="#{contasPagarMB.cliente}" converter="ClienteConverter"
+                                <p:selectOneMenu id="cliente"  style="width: 300px;margin-left: 6%"  value="#{contasPagarMB.cliente}" converter="ClienteConverter"
                                                  filter="true" filterMatchMode="startsWith" panelStyle="width:180px">
                                     <f:selectItem  itemLabel="Unidade" itemValue="0" noSelectionOption="true"/> 
                                     <f:selectItems value="#{contasPagarMB.listaCliente}" var="clienteselecionado" itemLabel="#{clienteselecionado.nomeFantasia}" itemValue="#{clienteselecionado}"/>
                                     <f:attribute name="listaCliente" value="#{contasPagarMB.listaCliente}"/>
                                 </p:selectOneMenu>  
-                                <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="15" maxlength="15" value="#{contasPagarMB.dataInicio}" class="tabelaRecebimento" style="margin-left: 40%" placeholder="Data Inicial" >
+                                <p:calendar id="dataIni"  pattern="dd/MM/yyyy" mask="true" size="15" maxlength="15" value="#{contasPagarMB.dataInicio}" class="tabelaRecebimento" style="margin-left: 30%" placeholder="Data Inicial" >
                                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
-                                <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="15" maxlength="15" class="left6" value="#{contasPagarMB.dataFinal}" style="margin-left: 60%" placeholder="Data Final">
+                                <p:calendar id="dataFinal"  pattern="dd/MM/yyyy" mask="true" size="15" maxlength="15" class="left6" value="#{contasPagarMB.dataFinal}" style="margin-left: 50%" placeholder="Data Final">
                                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
                                 </p:calendar>
-                                <p:commandLink  title="Pesquisar" style="text-decoration: none;margin-left: 250%"  update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{contasPagarMB.pesquisar()}">
+                                <p:commandLink  title="Pesquisar" style="text-decoration: none;margin-left: 230%"  update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{contasPagarMB.pesquisar()}">
 
-                                    <img src="../../resources/img/iconepesquisar.png" />
+                                    <img src="../../resources/img/pesquisarS.png" width="30" height="30" />
                                 </p:commandLink>
                                 <p:selectBooleanCheckbox  class="left" value="#{contasPagarMB.liberadas}" style="margin-left: 85%">
                                     <p:ajax event="change" update=":frmConsultaPagar:idTabelaContaPagar, :frmConsultaPagar:contasVenc, :frmConsultaPagar:contasVencendo, :frmConsultaPagar:contasVencer, :frmConsultaPagar:contasPagar" listener="#{contasPagarMB.pesquisar()}"/>
@@ -39,7 +39,7 @@
                                 </p:selectBooleanCheckbox>
                                 <h:outputText value="Autorizadas"  style="margin-left: 23%"/>  
                                 <p:commandLink  title="Limpar"  action="#{contasPagarMB.limparConsulta()}" style="margin-left: 120%"  update="@all"   >
-                                    <img src="../../resources/img/limparS.png" width="40" height="40" />
+                                    <img src="../../resources/img/limparS.png" width="30" height="30" />
                                 </p:commandLink>
                             </h:panelGrid>
 
