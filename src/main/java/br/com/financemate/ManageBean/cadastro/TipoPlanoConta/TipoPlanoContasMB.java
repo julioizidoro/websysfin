@@ -3,21 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.financemate.ManageBean.cadastro;
+package br.com.financemate.ManageBean.cadastro.TipoPlanoConta;
 
 import br.com.financemate.ManageBean.UsuarioLogadoBean;
 import br.com.financemate.facade.TipoPlanoContasFacede;
-import br.com.financemate.model.Cliente;
 import br.com.financemate.model.Tipoplanocontas;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
+import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -29,14 +36,16 @@ public class TipoPlanoContasMB implements Serializable {
 
     private List<Tipoplanocontas> listarTipoPlanoContas;
     private Tipoplanocontas tipoplanocontas;
+    @Inject
     private UsuarioLogadoBean usuarioLogadoBean;
-
-    public TipoPlanoContasMB() {
-        tipoplanocontas = new Tipoplanocontas();
-      
+    
+    @PostConstruct
+    public void init() {
+        gerarListaTipoPlanoConta();
+        
     }
 
-    public List<Tipoplanocontas> getListarTipoPlanoContas() throws SQLException {
+    public List<Tipoplanocontas> getListarTipoPlanoContas(){
         if(listarTipoPlanoContas==null){
             gerarListaTipoPlanoConta();
         }
@@ -79,32 +88,30 @@ public class TipoPlanoContasMB implements Serializable {
         
     }
 
-    public String cancelar() {
-        return "consTipoPlanoConta";
-    }
+    
 
     public String novo() {
-        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getItipoplanocontas()){
-            return "cadTipoPlanoConta";
-        }else {
+        if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getItipoplanocontas()) {
+            tipoplanocontas = new Tipoplanocontas();
+            Map<String, Object> options = new HashMap<String, Object>();
+            options.put("contentWidth", 300);
+            RequestContext.getCurrentInstance().openDialog("cadTipoPlanoConta");
+        } else {
             FacesMessage mensagem = new FacesMessage("Erro! ", "Acesso Negado");
             FacesContext.getCurrentInstance().addMessage(null, mensagem);
             return "";
         }
-        
+        return "";
+
     }
 
-    public String editar() throws SQLException {
+    public String editar(Tipoplanocontas tipoplanocontas) {
         if (usuarioLogadoBean.getUsuario().getTipoacesso().getAcesso().getAtipoplanocontas()){
-            if (listarTipoPlanoContas!=null){
-                for(int i=0;i<listarTipoPlanoContas.size();i++){
-                    if (listarTipoPlanoContas.get(i).isSelecionado()){
-                        tipoplanocontas = listarTipoPlanoContas.get(i);
-                        listarTipoPlanoContas.get(i).setSelecionado(false);
-                        i=100000;
-                        return "cadTipoPlanoConta";
-                    }
-                }
+             if (tipoplanocontas != null) {
+                FacesContext fc = FacesContext.getCurrentInstance();
+                HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+                session.setAttribute("tipoplanocontas", tipoplanocontas);
+                RequestContext.getCurrentInstance().openDialog("cadTipoPlanoConta");
             }
             return  "";
         }else {
@@ -115,11 +122,28 @@ public class TipoPlanoContasMB implements Serializable {
          
     }
 
-    public void gerarListaTipoPlanoConta() throws SQLException {
+    public void gerarListaTipoPlanoConta() {
         TipoPlanoContasFacede tipoPlanoContasFacede = new TipoPlanoContasFacede();
-        listarTipoPlanoContas = tipoPlanoContasFacede.listar();
-        if (listarTipoPlanoContas == null) {
-            listarTipoPlanoContas = new ArrayList<Tipoplanocontas>();
+        try {
+            listarTipoPlanoContas = tipoPlanoContasFacede.listar();
+            if (listarTipoPlanoContas == null) {
+                listarTipoPlanoContas = new ArrayList<Tipoplanocontas>();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TipoPlanoContasMB.class.getName()).log(Level.SEVERE, null, ex);
+            mostrarMensagem(ex, "Erro ao gerar a lista de tipo de plano de contas", "Erro");
         }
+
+    }
+    
+    public void retornoDialogNovo(SelectEvent event){
+        Tipoplanocontas tipoplanocontas = (Tipoplanocontas) event.getObject();
+       listarTipoPlanoContas.add(tipoplanocontas);
+   }
+    
+    public void mostrarMensagem(Exception ex, String erro, String titulo){
+        FacesContext context = FacesContext.getCurrentInstance();
+        erro = erro + " - " + ex;
+        context.addMessage(null, new FacesMessage(titulo, erro));
     }
 }

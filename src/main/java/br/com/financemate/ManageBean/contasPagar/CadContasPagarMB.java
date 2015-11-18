@@ -181,9 +181,9 @@ public class CadContasPagarMB implements Serializable {
     public void gerarListaBanco(){
         if (cliente!=null){
             BancoFacade bancoFacade = new BancoFacade();
-            String sql = "Select b from banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
+            String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
             listaBanco = bancoFacade.listar(sql);
-            if (listaBanco!=null){
+            if (listaBanco ==null){
                 listaBanco = new ArrayList<Banco>();
             }
         }else {
