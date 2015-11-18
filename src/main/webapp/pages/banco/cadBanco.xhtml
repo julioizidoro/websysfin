@@ -21,44 +21,44 @@
                 <img src="resources/img/ajax-loader.gif" />
             </p:dialog>
 
-            <title  >Editar Contas Receber</title>
+            <title  >Banco</title>
             <p:growl id="growl" showDetail="true" sticky="true" />
             <br></br>
-            <h:panelGrid columns="2" cellpadding="5" >
-                <p:outputLabel value="Nome" for="nome"  class="left3" />
-                <p:outputLabel value="Número" for="numero"  class="numero2" />
-            </h:panelGrid>
+           
+            <p:outputLabel value="Nome" for="nome"  style="margin-left: 5.5%" />
+                <p:outputLabel value="Número" for="numero"  style="margin-left: 62%" />
+           
             <h:panelGrid columns="3">
-                <p:inputText id="nome" size="62"  class="left3" value="#{bancoMB.banco.nome}"/>
-                <p:inputText id="numero" size="15"  class="left"  value="#{bancoMB.banco.numeroBanco}"/>
+                <p:inputText id="nome" style="width:  200%;margin-left: 15%"  value="#{bancoMB.banco.nome}"/>
+                <p:inputText id="numero" style="width:  30%;margin-left: 60%"    value="#{bancoMB.banco.numeroBanco}"/>
             </h:panelGrid>
 
-            <h:panelGrid columns="4" cellpadding="5" >
-                <p:outputLabel value="nº Agencia" for="nAgencia"  class="left3"/>
-                <p:outputLabel value="nº Conta" for="nConta"  class="dataVenc"/>
-                <p:outputLabel value="Chave" for="chave"  class="left9"/>
-                <p:outputLabel value="Senha" for="senha"  class="left9"/>
-            </h:panelGrid>
+        
+                <p:outputLabel value="Nº Agencia" for="nAgencia"  style="margin-left: 5.5%"/>
+                <p:outputLabel value="Nº Conta" for="nConta"  style="margin-left: 14.5%"/>
+                <p:outputLabel value="Chave" for="chave"  style="margin-left: 15%"/>
+                <p:outputLabel value="Senha" for="senha"  style="margin-left: 19%"/>
+            
             <h:panelGrid columns="4">
-                <p:inputText id="nAgencia" size="10"  class="left3"  value="#{bancoMB.banco.agencia}"/>
-                <p:inputText id="nConta" size="11"  class="left"  value="#{bancoMB.banco.conta}"/>
-                <p:inputText id="chave" size="9"  class="left"  value="#{bancoMB.banco.cahve}"/>
-                <p:inputText id="senha" size="10"  class="left"  value="#{bancoMB.banco.senha}"/>
+                <p:inputText id="nAgencia"  style="margin-left: 19%;width: 60%"  value="#{bancoMB.banco.agencia}"/>
+                <p:inputText id="nConta" style="margin-left: 10%;width: 60%"  value="#{bancoMB.banco.conta}"/>
+                <p:inputText id="chave" style="margin-left: 10%;width: 60%" value="#{bancoMB.banco.cahve}"/>
+                <p:inputText id="senha" style="margin-left: 10%;width: 60%"  value="#{bancoMB.banco.senha}"/>
             </h:panelGrid>
-            <h:panelGrid columns="2" cellpadding="5" >
-                <p:outputLabel value="Nome do Gerente" for="nomegerente"  class="left3" />
-            </h:panelGrid>
+            
+                <p:outputLabel value="Nome do Gerente" for="nomegerente"  style="margin-left: 5.5%" />
+           
             <h:panelGrid columns="3">
-                <p:inputText id="nomegerente" size="97"  class="left3"  value="#{bancoMB.banco.gerente}"/>
+                <p:inputText id="nomegerente" size="97"  style="margin-left: 5%;width: 88%"  value="#{bancoMB.banco.gerente}"/>
             </h:panelGrid>
-            <h:panelGrid columns="2" cellpadding="5" >
-                <p:outputLabel value="E-mail do Gerente" for="emailgerente"  class="left3" />
-            </h:panelGrid>
+            
+                <p:outputLabel value="E-mail do Gerente" for="emailgerente"  style="margin-left: 5.5%"/>
+            
             <h:panelGrid columns="3">
-                <p:inputText id="emailgerente" size="97"  class="left3"  value="#{bancoMB.banco.emailGerente}"/>
+                <p:inputText id="emailgerente" size="97"  style="margin-left: 5%;width: 88%" value="#{bancoMB.banco.emailGerente}"/>
             </h:panelGrid>
 
-            <p:commandLink title="Confirmar" style="margin-left: 72%;text-decoration: none" actionListener="#{mensagem.saveMessagem}"  action="#" >
+            <p:commandLink title="Confirmar" style="margin-left: 76%;text-decoration: none" actionListener="#{mensagem.saveMessagem}"  action="#" >
                 <img src="../../resources/img/confirmarS.png" width="50" height="50"/>
             </p:commandLink>
             <p:commandLink title="Cancelar" style="margin-left: 2%;text-decoration: none" action="#" >
