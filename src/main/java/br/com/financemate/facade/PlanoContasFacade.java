@@ -42,14 +42,10 @@ public class PlanoContasFacade {
         planoContasDao = new PlanoContasDao();
         return planoContasDao.listar(descricao, idTipo);
     }
-    public List<Planocontas> listar() {
+    public List<Planocontas> listar() throws Exception{
         planoContasDao = new PlanoContasDao();
-        try {
-            return planoContasDao.listar();
-        } catch (SQLException ex) {
-            Logger.getLogger(PlanoContasFacade.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
+        return planoContasDao.listar();
+        
     }
     
 }
