@@ -5,30 +5,42 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-      <ui:composition template="/WEB-INF/templates/default.xhtml">
+    <ui:composition template="/WEB-INF/templates/default.xhtml">
         <ui:define name="corpo">
-            <h:form>
+            <h:form id="idfrmplanocontas">
                 <div id="centro">
                     <p:growl id="growl" showDetail="true" sticky="true" />
                     <br></br>
-                    <h:panelGrid columns="7" cellpadding="3">
-                        <p:outputLabel value="Descrição" for="descricao" class="unidade"/> 
-                        <p:outputLabel value="Modelo" for="modelo" class="usuario3"/>
-                    </h:panelGrid>
-                    <h:panelGrid columns="6" cellpadding="1">
-                        <p:inputText id="descricao" size="25" maxlength="100" class="unidade" value="#{planoContasMB.descricao}" />
-                        <p:selectOneMenu id="modelo" class="left" style="width:127px"  value="#{planoContasMB.idTipoPlanoConta}">
-                            <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
-                            <f:selectItems value="#{planoContasMB.listarTipoPlanoContas}" var="tipoSelecionado" itemLabel="#{tipoSelecionado.descricao}" itemValue="#{tipoSelecionado.idtipoplanocontas}"/>
-                        </p:selectOneMenu>
-                        <p:commandButton value="Pesquisar" class="pesquisar" icon=" ui-icon-search " update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{planoContasMB.pesquisar()}"/>
-                        <p:commandButton value="Limpar" class="limpar"  update="@all"  oncomplete="popAprovar.hide();  #{meuBean.objetos}"/>
-                    </h:panelGrid>
+                    <p:accordionPanel style="font-size:12px;">
+                        <p:tab title="Pesquisar" titleStyle="background: #3E7D62;color: white">
+                            <h:panelGrid columns="7" cellpadding="3">
+                                <p:outputLabel value="Descrição" for="descricao" class="unidade"/> 
+                                <p:outputLabel value="Modelo" for="modelo" class="usuario3"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="6" cellpadding="1">
+                                <p:inputText id="descricao" size="25" maxlength="100" class="unidade" value="#{planoContasMB.descricao}" />
+                                <p:selectOneMenu id="modelo" class="left" style="width:127px"  value="#{planoContasMB.idTipoPlanoConta}">
+                                    <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
+                                    <f:selectItems value="#{planoContasMB.listarTipoPlanoContas}" var="tipoSelecionado" itemLabel="#{tipoSelecionado.descricao}" itemValue="#{tipoSelecionado.idtipoplanocontas}"/>
+                                </p:selectOneMenu>
+                                <p:commandLink title="Pesquisar"  oncomplete="popAprovar.hide();  #{meuBean.objetos}" action="#{planoContasMB.pesquisar()}" update=":idfrmplanocontas:idplanoconta">
+                                    <img src="../../resources/img/pesquisarS.png" width="30" height="30"/>
+                                </p:commandLink>
+                                <p:commandLink title="Limpar"   oncomplete="popAprovar.hide();  #{meuBean.objetos}" update=":idfrmplanocontas:idplanoconta">
+                                    <img src="../../resources/img/limparS.png" width="30" height="30"/>
+                                </p:commandLink> 
+                            </h:panelGrid>
+                        </p:tab>
+                    </p:accordionPanel>
                     <br></br>
-                    <legend id="iUsu" ><b>Consulta Plano de Contas</b></legend>
-                    <p:dataTable id="planoconta" var="planoconta" value="#{planoContasMB.listarPlanoContas}" rowStyleClass="tabela" class="tabelaselecionar" 
-                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-                                 paginator="true" rows="10" style="margin-bottom:20px"> 
+                    <legend id="iUsu2" ><b>Consulta Plano de Contas</b>
+                        <p:commandLink title="Novo"  class="fechar" action="#{planoContasMB.novo()}" style="margin-left: 40%">
+                            <img src="../../resources/img/adicionarS.png" width="30"/>
+                            <p:ajax event="dialogReturn" listener="#{planoContasMB.retornoDialog}" update=":idfrmplanocontas:idplanoconta"/>
+                        </p:commandLink>
+                    </legend>
+                    <p:dataTable id="idplanoconta" var="planoconta" value="#{planoContasMB.listarPlanoContas}" rowStyleClass="tabela" class="tabelaselecionar" 
+                                 scrollable="true" scrollHeight="300" style="margin-bottom:20px"> 
 
 
                         <p:column headerText="Número" style="width:100px">
@@ -40,15 +52,18 @@
                         <p:column headerText="Modelo"  >
                             <h:outputText value="#{planoconta.tipoplanocontas}"/>
                         </p:column>
-                        <p:column style="width:26px">
-                             <p:selectBooleanCheckbox value="#{planoconta.selecionado}"/>
+                        <p:column style="width: 35px">
+                            <p:commandLink title="Editar" style="text-align: center;" action="#{planoContasMB.editar(planoconta)}" update=":idfrmplanocontas:idplanoconta" >
+                                <img src="../../resources/img/editarS.png" width="30" height="30"/>
+                                <p:ajax event="dialogReturn" listener="#{planoContasMB.retornoDialog}" update=":idfrmplanocontas:idplanoconta"/>
+                            </p:commandLink>
                         </p:column>
+                        <p:column style="width: 35px">
+                           
+                        </p:column>
+                        
                     </p:dataTable>
-                    <h:panelGrid columns="3" cellpadding="1">
-                        <p:commandButton value="Adicionar" icon=" ui-icon-plus " class="cadastrar" action="#{planoContasMB.novo()}"/>
-                        <p:commandButton value="Excluir" class="export" icon=" ui-icon-trash " actionListener="#{mensagem.excluiMessagem()}" update="growl" />
-                        <p:commandButton value="Editar" class="export" icon="ui-icon-pencil" action="#{planoContasMB.editar()}" />
-                    </h:panelGrid>
+                 
                     <br></br>
                 </div>
             </h:form>     
