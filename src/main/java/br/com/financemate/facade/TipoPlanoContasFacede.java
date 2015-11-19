@@ -30,4 +30,6 @@ public class TipoPlanoContasFacede {
         return tipoPlanoContasDao.consultar(idtipoplanocontas);
     }
     
+      
+    
 }
