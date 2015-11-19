@@ -114,7 +114,7 @@ public class BancoMB implements Serializable {
                  mostrarMensagem(null, "Erro ao Cadastrar Banco", "Erro");
             }
         } catch (Exception ex) {
-            Logger.getLogger(BancoMB.class.getName()).log(Level.SEVERE, null);
+            Logger.getLogger(BancoMB.class.getName()).log(Level.SEVERE, null, ex);
             mostrarMensagem(ex, "Erro ao Cadastrar Banco", "Erro");
 
         }
