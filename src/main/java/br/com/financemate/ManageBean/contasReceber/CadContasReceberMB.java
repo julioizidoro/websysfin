@@ -135,7 +135,11 @@ public class CadContasReceberMB implements Serializable{
     
      public void gerarListaPlanoContas() {
         PlanoContasFacade planoContasFacade = new PlanoContasFacade();
-        listaPlanoContas = planoContasFacade.listar();
+        try {
+            listaPlanoContas = planoContasFacade.listar();
+        } catch (Exception ex) {
+            Logger.getLogger(CadContasReceberMB.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
       
     public void gerarListaBanco(){
