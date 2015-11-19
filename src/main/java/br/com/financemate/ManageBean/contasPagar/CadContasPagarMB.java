@@ -58,6 +58,10 @@ public class CadContasPagarMB implements Serializable {
         gerarListaBanco();
         if (contaPagar == null) {
              contaPagar = new Contaspagar();
+        }else{
+            cliente = contaPagar.getCliente();
+            planoContas = contaPagar.getPlanocontas();
+            banco = contaPagar.getBanco();
         }
        
     }
@@ -138,10 +142,16 @@ public class CadContasPagarMB implements Serializable {
     
     public void gerarListaPlanoContas() {
         PlanoContasFacade planoContasFacade = new PlanoContasFacade();
-        listaPlanoContas = planoContasFacade.listar();
-        if (listaPlanoContas == null) {
-            listaPlanoContas = new ArrayList<Planocontas>();
+        try {
+            listaPlanoContas = planoContasFacade.listar();
+            if (listaPlanoContas == null) {
+                listaPlanoContas = new ArrayList<Planocontas>();
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(CadContasPagarMB.class.getName()).log(Level.SEVERE, null, ex);
+            mostrarMensagem(ex, "Erro ao gerar a lista de plano de contas", "Erro");
         }
+        
     }
     
     public void gerarListaCliente() {
@@ -181,7 +191,7 @@ public class CadContasPagarMB implements Serializable {
     public void gerarListaBanco(){
         if (cliente!=null){
             BancoFacade bancoFacade = new BancoFacade();
-            String sql = "Select b from Banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
+            String sql = "Select b from banco b where b.cliente.idcliente=" + cliente.getIdcliente() + " order by b.nome";
             listaBanco = bancoFacade.listar(sql);
             if (listaBanco ==null){
                 listaBanco = new ArrayList<Banco>();
